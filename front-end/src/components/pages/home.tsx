@@ -21,23 +21,32 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-// router
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-// layouts
-import MainLayout from "./components/layout/mainLayout";
-// pages
-import Home from "./components/pages/home";
 
-const App = () => {
+const Home = () => {
     return (
-        <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<MainLayout />}>
-                    <Route index element={<Home />} />
-                </Route>
-            </Routes>
-        </BrowserRouter>
+        <div className="container mx-auto w-[60%] px-6 py-16">
+            <div className="flex flex-row items-center justify-between gap-2">
+                <div className="flex-1 max-w-lg">
+                    <h1 className="text-5xl font-bold text-gray-900 mb-6 leading-tight">
+                        Progress tracking made simple
+                    </h1>
+                    <p className="text-lg text-gray-600 mb-8 leading-relaxed">
+                        Track your goals, monitor your achievements, and
+                        visualize your growth. Built for individuals who want to
+                        stay motivated and see real progress in their personal
+                        and professional journey.
+                    </p>
+                </div>
+                <div className="flex-1 flex justify-center">
+                    <img
+                        src="/images/Hero.png"
+                        alt="Progress tracking hero illustration"
+                        className="max-w-md w-full h-auto"
+                    />
+                </div>
+            </div>
+        </div>
     );
 };
 
-export default App;
+export default Home;

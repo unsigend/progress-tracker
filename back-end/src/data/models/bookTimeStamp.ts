@@ -22,13 +22,24 @@
  * SOFTWARE.
  */
 
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
-import App from "./App.tsx";
-import "./index.css";
+import mongoose from "mongoose";
+import { Schema } from "mongoose";
 
-createRoot(document.getElementById("root")!).render(
-    <StrictMode>
-        <App />
-    </StrictMode>
-);
+const bookTimeStampSchema = new Schema({
+    bookId: {
+        type: String,
+        required: true,
+    },
+    date: {
+        type: Date,
+        required: true,
+    },
+    minutes: {
+        type: Number,
+        required: true,
+    },
+});
+
+const BookTimeStamp = mongoose.model("BookTimeStamp", bookTimeStampSchema);
+
+export default BookTimeStamp;

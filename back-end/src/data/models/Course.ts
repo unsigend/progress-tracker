@@ -22,13 +22,24 @@
  * SOFTWARE.
  */
 
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
-import App from "./App.tsx";
-import "./index.css";
+import mongoose from "mongoose";
+import { Schema } from "mongoose";
 
-createRoot(document.getElementById("root")!).render(
-    <StrictMode>
-        <App />
-    </StrictMode>
-);
+const courseSchema = new Schema({
+    title: {
+        type: String,
+        required: true,
+    },
+    description: {
+        type: String,
+        required: false,
+    },
+    from: {
+        type: String,
+        required: false,
+    },
+});
+
+const Course = mongoose.model("Course", courseSchema);
+
+export default Course;

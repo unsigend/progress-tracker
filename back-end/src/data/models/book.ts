@@ -27,6 +27,8 @@
 import mongoose from "mongoose";
 import { Schema } from "mongoose";
 
+import BookTimeStamp from "@/data/models/bookTimeStamp.js";
+
 const bookSchema = new Schema({
     title: {
         type: String,
@@ -34,7 +36,11 @@ const bookSchema = new Schema({
     },
     image: {
         type: String,
-        required: true,
+        required: false,
+    },
+    timeStamps: {
+        type: [BookTimeStamp.schema],
+        required: false,
     },
 });
 

@@ -23,14 +23,34 @@
  */
 
 import dotenv from "dotenv";
-import initDatabase from "./data/init.js";
-
-// load environment variables
-dotenv.config();
+import express from "express";
+import initDatabase from "@/data/init.js";
+import chalk from "chalk";
 
 // main function
 async function main() {
+    // load environment variables
+    dotenv.config();
+
+    // init database
     await initDatabase();
+
+    // init express
+    const app = express();
+
+    // middleware
+    app.use(express.json());
+
+    // routes
+
+    // start server
+    app.listen(process.env.PORT || 3000, () => {
+        console.log(
+            chalk.green(
+                "Server is running on port " + (process.env.PORT || 3000)
+            )
+        );
+    });
 }
 
 main();
