@@ -22,15 +22,22 @@
  * SOFTWARE.
  */
 
-import dotenv from "dotenv";
-import initDatabase from "./data/init.js";
+// Book model Schema
 
-// load environment variables
-dotenv.config();
+import mongoose from "mongoose";
+import { Schema } from "mongoose";
 
-// main function
-async function main() {
-    await initDatabase();
-}
+const bookSchema = new Schema({
+    title: {
+        type: String,
+        required: true,
+    },
+    image: {
+        type: String,
+        required: true,
+    },
+});
 
-main();
+const Book = mongoose.model("Book", bookSchema);
+
+export default Book;

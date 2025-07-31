@@ -22,15 +22,19 @@
  * SOFTWARE.
  */
 
-import dotenv from "dotenv";
-import initDatabase from "./data/init.js";
+import mongoose from "mongoose";
+import chalk from "chalk";
 
-// load environment variables
-dotenv.config();
-
-// main function
-async function main() {
-    await initDatabase();
+// database init
+async function initDatabase() {
+    try {
+        await mongoose.connect(process.env.MONGO_URI as string);
+        console.log(chalk.green("Connected to MongoDB"));
+    } catch (error) {
+        console.log(chalk.red("Failed to connect to MongoDB"));
+        console.log(error);
+        process.exit(1);
+    }
 }
 
-main();
+export default initDatabase;

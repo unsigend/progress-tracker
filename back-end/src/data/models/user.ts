@@ -22,15 +22,28 @@
  * SOFTWARE.
  */
 
-import dotenv from "dotenv";
-import initDatabase from "./data/init.js";
+// User model Schema
 
-// load environment variables
-dotenv.config();
+import mongoose from "mongoose";
+import { Schema } from "mongoose";
 
-// main function
-async function main() {
-    await initDatabase();
-}
+const userSchema = new Schema({
+    username: {
+        type: String,
+        required: true,
+        unique: false,
+    },
+    password: {
+        type: String,
+        required: true,
+    },
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+    },
+});
 
-main();
+const User = mongoose.model("User", userSchema);
+
+export default User;

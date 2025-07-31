@@ -5,7 +5,7 @@
     "main": "dist/index.js",
     "scripts": {
         "start": "node dist/index.js",
-        "dev": "nodemon src/index.ts",
+        "dev": "nodemon --exec tsx src/index.ts",
         "build": "tsc"
     },
     "keywords": [],
@@ -16,8 +16,10 @@
         "@types/cors": "^2.8.19",
         "@types/express": "^5.0.3",
         "@types/node": "^24.1.0",
+        "chalk": "^5.4.1",
         "nodemon": "^3.1.10",
         "ts-node": "^10.9.2",
+        "tsx": "^4.20.3",
         "typescript": "^5.9.2"
     },
     "dependencies": {
