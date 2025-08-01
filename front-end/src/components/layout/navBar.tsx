@@ -21,16 +21,22 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-import { Outlet } from "react-router-dom";
-import NavBar from "@/components/layout/navBar";
 
-const MainLayout = () => {
+import Logo from "@/components/ui/logo";
+import NavItem from "@/components/ui/navItem";
+
+const NavBar = () => {
     return (
-        <div>
-            <NavBar />
-            <Outlet />
+        <div className="flex justify-between items-center p-4">
+            <Logo />
+            <div className="flex items-center gap-4">
+                <NavItem>Home</NavItem>
+                <NavItem>About</NavItem>
+                <NavItem>Contact</NavItem>
+            </div>
+            <div></div>
         </div>
     );
 };
 
-export default MainLayout;
+export default NavBar;

@@ -21,16 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-import { Outlet } from "react-router-dom";
-import NavBar from "@/components/layout/navBar";
 
-const MainLayout = () => {
-    return (
-        <div>
-            <NavBar />
-            <Outlet />
-        </div>
-    );
+const NavItem = ({ children }: { children: React.ReactNode }) => {
+    return <div>{children}</div>;
 };
 
-export default MainLayout;
+export default NavItem;
