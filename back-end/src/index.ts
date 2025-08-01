@@ -25,11 +25,14 @@
 // dependencies
 import dotenv from "dotenv";
 import express from "express";
-import initDatabase from "@/data/init.js";
+import initDatabase from "@/config/db.js";
 import chalk from "chalk";
 
 // routes
 import bookRoutes from "@/routes/book/bookRoutes.js";
+
+// middleware
+import errorMiddleware from "@/middleware/errorMiddleware.js";
 
 // main function
 async function main() {
@@ -44,6 +47,10 @@ async function main() {
 
     // middleware
     app.use(express.json());
+    app.use(express.urlencoded({ extended: false }));
+
+    // custom error middleware
+    app.use(errorMiddleware);
 
     // routes
     app.use("/api/books", bookRoutes);

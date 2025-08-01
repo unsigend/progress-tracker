@@ -22,19 +22,16 @@
  * SOFTWARE.
  */
 
-// Book model Schema
-
 import mongoose from "mongoose";
-import { Schema } from "mongoose";
 
-const bookSchema = new Schema({
+const bookSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true,
     },
     image: {
         type: String,
-        required: false,
+        required: true,
     },
 });
 

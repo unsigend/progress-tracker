@@ -24,42 +24,45 @@
 
 import { Request, Response } from "express";
 
-// @desc Get all books
-// @route GET /api/books
-// @access Public
-const getBooks = (req: Request, res: Response) => {
-    res.send("Get request received");
+const bookController = {
+    // @desc Get all books
+    // @route GET /api/books
+    // @access Public
+    async getBooks(req: Request, res: Response) {
+        res.send("Get request received");
+    },
+
+    // @desc Get a book by id
+    // @route GET /api/books/:id
+    // @access Public
+    async getBookById(req: Request, res: Response) {
+        const { id } = req.params;
+        res.send(`Get request received for book ${id}`);
+    },
+
+    // @desc Create a book
+    // @route POST /api/books
+    // @access Public
+    async createBook(req: Request, res: Response) {
+        console.log(req.body);
+        res.send("Post request received");
+    },
+
+    // @desc Update a book
+    // @route PUT /api/books/:id
+    // @access Public
+    async updateBook(req: Request, res: Response) {
+        const { id } = req.params;
+        res.send(`Put request received for book ${id}`);
+    },
+
+    // @desc Delete a book
+    // @route DELETE /api/books/:id
+    // @access Public
+    async deleteBook(req: Request, res: Response) {
+        const { id } = req.params;
+        res.send(`Delete request received for book ${id}`);
+    },
 };
 
-// @desc Get a book by id
-// @route GET /api/books/:id
-// @access Public
-const getBookById = (req: Request, res: Response) => {
-    const { id } = req.params;
-    res.send(`Get request received for book ${id}`);
-};
-
-// @desc Create a book
-// @route POST /api/books
-// @access Public
-const createBook = (req: Request, res: Response) => {
-    res.send("Post request received");
-};
-
-// @desc Update a book
-// @route PUT /api/books/:id
-// @access Public
-const updateBook = (req: Request, res: Response) => {
-    const { id } = req.params;
-    res.send(`Put request received for book ${id}`);
-};
-
-// @desc Delete a book
-// @route DELETE /api/books/:id
-// @access Public
-const deleteBook = (req: Request, res: Response) => {
-    const { id } = req.params;
-    res.send(`Delete request received for book ${id}`);
-};
-
-export { getBooks, getBookById, createBook, updateBook, deleteBook };
+export default bookController;

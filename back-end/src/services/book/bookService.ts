@@ -22,7 +22,6 @@
  * SOFTWARE.
  */
 
-// import { Book as BookModel } from "@/data/models/book.js";
 import { Book as BookType } from "@/types/book.js";
 
 const BookService = {

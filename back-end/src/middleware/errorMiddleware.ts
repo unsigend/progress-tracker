@@ -22,24 +22,22 @@
  * SOFTWARE.
  */
 
-import mongoose from "mongoose";
-import { Schema } from "mongoose";
+import { Request, Response, NextFunction } from "express";
 
-const bookTimeStampSchema = new Schema({
-    bookId: {
-        type: String,
-        required: true,
-    },
-    date: {
-        type: Date,
-        required: true,
-    },
-    minutes: {
-        type: Number,
-        required: true,
-    },
-});
+// general error middleware
+const errorMiddleware = (
+    err: Error,
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    const statusCode = res.statusCode ? res.statusCode : 500;
+    res.status(statusCode);
+    res.json({
+        message: err.message,
+        stack: process.env.NODE_ENV === "production" ? null : err.stack,
+    });
+    next();
+};
 
-const BookTimeStamp = mongoose.model("BookTimeStamp", bookTimeStampSchema);
-
-export default BookTimeStamp;
+export default errorMiddleware;
