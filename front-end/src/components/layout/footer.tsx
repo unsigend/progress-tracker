@@ -23,6 +23,7 @@
  */
 
 import { Github, Mail } from "lucide-react";
+import global from "@/data/global";
 
 const Footer = () => {
     return (
@@ -54,7 +55,7 @@ const Footer = () => {
                         <ul className="space-y-3">
                             <li>
                                 <a
-                                    href="/about"
+                                    href="#"
                                     className="text-gray-400 hover:text-white transition-colors text-sm"
                                 >
                                     About
@@ -62,7 +63,7 @@ const Footer = () => {
                             </li>
                             <li>
                                 <a
-                                    href="/contact"
+                                    href="#"
                                     className="text-gray-400 hover:text-white transition-colors text-sm"
                                 >
                                     Contact
@@ -70,7 +71,7 @@ const Footer = () => {
                             </li>
                             <li>
                                 <a
-                                    href="/privacy"
+                                    href="#"
                                     className="text-gray-400 hover:text-white transition-colors text-sm"
                                 >
                                     Privacy
@@ -78,7 +79,7 @@ const Footer = () => {
                             </li>
                             <li>
                                 <a
-                                    href="/terms"
+                                    href="#"
                                     className="text-gray-400 hover:text-white transition-colors text-sm"
                                 >
                                     Terms
@@ -95,7 +96,7 @@ const Footer = () => {
                         <ul className="space-y-3">
                             <li>
                                 <a
-                                    href="/features"
+                                    href="#"
                                     className="text-gray-400 hover:text-white transition-colors text-sm"
                                 >
                                     Features
@@ -103,7 +104,7 @@ const Footer = () => {
                             </li>
                             <li>
                                 <a
-                                    href="/pricing"
+                                    href="#"
                                     className="text-gray-400 hover:text-white transition-colors text-sm"
                                 >
                                     Pricing
@@ -111,7 +112,7 @@ const Footer = () => {
                             </li>
                             <li>
                                 <a
-                                    href="/analytics"
+                                    href="#"
                                     className="text-gray-400 hover:text-white transition-colors text-sm"
                                 >
                                     Analytics
@@ -119,7 +120,7 @@ const Footer = () => {
                             </li>
                             <li>
                                 <a
-                                    href="/integrations"
+                                    href="#"
                                     className="text-gray-400 hover:text-white transition-colors text-sm"
                                 >
                                     Integrations
@@ -135,14 +136,16 @@ const Footer = () => {
                         </h3>
                         <div className="space-y-3">
                             <a
-                                href="https://github.com"
+                                href={global.github}
                                 className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors text-sm"
+                                target="_blank"
+                                rel="noopener noreferrer"
                             >
                                 <Github className="w-4 h-4" />
                                 GitHub
                             </a>
                             <a
-                                href="mailto:contact@progresstracker.com"
+                                href={`mailto:${global.email}`}
                                 className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors text-sm"
                             >
                                 <Mail className="w-4 h-4" />
@@ -156,17 +159,17 @@ const Footer = () => {
                 <div className="border-t border-gray-800 mt-8 pt-6">
                     <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
                         <p className="text-gray-400 text-sm">
-                            © 2025 Progress Tracker. All rights reserved.
+                            © 2025 {global.author}. All rights reserved.
                         </p>
                         <div className="flex items-center gap-6">
                             <a
-                                href="/privacy"
+                                href="#"
                                 className="text-gray-400 hover:text-white transition-colors text-sm"
                             >
                                 Privacy
                             </a>
                             <a
-                                href="/terms"
+                                href="#"
                                 className="text-gray-400 hover:text-white transition-colors text-sm"
                             >
                                 Terms
