@@ -22,10 +22,14 @@
  * SOFTWARE.
  */
 
+// dependencies
 import dotenv from "dotenv";
 import express from "express";
 import initDatabase from "@/data/init.js";
 import chalk from "chalk";
+
+// routes
+import bookRoutes from "@/routes/book/bookRoutes.js";
 
 // main function
 async function main() {
@@ -42,6 +46,7 @@ async function main() {
     app.use(express.json());
 
     // routes
+    app.use("/api/books", bookRoutes);
 
     // start server
     app.listen(process.env.PORT || 3000, () => {

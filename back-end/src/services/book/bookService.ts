@@ -22,22 +22,15 @@
  * SOFTWARE.
  */
 
-// Book model Schema
+// import { Book as BookModel } from "@/data/models/book.js";
+import { Book as BookType } from "@/types/book.js";
 
-import mongoose from "mongoose";
-import { Schema } from "mongoose";
+const BookService = {
+    async getBooks() {},
+    async getBookById(id: string) {},
+    async createBook(book: BookType) {},
+    async updateBook(id: string, book: BookType) {},
+    async deleteBook(id: string) {},
+};
 
-const bookSchema = new Schema({
-    title: {
-        type: String,
-        required: true,
-    },
-    image: {
-        type: String,
-        required: false,
-    },
-});
-
-const Book = mongoose.model("Book", bookSchema);
-
-export default Book;
+export default BookService;

@@ -22,22 +22,21 @@
  * SOFTWARE.
  */
 
-// Book model Schema
+import express from "express";
+import {
+    getBooks,
+    getBookById,
+    createBook,
+    updateBook,
+    deleteBook,
+} from "@/controllers/book/bookController.js";
 
-import mongoose from "mongoose";
-import { Schema } from "mongoose";
+const router = express.Router();
 
-const bookSchema = new Schema({
-    title: {
-        type: String,
-        required: true,
-    },
-    image: {
-        type: String,
-        required: false,
-    },
-});
+router.get("/", getBooks);
+router.get("/:id", getBookById);
+router.post("/", createBook);
+router.put("/:id", updateBook);
+router.delete("/:id", deleteBook);
 
-const Book = mongoose.model("Book", bookSchema);
-
-export default Book;
+export default router;

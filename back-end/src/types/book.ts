@@ -22,22 +22,7 @@
  * SOFTWARE.
  */
 
-// Book model Schema
-
-import mongoose from "mongoose";
-import { Schema } from "mongoose";
-
-const bookSchema = new Schema({
-    title: {
-        type: String,
-        required: true,
-    },
-    image: {
-        type: String,
-        required: false,
-    },
-});
-
-const Book = mongoose.model("Book", bookSchema);
-
-export default Book;
+export interface Book {
+    title: string;
+    image: string;
+}
