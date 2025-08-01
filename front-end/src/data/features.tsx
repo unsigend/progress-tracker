@@ -21,44 +21,51 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-import { User } from "lucide-react";
+import {
+    TrendingUp,
+    BarChart3,
+    Users,
+    GitBranch,
+    Smartphone,
+    Zap,
+} from "lucide-react";
 
 const features = [
     {
         id: 1,
-        title: "Bring Your Own Framework",
-        text: "Build your site using React, Svelte, Vue, Preact, web components, or just plain ol' HTML + JavaScript.",
-        icon: <User className="text-white" />,
+        title: "Smart Progress Tracking",
+        text: "Track your reading progress, course completion, and project milestones with intuitive progress bars and milestone markers.",
+        icon: <TrendingUp className="text-white" />,
     },
     {
         id: 2,
-        title: "Community",
-        text: "Join our community of developers and designers who are passionate about building modern web applications with optimized design and performance.",
-        icon: <User className="text-white" />,
+        title: "Data Visualization",
+        text: "Visualize your learning journey with beautiful charts, graphs, and analytics to understand your progress patterns and achievements.",
+        icon: <BarChart3 className="text-white" />,
     },
     {
         id: 3,
-        title: "Community",
-        text: "Join our community of developers and designers who are passionate about building modern web applications with optimized design and performance.",
-        icon: <User className="text-white" />,
+        title: "Community Driven",
+        text: "Join a community of learners, share your progress, discover new learning resources, and motivate each other to achieve goals.",
+        icon: <Users className="text-white" />,
     },
     {
         id: 4,
-        title: "Community",
-        text: "Join our community of developers and designers who are passionate about building modern web applications with optimized design and performance.",
-        icon: <User className="text-white" />,
+        title: "Open Source Contribution",
+        text: "Built by the community, for the community. Contribute features, report bugs, or help improve the platform for everyone.",
+        icon: <GitBranch className="text-white" />,
     },
     {
         id: 5,
-        title: "Community",
-        text: "Join our community of developers and designers who are passionate about building modern web applications with optimized design and performance.",
-        icon: <User className="text-white" />,
+        title: "Cross-Platform Support",
+        text: "Access your progress tracker on any device - desktop, tablet, or mobile. Your data syncs seamlessly across all platforms.",
+        icon: <Smartphone className="text-white" />,
     },
     {
         id: 6,
-        title: "Community",
-        text: "Join our community of developers and designers who are passionate about building modern web applications with optimized design and performance.",
-        icon: <User className="text-white" />,
+        title: "Real-Time Analytics",
+        text: "Get instant insights into your learning habits, productivity patterns, and goal achievements with live data updates.",
+        icon: <Zap className="text-white" />,
     },
 ];
 
