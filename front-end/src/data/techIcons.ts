@@ -21,20 +21,38 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-import { Outlet } from "react-router-dom";
 
-// Components
-import NavBar from "@/components/layout/navBar";
-import Footer from "@/components/layout/footer";
+const techIcons = [
+    {
+        name: "React",
+        icon: "/images/techIcons/react.svg",
+        hoverColor: "hover:scale-110",
+    },
+    {
+        name: "Express",
+        icon: "/images/techIcons/express.svg",
+        hoverColor: "hover:scale-110",
+    },
+    {
+        name: "Node.js",
+        icon: "/images/techIcons/nodedotjs.svg",
+        hoverColor: "hover:scale-110",
+    },
+    {
+        name: "MongoDB",
+        icon: "/images/techIcons/mongodb.svg",
+        hoverColor: "hover:scale-110",
+    },
+    {
+        name: "Tailwind CSS",
+        icon: "/images/techIcons/tailwindcss.svg",
+        hoverColor: "hover:scale-110",
+    },
+    {
+        name: "Shadcn/ui",
+        icon: "/images/techIcons/shadcnui.svg",
+        hoverColor: "hover:scale-110",
+    },
+];
 
-const MainLayout = () => {
-    return (
-        <div>
-            <NavBar />
-            <Outlet />
-            <Footer />
-        </div>
-    );
-};
-
-export default MainLayout;
+export default techIcons;

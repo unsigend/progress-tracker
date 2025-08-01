@@ -21,20 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-import { Outlet } from "react-router-dom";
 
-// Components
-import NavBar from "@/components/layout/navBar";
-import Footer from "@/components/layout/footer";
-
-const MainLayout = () => {
-    return (
-        <div>
-            <NavBar />
-            <Outlet />
-            <Footer />
-        </div>
-    );
+const Footer = () => {
+    return null;
 };
 
-export default MainLayout;
+export default Footer;
