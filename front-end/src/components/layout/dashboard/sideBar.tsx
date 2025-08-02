@@ -23,14 +23,7 @@
  */
 
 import { Link, useLocation } from "react-router-dom";
-import {
-    Home,
-    BookOpen,
-    GraduationCap,
-    User,
-    Settings,
-    LogOut,
-} from "lucide-react";
+import menuItems from "@/data/dashboard/sideBarItems";
 
 const SideBar = () => {
     const location = useLocation();
@@ -38,40 +31,6 @@ const SideBar = () => {
     const isActive = (path: string) => {
         return location.pathname === path;
     };
-
-    const menuItems = [
-        {
-            label: "Home",
-            icon: Home,
-            path: "/dashboard",
-            category: "main",
-        },
-        {
-            label: "Reading Progress",
-            icon: BookOpen,
-            path: "/dashboard/reading",
-            category: "progress",
-        },
-        {
-            label: "Course Progress",
-            icon: GraduationCap,
-            path: "/dashboard/courses",
-            category: "progress",
-        },
-    ];
-
-    const bottomItems = [
-        {
-            label: "Profile",
-            icon: User,
-            path: "/dashboard/profile",
-        },
-        {
-            label: "Settings",
-            icon: Settings,
-            path: "/dashboard/settings",
-        },
-    ];
 
     return (
         <div className="hidden lg:flex lg:w-64 lg:flex-col lg:fixed lg:inset-y-0 lg:z-50">
@@ -90,111 +49,31 @@ const SideBar = () => {
 
                 {/* Navigation */}
                 <nav className="flex flex-1 flex-col">
-                    <ul role="list" className="flex flex-1 flex-col gap-y-7">
-                        {/* Main Navigation */}
-                        <li>
-                            <ul role="list" className="-mx-2 space-y-1">
-                                {menuItems.map((item) => {
-                                    const Icon = item.icon;
-                                    return (
-                                        <li key={item.path}>
-                                            <Link
-                                                to={item.path}
-                                                className={`group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 transition-colors ${
-                                                    isActive(item.path)
-                                                        ? "bg-white text-black"
-                                                        : "text-gray-300 hover:text-white hover:bg-gray-800"
-                                                }`}
-                                            >
-                                                <Icon
-                                                    className={`h-5 w-5 shrink-0 ${
-                                                        isActive(item.path)
-                                                            ? "text-black"
-                                                            : "text-gray-400 group-hover:text-white"
-                                                    }`}
-                                                />
-                                                {item.label}
-                                            </Link>
-                                        </li>
-                                    );
-                                })}
-                            </ul>
-                        </li>
-
-                        {/* Progress Section */}
-                        <li>
-                            <div className="text-xs font-semibold leading-6 text-gray-400 uppercase tracking-wider">
-                                Progress Tracking
-                            </div>
-                            <ul role="list" className="-mx-2 mt-2 space-y-1">
-                                {menuItems
-                                    .filter(
-                                        (item) => item.category === "progress"
-                                    )
-                                    .map((item) => {
-                                        const Icon = item.icon;
-                                        return (
-                                            <li key={item.path}>
-                                                <Link
-                                                    to={item.path}
-                                                    className={`group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 transition-colors ${
-                                                        isActive(item.path)
-                                                            ? "bg-white text-black"
-                                                            : "text-gray-300 hover:text-white hover:bg-gray-800"
-                                                    }`}
-                                                >
-                                                    <Icon
-                                                        className={`h-5 w-5 shrink-0 ${
-                                                            isActive(item.path)
-                                                                ? "text-black"
-                                                                : "text-gray-400 group-hover:text-white"
-                                                        }`}
-                                                    />
-                                                    {item.label}
-                                                </Link>
-                                            </li>
-                                        );
-                                    })}
-                            </ul>
-                        </li>
-
-                        {/* Bottom Section */}
-                        <li className="mt-auto">
-                            <ul role="list" className="-mx-2 space-y-1">
-                                {bottomItems.map((item) => {
-                                    const Icon = item.icon;
-                                    return (
-                                        <li key={item.path}>
-                                            <Link
-                                                to={item.path}
-                                                className={`group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 transition-colors ${
-                                                    isActive(item.path)
-                                                        ? "bg-white text-black"
-                                                        : "text-gray-300 hover:text-white hover:bg-gray-800"
-                                                }`}
-                                            >
-                                                <Icon
-                                                    className={`h-5 w-5 shrink-0 ${
-                                                        isActive(item.path)
-                                                            ? "text-black"
-                                                            : "text-gray-400 group-hover:text-white"
-                                                    }`}
-                                                />
-                                                {item.label}
-                                            </Link>
-                                        </li>
-                                    );
-                                })}
-
-                                {/* Logout Button */}
-                                <li>
-                                    <button className="group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-red-400 hover:text-red-300 hover:bg-red-900/20 transition-colors w-full">
-                                        <LogOut className="h-5 w-5 shrink-0" />
-                                        Logout
-                                    </button>
+                    <ul role="list" className="-mx-2 space-y-1">
+                        {menuItems.map((item) => {
+                            const Icon = item.icon;
+                            return (
+                                <li key={item.path}>
+                                    <Link
+                                        to={item.path}
+                                        className={`group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 transition-colors ${
+                                            isActive(item.path)
+                                                ? "bg-white text-black"
+                                                : "text-gray-300 hover:text-white hover:bg-gray-800"
+                                        }`}
+                                    >
+                                        <Icon
+                                            className={`h-5 w-5 shrink-0 ${
+                                                isActive(item.path)
+                                                    ? "text-black"
+                                                    : "text-gray-400 group-hover:text-white"
+                                            }`}
+                                        />
+                                        {item.label}
+                                    </Link>
                                 </li>
-                            </ul>
-                        </li>
+                            );
+                        })}
                     </ul>
                 </nav>
             </div>

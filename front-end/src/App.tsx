@@ -36,6 +36,8 @@ import LandingAbout from "@/components/pages/landing/about";
 // dashboard pages
 import DashboardHome from "@/components/pages/dashboard/home";
 import DashboardBookLibrary from "@/components/pages/dashboard/bookLibrary";
+import ReadingProgress from "./components/pages/dashboard/readingProgress";
+import CourseProgress from "./components/pages/dashboard/courseProgress";
 
 const App = () => {
     return (
@@ -53,6 +55,14 @@ const App = () => {
                     <Route
                         path="book-library"
                         element={<DashboardBookLibrary />}
+                    />
+                    <Route
+                        path="course-progress"
+                        element={<CourseProgress />}
+                    />
+                    <Route
+                        path="reading-progress"
+                        element={<ReadingProgress />}
                     />
                 </Route>
             </Routes>

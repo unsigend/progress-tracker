@@ -23,9 +23,9 @@
  */
 
 // Data
-import features from "@/data/features";
-import techIcons from "@/data/techIcons";
-import stats from "@/data/status";
+import features from "@/data/landing/features";
+import techIcons from "@/data/landing/techIcons";
+import stats from "@/data/landing/status";
 
 // Components
 import FeatureCard from "@/components/ui/featureCard";
