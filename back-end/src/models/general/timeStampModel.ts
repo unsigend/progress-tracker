@@ -24,33 +24,23 @@
 
 import mongoose from "mongoose";
 
-const bookSchema = new mongoose.Schema({
-    title: {
-        type: String,
-        required: true,
-    },
-    image: {
-        type: String,
-        required: false,
-    },
-    author: {
-        type: String,
-        required: false,
-    },
-    tags: {
-        type: [String],
-        required: false,
-    },
-    pages: {
-        type: Number,
-        required: false,
-    },
+const timeStampSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now,
     },
+    fromTime: {
+        type: Date,
+        required: true,
+    },
+    toTime: {
+        type: Date,
+        required: true,
+    },
+    minutes: {
+        type: Number,
+        required: true,
+    },
 });
 
-const Book = mongoose.model("Book", bookSchema);
-
-export default Book;
+export default timeStampSchema;

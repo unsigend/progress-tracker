@@ -22,17 +22,41 @@
  * SOFTWARE.
  */
 
-import express from "express";
-import bookController from "@/controllers/book/bookController";
+import mongoose from "mongoose";
+import userDataSchema from "./userDataModel";
 
-const router = express.Router();
+const userSchema = new mongoose.Schema({
+    username: {
+        type: String,
+        required: true,
+        maxlength: 50,
+        minlength: 3,
+        trim: true,
+    },
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+        lowercase: true,
+        trim: true,
+    },
+    password: {
+        type: String,
+        required: true,
+        minlength: 6,
+    },
+    createAt: {
+        type: Date,
+        default: Date.now,
+    },
+    avatar: {
+        type: String,
+        default: null,
+        required: false,
+    },
+    ...userDataSchema.obj,
+});
 
-router.route("/").get(bookController.getBooks).post(bookController.createBook);
+const UserModel = mongoose.model("User", userSchema);
 
-router
-    .route("/:id")
-    .get(bookController.getBookById)
-    .put(bookController.updateBook)
-    .delete(bookController.deleteBook);
-
-export default router;
+export default UserModel;

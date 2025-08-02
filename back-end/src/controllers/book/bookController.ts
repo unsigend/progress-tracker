@@ -31,7 +31,7 @@ const bookController = {
     // @access Public
     async getBooks(req: Request, res: Response) {
         try {
-            const books = await BookService.getBooks();
+            const books = await BookService.getAllBooks();
             res.status(200).json(books);
         } catch (error: any) {
             res.status(400).json({ message: error.message });

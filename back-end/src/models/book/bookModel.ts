@@ -22,17 +22,39 @@
  * SOFTWARE.
  */
 
-import express from "express";
-import bookController from "@/controllers/book/bookController";
+import mongoose from "mongoose";
 
-const router = express.Router();
+const bookSchema = new mongoose.Schema({
+    title: {
+        type: String,
+        required: true,
+    },
+    image: {
+        type: String,
+        required: false,
+    },
+    author: {
+        type: String,
+        required: false,
+    },
+    tags: {
+        type: [String],
+        required: false,
+    },
+    pages: {
+        type: Number,
+        required: false,
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now,
+    },
+    ISBN10: {
+        type: String,
+        required: false,
+    },
+});
 
-router.route("/").get(bookController.getBooks).post(bookController.createBook);
+const Book = mongoose.model("Book", bookSchema);
 
-router
-    .route("/:id")
-    .get(bookController.getBookById)
-    .put(bookController.updateBook)
-    .delete(bookController.deleteBook);
-
-export default router;
+export default Book;

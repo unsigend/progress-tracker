@@ -22,17 +22,17 @@
  * SOFTWARE.
  */
 
-import express from "express";
-import bookController from "@/controllers/book/bookController";
+import mongoose from "mongoose";
+import bookTrackSchema from "@/models/book/bookTrack";
 
-const router = express.Router();
+const userDataSchema = new mongoose.Schema(
+    {
+        booksTracked: {
+            type: [bookTrackSchema],
+            required: false,
+        },
+    },
+    { _id: false }
+);
 
-router.route("/").get(bookController.getBooks).post(bookController.createBook);
-
-router
-    .route("/:id")
-    .get(bookController.getBookById)
-    .put(bookController.updateBook)
-    .delete(bookController.deleteBook);
-
-export default router;
+export default userDataSchema;

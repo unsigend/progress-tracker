@@ -22,17 +22,23 @@
  * SOFTWARE.
  */
 
-import express from "express";
-import bookController from "@/controllers/book/bookController";
+import mongoose from "mongoose";
+import timeStampSchema from "@/models/general/timeStampModel";
 
-const router = express.Router();
+const bookStampSchema = new mongoose.Schema({
+    pages: {
+        type: Number,
+        required: true,
+    },
+    fromPage: {
+        type: Number,
+        required: true,
+    },
+    toPage: {
+        type: Number,
+        required: true,
+    },
+    ...timeStampSchema.obj,
+});
 
-router.route("/").get(bookController.getBooks).post(bookController.createBook);
-
-router
-    .route("/:id")
-    .get(bookController.getBookById)
-    .put(bookController.updateBook)
-    .delete(bookController.deleteBook);
-
-export default router;
+export default bookStampSchema;
