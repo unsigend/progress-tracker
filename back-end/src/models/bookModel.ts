@@ -22,11 +22,35 @@
  * SOFTWARE.
  */
 
-export interface Book {
-    title: string;
-    image: string;
-    author: string;
-    tags: string[];
-    pages: number;
-    createdAt: Date;
-}
+import mongoose from "mongoose";
+
+const bookSchema = new mongoose.Schema({
+    title: {
+        type: String,
+        required: true,
+    },
+    image: {
+        type: String,
+        required: false,
+    },
+    author: {
+        type: String,
+        required: false,
+    },
+    tags: {
+        type: [String],
+        required: false,
+    },
+    pages: {
+        type: Number,
+        required: false,
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now,
+    },
+});
+
+const Book = mongoose.model("Book", bookSchema);
+
+export default Book;

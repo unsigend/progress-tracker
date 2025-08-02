@@ -22,19 +22,19 @@
  * SOFTWARE.
  */
 
-import mongoose from "mongoose";
+// global setup for testing
 
-const bookSchema = new mongoose.Schema({
-    title: {
-        type: String,
-        required: true,
-    },
-    image: {
-        type: String,
-        required: true,
-    },
-});
+import { MongoMemoryServer } from "mongodb-memory-server";
 
-const Book = mongoose.model("Book", bookSchema);
-
-export default Book;
+export default async () => {
+    // create a mongo memory server
+    const mongoServer = await MongoMemoryServer.create({
+        binary: {
+            version: "6.0.4",
+        },
+    });
+    // get the instance of the mongo server
+    global.__MONGOINSTANCE = mongoServer;
+    // set the mongo uri to the process environment
+    process.env.MONGO_URI = mongoServer.getUri();
+};

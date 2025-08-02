@@ -22,11 +22,8 @@
  * SOFTWARE.
  */
 
-export interface Book {
-    title: string;
-    image: string;
-    author: string;
-    tags: string[];
-    pages: number;
-    createdAt: Date;
-}
+// global teardown for testing
+
+export default async () => {
+    await global.__MONGOINSTANCE.stop();
+};

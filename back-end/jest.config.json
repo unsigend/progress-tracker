@@ -1,0 +1,11 @@
+{
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "moduleNameMapper": {
+        "^chalk$": "<rootDir>/src/test/__mocks__/chalk.js",
+        "^@/(.*)$": "<rootDir>/src/$1"
+    },
+    "setupFilesAfterEnv": ["<rootDir>/src/test/setupFileAfterEnv.ts"],
+    "globalSetup": "<rootDir>/src/test/globalSetup.ts",
+    "globalTeardown": "<rootDir>/src/test/globalTeardown.ts"
+}

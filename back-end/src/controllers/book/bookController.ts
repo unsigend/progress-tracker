@@ -23,6 +23,7 @@
  */
 
 import { Request, Response } from "express";
+import BookService from "@/services/book/bookService";
 
 const bookController = {
     // @desc Get all books
@@ -44,8 +45,12 @@ const bookController = {
     // @route POST /api/books
     // @access Public
     async createBook(req: Request, res: Response) {
-        console.log(req.body);
-        res.send("Post request received");
+        try {
+            const book = await BookService.createBook(req.body);
+            res.status(201).json(book);
+        } catch (error: any) {
+            res.status(400).json({ message: error.message });
+        }
     },
 
     // @desc Update a book

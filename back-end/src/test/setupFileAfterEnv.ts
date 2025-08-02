@@ -22,11 +22,14 @@
  * SOFTWARE.
  */
 
-export interface Book {
-    title: string;
-    image: string;
-    author: string;
-    tags: string[];
-    pages: number;
-    createdAt: Date;
-}
+import mongoose from "mongoose";
+import initDatabase from "../config/db";
+import { beforeAll, afterAll } from "@jest/globals";
+
+beforeAll(async () => {
+    await initDatabase();
+});
+
+afterAll(async () => {
+    await mongoose.disconnect();
+});

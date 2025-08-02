@@ -22,11 +22,12 @@
  * SOFTWARE.
  */
 
-export interface Book {
-    title: string;
-    image: string;
-    author: string;
-    tags: string[];
-    pages: number;
-    createdAt: Date;
-}
+// dependencies
+import { describe, it, expect } from "@jest/globals";
+import mongoose from "mongoose";
+
+// services
+import BookService from "@/services/book/bookService";
+
+// models
+import BookModel from "@/models/bookModel";
