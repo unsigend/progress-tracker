@@ -21,43 +21,34 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-import mongoose from "mongoose";
 
-const bookSchema = new mongoose.Schema({
-    title: {
-        type: String,
-        required: true,
-    },
-    image: {
-        type: String,
-        required: false,
-    },
-    author: {
-        type: String,
-        required: false,
-    },
-    tags: {
-        type: [String],
-        required: false,
-    },
-    pages: {
-        type: Number,
-        required: false,
-    },
-    createdAt: {
-        type: Date,
-        default: Date.now,
-    },
-    ISBN10: {
-        type: String,
-        required: false,
-    },
-    link: {
-        type: String,
-        required: false,
-    },
-});
+import BookCard from "@/components/ui/bookCard";
 
-const Book = mongoose.model("Book", bookSchema);
+interface Book {
+    id: number;
+    imageUrl: string;
+    link: string;
+}
 
-export default Book;
+interface BookShelfProps {
+    books: Book[];
+    className?: string;
+}
+
+const BookShelf = ({ books, className = "" }: BookShelfProps) => {
+    return (
+        <div
+            className={`grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6 ${className}`}
+        >
+            {books.map((book) => (
+                <BookCard
+                    key={book.id}
+                    imageUrl={book.imageUrl}
+                    link={book.link}
+                />
+            ))}
+        </div>
+    );
+};
+
+export default BookShelf;

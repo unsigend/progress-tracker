@@ -21,19 +21,39 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
 // router
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 // layouts
-import MainLayout from "./components/layout/mainLayout";
-// pages
-import Home from "./components/pages/home";
+import MainLayout from "@/components/layout/main";
+import DashboardLayout from "@/components/layout/dashboard";
+
+// landing pages
+import LandingHome from "@/components/pages/landing/home";
+import LandingAbout from "@/components/pages/landing/about";
+
+// dashboard pages
+import DashboardHome from "@/components/pages/dashboard/home";
+import DashboardBookLibrary from "@/components/pages/dashboard/bookLibrary";
 
 const App = () => {
     return (
         <BrowserRouter>
             <Routes>
+                {/* Main Layout */}
                 <Route path="/" element={<MainLayout />}>
-                    <Route index element={<Home />} />
+                    <Route index element={<LandingHome />} />
+                    <Route path="about" element={<LandingAbout />} />
+                </Route>
+
+                {/* Dashboard Layout */}
+                <Route path="/dashboard" element={<DashboardLayout />}>
+                    <Route index element={<DashboardHome />} />
+                    <Route
+                        path="book-library"
+                        element={<DashboardBookLibrary />}
+                    />
                 </Route>
             </Routes>
         </BrowserRouter>

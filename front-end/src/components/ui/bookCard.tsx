@@ -21,43 +21,34 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-import mongoose from "mongoose";
 
-const bookSchema = new mongoose.Schema({
-    title: {
-        type: String,
-        required: true,
-    },
-    image: {
-        type: String,
-        required: false,
-    },
-    author: {
-        type: String,
-        required: false,
-    },
-    tags: {
-        type: [String],
-        required: false,
-    },
-    pages: {
-        type: Number,
-        required: false,
-    },
-    createdAt: {
-        type: Date,
-        default: Date.now,
-    },
-    ISBN10: {
-        type: String,
-        required: false,
-    },
-    link: {
-        type: String,
-        required: false,
-    },
-});
+import { Link } from "react-router-dom";
 
-const Book = mongoose.model("Book", bookSchema);
+interface BookCardProps {
+    imageUrl: string;
+    link: string;
+    className?: string;
+}
 
-export default Book;
+const BookCard = ({ imageUrl, link, className = "" }: BookCardProps) => {
+    return (
+        <Link
+            to={link}
+            className={`group block transition-all duration-200 hover:scale-102 hover:-translate-y-0.5 ${className}`}
+        >
+            <div className="relative w-40 h-52 bg-white rounded-sm shadow-sm hover:shadow-md transition-all duration-200">
+                {/* Book Cover Image Only */}
+                <img
+                    src={imageUrl}
+                    alt="Book cover"
+                    className="w-full h-full object-cover rounded-sm"
+                />
+
+                {/* Subtle overlay on hover */}
+                <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-sm" />
+            </div>
+        </Link>
+    );
+};
+
+export default BookCard;

@@ -21,43 +21,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-import mongoose from "mongoose";
 
-const bookSchema = new mongoose.Schema({
-    title: {
-        type: String,
-        required: true,
-    },
-    image: {
-        type: String,
-        required: false,
-    },
-    author: {
-        type: String,
-        required: false,
-    },
-    tags: {
-        type: [String],
-        required: false,
-    },
-    pages: {
-        type: Number,
-        required: false,
-    },
-    createdAt: {
-        type: Date,
-        default: Date.now,
-    },
-    ISBN10: {
-        type: String,
-        required: false,
-    },
-    link: {
-        type: String,
-        required: false,
-    },
-});
+const BookLibrary = () => {
+    return (
+        <div className="space-y-6">
+            {/* Page Header */}
+            <div className="border-b border-gray-200 pb-4">
+                <h1 className="text-3xl font-bold text-gray-900">
+                    Book Library
+                </h1>
+                <p className="mt-2 text-gray-600">
+                    Track your reading progress and discover new books
+                </p>
+            </div>
+        </div>
+    );
+};
 
-const Book = mongoose.model("Book", bookSchema);
-
-export default Book;
+export default BookLibrary;

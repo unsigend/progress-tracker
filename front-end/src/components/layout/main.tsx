@@ -21,43 +21,22 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-import mongoose from "mongoose";
+import { Outlet } from "react-router-dom";
 
-const bookSchema = new mongoose.Schema({
-    title: {
-        type: String,
-        required: true,
-    },
-    image: {
-        type: String,
-        required: false,
-    },
-    author: {
-        type: String,
-        required: false,
-    },
-    tags: {
-        type: [String],
-        required: false,
-    },
-    pages: {
-        type: Number,
-        required: false,
-    },
-    createdAt: {
-        type: Date,
-        default: Date.now,
-    },
-    ISBN10: {
-        type: String,
-        required: false,
-    },
-    link: {
-        type: String,
-        required: false,
-    },
-});
+// Components
+import NavBar from "@/components/layout/landing/navBar";
+import Footer from "@/components/layout/landing/footer";
 
-const Book = mongoose.model("Book", bookSchema);
+const MainLayout = () => {
+    return (
+        <div className="w-full">
+            <NavBar />
+            <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16">
+                <Outlet />
+            </div>
+            <Footer />
+        </div>
+    );
+};
 
-export default Book;
+export default MainLayout;

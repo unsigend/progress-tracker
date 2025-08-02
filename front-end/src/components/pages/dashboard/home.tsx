@@ -21,43 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-import mongoose from "mongoose";
 
-const bookSchema = new mongoose.Schema({
-    title: {
-        type: String,
-        required: true,
-    },
-    image: {
-        type: String,
-        required: false,
-    },
-    author: {
-        type: String,
-        required: false,
-    },
-    tags: {
-        type: [String],
-        required: false,
-    },
-    pages: {
-        type: Number,
-        required: false,
-    },
-    createdAt: {
-        type: Date,
-        default: Date.now,
-    },
-    ISBN10: {
-        type: String,
-        required: false,
-    },
-    link: {
-        type: String,
-        required: false,
-    },
-});
+const DashboardHome = () => {
+    return null;
+};
 
-const Book = mongoose.model("Book", bookSchema);
-
-export default Book;
+export default DashboardHome;

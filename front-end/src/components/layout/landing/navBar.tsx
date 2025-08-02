@@ -25,6 +25,7 @@
 import { useState } from "react";
 import Logo from "@/components/ui/logo";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const NavBar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -41,14 +42,26 @@ const NavBar = () => {
 
                     {/* Desktop Navigation */}
                     <div className="hidden md:flex items-center gap-4">
-                        <Button variant="link" className="text-base">
-                            Home
+                        <Button
+                            variant="link"
+                            className="text-base cursor-pointer"
+                            asChild
+                        >
+                            <Link to="/">Home</Link>
                         </Button>
-                        <Button variant="link" className="text-base">
-                            About
+                        <Button
+                            variant="link"
+                            className="text-base cursor-pointer"
+                            asChild
+                        >
+                            <Link to="/about">About</Link>
                         </Button>
-                        <Button variant="link" className="text-base">
-                            Contact
+                        <Button
+                            variant="link"
+                            className="text-base cursor-pointer"
+                            asChild
+                        >
+                            <Link to="/">Contact</Link>
                         </Button>
                     </div>
 
@@ -101,25 +114,30 @@ const NavBar = () => {
                     <div className="py-4 space-y-3 border-t border-gray-200">
                         <div className="flex flex-col space-y-2">
                             <Button
+                                asChild
                                 variant="ghost"
                                 className="justify-start text-base"
                                 onClick={() => setIsMenuOpen(false)}
                             >
-                                Home
+                                <Link to="/">Home</Link>
                             </Button>
+
                             <Button
+                                asChild
                                 variant="ghost"
                                 className="justify-start text-base"
                                 onClick={() => setIsMenuOpen(false)}
                             >
-                                About
+                                <Link to="/about">About</Link>
                             </Button>
+
                             <Button
+                                asChild
                                 variant="ghost"
                                 className="justify-start text-base"
                                 onClick={() => setIsMenuOpen(false)}
                             >
-                                Contact
+                                <Link to="/">Contact</Link>
                             </Button>
                         </div>
                         <div className="flex flex-col space-y-2 pt-3 border-t border-gray-100">
