@@ -23,15 +23,23 @@
  */
 
 import express from "express";
-import bookController from "@/controllers/book/bookController.js";
+import bookController from "@/controllers/book/bookController";
+import {
+    validateCreateBook,
+    validateUpdateBook,
+} from "@/middleware/bookValidationMiddleware";
 
 const router = express.Router();
 
-router.route("/").get(bookController.getBooks).post(bookController.createBook);
+router
+    .route("/")
+    .get(bookController.getBooks)
+    .post(validateCreateBook, bookController.createBook);
+
 router
     .route("/:id")
     .get(bookController.getBookById)
-    .put(bookController.updateBook)
+    .put(validateUpdateBook, bookController.updateBook)
     .delete(bookController.deleteBook);
 
 export default router;

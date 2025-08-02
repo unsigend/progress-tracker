@@ -55,6 +55,7 @@ const bookController = {
     // @route POST /api/books
     // @access Public
     async createBook(req: Request, res: Response) {
+        // Validation is handled by validateCreateBook middleware
         try {
             const book = await BookService.createBook(req.body);
             res.status(201).json(book);
@@ -67,6 +68,7 @@ const bookController = {
     // @route PUT /api/books/:id
     // @access Public
     async updateBook(req: Request, res: Response) {
+        // Validation is handled by validateUpdateBook middleware
         const { id } = req.params;
         try {
             const book = await BookService.updateBook(id, req.body);
@@ -83,7 +85,7 @@ const bookController = {
         const { id } = req.params;
         try {
             await BookService.deleteBook(id);
-            res.status(200).json({ message: "Book deleted" });
+            res.status(200).json({ message: "Book deleted", id: id });
         } catch (error: any) {
             res.status(400).json({ message: error.message });
         }
