@@ -30,7 +30,12 @@ const bookController = {
     // @route GET /api/books
     // @access Public
     async getBooks(req: Request, res: Response) {
-        res.send("Get request received");
+        try {
+            const books = await BookService.getBooks();
+            res.status(200).json(books);
+        } catch (error: any) {
+            res.status(400).json({ message: error.message });
+        }
     },
 
     // @desc Get a book by id
@@ -38,7 +43,12 @@ const bookController = {
     // @access Public
     async getBookById(req: Request, res: Response) {
         const { id } = req.params;
-        res.send(`Get request received for book ${id}`);
+        try {
+            const book = await BookService.getBookById(id);
+            res.status(200).json(book);
+        } catch (error: any) {
+            res.status(400).json({ message: error.message });
+        }
     },
 
     // @desc Create a book
@@ -58,7 +68,12 @@ const bookController = {
     // @access Public
     async updateBook(req: Request, res: Response) {
         const { id } = req.params;
-        res.send(`Put request received for book ${id}`);
+        try {
+            const book = await BookService.updateBook(id, req.body);
+            res.status(200).json(book);
+        } catch (error: any) {
+            res.status(400).json({ message: error.message });
+        }
     },
 
     // @desc Delete a book
@@ -66,7 +81,12 @@ const bookController = {
     // @access Public
     async deleteBook(req: Request, res: Response) {
         const { id } = req.params;
-        res.send(`Delete request received for book ${id}`);
+        try {
+            await BookService.deleteBook(id);
+            res.status(200).json({ message: "Book deleted" });
+        } catch (error: any) {
+            res.status(400).json({ message: error.message });
+        }
     },
 };
 
