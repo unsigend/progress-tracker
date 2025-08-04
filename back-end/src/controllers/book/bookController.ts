@@ -33,7 +33,32 @@ const bookController = {
      * @access Public
      * @description Get all books
      */
-    async getBooks(req: Request, res: Response) {},
+    async getBooks(req: Request, res: Response) {
+        const { _limit, _sort, _order, _searchBy, _query } = req.query;
+
+        // validate options
+        const BookServiceOptions: BookServiceOptionsInterface = {
+            limit: _limit ? Number(_limit) : 10,
+            sortBy: _sort ? String(_sort) : "createdAt",
+            sortOrder: _order ? String(_order) : "desc",
+        };
+
+        // validate query
+        const query: { [key: string]: string } = {};
+        if (_searchBy && _query) {
+            query[_searchBy as string] = _query as string;
+        }
+
+        try {
+            const books = await BookService.getAllBooksByQuery(
+                query,
+                BookServiceOptions
+            );
+            res.status(200).json(books);
+        } catch (error) {
+            throw new Error("Failed to get books");
+        }
+    },
 
     /**
      * Get a book by id
@@ -41,7 +66,15 @@ const bookController = {
      * @access Public
      * @description Get a book by id
      */
-    async getBookById(req: Request, res: Response) {},
+    async getBookById(req: Request, res: Response) {
+        const { id } = req.params;
+        try {
+            const book = await BookService.getBookById(id);
+            res.status(200).json(book);
+        } catch (error) {
+            throw new Error("Failed to get book by id");
+        }
+    },
 
     /**
      * Create a book
@@ -49,7 +82,16 @@ const bookController = {
      * @access Public
      * @description Create a book
      */
-    async createBook(req: Request, res: Response) {},
+    async createBook(req: Request, res: Response) {
+        try {
+            const book = await BookService.createBook({
+                ...req.body,
+            });
+            res.status(201).json(book);
+        } catch (error) {
+            throw new Error("Failed to create book");
+        }
+    },
 
     /**
      * Update a book
@@ -57,7 +99,15 @@ const bookController = {
      * @access Public
      * @description Update a book
      */
-    async updateBook(req: Request, res: Response) {},
+    async updateBook(req: Request, res: Response) {
+        const { id } = req.params;
+        try {
+            const book = await BookService.updateBook(id, req.body);
+            res.status(200).json(book);
+        } catch (error) {
+            throw new Error("Failed to update book");
+        }
+    },
 
     /**
      * Delete a book
@@ -65,7 +115,15 @@ const bookController = {
      * @access Public
      * @description Delete a book
      */
-    async deleteBook(req: Request, res: Response) {},
+    async deleteBook(req: Request, res: Response) {
+        const { id } = req.params;
+        try {
+            await BookService.deleteBookById(id);
+            res.status(200).json({ message: "Book deleted successfully" });
+        } catch (error) {
+            throw new Error("Failed to delete book");
+        }
+    },
 };
 
 export default bookController;

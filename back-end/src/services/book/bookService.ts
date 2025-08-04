@@ -30,8 +30,8 @@ import BookModel from "@/models/book/bookModel";
 // sortOrder: sort order
 // limit: limit the number of books
 interface BookServiceOptions {
-    sortBy?: "createdAt" | "updatedAt" | "pages";
-    sortOrder?: "asc" | "desc";
+    sortBy?: string;
+    sortOrder?: string;
     limit?: number;
 }
 
