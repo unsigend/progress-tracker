@@ -23,73 +23,49 @@
  */
 
 import { Request, Response } from "express";
+import { BookServiceOptionsInterface } from "@/services/book/bookService";
 import BookService from "@/services/book/bookService";
 
 const bookController = {
-    // @desc Get all books
-    // @route GET /api/books
-    // @access Public
-    async getBooks(req: Request, res: Response) {
-        try {
-            const books = await BookService.getAllBooks();
-            res.status(200).json(books);
-        } catch (error: any) {
-            res.status(400).json({ message: error.message });
-        }
-    },
+    /**
+     * Get all books
+     * @route GET /api/books
+     * @access Public
+     * @description Get all books
+     */
+    async getBooks(req: Request, res: Response) {},
 
-    // @desc Get a book by id
-    // @route GET /api/books/:id
-    // @access Public
-    async getBookById(req: Request, res: Response) {
-        const { id } = req.params;
-        try {
-            const book = await BookService.getBookById(id);
-            res.status(200).json(book);
-        } catch (error: any) {
-            res.status(400).json({ message: error.message });
-        }
-    },
+    /**
+     * Get a book by id
+     * @route GET /api/books/:id
+     * @access Public
+     * @description Get a book by id
+     */
+    async getBookById(req: Request, res: Response) {},
 
-    // @desc Create a book
-    // @route POST /api/books
-    // @access Public
-    async createBook(req: Request, res: Response) {
-        // Validation is handled by validateCreateBook middleware
-        try {
-            const book = await BookService.createBook(req.body);
-            res.status(201).json(book);
-        } catch (error: any) {
-            res.status(400).json({ message: error.message });
-        }
-    },
+    /**
+     * Create a book
+     * @route POST /api/books
+     * @access Public
+     * @description Create a book
+     */
+    async createBook(req: Request, res: Response) {},
 
-    // @desc Update a book
-    // @route PUT /api/books/:id
-    // @access Public
-    async updateBook(req: Request, res: Response) {
-        // Validation is handled by validateUpdateBook middleware
-        const { id } = req.params;
-        try {
-            const book = await BookService.updateBook(id, req.body);
-            res.status(200).json(book);
-        } catch (error: any) {
-            res.status(400).json({ message: error.message });
-        }
-    },
+    /**
+     * Update a book
+     * @route PUT /api/books/:id
+     * @access Public
+     * @description Update a book
+     */
+    async updateBook(req: Request, res: Response) {},
 
-    // @desc Delete a book
-    // @route DELETE /api/books/:id
-    // @access Public
-    async deleteBook(req: Request, res: Response) {
-        const { id } = req.params;
-        try {
-            await BookService.deleteBook(id);
-            res.status(200).json({ message: "Book deleted", id: id });
-        } catch (error: any) {
-            res.status(400).json({ message: error.message });
-        }
-    },
+    /**
+     * Delete a book
+     * @route DELETE /api/books/:id
+     * @access Public
+     * @description Delete a book
+     */
+    async deleteBook(req: Request, res: Response) {},
 };
 
 export default bookController;

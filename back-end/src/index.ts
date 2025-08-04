@@ -22,11 +22,14 @@
  * SOFTWARE.
  */
 
-// dependencies
+// external dependencies
 import dotenv from "dotenv";
 import express from "express";
-import initDatabase from "@/config/db.js";
 import chalk from "chalk";
+import cors from "cors";
+
+// database
+import initDatabase from "@/config/db.js";
 
 // routes
 import bookRoutes from "@/routes/book/bookRoutes.js";
@@ -46,6 +49,7 @@ async function main() {
     const app = express();
 
     // middleware
+    app.use(cors());
     app.use(express.json());
     app.use(express.urlencoded({ extended: false }));
 
