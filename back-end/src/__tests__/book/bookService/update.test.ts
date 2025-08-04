@@ -88,10 +88,10 @@ describe("Book Service: Update Methods", () => {
 
             expect(updatedBook).not.toBeNull();
             expect(updatedBook!.title).toBe("Partially Updated Title");
-            expect(updatedBook!.author).toBe("Original Author"); // unchanged
+            expect(updatedBook!.author).toBe("Original Author");
             expect(updatedBook!.pages).toBe(250);
-            expect(updatedBook!.tags).toEqual(["original", "programming"]); // unchanged
-            expect(updatedBook!.ISBN10).toBe("1234567890"); // unchanged
+            expect(updatedBook!.tags).toEqual(["original", "programming"]);
+            expect(updatedBook!.ISBN10).toBe("1234567890");
         });
 
         it("should return null when book ID does not exist", async () => {
@@ -157,7 +157,7 @@ describe("Book Service: Update Methods", () => {
 
             expect(updatedBook).not.toBeNull();
             expect(updatedBook!.tags).toEqual(newTags);
-            expect(updatedBook!.title).toBe("Original Title"); // unchanged
+            expect(updatedBook!.title).toBe("Original Title");
         });
 
         it("should handle empty tags array update", async () => {

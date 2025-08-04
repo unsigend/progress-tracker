@@ -80,7 +80,7 @@ describe("Book Service: Create Methods", () => {
             expect(createdBook.title).toBe("Test Book");
             expect(createdBook.author).toBeUndefined();
             expect(createdBook.pages).toBeUndefined();
-            expect(createdBook.tags).toEqual([]); // Mongoose creates empty array for array fields
+            expect(createdBook.tags).toEqual([]);
             expect(createdBook.ISBN10).toBeUndefined();
         });
 

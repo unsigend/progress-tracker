@@ -233,11 +233,9 @@ describe("Book Service: Delete Methods", () => {
         });
 
         it("should delete books by pages field", async () => {
-            // Delete books with exactly 464 pages
-            const query = { pages: "464" }; // Note: query uses string values
+            const query = { pages: "464" };
             const deletedCount = await BookService.deleteBookByQuery(query);
 
-            // This should delete Clean Code which has 464 pages
             expect(deletedCount).toBe(1);
 
             const remainingBooks = await BookModel.find({});

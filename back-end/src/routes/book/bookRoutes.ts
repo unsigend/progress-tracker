@@ -25,14 +25,23 @@
 import express from "express";
 import bookController from "@/controllers/book/bookController";
 
+// middleware
+import {
+    validateBookDataPost,
+    validateBookDataUpdate,
+} from "@/middleware/bookMiddleware";
+
 const router = express.Router();
 
-router.route("/").get(bookController.getBooks).post(bookController.createBook);
+router
+    .route("/")
+    .get(bookController.getBooks)
+    .post(validateBookDataPost, bookController.createBook);
 
 router
     .route("/:id")
     .get(bookController.getBookById)
-    .put(bookController.updateBook)
+    .put(validateBookDataUpdate, bookController.updateBook)
     .delete(bookController.deleteBook);
 
 export default router;
