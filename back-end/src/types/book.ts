@@ -24,9 +24,21 @@
 
 export interface Book {
     title: string;
-    image: string;
-    author: string;
-    tags: string[];
-    pages: number;
-    createdAt: Date;
+    image?: string;
+    author?: string;
+    tags?: string[];
+    pages?: number;
+    ISBN10?: string;
+    link?: string;
+    createdAt?: Date;
+}
+
+export interface BookInput {
+    title: string;
+    image?: string;
+    author?: string;
+    tags?: string[];
+    pages?: number;
+    ISBN10?: string;
+    link?: string;
 }

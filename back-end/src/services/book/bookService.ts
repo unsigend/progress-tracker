@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-import { Book as BookType } from "@/types/book";
+import { Book as BookType, BookInput } from "@/types/book";
 import BookModel from "@/models/book/bookModel";
 
 // internal API options
@@ -63,7 +63,7 @@ const BookService = {
      * @param book - book object
      * @returns - created book object or null if creation failed
      */
-    createBook: async (book: BookType) => {
+    createBook: async (book: BookInput) => {
         const newBook = await BookModel.create(book);
         return newBook;
     },
@@ -107,10 +107,10 @@ const BookService = {
     /**
      * Update a book
      * @param id - book id
-     * @param book - book object
+     * @param book - partial book object with fields to update
      * @returns - updated book object or null if not found
      */
-    updateBook: async (id: string, book: BookType) => {
+    updateBook: async (id: string, book: Partial<BookInput>) => {
         const updatedBook = await BookModel.findByIdAndUpdate(id, book, {
             new: true,
         });
