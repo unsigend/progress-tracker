@@ -1,27 +1,3 @@
-/**
- * MIT License
- *
- * Copyright (c) 2025 Qiu Yixiang
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
-
 import BookService from "@/services/book/bookService";
 import { describe, it, expect, beforeEach } from "@jest/globals";
 import BookModel from "@/models/book/bookModel";
@@ -31,19 +7,13 @@ const sampleBookData = {
     author: "Robert C. Martin",
     pages: 432,
     tags: ["architecture", "programming", "software-design"],
-    ISBN10: "0134494164",
+    ISBN: "0134494164",
     image: "https://example.com/clean-architecture.jpg",
     link: "https://example.com/book/clean-architecture",
 };
 
 const minimalBookData = {
     title: "Test Book",
-};
-
-const invalidBookData = {
-    author: "Test Author",
-    pages: 200,
-    // Missing required title field
 };
 
 describe("Book Service: Create Methods", () => {
@@ -64,7 +34,7 @@ describe("Book Service: Create Methods", () => {
                 "programming",
                 "software-design",
             ]);
-            expect(createdBook.ISBN10).toBe("0134494164");
+            expect(createdBook.ISBN).toBe("0134494164");
             expect(createdBook.image).toBe(
                 "https://example.com/clean-architecture.jpg"
             );
@@ -81,7 +51,7 @@ describe("Book Service: Create Methods", () => {
             expect(createdBook.author).toBeUndefined();
             expect(createdBook.pages).toBeUndefined();
             expect(createdBook.tags).toEqual([]);
-            expect(createdBook.ISBN10).toBeUndefined();
+            expect(createdBook.ISBN).toBeUndefined();
         });
 
         it("should auto-generate createdAt timestamp", async () => {
@@ -155,7 +125,7 @@ describe("Book Service: Create Methods", () => {
                 author: "Test Author",
                 pages: 300,
                 tags: ["test", "complete"],
-                ISBN10: "1234567890",
+                ISBN: "1234567890",
                 image: "http://example.com/image.jpg",
                 link: "http://example.com/book",
             };
@@ -166,7 +136,7 @@ describe("Book Service: Create Methods", () => {
             expect(createdBook.author).toBe("Test Author");
             expect(createdBook.pages).toBe(300);
             expect(createdBook.tags).toEqual(["test", "complete"]);
-            expect(createdBook.ISBN10).toBe("1234567890");
+            expect(createdBook.ISBN).toBe("1234567890");
             expect(createdBook.image).toBe("http://example.com/image.jpg");
             expect(createdBook.link).toBe("http://example.com/book");
         });

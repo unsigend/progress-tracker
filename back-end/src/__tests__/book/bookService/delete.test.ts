@@ -1,27 +1,3 @@
-/**
- * MIT License
- *
- * Copyright (c) 2025 Qiu Yixiang
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
-
 import BookService from "@/services/book/bookService";
 import { describe, it, expect, beforeEach } from "@jest/globals";
 import BookModel from "@/models/book/bookModel";
@@ -32,35 +8,35 @@ const sampleBooksData = [
         author: "Robert C. Martin",
         pages: 464,
         tags: ["programming", "best-practices"],
-        ISBN10: "0132350882",
+        ISBN: "0132350882",
     },
     {
         title: "The Pragmatic Programmer",
         author: "Andrew Hunt",
         pages: 352,
         tags: ["programming", "career"],
-        ISBN10: "0201616220",
+        ISBN: "0201616220",
     },
     {
         title: "Design Patterns",
         author: "Gang of Four",
         pages: 395,
         tags: ["design-patterns", "programming"],
-        ISBN10: "0201633612",
+        ISBN: "0201633612",
     },
     {
         title: "Refactoring",
         author: "Martin Fowler",
         pages: 448,
         tags: ["programming", "refactoring"],
-        ISBN10: "0134757599",
+        ISBN: "0134757599",
     },
     {
         title: "Code Complete",
         author: "Steve McConnell",
         pages: 960,
         tags: ["programming", "software-construction"],
-        ISBN10: "0735619670",
+        ISBN: "0735619670",
     },
 ];
 
@@ -114,7 +90,7 @@ describe("Book Service: Delete Methods", () => {
             expect(deletedBook).toHaveProperty("author");
             expect(deletedBook).toHaveProperty("pages");
             expect(deletedBook).toHaveProperty("tags");
-            expect(deletedBook).toHaveProperty("ISBN10");
+            expect(deletedBook).toHaveProperty("ISBN");
             expect(deletedBook).toHaveProperty("createdAt");
         });
 
@@ -161,7 +137,7 @@ describe("Book Service: Delete Methods", () => {
                 author: "Robert C. Martin",
                 pages: 432,
                 tags: ["architecture", "programming"],
-                ISBN10: "0134494164",
+                ISBN: "0134494164",
             });
 
             const query = { author: "Robert C. Martin" };
@@ -193,8 +169,8 @@ describe("Book Service: Delete Methods", () => {
             expect(remainingBooks).toHaveLength(0);
         });
 
-        it("should delete books by ISBN10 query", async () => {
-            const query = { ISBN10: "0132350882" };
+        it("should delete books by ISBN query", async () => {
+            const query = { ISBN: "0132350882" };
             const deletedCount = await BookService.deleteBookByQuery(query);
 
             expect(deletedCount).toBe(1);

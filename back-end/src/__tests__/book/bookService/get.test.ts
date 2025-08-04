@@ -1,27 +1,3 @@
-/**
- * MIT License
- *
- * Copyright (c) 2025 Qiu Yixiang
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
-
 import BookService from "@/services/book/bookService";
 import { describe, it, expect, beforeEach } from "@jest/globals";
 import BookModel from "@/models/book/bookModel";
@@ -32,35 +8,35 @@ const sampleBooksData = [
         author: "Steve Klabnik",
         pages: 552,
         tags: ["systems", "programming", "rust"],
-        ISBN10: "1593278284",
+        ISBN: "1593278284",
     },
     {
         title: "Clean Code",
         author: "Robert C. Martin",
         pages: 464,
         tags: ["programming", "best-practices", "software-engineering"],
-        ISBN10: "0132350882",
+        ISBN: "0132350882",
     },
     {
         title: "JavaScript: The Good Parts",
         author: "Douglas Crockford",
         pages: 176,
         tags: ["javascript", "programming", "web-development"],
-        ISBN10: "0596517742",
+        ISBN: "0596517742",
     },
     {
         title: "Design Patterns",
         author: "Gang of Four",
         pages: 395,
         tags: ["design-patterns", "programming", "software-architecture"],
-        ISBN10: "0201633612",
+        ISBN: "0201633612",
     },
     {
         title: "Introduction to Algorithms",
         author: "Thomas H. Cormen",
         pages: 1312,
         tags: ["algorithms", "computer-science", "data-structures"],
-        ISBN10: "0262033844",
+        ISBN: "0262033844",
     },
 ];
 
@@ -216,7 +192,7 @@ describe("Book Service: Get Methods", () => {
             expect(book).toHaveProperty("author");
             expect(book).toHaveProperty("pages");
             expect(book).toHaveProperty("tags");
-            expect(book).toHaveProperty("ISBN10");
+            expect(book).toHaveProperty("ISBN");
             expect(book).toHaveProperty("createdAt");
         });
     });

@@ -28,7 +28,7 @@ export interface Book {
     author?: string;
     tags?: string[];
     pages?: number;
-    ISBN10?: string;
+    ISBN?: string;
     link?: string;
     createdAt?: Date;
 }
@@ -39,6 +39,6 @@ export interface BookInput {
     author?: string;
     tags?: string[];
     pages?: number;
-    ISBN10?: string;
+    ISBN?: string;
     link?: string;
 }

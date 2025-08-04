@@ -1,27 +1,3 @@
-/**
- * MIT License
- *
- * Copyright (c) 2025 Qiu Yixiang
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
-
 import BookService from "@/services/book/bookService";
 import { describe, it, expect, beforeEach } from "@jest/globals";
 import BookModel from "@/models/book/bookModel";
@@ -32,7 +8,7 @@ const sampleBooksData = [
         author: "Robert C. Martin",
         pages: 464,
         tags: ["programming", "best-practices", "software-engineering"],
-        ISBN10: "0132350882",
+        ISBN: "0132350882",
         image: "https://example.com/clean-code.jpg",
         link: "https://example.com/book/clean-code",
     },
@@ -41,7 +17,7 @@ const sampleBooksData = [
         author: "Andrew Hunt",
         pages: 352,
         tags: ["programming", "career", "software-development"],
-        ISBN10: "0201616220",
+        ISBN: "0201616220",
         image: "https://example.com/pragmatic-programmer.jpg",
         link: "https://example.com/book/pragmatic-programmer",
     },
@@ -50,7 +26,7 @@ const sampleBooksData = [
         author: "Gang of Four",
         pages: 395,
         tags: ["design-patterns", "programming", "software-architecture"],
-        ISBN10: "0201633612",
+        ISBN: "0201633612",
         image: "https://example.com/design-patterns.jpg",
         link: "https://example.com/book/design-patterns",
     },
@@ -59,7 +35,7 @@ const sampleBooksData = [
         author: "Martin Fowler",
         pages: 448,
         tags: ["programming", "refactoring", "code-quality"],
-        ISBN10: "0134757599",
+        ISBN: "0134757599",
         image: "https://example.com/refactoring.jpg",
         link: "https://example.com/book/refactoring",
     },
@@ -70,7 +46,7 @@ const newBookData = {
     author: "Kent Beck",
     pages: 240,
     tags: ["testing", "programming", "agile"],
-    ISBN10: "0321146530",
+    ISBN: "0321146530",
     image: "https://example.com/tdd.jpg",
     link: "https://example.com/book/tdd",
 };
@@ -428,7 +404,7 @@ describe("Book Service: Integration Tests", () => {
                 author: "Douglas Crockford",
                 pages: 176,
                 tags: ["javascript", "programming", "web-development"],
-                ISBN10: "0596517742",
+                ISBN: "0596517742",
             });
             expect(newRecommendation.title).toBe("JavaScript: The Good Parts");
 

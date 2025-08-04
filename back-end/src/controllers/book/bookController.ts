@@ -83,9 +83,33 @@ const bookController = {
      * @description Create a book
      */
     async createBook(req: Request, res: Response) {
+        let { title, author, pages, tags, ISBN: ISBN, link } = req.body;
+
+        title = title.trim();
+        if (author) {
+            author = author.trim();
+        }
+        if (pages) {
+            pages = Number(pages);
+        }
+        if (tags) {
+            tags = tags.map((tag: string) => tag.trim());
+        }
+        if (ISBN) {
+            ISBN = ISBN.trim();
+        }
+        if (link) {
+            link = link.trim();
+        }
+
         try {
             const book = await BookService.createBook({
-                ...req.body,
+                title,
+                author,
+                pages,
+                tags,
+                ISBN: ISBN,
+                link,
             });
             res.status(201).json(book);
         } catch (error) {
@@ -119,7 +143,10 @@ const bookController = {
         const { id } = req.params;
         try {
             await BookService.deleteBookById(id);
-            res.status(200).json({ message: "Book deleted successfully" });
+            res.status(200).json({
+                message: "Book deleted successfully",
+                id: id,
+            });
         } catch (error) {
             throw new Error("Failed to delete book");
         }

@@ -1,27 +1,3 @@
-/**
- * MIT License
- *
- * Copyright (c) 2025 Qiu Yixiang
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
-
 import BookService from "@/services/book/bookService";
 import { describe, it, expect, beforeEach } from "@jest/globals";
 import BookModel from "@/models/book/bookModel";
@@ -31,7 +7,7 @@ const originalBookData = {
     author: "Original Author",
     pages: 200,
     tags: ["original", "programming"],
-    ISBN10: "1234567890",
+    ISBN: "1234567890",
     image: "https://example.com/original.jpg",
     link: "https://example.com/original",
 };
@@ -41,7 +17,7 @@ const updateData = {
     author: "Updated Author",
     pages: 300,
     tags: ["updated", "programming", "advanced"],
-    ISBN10: "0987654321",
+    ISBN: "0987654321123",
     image: "https://example.com/updated.jpg",
     link: "https://example.com/updated",
 };
@@ -75,7 +51,7 @@ describe("Book Service: Update Methods", () => {
                 "programming",
                 "advanced",
             ]);
-            expect(updatedBook!.ISBN10).toBe("0987654321");
+            expect(updatedBook!.ISBN).toBe("0987654321123");
             expect(updatedBook!.image).toBe("https://example.com/updated.jpg");
             expect(updatedBook!.link).toBe("https://example.com/updated");
         });
@@ -91,7 +67,7 @@ describe("Book Service: Update Methods", () => {
             expect(updatedBook!.author).toBe("Original Author");
             expect(updatedBook!.pages).toBe(250);
             expect(updatedBook!.tags).toEqual(["original", "programming"]);
-            expect(updatedBook!.ISBN10).toBe("1234567890");
+            expect(updatedBook!.ISBN).toBe("1234567890");
         });
 
         it("should return null when book ID does not exist", async () => {
@@ -212,7 +188,7 @@ describe("Book Service: Update Methods", () => {
                 author: undefined,
                 pages: undefined,
                 tags: undefined,
-                ISBN10: undefined,
+                ISBN: undefined,
                 image: undefined,
                 link: undefined,
             };

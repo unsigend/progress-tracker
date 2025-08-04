@@ -29,6 +29,7 @@ const VALIDATION_CONSTANTS = {
     MIN_PAGES: 0,
     MAX_PAGES: 10000,
     ISBN10_LENGTH: 10,
+    ISBN13_LENGTH: 13,
     MAX_TITLE_LENGTH: 200,
     MAX_AUTHOR_LENGTH: 100,
     MAX_TAGS_COUNT: 20,
@@ -44,8 +45,11 @@ function validatePages(pages: number): boolean {
     return true;
 }
 
-function validateISBN10(ISBN10: string): boolean {
-    if (ISBN10.length !== VALIDATION_CONSTANTS.ISBN10_LENGTH) {
+function validateISBN(ISBN: string): boolean {
+    if (
+        ISBN.length !== VALIDATION_CONSTANTS.ISBN10_LENGTH &&
+        ISBN.length !== VALIDATION_CONSTANTS.ISBN13_LENGTH
+    ) {
         return false;
     }
     return true;
@@ -80,8 +84,9 @@ function validateLink(link: string): boolean {
 }
 
 function validateBookDataPost(req: Request, res: Response, next: NextFunction) {
-    const { title, author, pages, tags, ISBN10, link } = req.body;
+    const { title, author, pages, tags, ISBN, link } = req.body;
 
+    // validate title
     if (!title) {
         return res.status(400).json({ error: "Title is required" });
     } else {
@@ -90,22 +95,27 @@ function validateBookDataPost(req: Request, res: Response, next: NextFunction) {
         }
     }
 
+    // validate author
     if (author && !validateAuthor(author)) {
         return res.status(400).json({ error: "Author is invalid" });
     }
 
+    // validate tags
     if (tags && !validateTags(tags)) {
         return res.status(400).json({ error: "Tags is invalid" });
     }
 
+    // validate pages
     if (pages && !validatePages(pages)) {
         return res.status(400).json({ error: "Pages is invalid" });
     }
 
-    if (ISBN10 && !validateISBN10(ISBN10)) {
-        return res.status(400).json({ error: "ISBN10 is invalid" });
+    // validate ISBN
+    if (ISBN && !validateISBN(ISBN)) {
+        return res.status(400).json({ error: "ISBN is invalid" });
     }
 
+    // validate link
     if (link && !validateLink(link)) {
         return res.status(400).json({ error: "Link is invalid" });
     }
@@ -118,28 +128,34 @@ function validateBookDataUpdate(
     res: Response,
     next: NextFunction
 ) {
-    const { title, author, pages, tags, ISBN10, link } = req.body;
+    let { title, author, pages, tags, ISBN, link } = req.body;
 
+    // validate title
     if (title && !validateTitle(title)) {
         return res.status(400).json({ error: "Title is invalid" });
     }
 
+    // validate author
     if (author && !validateAuthor(author)) {
         return res.status(400).json({ error: "Author is invalid" });
     }
 
+    // validate pages
     if (pages && !validatePages(pages)) {
         return res.status(400).json({ error: "Pages is invalid" });
     }
 
+    // validate tags
     if (tags && !validateTags(tags)) {
         return res.status(400).json({ error: "Tags is invalid" });
     }
 
-    if (ISBN10 && !validateISBN10(ISBN10)) {
-        return res.status(400).json({ error: "ISBN10 is invalid" });
+    // validate ISBN
+    if (ISBN && !validateISBN(ISBN)) {
+        return res.status(400).json({ error: "ISBN is invalid" });
     }
 
+    // validate link
     if (link && !validateLink(link)) {
         return res.status(400).json({ error: "Link is invalid" });
     }
