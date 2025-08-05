@@ -22,33 +22,19 @@
  * SOFTWARE.
  */
 
-import { Link } from "react-router-dom";
+// dependencies
+import axios from "axios";
 
-interface BookCardProps {
-    imageURL: string;
-    link: string;
-    className?: string;
-}
+// API endpoints
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
-const BookCard = ({ imageURL, link, className = "" }: BookCardProps) => {
-    return (
-        <Link
-            to={link}
-            className={`group block transition-all duration-200 hover:scale-102 hover:-translate-y-0.5 ${className}`}
-        >
-            <div className="relative w-40 h-52 bg-white rounded-sm shadow-sm hover:shadow-md transition-all duration-200">
-                {/* Book Cover Image Only */}
-                <img
-                    src={imageURL}
-                    alt="Book cover"
-                    className="w-full h-full object-cover rounded-sm"
-                />
-
-                {/* Subtle overlay on hover */}
-                <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-sm" />
-            </div>
-        </Link>
-    );
+const BookAPI = {
+    getBooks: async (queryParams: Record<string, string>) => {
+        const queryString = new URLSearchParams(queryParams).toString();
+        const url = `${BASE_URL}/api/books?${queryString}`;
+        const response = await axios.get(url);
+        return response.data;
+    },
 };
 
-export default BookCard;
+export default BookAPI;

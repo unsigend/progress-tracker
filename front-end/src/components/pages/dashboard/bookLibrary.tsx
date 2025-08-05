@@ -22,7 +22,30 @@
  * SOFTWARE.
  */
 
+// dependencies
+import { useQuery } from "@tanstack/react-query";
+import { Loader2 } from "lucide-react";
+
+// API services
+import BookAPI from "@/api/books";
+
+// components
+import BookShelf from "@/components/ui/bookShelf";
+import ErrorMessage from "@/components/ui/errorMessage";
+
 const BookLibrary = () => {
+    const {
+        data: books,
+        isLoading,
+        error,
+        refetch,
+    } = useQuery({
+        queryKey: ["books"],
+        queryFn: () => BookAPI.getBooks({}),
+    });
+
+    const bookList = books || [];
+
     return (
         <div className="space-y-6">
             {/* Page Header */}
@@ -34,6 +57,26 @@ const BookLibrary = () => {
                     Track your reading progress and discover new books
                 </p>
             </div>
+
+            {/* Book List */}
+            {isLoading ? (
+                <div className="flex justify-center items-center h-full">
+                    <Loader2 className="w-6 h-6 animate-spin" />
+                </div>
+            ) : error ? (
+                <ErrorMessage
+                    title="Failed to Load Books"
+                    message={`We couldn't retrieve your book library: ${error.message}`}
+                    icon="alert"
+                    variant="default"
+                    size="full"
+                    showRetry
+                    onRetry={() => refetch()}
+                    retryText="Reload Books"
+                />
+            ) : (
+                <BookShelf books={bookList} />
+            )}
         </div>
     );
 };

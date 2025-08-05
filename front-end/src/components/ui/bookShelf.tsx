@@ -25,8 +25,8 @@
 import BookCard from "@/components/ui/bookCard";
 
 interface Book {
-    id: number;
-    imageUrl: string;
+    _id: number;
+    image: string;
     link: string;
 }
 
@@ -42,8 +42,8 @@ const BookShelf = ({ books, className = "" }: BookShelfProps) => {
         >
             {books.map((book) => (
                 <BookCard
-                    key={book.id}
-                    imageUrl={book.imageUrl}
+                    key={book._id}
+                    imageURL={book.image}
                     link={book.link}
                 />
             ))}
