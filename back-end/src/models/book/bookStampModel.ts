@@ -23,22 +23,18 @@
  */
 
 import mongoose from "mongoose";
-import timeStampSchema from "@/models/general/timeStampModel";
+import timestampSchema from "@/models/general/timeStampModel";
 
 const bookStampSchema = new mongoose.Schema({
     pages: {
         type: Number,
         required: true,
     },
-    fromPage: {
-        type: Number,
-        required: true,
+    note: {
+        type: String,
+        required: false,
     },
-    toPage: {
-        type: Number,
-        required: true,
-    },
-    ...timeStampSchema.obj,
+    ...timestampSchema.obj,
 });
 
 export default bookStampSchema;

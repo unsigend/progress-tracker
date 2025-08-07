@@ -23,12 +23,12 @@
  */
 
 import mongoose from "mongoose";
-import bookTrackSchema from "@/models/book/bookTrack";
+import bookTrackerSchema from "@/models/book/bookTracker";
 
 const userDataSchema = new mongoose.Schema(
     {
         booksTracked: {
-            type: [bookTrackSchema],
+            type: [bookTrackerSchema],
             required: false,
         },
     },

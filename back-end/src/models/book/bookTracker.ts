@@ -25,7 +25,7 @@
 import mongoose from "mongoose";
 import bookStampSchema from "@/models/book/bookStampModel";
 
-const bookTrackSchema = new mongoose.Schema({
+const bookTrackerSchema = new mongoose.Schema({
     bookId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Book",
@@ -37,4 +37,4 @@ const bookTrackSchema = new mongoose.Schema({
     },
 });
 
-export default bookTrackSchema;
+export default bookTrackerSchema;

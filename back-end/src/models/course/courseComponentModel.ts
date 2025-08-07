@@ -23,20 +23,20 @@
  */
 
 import mongoose from "mongoose";
+import timestampSchema from "@/models/general/timeStampModel";
 
-const timestampSchema = new mongoose.Schema(
+const courseComponentModel = new mongoose.Schema(
     {
-        minutes: {
-            type: Number,
+        componentType: {
+            type: String,
             required: true,
         },
-        date: {
-            type: Date,
-            required: true,
-            default: Date.now,
+        recordings: {
+            type: [timestampSchema],
+            required: false,
         },
     },
     { _id: false }
 );
 
-export default timestampSchema;
+export default courseComponentModel;

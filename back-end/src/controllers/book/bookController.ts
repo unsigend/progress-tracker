@@ -83,7 +83,7 @@ const bookController = {
      * @description Create a book
      */
     async createBook(req: Request, res: Response) {
-        let { title, author, pages, tags, ISBN: ISBN, link } = req.body;
+        let { title, author, pages, tags, ISBN: ISBN, link, image } = req.body;
 
         title = title.trim();
         if (author) {
@@ -110,6 +110,7 @@ const bookController = {
                 tags,
                 ISBN: ISBN,
                 link,
+                image,
             });
             res.status(201).json(book);
         } catch (error) {
