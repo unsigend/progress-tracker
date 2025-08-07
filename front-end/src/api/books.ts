@@ -30,9 +30,9 @@ const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const BookAPI = {
     getBooks: async (queryParams: Record<string, string>) => {
-        const queryString = new URLSearchParams(queryParams).toString();
-        const url = `${BASE_URL}/api/books?${queryString}`;
-        const response = await axios.get(url);
+        const response = await axios.get(`${BASE_URL}/api/books`, {
+            params: queryParams,
+        });
         return response.data;
     },
 };

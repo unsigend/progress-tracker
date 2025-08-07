@@ -23,8 +23,8 @@
  */
 
 // dependencies
-import { useQuery } from "@tanstack/react-query";
-import { Loader2 } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Loader2, Plus } from "lucide-react";
 
 // API services
 import BookAPI from "@/api/books";
@@ -32,19 +32,47 @@ import BookAPI from "@/api/books";
 // components
 import BookShelf from "@/components/ui/bookShelf";
 import ErrorMessage from "@/components/ui/errorMessage";
+import SearchBar from "@/components/ui/searchBar";
+import { Button } from "@/components/ui/button";
 
 const BookLibrary = () => {
-    const {
-        data: books,
-        isLoading,
-        error,
-        refetch,
-    } = useQuery({
-        queryKey: ["books"],
-        queryFn: () => BookAPI.getBooks({}),
-    });
+    const [searchQuery, setSearchQuery] = useState("");
+    const [books, setBooks] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchBooks = async () => {
+            try {
+                const data = await BookAPI.getBooks({});
+                setBooks(data);
+            } catch (err: any) {
+                setError(err.message);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        fetchBooks();
+    }, []);
 
     const bookList = books || [];
+
+    // Handle search functionality
+    const handleSearch = (value: string) => {
+        setSearchQuery(value);
+        // TODO: Implement search logic
+    };
+
+    const handleClearSearch = () => {
+        setSearchQuery("");
+        // TODO: Reset search results
+    };
+
+    // Handle add book functionality
+    const handleAddBook = () => {
+        // TODO: Implement add book functionality
+        console.log("Add book clicked");
+    };
 
     return (
         <div className="space-y-6">
@@ -56,6 +84,29 @@ const BookLibrary = () => {
                 <p className="mt-2 text-gray-600">
                     Track your reading progress and discover new books
                 </p>
+            </div>
+
+            {/* Search and Actions Bar */}
+            <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
+                <div className="flex-1 max-w-md">
+                    <SearchBar
+                        placeholder="Search books by title, author, or ISBN..."
+                        value={searchQuery}
+                        onChange={(e) => handleSearch(e.target.value)}
+                        onClear={handleClearSearch}
+                        variant="outline"
+                        size="default"
+                    />
+                </div>
+                <Button
+                    onClick={handleAddBook}
+                    variant="default"
+                    size="default"
+                    className="gap-2"
+                >
+                    <Plus className="h-4 w-4" />
+                    Add Book
+                </Button>
             </div>
 
             {/* Book List */}
