@@ -24,7 +24,7 @@
 
 // dependencies
 import { useEffect, useState } from "react";
-import { Loader2, Plus } from "lucide-react";
+import { Loader2, Plus, Search } from "lucide-react";
 
 // API services
 import BookAPI from "@/api/books";
@@ -39,15 +39,15 @@ const BookLibrary = () => {
     const [searchQuery, setSearchQuery] = useState("");
     const [books, setBooks] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const [error, setError] = useState<Error | null>(null);
 
     useEffect(() => {
         const fetchBooks = async () => {
             try {
                 const data = await BookAPI.getBooks({});
                 setBooks(data);
-            } catch (err: any) {
-                setError(err.message);
+            } catch (err) {
+                setError(err as Error);
             } finally {
                 setIsLoading(false);
             }
@@ -68,6 +68,11 @@ const BookLibrary = () => {
         // TODO: Reset search results
     };
 
+    const handleSearchSubmit = () => {
+        // TODO: Implement search submission logic
+        console.log("Search submitted:", searchQuery);
+    };
+
     // Handle add book functionality
     const handleAddBook = () => {
         // TODO: Implement add book functionality
@@ -75,20 +80,21 @@ const BookLibrary = () => {
     };
 
     return (
-        <div className="space-y-6">
+        <div className="flex flex-col gap-6">
             {/* Page Header */}
             <div className="border-b border-gray-200 pb-4">
                 <h1 className="text-3xl font-bold text-gray-900">
                     Book Library
                 </h1>
                 <p className="mt-2 text-gray-600">
-                    Track your reading progress and discover new books
+                    Discover new books and add them to your library to track
+                    your reading progress
                 </p>
             </div>
 
             {/* Search and Actions Bar */}
-            <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
-                <div className="flex-1 max-w-md">
+            <div className="flex flex-col sm:flex-row gap-5 items-start sm:items-center ">
+                <div className="flex gap-2 flex-1 max-w-lg items-center">
                     <SearchBar
                         placeholder="Search books by title, author, or ISBN..."
                         value={searchQuery}
@@ -96,7 +102,17 @@ const BookLibrary = () => {
                         onClear={handleClearSearch}
                         variant="outline"
                         size="default"
+                        containerClassName="flex-1"
                     />
+                    <Button
+                        onClick={handleSearchSubmit}
+                        variant="outline"
+                        size="lg"
+                        className="gap-2 h-10"
+                    >
+                        <Search className="h-4 w-4" />
+                        Search
+                    </Button>
                 </div>
                 <Button
                     onClick={handleAddBook}
@@ -105,7 +121,7 @@ const BookLibrary = () => {
                     className="gap-2"
                 >
                     <Plus className="h-4 w-4" />
-                    Add Book
+                    Create Book
                 </Button>
             </div>
 
@@ -122,7 +138,7 @@ const BookLibrary = () => {
                     variant="default"
                     size="full"
                     showRetry
-                    onRetry={() => refetch()}
+                    onRetry={() => window.location.reload()}
                     retryText="Reload Books"
                 />
             ) : (
