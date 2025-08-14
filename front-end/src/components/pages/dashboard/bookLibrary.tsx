@@ -23,11 +23,8 @@
  */
 
 // dependencies
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Loader2, Plus, Search } from "lucide-react";
-
-// API services
-import BookAPI from "@/api/books";
 
 // components
 import BookShelf from "@/components/ui/bookShelf";
@@ -35,48 +32,21 @@ import ErrorMessage from "@/components/ui/errorMessage";
 import SearchBar from "@/components/ui/searchBar";
 import { Button } from "@/components/ui/button";
 
+// hooks
+import useBooks from "@/hooks/useBooks";
+
 const BookLibrary = () => {
     const [searchQuery, setSearchQuery] = useState("");
-    const [books, setBooks] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState<Error | null>(null);
+    const [_searchQuery, _setSearchQuery] = useState("");
 
-    useEffect(() => {
-        const fetchBooks = async () => {
-            try {
-                const data = await BookAPI.getBooks({});
-                setBooks(data);
-            } catch (err) {
-                setError(err as Error);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-        fetchBooks();
-    }, []);
+    const [books, isLoading, error] = useBooks({
+        search: _searchQuery,
+    });
 
     const bookList = books || [];
 
-    // Handle search functionality
-    const handleSearch = (value: string) => {
-        setSearchQuery(value);
-        // TODO: Implement search logic
-    };
-
-    const handleClearSearch = () => {
-        setSearchQuery("");
-        // TODO: Reset search results
-    };
-
     const handleSearchSubmit = () => {
-        // TODO: Implement search submission logic
-        console.log("Search submitted:", searchQuery);
-    };
-
-    // Handle add book functionality
-    const handleAddBook = () => {
-        // TODO: Implement add book functionality
-        console.log("Add book clicked");
+        _setSearchQuery(searchQuery);
     };
 
     return (
@@ -98,8 +68,11 @@ const BookLibrary = () => {
                     <SearchBar
                         placeholder="Search books by title, author, or ISBN..."
                         value={searchQuery}
-                        onChange={(e) => handleSearch(e.target.value)}
-                        onClear={handleClearSearch}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        onClear={() => {
+                            setSearchQuery("");
+                            _setSearchQuery("");
+                        }}
                         variant="outline"
                         size="default"
                         containerClassName="flex-1"
@@ -115,7 +88,7 @@ const BookLibrary = () => {
                     </Button>
                 </div>
                 <Button
-                    onClick={handleAddBook}
+                    onClick={() => {}}
                     variant="default"
                     size="default"
                     className="gap-2"

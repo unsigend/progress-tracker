@@ -22,28 +22,43 @@
  * SOFTWARE.
  */
 
-import BookCard from "@/components/ui/bookCard";
+// dependencies
+import { useEffect, useState } from "react";
+
+// types
 import type { Book } from "@/types/Book";
 
-interface BookShelfProps {
-    books: Book[];
-    className?: string;
-}
+// API services
+import BookAPI from "@/api/books";
 
-const BookShelf = ({ books, className = "" }: BookShelfProps) => {
-    return (
-        <div
-            className={`grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6 ${className}`}
-        >
-            {books.map((book) => (
-                <BookCard
-                    key={book._id}
-                    imageURL={book.image}
-                    link={book.link}
-                />
-            ))}
-        </div>
-    );
+// useBooks hook
+// when the search query changes, the books are fetched again automatically
+const useBooks = (queryParams: Record<string, string>) => {
+    const [books, setBooks] = useState<Book[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState<Error | null>(null);
+
+    const searchQuery = queryParams.search || "";
+
+    useEffect(() => {
+        const fetchBooks = async () => {
+            setIsLoading(true);
+            setError(null);
+            try {
+                const data = await BookAPI.getBooks(queryParams);
+                setBooks(data);
+            } catch (err) {
+                setError(err as Error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        fetchBooks();
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [searchQuery]);
+
+    return [books, isLoading, error] as const;
 };
 
-export default BookShelf;
+export default useBooks;

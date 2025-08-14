@@ -22,28 +22,16 @@
  * SOFTWARE.
  */
 
-import BookCard from "@/components/ui/bookCard";
-import type { Book } from "@/types/Book";
-
-interface BookShelfProps {
-    books: Book[];
-    className?: string;
+interface Book {
+    _id: string;
+    title: string;
+    image: string;
+    author: string;
+    tags: string[];
+    pages: number;
+    createdAt: Date;
+    ISBN: string;
+    link: string;
 }
 
-const BookShelf = ({ books, className = "" }: BookShelfProps) => {
-    return (
-        <div
-            className={`grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6 ${className}`}
-        >
-            {books.map((book) => (
-                <BookCard
-                    key={book._id}
-                    imageURL={book.image}
-                    link={book.link}
-                />
-            ))}
-        </div>
-    );
-};
-
-export default BookShelf;
+export type { Book };

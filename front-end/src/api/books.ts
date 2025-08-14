@@ -28,12 +28,34 @@ import axios from "axios";
 // API endpoints
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
+// types
+import type { Book } from "@/types/Book";
+
 const BookAPI = {
-    getBooks: async (queryParams: Record<string, string>) => {
+    getBooks: async (queryParams: Record<string, string>): Promise<Book[]> => {
         const response = await axios.get(`${BASE_URL}/api/books`, {
             params: queryParams,
         });
         return response.data;
+    },
+
+    getBookById: async (id: string): Promise<Book> => {
+        const response = await axios.get(`${BASE_URL}/api/books/${id}`);
+        return response.data;
+    },
+
+    createBook: async (book: Book): Promise<Book> => {
+        const response = await axios.post(`${BASE_URL}/api/books`, book);
+        return response.data;
+    },
+
+    updateBook: async (id: string, book: Book): Promise<Book> => {
+        const response = await axios.put(`${BASE_URL}/api/books/${id}`, book);
+        return response.data;
+    },
+
+    deleteBook: async (id: string): Promise<void> => {
+        await axios.delete(`${BASE_URL}/api/books/${id}`);
     },
 };
 
