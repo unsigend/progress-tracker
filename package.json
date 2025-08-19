@@ -2,7 +2,6 @@
     "name": "progress-tracker",
     "version": "1.0.0",
     "description": "A full stack open source project for progress tracker",
-    "main": "index.js",
     "scripts": {
         "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
         "dev:server": "cd server && npm run dev",
@@ -21,8 +20,7 @@
     },
     "keywords": [],
     "author": "",
-    "license": "ISC",
-    "type": "commonjs",
+    "license": "MIT",
     "bugs": {
         "url": "https://github.com/unsigend/progress-tracker/issues"
     },
