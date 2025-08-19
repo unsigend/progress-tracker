@@ -13,6 +13,9 @@ import connectDB from "./config/db";
 import bookRoute from "@/routes/book.route";
 import userRoute from "@/routes/user.route";
 
+// import middleware
+import errorHandler from "./middleware/errorHandler";
+
 const main = () => {
     // load environment variables
     dotenv.config();
@@ -28,7 +31,7 @@ const main = () => {
         process.exit(1);
     }
 
-    // use middleware
+    // use internal middleware
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
 
@@ -38,6 +41,9 @@ const main = () => {
     // use routes
     app.use("/api/books", bookRoute);
     app.use("/api/users", userRoute);
+
+    // use error handler
+    app.use(errorHandler);
 
     // start server
     app.listen(PORT, () => {

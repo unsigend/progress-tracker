@@ -27,5 +27,8 @@
     "homepage": "https://github.com/unsigend/progress-tracker#readme",
     "devDependencies": {
         "concurrently": "^9.2.0"
+    },
+    "dependencies": {
+        "zod": "^4.0.17"
     }
 }
