@@ -1,4 +1,7 @@
+// import dependencies
 import { Router } from "express";
+
+// import controller
 import bookController from "@/controller/book.controller";
 
 const router = Router();
