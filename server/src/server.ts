@@ -13,10 +13,10 @@ import connectDB from "./config/db";
 import bookRoute from "@/routes/book.route";
 import userRoute from "@/routes/user.route";
 
-// import middleware
-import errorHandler from "./middleware/errorHandler";
+// import middlewares
+import errorMiddleware from "@/middleware/errorMiddleware";
 
-const main = () => {
+const main = async () => {
     // load environment variables
     dotenv.config();
 
@@ -25,7 +25,7 @@ const main = () => {
 
     // connect to database
     if (MONGO_URI) {
-        connectDB(MONGO_URI);
+        await connectDB(MONGO_URI);
     } else {
         console.log("MONGO_URI is not set");
         process.exit(1);
@@ -42,8 +42,8 @@ const main = () => {
     app.use("/api/books", bookRoute);
     app.use("/api/users", userRoute);
 
-    // use error handler
-    app.use(errorHandler);
+    // use error middleware
+    app.use(errorMiddleware);
 
     // start server
     app.listen(PORT, () => {
