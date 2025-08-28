@@ -1,7 +1,13 @@
 import { NextFunction, Request, Response } from "express";
 
-// global generic error handler
-const errorMiddleware = (err: any, req: Request, res: Response, next: NextFunction) => {
+// default global error handler
+// statusCode and message is required
+const errorMiddleware = (
+    err: any,
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
     const statusCode = err.statusCode || 500;
     const message = err.message || "Internal Server Error";
 
@@ -9,7 +15,6 @@ const errorMiddleware = (err: any, req: Request, res: Response, next: NextFuncti
         error: message,
         stack: process.env.NODE_ENV === "production" ? null : err.stack,
     });
-
 };
 
 export default errorMiddleware;
