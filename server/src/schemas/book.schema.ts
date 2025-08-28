@@ -25,7 +25,7 @@ const bookObjectSchema = z.object({
         .min(10, {
             message: "ISBN must be at least10 characters long",
         })
-        .max(13, {
+        .max(17, {
             message: "ISBN must be at most 13 characters long",
         })
         .optional(),

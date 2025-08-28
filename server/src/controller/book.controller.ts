@@ -4,6 +4,9 @@ import { Request, Response, NextFunction } from "express";
 // import services
 import bookService from "@/service/book.service";
 
+// import types
+import { BookQueryParamsType } from "@root/shared/types";
+
 const bookController = {
     getBookByID: async (req: Request, res: Response, next: NextFunction) => {
         try {
@@ -16,7 +19,9 @@ const bookController = {
     },
     getBooks: async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const books = await bookService.getBooks();
+            const books = await bookService.getBooks(
+                req.query as BookQueryParamsType
+            );
             res.status(200).json(books);
         } catch (error) {
             next(error);
