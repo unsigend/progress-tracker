@@ -13,8 +13,8 @@ interface BookType {
     pages?: number;
     image?: string;
     ISBN?: string;
-    createdAt: Date;
-    updatedAt: Date;
+    createdAt?: Date;
+    updatedAt?: Date;
 }
 
 /**

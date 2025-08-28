@@ -109,6 +109,7 @@ const bookService = {
      * Create a new book
      * @param book - The book object to create
      * @returns The created book in Promise
+     * @note Data is assumed to be already validated by middleware
      */
     createBook: async (book: BookType): Promise<BookType> => {
         const newBook = await BookModel.create(book);

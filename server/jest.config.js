@@ -11,4 +11,8 @@ module.exports = {
         "^@root/(.*)$": "<rootDir>/../$1",
     },
     collectCoverageFrom: ["src/**/*.ts", "!src/**/*.d.ts"],
+    // Global setup and teardown
+    globalSetup: "<rootDir>/test/setup/globalSetup.ts",
+    globalTeardown: "<rootDir>/test/setup/globalTeardown.ts",
+    maxWorkers: 1,
 };
