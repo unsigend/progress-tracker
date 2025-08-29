@@ -94,6 +94,7 @@ const bookService = {
 
     /**
      * Get all books
+     * @param queryObject - BookQueryParamsType containing the query config
      * @returns All books in Promise
      */
     getBooks: async (queryObject: BookQueryParamsType): Promise<BookType[]> => {
