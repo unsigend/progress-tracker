@@ -17,7 +17,7 @@ import { isValidISBN } from "@/util/ISBN";
  * @param queryObject - BookQueryParamsType containing the query config
  * @returns The books in Promise
  *
- * the default sortBy is createdAt
+ * the default sortBy is _id (timestamp)
  * the default sortOrder is desc (latest to oldest)
  * the default page is 1
  * the default limit is 10
@@ -33,7 +33,7 @@ const _getAllBooks = async (
     const _projectionObject: any = null;
     const _optionsObject: any = {};
 
-    const _defaultSortBy = "createdAt";
+    const _defaultSortBy = "_id";
     const _defaultSortOrder = "desc";
     const _defaultPage = 1;
     const _defaultLimit = 10;

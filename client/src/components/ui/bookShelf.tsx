@@ -1,8 +1,8 @@
 import BookCard from "@/components/ui/bookCard";
-import type { BookType } from "@root/shared/types";
+import type { BookWithId } from "@/types/frontend";
 
 interface BookShelfProps {
-    books: BookType[];
+    books: BookWithId[];
     className?: string;
 }
 
@@ -15,7 +15,7 @@ const BookShelf = ({ books, className = "" }: BookShelfProps) => {
                 <BookCard
                     key={book._id}
                     imageURL={book.image}
-                    link={`/books/${book.title}`}
+                    link={`/books/${book._id}`}
                 />
             ))}
         </div>

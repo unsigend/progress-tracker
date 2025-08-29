@@ -9,12 +9,12 @@ const menuItems = [
     {
         label: "Reading Progress",
         icon: BookOpen,
-        path: "/dashboard/reading-progress",
+        path: "/dashboard/reading",
     },
     {
         label: "Course Progress",
         icon: GraduationCap,
-        path: "/dashboard/course-progress",
+        path: "/dashboard/course",
     },
 ];
 
