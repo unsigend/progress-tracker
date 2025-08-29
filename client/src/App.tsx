@@ -2,12 +2,12 @@
 import { Route, Routes } from "react-router";
 
 // import layouts
-import LandingLayout from "@/layout/landing/main";
-import DashboardLayout from "@/layout/dashboard/main";
+import LandingLayout from "@/components/layout/landing/main";
+import DashboardLayout from "@/components/layout/dashboard/main";
 
 // import pages
-import HomePage from "@/pages/landing/home";
-import DashboardHomePage from "@/pages/dashboard/home";
+import HomePage from "@/components/pages/landing/home";
+import DashboardHomePage from "@/components/pages/dashboard/home";
 
 export default function App() {
     return (

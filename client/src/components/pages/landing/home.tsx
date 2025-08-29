@@ -1,6 +1,14 @@
+// import data
+import stats from "@/data/landing/status";
+import techIcons from "@/data/landing/techIcons";
+import features from "@/data/landing/features";
+
+// import components
+import FeatureCard from "@/components/ui/featureCard";
+
 const HeroImageBar = () => {
     return (
-        <div className="flex flex-col lg:flex-row items-center justify-center gap-6 lg:gap-2">
+        <section className="flex flex-col lg:flex-row items-center justify-center gap-6 lg:gap-2">
             <div className="flex-1 text-center lg:text-left max-w-lg lg:max-w-none">
                 <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 sm:mb-6 leading-tight">
                     Progress tracking made simple
@@ -29,13 +37,13 @@ const HeroImageBar = () => {
                     className="w-full max-w-sm sm:max-w-md lg:max-w-lg h-auto"
                 />
             </div>
-        </div>
+        </section>
     );
 };
 
 const AnalyticBar = () => {
     return (
-        <div className="w-full py-8 sm:py-12">
+        <section className="w-full py-8 sm:py-12">
             <div className="text-center mb-6 sm:mb-8">
                 <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900">
                     Analytics Overview
@@ -46,7 +54,7 @@ const AnalyticBar = () => {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-                {stats.map((stat, index) => (
+                {stats.map((stat, index: number) => (
                     <div
                         key={index}
                         className="bg-white border border-gray-200 rounded-xl p-4 sm:p-5 transition-all duration-300 hover:shadow-lg hover:border-gray-300"
@@ -69,13 +77,13 @@ const AnalyticBar = () => {
                     </div>
                 ))}
             </div>
-        </div>
+        </section>
     );
 };
 
 const BuildWithBar = () => {
     return (
-        <div className="w-full py-8 sm:py-12 lg:py-16">
+        <section className="w-full py-8 sm:py-12 lg:py-16">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="text-center mb-6 sm:mb-8 lg:mb-10">
                     <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900">
@@ -108,13 +116,13 @@ const BuildWithBar = () => {
                     ))}
                 </div>
             </div>
-        </div>
+        </section>
     );
 };
 
 const FeaturesBar = () => {
     return (
-        <div className="w-full">
+        <section className="w-full">
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 text-center mb-6">
                 Features
             </h2>
@@ -128,18 +136,18 @@ const FeaturesBar = () => {
                     />
                 ))}
             </div>
-        </div>
+        </section>
     );
 };
 
 const Home = () => {
     return (
-        <div className="flex flex-col gap-8 sm:gap-10 lg:gap-12">
+        <section className="flex flex-col gap-8 sm:gap-10 lg:gap-12">
             <HeroImageBar />
             <AnalyticBar />
             <FeaturesBar />
             <BuildWithBar />
-        </div>
+        </section>
     );
 };
 

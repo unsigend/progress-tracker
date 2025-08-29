@@ -3,7 +3,7 @@ import {
     MiniBarChart,
     MiniLineChart,
     MiniPieChart,
-} from "@/components/miniChart";
+} from "@/components/ui/miniChart";
 
 const stats = [
     {

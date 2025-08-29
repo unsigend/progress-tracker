@@ -7,6 +7,7 @@
  * @property {string} description - description of the book
  */
 interface BookType {
+    _id: string;
     title: string;
     author?: string;
     description?: string;
@@ -15,6 +16,7 @@ interface BookType {
     ISBN?: string;
     createdAt?: Date;
     updatedAt?: Date;
+    __v?: number;
 }
 
 /**
