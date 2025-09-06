@@ -14,7 +14,6 @@ interface BookQueryType {
     sortedBy?: "title" | "createdAt";
     order?: "asc" | "desc";
     search?: string;
-    searchBy?: "title" | "author" | "ISBN";
     limit?: number;
     page?: number;
 }
