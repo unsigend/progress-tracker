@@ -10,4 +10,13 @@ interface BookType {
     ISBN?: string;
 }
 
-export type { BookType };
+interface BookQueryType {
+    sortedBy?: "title" | "createdAt";
+    order?: "asc" | "desc";
+    search?: string;
+    searchBy?: "title" | "author" | "ISBN";
+    limit?: number;
+    page?: number;
+}
+
+export type { BookType, BookQueryType };
