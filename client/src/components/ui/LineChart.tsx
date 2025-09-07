@@ -11,8 +11,8 @@ type ChartData = {
 
 /**
  * Line Chart Component
- * @param {ChartData[]} chartData - The data for the chart
- * @returns
+ * @param chartData: chart data
+ * @returns Line chart component
  */
 function LineChartComponent({ chartData }: { chartData: ChartData[] }) {
     return (

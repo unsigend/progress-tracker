@@ -1,10 +1,18 @@
 // import Icons
-import { Github, Download } from "lucide-react";
+import { Github, ArrowRight } from "lucide-react";
 
 // import Components
 import { Button } from "@/components/ui/button";
 
+// import config
+import globalConfig from "@/data/global";
+
+// import dependencies
+import { useNavigate } from "react-router";
+
 const HeroBar = () => {
+    const navigate = useNavigate();
+
     return (
         <div className="max-w-6xl mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-6 lg:gap-8 items-center">
@@ -24,14 +32,28 @@ const HeroBar = () => {
 
                     {/* Action Buttons */}
                     <div className="flex flex-col sm:flex-row gap-3 justify-center pt-4 lg:justify-start md:gap-6">
-                        <Button className="w-full sm:w-auto">
-                            <Download className="size-4 mr-2" />
-                            Download for Free
+                        <Button
+                            className="w-full sm:w-auto cursor-pointer"
+                            onClick={() => {
+                                navigate("/signup");
+                            }}
+                        >
+                            <ArrowRight className="size-4 mr-2" />
+                            Quick Start
                         </Button>
-                        <Button variant="outline" className="w-full sm:w-auto">
-                            <Github className="size-4 mr-2" />
-                            GitHub Repo
-                        </Button>
+                        <a
+                            href={globalConfig.github}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <Button
+                                variant="outline"
+                                className="w-full sm:w-auto cursor-pointer"
+                            >
+                                <Github className="size-4 mr-2" />
+                                GitHub Repo
+                            </Button>
+                        </a>
                     </div>
                 </div>
 

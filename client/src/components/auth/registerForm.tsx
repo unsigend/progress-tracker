@@ -19,6 +19,14 @@ interface FormData {
     username: string;
 }
 
+/**
+ * Register form component
+ * @param currentStep: current step
+ * @param setCurrentStep: set current step
+ * @param formData: form data
+ * @param setFormData: set form data
+ * @returns Register form component
+ */
 const RegisterForm = ({
     currentStep,
     setCurrentStep,

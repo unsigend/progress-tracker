@@ -11,31 +11,33 @@ import {
 
 /**
  * Chart data interface
+ * @typedef {Object} ChartDataItem
+ * @property {string} key - Display name/label for the segment
+ * @property {number} value - Numeric value for the segment size
+ * @property {string} fill - Optional color for the segment (auto-generated if not provided)
  */
 interface ChartDataItem {
-    /** Display name/label for the segment */
     key: string;
-    /** Numeric value for the segment size */
     value: number;
-    /** Optional color for the segment (auto-generated if not provided) */
     fill?: string;
 }
 
 /**
  * Pie Chart Component Props
+ * @typedef {Object} PieChartProps
+ * @property {ChartDataItem[]} data - Array of chart data items
+ * @property {string} className - Chart container class name
+ * @property {boolean} showTooltip - Show tooltip on hover @default true
+ * @property {number} innerRadius - Inner radius for donut chart @default 60
+ * @property {number} outerRadius - Outer radius @default 80
+ * @property {boolean} showLegend - Show legend at the bottom of the chart @default false
  */
 interface PieChartProps {
-    /** Array of chart data items */
     data: ChartDataItem[];
-    /** Chart container class name */
     className?: string;
-    /** Show tooltip on hover @default true */
     showTooltip?: boolean;
-    /** Inner radius for donut chart @default 60 */
     innerRadius?: number;
-    /** Outer radius @default 80 */
     outerRadius?: number;
-    /** Show legend on hover @default false */
     showLegend?: boolean;
 }
 
@@ -55,7 +57,7 @@ const generateGrayscaleColors = (dataLength: number) => {
 };
 
 /**
- * Rebuild PieChart Component based on shadcn/ui
+ * PieChart Component based on shadcn/ui
  */
 const PieChartComponent = ({
     data,
