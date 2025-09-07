@@ -8,8 +8,8 @@ import random from "@/util/random";
 const graphData = [
     {
         title: "Track Your course progress",
-        incremental1: "+240min",
-        incremental2: "+40% from last month",
+        incremental1: "Time Spent",
+        incremental2: "21.7h",
         chartData: [
             { key: "lecture", value: 300 },
             { key: "lab", value: 380 },

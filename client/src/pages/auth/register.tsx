@@ -27,7 +27,6 @@ const RegisterPage = () => {
     return (
         <div className="grid md:grid-cols-2 min-h-[600px]">
             {/* Left Side - Progress Chart */}
-
             {/* Graph Data rendered dynamically based on the current step */}
             <div className="bg-gray-50/50 p-8 flex items-center justify-center">
                 <div className="w-full max-w-sm">

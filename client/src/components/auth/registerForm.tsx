@@ -74,7 +74,7 @@ const RegisterForm = ({
                     <h1 className="text-2xl font-semibold text-gray-900 transition-all duration-300">
                         {steps[currentStep - 1]?.title}
                     </h1>
-                    <Button variant="link" className="text-sm">
+                    <Button variant="link" className="text-sm cursor-pointer">
                         <Link to="/login">Login</Link>
                     </Button>
                 </div>
@@ -120,7 +120,7 @@ const RegisterForm = ({
                             type="button"
                             variant="outline"
                             onClick={handlePreviousStep}
-                            className="flex-1 transition-all duration-200"
+                            className="flex-1 transition-all duration-200 cursor-pointer"
                         >
                             Back
                         </Button>
@@ -130,7 +130,7 @@ const RegisterForm = ({
                         onClick={handleNextStep}
                         className={`transition-all duration-200 ${
                             currentStep === 1 ? "w-full" : "flex-1"
-                        }`}
+                        } cursor-pointer`}
                     >
                         {currentStepData?.buttonText}
                     </Button>
@@ -144,7 +144,10 @@ const RegisterForm = ({
 
                         {/* Social Login Buttons */}
                         <div className="space-y-2 transition-all duration-300">
-                            <Button variant="outline" className="w-full">
+                            <Button
+                                variant="outline"
+                                className="w-full cursor-pointer"
+                            >
                                 <img
                                     src="/image/google.svg"
                                     alt="Google"
@@ -152,7 +155,10 @@ const RegisterForm = ({
                                 />
                                 Sign up with Google
                             </Button>
-                            <Button variant="outline" className="w-full">
+                            <Button
+                                variant="outline"
+                                className="w-full cursor-pointer"
+                            >
                                 <img
                                     src="/image/github.svg"
                                     alt="GitHub"

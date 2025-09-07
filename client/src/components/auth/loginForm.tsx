@@ -14,7 +14,7 @@ const LoginForm = () => {
                     <h1 className="text-2xl font-semibold text-gray-900">
                         Welcome back!
                     </h1>
-                    <Button variant="link" className="text-sm">
+                    <Button variant="link" className="text-sm cursor-pointer">
                         <Link to="/signup">Sign Up</Link>
                     </Button>
                 </div>
@@ -39,7 +39,7 @@ const LoginForm = () => {
                         <Label htmlFor="password">Password</Label>
                         <a
                             href="#"
-                            className="text-sm text-gray-600 hover:text-gray-900 underline-offset-4 hover:underline"
+                            className="text-sm text-gray-600 hover:text-gray-900 underline-offset-4 hover:underline cursor-pointer"
                         >
                             Forgot your password?
                         </a>
@@ -50,7 +50,7 @@ const LoginForm = () => {
 
             {/* Actions */}
             <div className="space-y-4">
-                <Button type="submit" className="w-full">
+                <Button type="submit" className="w-full cursor-pointer">
                     Login
                 </Button>
 
@@ -68,7 +68,7 @@ const LoginForm = () => {
 
                 {/* Social Login Buttons */}
                 <div className="space-y-2">
-                    <Button variant="outline" className="w-full">
+                    <Button variant="outline" className="w-full cursor-pointer">
                         <img
                             src="/image/google.svg"
                             alt="Google"
@@ -76,7 +76,7 @@ const LoginForm = () => {
                         />
                         Login with Google
                     </Button>
-                    <Button variant="outline" className="w-full">
+                    <Button variant="outline" className="w-full cursor-pointer">
                         <img
                             src="/image/github.svg"
                             alt="GitHub"

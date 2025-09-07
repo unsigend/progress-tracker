@@ -12,7 +12,7 @@ const StepIndicator = ({
     totalSteps: number;
 }) => {
     return (
-        <div className="flex items-center justify-center space-x-2 mb-4">
+        <div className="flex items-center justify-center space-x-2 mb-8">
             {Array.from({ length: totalSteps }, (_, index) => (
                 <div key={index + 1} className="flex items-center">
                     <div
