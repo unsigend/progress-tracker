@@ -3,9 +3,9 @@ import { Outlet } from "react-router";
 
 const DashboardMainLayout = () => {
     return (
-        <div>
+        <section>
             <Outlet />
-        </div>
+        </section>
     );
 };
 
