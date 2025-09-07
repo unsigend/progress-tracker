@@ -1,81 +1,50 @@
 // import components
-import { Button } from "@/components/ui/button";
-import {
-    Card,
-    CardAction,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Link } from "react-router";
+import LoginForm from "@/components/auth/loginForm";
+import BarChartComponent from "@/components/ui/BarChart";
+
+// import utils
+import random from "@/util/random";
+
+// generate random data for the chart
+const chartData = Array.from({ length: 8 }, () => ({
+    value: random.generateRandomNumber(10, 100),
+}));
 
 const LoginPage = () => {
     return (
-        <Card className="w-full max-w-sm">
-            <CardHeader>
-                <CardTitle>Welcome back!</CardTitle>
-                <CardDescription>
-                    Enter your email below to login to your account
-                </CardDescription>
-                <CardAction>
-                    <Button variant="link">
-                        <Link to="/signup">Sign Up</Link>
-                    </Button>
-                </CardAction>
-            </CardHeader>
-            <CardContent>
-                <form>
-                    <div className="flex flex-col gap-6">
-                        <div className="grid gap-2">
-                            <Label htmlFor="email">Email</Label>
-                            <Input
-                                id="email"
-                                type="email"
-                                placeholder="m@example.com"
-                                required
-                            />
+        <div className="grid md:grid-cols-2 min-h-[600px]">
+            {/* Left Side - Progress Chart */}
+            <div className="bg-gray-50/50 p-8 flex items-center justify-center">
+                <div className="w-full max-w-sm">
+                    {/* Header */}
+                    <div className="flex items-center justify-between mb-8">
+                        <h2 className="text-gray-600 text-xl font-medium">
+                            Track Your Reading Progress
+                        </h2>
+                    </div>
+                    {/* Main Metric */}
+                    <div className="mb-12">
+                        <div className="text-4xl font-bold text-gray-900 mb-4 leading-none">
+                            +240 min
                         </div>
-                        <div className="grid gap-2">
-                            <div className="flex items-center">
-                                <Label htmlFor="password">Password</Label>
-                                <a
-                                    href="#"
-                                    className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
-                                >
-                                    Forgot your password?
-                                </a>
-                            </div>
-                            <Input id="password" type="password" required />
+                        <div className="text-gray-500 text-base">
+                            +40% from last week
                         </div>
                     </div>
-                </form>
-            </CardContent>
-            <CardFooter className="flex-col gap-2">
-                <Button type="submit" className="w-full">
-                    Login
-                </Button>
-                <Button variant="outline" className="w-full">
-                    <img
-                        src="/image/google.svg"
-                        alt="Google"
-                        className="size-4 mr-2"
-                    />
-                    Login with Google
-                </Button>
-                <Button variant="outline" className="w-full">
-                    <img
-                        src="/image/github.svg"
-                        alt="GitHub"
-                        className="size-4 mr-2"
-                    />
-                    Login with GitHub
-                </Button>
-            </CardFooter>
-        </Card>
+                    <BarChartComponent chartData={chartData} />
+
+                    {/* Additional spacing for balance */}
+                    <div className="mt-8"></div>
+                </div>
+            </div>
+
+            {/* Right Side - Login Form */}
+            <div className="p-8 flex items-center justify-center">
+                <div className="w-full max-w-sm">
+                    <LoginForm />
+                </div>
+            </div>
+        </div>
     );
 };
 
