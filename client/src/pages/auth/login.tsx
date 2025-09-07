@@ -1,6 +1,6 @@
 // import components
 import LoginForm from "@/components/auth/loginForm";
-import BarChartComponent from "@/components/ui/BarChart";
+import LineChartComponent from "@/components/ui/LineChart";
 
 // import utils
 import random from "@/util/random";
@@ -31,7 +31,9 @@ const LoginPage = () => {
                             +40% from last week
                         </div>
                     </div>
-                    <BarChartComponent chartData={chartData} />
+
+                    {/* Bar Chart */}
+                    <LineChartComponent chartData={chartData} />
 
                     {/* Additional spacing for balance */}
                     <div className="mt-8"></div>

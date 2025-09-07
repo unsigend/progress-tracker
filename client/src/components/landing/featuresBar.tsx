@@ -2,7 +2,7 @@
 import features from "@/data/landing/features";
 
 // import components
-import FeatureCard from "@/components/landing/FeatureCard";
+import FeatureCard from "@/components/landing/featureCard";
 
 const FeaturesBar = () => {
     return (
@@ -16,7 +16,7 @@ const FeaturesBar = () => {
                     <p className="text-lg  max-w-3xl  lg:text-left">
                         Progress Tracker comes with powerful features to help
                         you monitor and analyze your daily progress across
-                        multiple domains with seamless integrations.
+                        multiple domains with seamless integrations
                     </p>
                 </div>
 
