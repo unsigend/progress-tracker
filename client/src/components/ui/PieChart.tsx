@@ -1,74 +1,122 @@
-import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
+// import components
+import { Pie, PieChart } from "recharts";
+import {
+    type ChartConfig,
+    ChartContainer,
+    ChartTooltip,
+    ChartTooltipContent,
+    ChartLegend,
+    ChartLegendContent,
+} from "@/components/ui/chart";
 
 /**
- * Chart Data Type
- * @typedef {Object} ChartData
- * @property {number} value - The value of the chart
- * @property {string} name - Optional name for the data point
+ * Chart data interface
  */
-type ChartData = {
+interface ChartDataItem {
+    /** Display name/label for the segment */
+    key: string;
+    /** Numeric value for the segment size */
     value: number;
-    name?: string;
+    /** Optional color for the segment (auto-generated if not provided) */
+    fill?: string;
+}
+
+/**
+ * Pie Chart Component Props
+ */
+interface PieChartProps {
+    /** Array of chart data items */
+    data: ChartDataItem[];
+    /** Chart container class name */
+    className?: string;
+    /** Show tooltip on hover @default true */
+    showTooltip?: boolean;
+    /** Inner radius for donut chart @default 60 */
+    innerRadius?: number;
+    /** Outer radius @default 80 */
+    outerRadius?: number;
+    /** Show legend on hover @default false */
+    showLegend?: boolean;
+}
+
+/**
+ * Generate grayscale colors for chart segments
+ */
+const generateGrayscaleColors = (dataLength: number) => {
+    const colors = [
+        "#000000", // black
+        "#374151", // gray-700
+        "#6b7280", // gray-500
+        "#9ca3af", // gray-400
+        "#d1d5db", // gray-300
+        "#f3f4f6", // gray-100
+    ];
+    return colors.slice(0, dataLength);
 };
 
 /**
- * Pie Chart Component
- * @param {ChartData[]} chartData - The data for the chart
- * @returns
+ * Rebuild PieChart Component based on shadcn/ui
  */
-function PieChartComponent({ chartData }: { chartData: ChartData[] }) {
-    // Generate grayscale colors for each segment
-    const generateColors = (dataLength: number) => {
-        const baseColors = [
-            "#1f2937", // gray-800 (darkest)
-            "#374151", // gray-700
-            "#4b5563", // gray-600
-            "#6b7280", // gray-500
-            "#9ca3af", // gray-400
-            "#d1d5db", // gray-300 (lightest)
-        ];
-
-        // Repeat colors if we have more data points than colors
-        return Array.from(
-            { length: dataLength },
-            (_, index) => baseColors[index % baseColors.length]
-        );
-    };
-
-    const colors = generateColors(chartData.length);
-
-    // Add names to data if not provided
-    const processedData = chartData.map((item, index) => ({
+const PieChartComponent = ({
+    data,
+    className = "mx-auto aspect-square max-h-[250px]",
+    showTooltip = true,
+    innerRadius = 60,
+    outerRadius = 80,
+    showLegend = false,
+}: PieChartProps) => {
+    // Process data to ensure all items have fill colors
+    const processedData = data.map((item, index) => ({
         ...item,
-        name: item.name || `Segment ${index + 1}`,
+        fill: item.fill || generateGrayscaleColors(data.length)[index],
     }));
 
+    // Create chart config for shadcn/ui
+    const chartConfig: ChartConfig = {
+        value: {
+            label: "Value",
+        },
+        ...processedData.reduce((config, item) => {
+            config[item.key.toLowerCase().replace(/\s+/g, "")] = {
+                label: item.key,
+                color: item.fill,
+            };
+            return config;
+        }, {} as Record<string, unknown>),
+    } satisfies ChartConfig;
+
     return (
-        <div className="h-48 -mx-2 flex-grow">
-            <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-                    <Pie
-                        data={processedData}
-                        cx="50%"
-                        cy="50%"
-                        innerRadius={40}
-                        outerRadius={80}
-                        paddingAngle={2}
-                        dataKey="value"
-                        stroke="none"
-                    >
-                        {processedData.map((_, index) => (
-                            <Cell
-                                key={`cell-${index}`}
-                                fill={colors[index]}
-                                className="transition-all duration-200 hover:opacity-80"
-                            />
-                        ))}
-                    </Pie>
-                </PieChart>
-            </ResponsiveContainer>
-        </div>
+        <ChartContainer config={chartConfig} className={className}>
+            <PieChart>
+                {/* Tooltip when hovering over the chart */}
+                {showTooltip && (
+                    <ChartTooltip
+                        cursor={false}
+                        content={<ChartTooltipContent hideLabel />}
+                    />
+                )}
+
+                {/* Pie chart */}
+                <Pie
+                    data={processedData}
+                    dataKey="value"
+                    nameKey="key"
+                    innerRadius={innerRadius}
+                    outerRadius={outerRadius}
+                    strokeWidth={2}
+                    className="outline-none focus:outline-none"
+                />
+
+                {/* Legend under the chart */}
+                {showLegend && (
+                    <ChartLegend
+                        content={<ChartLegendContent nameKey="key" />}
+                        className="-translate-y-2 flex-wrap gap-2 *:basis-1/4 *:justify-center text-md"
+                    />
+                )}
+            </PieChart>
+        </ChartContainer>
     );
-}
+};
 
 export default PieChartComponent;
