@@ -11,6 +11,7 @@ import bookRouter from "@/routes/book.route.js";
 
 // import config
 import apiConfig from "@/config/api.js";
+import { connectDB, disconnectDB } from "@/config/db.js";
 
 async function main() {
     // load environment variables
@@ -38,8 +39,16 @@ async function main() {
     // setup host
     const host = process.env.HOST || "localhost";
 
+    // connect to database
+    await connectDB();
+
     // start the server
-    app.listen(port, () => {
+    app.listen(parseInt(port, 10), host, async (err: Error | undefined) => {
+        if (err) {
+            logger.serverLog(logger.logType.FATAL, err.message);
+            await disconnectDB();
+            process.exit(1);
+        }
         logger.serverLog(
             logger.logType.SUCCESS,
             `Server is running on http://${host}:${port}`
