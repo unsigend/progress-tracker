@@ -1,7 +1,7 @@
 // import Components
 import HeroBar from "@/components/landing/heroBar";
 import FeaturesBar from "@/components/landing/featuresBar";
-import BuildWithBar from "@/components/landing/BuildWithBar";
+import BuildWithBar from "@/components/landing/buildWithBar";
 
 const LandingHomePage = () => {
     return (

@@ -4,6 +4,7 @@ import { Routes, Route } from "react-router";
 // import layouts
 import LandingMainLayout from "@/layout/landing/main";
 import DashboardMainLayout from "@/layout/dashboard/main";
+import AuthMainLayout from "@/layout/auth/main";
 
 // import landing pages
 import LandingHomePage from "@/pages/landing/home";
@@ -12,6 +13,10 @@ import LandingAboutPage from "@/pages/landing/about";
 // import dashboard pages
 import DashboardHomePage from "@/pages/dashboard/home";
 import DashboardReadingPage from "@/pages/dashboard/reading";
+
+// import auth pages
+import LoginPage from "@/pages/auth/login";
+import RegisterPage from "@/pages/auth/register";
 
 const AppRoutes = () => {
     return (
@@ -31,6 +36,14 @@ const AppRoutes = () => {
                 <Route index element={<DashboardHomePage />} />
                 {/* dashboard reading page */}
                 <Route path="reading" element={<DashboardReadingPage />} />
+            </Route>
+
+            {/* auth routes */}
+            <Route element={<AuthMainLayout />}>
+                {/* auth login page */}
+                <Route path="login" element={<LoginPage />} />
+                {/* auth register page */}
+                <Route path="signup" element={<RegisterPage />} />
             </Route>
         </Routes>
     );

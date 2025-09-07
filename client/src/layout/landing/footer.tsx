@@ -1,4 +1,5 @@
-import { Github, Twitter, Mail } from "lucide-react";
+import globalConfig from "@/data/global";
+import { Github, Mail } from "lucide-react";
 
 const LandingFooter = () => {
     return (
@@ -153,23 +154,20 @@ const LandingFooter = () => {
                             {/* Social Links */}
                             <div className="flex items-center gap-4">
                                 <a
-                                    href="#"
+                                    href={`${globalConfig.github}`}
                                     className="text-gray-400 hover:text-white transition-colors"
                                     aria-label="GitHub"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
                                 >
                                     <Github className="w-5 h-5" />
                                 </a>
                                 <a
-                                    href="#"
-                                    className="text-gray-400 hover:text-white transition-colors"
-                                    aria-label="Twitter"
-                                >
-                                    <Twitter className="w-5 h-5" />
-                                </a>
-                                <a
-                                    href="#"
+                                    href={`mailto:${globalConfig.email}`}
                                     className="text-gray-400 hover:text-white transition-colors"
                                     aria-label="Email"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
                                 >
                                     <Mail className="w-5 h-5" />
                                 </a>
@@ -178,13 +176,13 @@ const LandingFooter = () => {
                             {/* Legal Links */}
                             <div className="flex items-center gap-6 text-sm">
                                 <a
-                                    href="#privacy"
+                                    href={`${globalConfig.privacyPolicy}`}
                                     className="text-gray-400 hover:text-white transition-colors"
                                 >
                                     Privacy Policy
                                 </a>
                                 <a
-                                    href="#terms"
+                                    href={`${globalConfig.termsOfService}`}
                                     className="text-gray-400 hover:text-white transition-colors"
                                 >
                                     Terms of Service

@@ -25,27 +25,46 @@ const LandingNavBar = () => {
                     <Logo fontSize="text-xl" />
                     <div className="flex items-center gap-4">
                         <Link to="/">
-                            <Button variant="link" className="text-md">
+                            <Button
+                                variant="link"
+                                className="text-md cursor-pointer"
+                            >
                                 Home
                             </Button>
                         </Link>
                         <Link to="/about">
-                            <Button variant="link" className="text-md">
+                            <Button
+                                variant="link"
+                                className="text-md cursor-pointer"
+                            >
                                 About
                             </Button>
                         </Link>
                         <Link to="/contact">
-                            <Button variant="link" className="text-md">
+                            <Button
+                                variant="link"
+                                className="text-md cursor-pointer"
+                            >
                                 Contact
                             </Button>
                         </Link>
                     </div>
                     <div className="flex items-center gap-4">
                         <Link to="/login">
-                            <Button variant="outline">Login</Button>
+                            <Button
+                                variant="outline"
+                                className="cursor-pointer"
+                            >
+                                Login
+                            </Button>
                         </Link>
                         <Link to="/signup">
-                            <Button variant="default">Signup</Button>
+                            <Button
+                                variant="default"
+                                className="cursor-pointer"
+                            >
+                                Signup
+                            </Button>
                         </Link>
                     </div>
                 </div>
