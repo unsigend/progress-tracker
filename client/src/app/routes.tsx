@@ -30,8 +30,7 @@ const AppRoutes = () => {
             </Route>
 
             {/* dashboard routes */}
-            <Route path="dashboard">
-                <Route element={<DashboardMainLayout />} />
+            <Route path="dashboard" element={<DashboardMainLayout />}>
                 {/* dashboard home page */}
                 <Route index element={<DashboardHomePage />} />
                 {/* dashboard reading page */}
