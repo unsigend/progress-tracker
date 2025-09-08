@@ -2,13 +2,19 @@
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+
 import { Link } from "react-router";
+import { toast } from "react-toastify";
 
 import StepIndicator from "@/components/auth/stepIndicator";
 import Divider from "@/components/ui/Divider";
 
 // import data
 import steps from "@/data/auth/stepData";
+import userAPI from "@/api/user";
+
+// import util
+import validate from "@/util/validate";
 
 /**
  * Form data interface
@@ -52,9 +58,23 @@ const RegisterForm = ({
     };
 
     // handle next step
-    const handleNextStep = (event: React.FormEvent) => {
+    const handleNextStep = async (event: React.FormEvent) => {
         event.preventDefault();
         if (currentStep < steps.length) {
+            // check if email is already in use
+            if (steps[currentStep - 1].field === "email") {
+                // validate email format first
+                if (!validate.email(formData.email)) {
+                    toast.error("Please enter a valid email address");
+                    return;
+                }
+
+                const response = await userAPI.checkUserEmail(formData.email);
+                if (response.exists) {
+                    toast.error(response.message);
+                    return;
+                }
+            }
             setCurrentStep(currentStep + 1);
         } else {
             console.log("Registration data:", formData);
