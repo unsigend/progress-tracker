@@ -14,7 +14,9 @@ const queryClient = new QueryClient();
 const App = () => {
     return (
         <QueryClientProvider client={queryClient}>
+            {/* app routes */}
             <AppRoutes />
+            {/* toast container */}
             <ToastContainer
                 position="top-right"
                 autoClose={3000}

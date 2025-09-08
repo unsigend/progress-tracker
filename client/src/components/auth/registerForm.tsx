@@ -1,9 +1,11 @@
+// import dependencies
+import { useMutation } from "@tanstack/react-query";
+import { Link, useNavigate } from "react-router";
+
 // import components
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-
-import { Link } from "react-router";
 import { toast } from "react-toastify";
 
 import StepIndicator from "@/components/auth/stepIndicator";
@@ -11,10 +13,15 @@ import Divider from "@/components/ui/Divider";
 
 // import data
 import steps from "@/data/auth/stepData";
+
+// import api
 import userAPI from "@/api/user";
 
 // import util
 import validate from "@/util/validate";
+
+// import types
+import type { UserType } from "@root/shared/types";
 
 /**
  * Form data interface
@@ -44,8 +51,23 @@ const RegisterForm = ({
     formData: FormData;
     setFormData: React.Dispatch<React.SetStateAction<FormData>>;
 }) => {
+    // navigate
+    const navigate = useNavigate();
+
     // get current step data
     const currentStepData = steps.find((step) => step.id === currentStep);
+
+    // create user mutation
+    const mutation = useMutation({
+        mutationFn: (user: UserType) => userAPI.createUser(user),
+        onSuccess: () => {
+            // after successful creation, redirect to the dashboard
+            navigate("/dashboard");
+        },
+        onError: (error) => {
+            toast.error(error.message);
+        },
+    });
 
     // handle input change and set form data
     const handleInputChange = (value: string) => {
@@ -61,9 +83,12 @@ const RegisterForm = ({
     const handleNextStep = async (event: React.FormEvent) => {
         event.preventDefault();
         if (currentStep < steps.length) {
-            // check if email is already in use
-            if (steps[currentStep - 1].field === "email") {
-                // validate email format first
+            const currentField = steps[currentStep - 1].field;
+
+            // validate based on current field
+
+            if (currentField === "email") {
+                // validate email
                 if (!validate.email(formData.email)) {
                     toast.error("Please enter a valid email address");
                     return;
@@ -74,10 +99,30 @@ const RegisterForm = ({
                     toast.error(response.message);
                     return;
                 }
+            } else if (currentField === "password") {
+                // validate password
+                if (!validate.password(formData.password)) {
+                    toast.error("Password must be at least 8 characters long");
+                    return;
+                }
+            } else if (currentField === "username") {
+                // validate username
+                if (!validate.username(formData.username)) {
+                    toast.error(
+                        "Username must be between 3 and 20 characters long"
+                    );
+                    return;
+                }
             }
+            // move to next step
             setCurrentStep(currentStep + 1);
         } else {
-            console.log("Registration data:", formData);
+            const user: UserType = {
+                email: formData.email,
+                password: formData.password,
+                username: formData.username,
+            };
+            mutation.mutate(user);
         }
     };
 
