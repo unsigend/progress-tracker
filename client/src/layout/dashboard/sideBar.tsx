@@ -2,14 +2,13 @@
 import { Link, useLocation } from "react-router";
 import { useState } from "react";
 
-// import icons
-import { User } from "lucide-react";
-
 // import utils
 import { cn } from "@/lib/utils";
 
 // import components
 import HamburgerButton from "@/components/ui/HamburgerButton";
+import Logo from "@/components/ui/logo";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 // import data
 import navigationItems from "@/data/dashboard/navigationItems";
@@ -70,9 +69,8 @@ const SideBar = () => {
                     {/* Navigation */}
                     <nav className="flex-1 space-y-1 p-4">
                         <div className="mb-8">
-                            <h2 className="text-lg font-semibold text-sidebar-foreground">
-                                Progress Tracker
-                            </h2>
+                            {/* Logo */}
+                            <Logo fontSize="text-xl" />
                         </div>
 
                         {navigationItems.map((item) => {
@@ -101,9 +99,10 @@ const SideBar = () => {
                     {/* Avatar Section */}
                     <div className="border-t border-sidebar-border p-4">
                         <div className="flex items-center gap-3">
-                            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-sidebar-accent">
-                                <User className="h-5 w-5 text-sidebar-accent-foreground" />
-                            </div>
+                            <Avatar>
+                                <AvatarImage src="https://github.com/shadcn.png" />
+                                <AvatarFallback>CN</AvatarFallback>
+                            </Avatar>
                             <div className="flex-1 min-w-0">
                                 <p className="text-sm font-medium text-sidebar-foreground truncate">
                                     John Doe

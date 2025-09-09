@@ -13,6 +13,9 @@ import LandingAboutPage from "@/pages/landing/about";
 // import dashboard pages
 import DashboardHomePage from "@/pages/dashboard/home";
 import DashboardReadingPage from "@/pages/dashboard/reading";
+import DashboardCoursesPage from "@/pages/dashboard/courses";
+import DashboardProjectPage from "@/pages/dashboard/projects";
+import DashboardLibraryPage from "@/pages/dashboard/library";
 
 // import auth pages
 import LoginPage from "@/pages/auth/login";
@@ -35,6 +38,15 @@ const AppRoutes = () => {
                 <Route index element={<DashboardHomePage />} />
                 {/* dashboard reading page */}
                 <Route path="reading" element={<DashboardReadingPage />} />
+                {/* landing library page */}
+                <Route
+                    path="reading/library"
+                    element={<DashboardLibraryPage />}
+                />
+                {/* landing courses page */}
+                <Route path="courses" element={<DashboardCoursesPage />} />
+                {/* landing project page */}
+                <Route path="projects" element={<DashboardProjectPage />} />
             </Route>
 
             {/* auth routes */}
