@@ -11,14 +11,17 @@ import { type BookType } from "@root/shared/types";
  * BookShelf component
  * @param books - Array of books to display
  * @param className - Additional CSS classes
+ * @param baseUrl - The base url of the book default is ""
  * @returns - A grid of book cards
  */
 const BookShelf = ({
     books,
     className,
+    baseUrl = "",
 }: {
     books: BookType[];
     className?: string;
+    baseUrl?: string;
 }) => {
     if (!books || books.length === 0) {
         return (
@@ -58,7 +61,7 @@ const BookShelf = ({
                                   }`
                                 : "Book cover"
                         }
-                        link={book._id}
+                        link={`${baseUrl}/${book._id}`}
                         className="transition-transform duration-200 hover:scale-105"
                         key={book._id}
                     />

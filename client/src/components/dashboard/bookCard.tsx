@@ -56,7 +56,7 @@ const BookCard = ({
     if (link) {
         return (
             <Link
-                to={`${location.pathname}/${link}`}
+                to={`${location.pathname}${link}`}
                 className="inline-block focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded-sm cursor-pointer"
             >
                 {cardContent}
