@@ -12,11 +12,12 @@ import LandingAboutPage from "@/pages/landing/about";
 
 // import dashboard pages
 import DashboardHomePage from "@/pages/dashboard/home";
-import DashboardReadingPage from "@/pages/dashboard/reading";
+import DashboardReadingPage from "@/pages/dashboard/reading/home";
 import DashboardCoursesPage from "@/pages/dashboard/courses";
 import DashboardProjectPage from "@/pages/dashboard/projects";
-import DashboardLibraryPage from "@/pages/dashboard/library";
-import DashboardBookDetailsPage from "@/pages/dashboard/bookDetails";
+import DashboardLibraryPage from "@/pages/dashboard/reading/library";
+import DashboardBookDetailsPage from "@/pages/dashboard/reading/bookDetails";
+import DashboardReadingAddBookPage from "@/pages/dashboard/reading/addBook";
 
 // import auth pages
 import LoginPage from "@/pages/auth/login";
@@ -43,6 +44,11 @@ const AppRoutes = () => {
                 <Route
                     path="reading/library"
                     element={<DashboardLibraryPage />}
+                />
+                {/* landing add book page */}
+                <Route
+                    path="reading/library/add"
+                    element={<DashboardReadingAddBookPage />}
                 />
                 {/* landing book details page */}
                 <Route
