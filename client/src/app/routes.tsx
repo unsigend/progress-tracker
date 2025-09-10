@@ -16,6 +16,7 @@ import DashboardReadingPage from "@/pages/dashboard/reading";
 import DashboardCoursesPage from "@/pages/dashboard/courses";
 import DashboardProjectPage from "@/pages/dashboard/projects";
 import DashboardLibraryPage from "@/pages/dashboard/library";
+import DashboardBookDetailsPage from "@/pages/dashboard/bookDetails";
 
 // import auth pages
 import LoginPage from "@/pages/auth/login";
@@ -42,6 +43,11 @@ const AppRoutes = () => {
                 <Route
                     path="reading/library"
                     element={<DashboardLibraryPage />}
+                />
+                {/* landing book details page */}
+                <Route
+                    path="reading/library/:id"
+                    element={<DashboardBookDetailsPage />}
                 />
                 {/* landing courses page */}
                 <Route path="courses" element={<DashboardCoursesPage />} />

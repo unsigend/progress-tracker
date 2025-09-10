@@ -48,7 +48,7 @@ const BookShelf = ({
             )}
         >
             {books.map((book) => (
-                <div key={book.id} className="flex justify-center">
+                <div key={book._id} className="flex justify-center">
                     <BookCard
                         image={book.image || "/placeholder-book.jpg"}
                         alt={
@@ -58,7 +58,9 @@ const BookShelf = ({
                                   }`
                                 : "Book cover"
                         }
+                        link={book._id}
                         className="transition-transform duration-200 hover:scale-105"
+                        key={book._id}
                     />
                 </div>
             ))}

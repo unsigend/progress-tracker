@@ -1,5 +1,5 @@
 interface BookType {
-    id: string;
+    _id: string;
     title?: string;
     author?: string;
     description?: string;
@@ -19,7 +19,7 @@ interface BookQueryType {
 }
 
 interface UserType {
-    id?: string;
+    _id?: string;
     username: string;
     email: string;
     password: string;

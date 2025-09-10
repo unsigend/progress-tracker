@@ -1,3 +1,6 @@
+// import dependencies
+import { Link, useLocation } from "react-router";
+
 import { cn } from "@/lib/utils";
 
 interface BookCardProps {
@@ -10,7 +13,7 @@ interface BookCardProps {
 /**
  * BookCard component
  * @param image - The image of the book
- * @param link - The link of the book
+ * @param link - The link of the book it should be the id of the book
  * @param alt - The alt of the book
  * @param className - The class name of the book
  */
@@ -20,6 +23,9 @@ const BookCard = ({
     alt = "Book cover",
     className,
 }: BookCardProps) => {
+    // get the location
+    const location = useLocation();
+
     const cardContent = (
         <div
             className={cn(
@@ -49,14 +55,12 @@ const BookCard = ({
 
     if (link) {
         return (
-            <a
-                href={link}
-                className="inline-block focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded-sm"
-                target="_blank"
-                rel="noopener noreferrer"
+            <Link
+                to={`${location.pathname}/${link}`}
+                className="inline-block focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded-sm cursor-pointer"
             >
                 {cardContent}
-            </a>
+            </Link>
         );
     }
 

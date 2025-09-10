@@ -1,6 +1,7 @@
 // import dependencies
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+import { Link } from "react-router";
 
 // import components
 import BookShelf from "@/components/dashboard/bookShelf";
@@ -72,22 +73,16 @@ const DashboardLibraryPage = () => {
                             </Button>
                         </form>
 
-                        {/* Optional: Filter/Sort buttons for future */}
                         <div className="flex gap-2">
-                            <Button
-                                variant="outline"
-                                size="sm"
-                                className="text-xs"
-                            >
-                                Sort A-Z
-                            </Button>
-                            <Button
-                                variant="outline"
-                                size="sm"
-                                className="text-xs"
-                            >
-                                Filter
-                            </Button>
+                            <Link to="/dashboard/reading/library/add">
+                                <Button
+                                    variant="outline"
+                                    size="sm"
+                                    className="text-xs"
+                                >
+                                    Add Book
+                                </Button>
+                            </Link>
                         </div>
                     </div>
                 </div>
