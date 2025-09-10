@@ -21,7 +21,7 @@ import userAPI from "@/api/user";
 import validate from "@/util/validate";
 
 // import types
-import type { UserType } from "@root/shared/types";
+import type { UserType } from "@root/types";
 
 /**
  * Form data interface

@@ -1,91 +1,40 @@
+// import dependencies
+import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
+
 // import components
 import BookShelf from "@/components/dashboard/bookShelf";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { toast } from "react-toastify";
+import { ClipLoader } from "react-spinners";
 
-// import types
-import { type BookType } from "@root/shared/types";
+// import api
+import bookAPI from "@/api/book";
+
+// import query types
+import { type BookQueryType } from "@root/shared/types";
 
 const DashboardLibraryPage = () => {
-    // Test data for computer science books
-    const testBooks: BookType[] = [
-        {
-            id: "1",
-            title: "Clean Code",
-            author: "Robert C. Martin",
-            image: "https://m.media-amazon.com/images/I/713LnlupOwL._SY522_.jpg",
-            pages: 464,
-            ISBN: "9780132350884",
-        },
-        {
-            id: "2",
-            title: "JavaScript: The Good Parts",
-            author: "Douglas Crockford",
-            image: "https://m.media-amazon.com/images/I/5131OWtQRaL._SX381_BO1,204,203,200_.jpg",
-            pages: 176,
-            ISBN: "9780596517748",
-        },
-        {
-            id: "3",
-            title: "Design Patterns",
-            author: "Gang of Four",
-            image: "https://m.media-amazon.com/images/I/51szD9HC9pL._SX395_BO1,204,203,200_.jpg",
-            pages: 395,
-            ISBN: "9780201633610",
-        },
-        {
-            id: "4",
-            title: "Introduction to Algorithms",
-            author: "Thomas H. Cormen",
-            image: "https://m.media-amazon.com/images/I/61Pgdn8Ys-L._SX440_BO1,204,203,200_.jpg",
-            pages: 1312,
-            ISBN: "9780262046305",
-        },
-        {
-            id: "5",
-            title: "The Pragmatic Programmer",
-            author: "Andrew Hunt",
-            image: "https://m.media-amazon.com/images/I/51W1sBPO7tL._SX380_BO1,204,203,200_.jpg",
-            pages: 352,
-            ISBN: "9780135957059",
-        },
-        {
-            id: "7",
-            title: "Cracking the Coding Interview",
-            author: "Gayle Laakmann McDowell",
-            image: "https://m.media-amazon.com/images/I/41oYsXjLvZL._SX348_BO1,204,203,200_.jpg",
-            pages: 687,
-            ISBN: "9780984782857",
-        },
-        {
-            id: "10",
-            title: "System Design Interview",
-            author: "Alex Xu",
-            image: "https://m.media-amazon.com/images/I/414CRjLjwgL._SX331_BO1,204,203,200_.jpg",
-            pages: 322,
-            ISBN: "9798664653403",
-        },
-        {
-            id: "11",
-            title: "The Clean Coder",
-            author: "Robert C. Martin",
-            image: "https://m.media-amazon.com/images/I/51E2055ZGUL._SX384_BO1,204,203,200_.jpg",
-            pages: 256,
-            ISBN: "9780137081073",
-        },
-        {
-            id: "12",
-            title: "Eloquent JavaScript",
-            author: "Marijn Haverbeke",
-            image: "https://m.media-amazon.com/images/I/51InjRPaF7L._SX377_BO1,204,203,200_.jpg",
-            pages: 472,
-            ISBN: "9781593279509",
-        },
-    ];
+    // state for query object
+    const [queryObject, setQueryObject] = useState<BookQueryType>({});
+    // state for search input
+    const [searchInput, setSearchInput] = useState<string>("");
+
+    // use Query to get all books
+    const { data, error, isLoading } = useQuery({
+        queryKey: ["books", queryObject],
+        queryFn: () => bookAPI.getAllBooks(queryObject),
+    });
+
+    if (error) {
+        toast.error(error.message);
+    }
 
     const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setQueryObject({ ...queryObject, search: searchInput });
     };
 
     return (
@@ -97,9 +46,6 @@ const DashboardLibraryPage = () => {
                         <h1 className="text-2xl font-semibold text-foreground">
                             The Library
                         </h1>
-                        <div className="text-sm text-muted-foreground">
-                            {testBooks.length} books
-                        </div>
                     </div>
 
                     {/* Search Section */}
@@ -112,6 +58,10 @@ const DashboardLibraryPage = () => {
                                 type="text"
                                 placeholder="Search by title, author, or ISBN..."
                                 className="flex-1"
+                                value={searchInput}
+                                onChange={(
+                                    e: React.ChangeEvent<HTMLInputElement>
+                                ) => setSearchInput(e.target.value)}
                             />
                             <Button
                                 type="submit"
@@ -143,7 +93,18 @@ const DashboardLibraryPage = () => {
                 </div>
             </CardHeader>
             <CardContent>
-                <BookShelf books={testBooks} />
+                {/* Loading State */}
+                {isLoading ? (
+                    <div className="flex justify-center items-center py-12">
+                        <ClipLoader
+                            color="#6b7280"
+                            size={40}
+                            speedMultiplier={0.8}
+                        />
+                    </div>
+                ) : (
+                    <BookShelf books={data} />
+                )}
             </CardContent>
         </Card>
     );
