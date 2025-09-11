@@ -37,7 +37,6 @@ const sampleBooks: BookType[] = [
         ISBN: "9781839214110",
         createdAt: new Date("2025-09-10T21:17:58.371Z"),
         updatedAt: new Date("2025-09-10T21:17:58.371Z"),
-        __v: 0,
     },
     {
         _id: "68c1eaafa9149ff18971e738",
