@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import BookCard from "@/components/dashboard/bookCard";
 
 // import api
-import bookAPI from "@/api/book.api";
+import apiClient from "@/api/apiClient";
 
 const BackToLibraryButton = () => {
     const navigate = useNavigate();
@@ -26,13 +26,9 @@ const BookDetailsPage = () => {
     const { id } = useParams();
 
     // Fetch book details
-    const {
-        data: book,
-        error,
-        isLoading,
-    } = useQuery({
+    const { data, error, isLoading } = useQuery({
         queryKey: ["book", id],
-        queryFn: () => bookAPI.getBookByID(id!),
+        queryFn: () => apiClient.api.booksControllerFindOne(id ?? ""),
         enabled: !!id,
     });
 
@@ -58,7 +54,7 @@ const BookDetailsPage = () => {
         );
     }
 
-    if (error || !book) {
+    if (error || !data) {
         return (
             <div className="max-w-7xl px-4">
                 <Card>
@@ -100,50 +96,50 @@ const BookDetailsPage = () => {
                             {/* Title */}
                             <div>
                                 <h1 className="text-2xl md:text-3xl font-semibold text-gray-900 leading-tight">
-                                    {book.title || "Untitled"}
+                                    {data.data.title || "Untitled"}
                                 </h1>
                             </div>
 
                             {/* Author */}
-                            {book.author && (
+                            {data.data.author && (
                                 <div>
                                     <h2 className="text-base md:text-lg text-gray-600">
-                                        by {book.author}
+                                        by {data.data.author}
                                     </h2>
                                 </div>
                             )}
 
                             {/* Description */}
-                            {book.description && (
+                            {data.data.description && (
                                 <div>
                                     <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wide mb-3">
                                         Description
                                     </h3>
                                     <p className="text-gray-700 leading-relaxed text-sm md:text-base">
-                                        {book.description}
+                                        {data.data.description}
                                     </p>
                                 </div>
                             )}
 
                             {/* Additional Info */}
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
-                                {book.pages && (
+                                {data.data.pages && (
                                     <div>
                                         <h4 className="text-sm font-medium text-gray-500 uppercase tracking-wide">
                                             Pages
                                         </h4>
                                         <p className="text-gray-700">
-                                            {book.pages}
+                                            {data.data.pages}
                                         </p>
                                     </div>
                                 )}
-                                {book.ISBN && (
+                                {data.data.ISBN && (
                                     <div>
                                         <h4 className="text-sm font-medium text-gray-500 uppercase tracking-wide">
                                             Normalized ISBN
                                         </h4>
                                         <p className="text-gray-700 font-mono text-sm">
-                                            {book.ISBN}
+                                            {data.data.ISBN}
                                         </p>
                                     </div>
                                 )}
@@ -153,8 +149,11 @@ const BookDetailsPage = () => {
                         {/* Book Image - Right Side */}
                         <div className="flex justify-center lg:justify-start lg:flex-shrink-0">
                             <BookCard
-                                image={book.imageURL || "/placeholder-book.jpg"}
-                                alt={book.title || "Book cover"}
+                                image={
+                                    data.data.imageURL ||
+                                    "/placeholder-book.jpg"
+                                }
+                                alt={data.data.title || "Book cover"}
                                 className="w-40 h-52 md:w-48 md:h-64"
                             />
                         </div>

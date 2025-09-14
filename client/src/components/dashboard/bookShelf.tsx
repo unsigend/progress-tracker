@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import BookCard from "@/components/dashboard/bookCard";
 
 // import types
-import { type BookType } from "@/types/book.type";
+import type { BookResponseDto } from "@/api/api";
 
 /**
  * BookShelf component
@@ -19,7 +19,7 @@ const BookShelf = ({
     className,
     baseUrl = "",
 }: {
-    books: BookType[];
+    books: BookResponseDto[];
     className?: string;
     baseUrl?: string;
 }) => {

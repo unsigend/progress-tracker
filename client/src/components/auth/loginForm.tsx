@@ -1,7 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
 // import dependencies
 import { Link } from "react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useContext } from "react";
 import { useNavigate } from "react-router";
 
@@ -12,24 +14,23 @@ import { Label } from "@/components/ui/label";
 import { toast } from "react-toastify";
 
 // import api
-import authAPI from "@/api/auth.api";
+import apiClient, { setAuthToken } from "@/api/apiClient";
 
 // import context
 import UserContext from "@/context/userContext";
 
 // import types
-import type { UserType } from "@/types/user.type";
+import type { AuthResponseDto, LoginDto, ResponseUserDto } from "@/api/api";
+import type { AxiosResponse } from "axios";
 
 const LoginForm = () => {
     // get setUser from context
-    const { setUser } = useContext(UserContext) as {
-        setUser: (user: UserType) => void;
+    const { setUser, user } = useContext(UserContext) as {
+        user: ResponseUserDto;
+        setUser: (user: ResponseUserDto) => void;
     };
     // get form data
-    const [formData, setFormData] = useState<{
-        email: string;
-        password: string;
-    }>({
+    const [formData, setFormData] = useState<LoginDto>({
         email: "",
         password: "",
     });
@@ -37,16 +38,28 @@ const LoginForm = () => {
     // navigate
     const navigate = useNavigate();
 
+    // if user is already logged in, redirect to dashboard
+    useEffect(() => {
+        if (user) {
+            navigate("/dashboard");
+        }
+    }, []);
+
     // handle login
     const handleLogin = async () => {
         try {
-            const jwtToken = await authAPI.login(
-                formData.email,
-                formData.password
-            );
-            localStorage.setItem("jwt-token", jwtToken);
-            const user = await authAPI.getCurrentUser();
-            setUser(user);
+            const jwtToken: AxiosResponse<AuthResponseDto> =
+                await apiClient.api.authControllerLogin({
+                    email: formData.email,
+                    password: formData.password,
+                });
+            setAuthToken(jwtToken.data.access_token);
+            // save the token to local storage
+            localStorage.setItem("jwt-token", jwtToken.data.access_token);
+            // get the user data
+            const user: AxiosResponse<ResponseUserDto> =
+                await apiClient.api.authControllerMe();
+            setUser(user.data);
 
             // redirect to dashboard
             navigate("/dashboard");

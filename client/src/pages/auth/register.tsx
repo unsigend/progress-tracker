@@ -8,14 +8,14 @@ import RegisterForm from "@/components/auth/registerForm";
 import graphData from "@/data/auth/graphData";
 
 // import types
-import { type UserType } from "@/types/user.type";
+import type { RegisterDto } from "@/api/api";
 
 const RegisterPage = () => {
     const [currentStep, setCurrentStep] = useState<number>(1);
-    const [formData, setFormData] = useState<UserType>({
+    const [formData, setFormData] = useState<RegisterDto>({
         email: "",
         password: "",
-        username: "",
+        name: "",
     });
 
     return (

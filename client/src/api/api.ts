@@ -10,74 +10,248 @@
  * ---------------------------------------------------------------
  */
 
-export interface CreateBookDto {
-  /** The title of the book */
+export interface BookResponseDto {
+  /**
+   * The unique identifier of the book
+   * @example "cm123456789abcdef"
+   */
+  id: string;
+  /**
+   * The title of the book
+   * @example "The Great Gatsby"
+   */
   title: string;
-  /** The author of the book */
+  /**
+   * The author of the book
+   * @example "F. Scott Fitzgerald"
+   */
+  author: string | null;
+  /**
+   * The description of the book
+   * @example "A classic American novel set in the Jazz Age"
+   */
+  description: string | null;
+  /**
+   * The number of pages in the book
+   * @example 180
+   */
+  pages: number | null;
+  /**
+   * The URL of the book's cover image
+   * @example "https://example.com/book-cover.jpg"
+   */
+  imageURL: string | null;
+  /**
+   * The ISBN of the book
+   * @example "978-0-7432-7356-5"
+   */
+  ISBN: string | null;
+  /**
+   * The timestamp when the book was created
+   * @format date-time
+   * @example "2024-01-15T10:30:00.000Z"
+   */
+  createdAt: string;
+  /**
+   * The timestamp when the book was last updated
+   * @format date-time
+   * @example "2024-01-15T10:30:00.000Z"
+   */
+  updatedAt: string;
+}
+
+export interface CreateBookDto {
+  /**
+   * The title of the book
+   * @example "The Great Gatsby"
+   */
+  title: string;
+  /**
+   * The author of the book
+   * @example "F. Scott Fitzgerald"
+   */
   author?: string;
-  /** The description of the book */
+  /**
+   * The description of the book
+   * @example "A classic American novel set in the Jazz Age"
+   */
   description?: string;
-  /** The number of pages in the book */
+  /**
+   * The number of pages in the book
+   * @example 180
+   */
   pages?: number;
-  /** The URL of the book's image */
+  /**
+   * The URL of the book's cover image
+   * @example "https://example.com/book-cover.jpg"
+   */
   imageURL?: string;
-  /** The ISBN of the book (ISBN-10 or ISBN-13) */
+  /**
+   * The ISBN of the book (ISBN-10 or ISBN-13)
+   * @example "978-0-7432-7356-5"
+   */
   ISBN?: string;
 }
 
 export interface UpdateBookDto {
-  /** The title of the book */
+  /**
+   * The title of the book
+   * @example "The Great Gatsby"
+   */
   title?: string;
-  /** The author of the book */
+  /**
+   * The author of the book
+   * @example "F. Scott Fitzgerald"
+   */
   author?: string;
-  /** The description of the book */
+  /**
+   * The description of the book
+   * @example "A classic American novel set in the Jazz Age"
+   */
   description?: string;
-  /** The number of pages in the book */
+  /**
+   * The number of pages in the book
+   * @example 180
+   */
   pages?: number;
-  /** The URL of the book's image */
+  /**
+   * The URL of the book's cover image
+   * @example "https://example.com/book-cover.jpg"
+   */
   imageURL?: string;
-  /** The ISBN of the book (ISBN-10 or ISBN-13) */
+  /**
+   * The ISBN of the book (ISBN-10 or ISBN-13)
+   * @example "978-0-7432-7356-5"
+   */
   ISBN?: string;
 }
 
 export interface PatchBookDto {
-  /** The title of the book */
+  /**
+   * The title of the book
+   * @example "The Great Gatsby"
+   */
   title?: string;
-  /** The author of the book */
+  /**
+   * The author of the book
+   * @example "F. Scott Fitzgerald"
+   */
   author?: string;
-  /** The description of the book */
+  /**
+   * The description of the book
+   * @example "A classic American novel set in the Jazz Age"
+   */
   description?: string;
-  /** The number of pages in the book */
+  /**
+   * The number of pages in the book
+   * @example 180
+   */
   pages?: number;
-  /** The URL of the book's image */
+  /**
+   * The URL of the book's cover image
+   * @example "https://example.com/book-cover.jpg"
+   */
   imageURL?: string;
-  /** The ISBN of the book (ISBN-10 or ISBN-13) */
+  /**
+   * The ISBN of the book (ISBN-10 or ISBN-13)
+   * @example "978-0-7432-7356-5"
+   */
   ISBN?: string;
 }
 
+export interface ResponseUserDto {
+  /**
+   * The unique identifier of the user
+   * @example "cm123456789abcdef"
+   */
+  id: string;
+  /**
+   * The name of the user
+   * @example "John Doe"
+   */
+  name: string;
+  /**
+   * The email address of the user
+   * @example "john.doe@example.com"
+   */
+  email: string;
+  /**
+   * The timestamp when the user was created
+   * @format date-time
+   * @example "2024-01-15T10:30:00.000Z"
+   */
+  createdAt: string;
+  /**
+   * The timestamp when the user was last updated
+   * @format date-time
+   * @example "2024-01-15T10:30:00.000Z"
+   */
+  updatedAt: string;
+}
+
 export interface UpdateUserDto {
-  /** The name of the user */
+  /**
+   * The full name of the user
+   * @example "John Doe"
+   */
   name?: string;
-  /** The email of the user */
+  /**
+   * The email address of the user
+   * @example "john.doe@example.com"
+   */
   email?: string;
-  /** The password of the user */
+  /**
+   * The new password for the user account
+   * @example "newSecurePassword123"
+   */
   password?: string;
 }
 
 export interface LoginDto {
-  /** The email of the user */
+  /**
+   * The email address of the user
+   * @example "john.doe@example.com"
+   */
   email: string;
-  /** The password of the user */
+  /**
+   * The password of the user
+   * @example "mySecurePassword123"
+   */
   password: string;
 }
 
+export interface AuthResponseDto {
+  /**
+   * The JWT access token for authentication
+   * @example "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+   */
+  access_token: string;
+}
+
 export interface RegisterDto {
-  /** The name of the user */
+  /**
+   * The full name of the user
+   * @example "John Doe"
+   */
   name: string;
-  /** The email of the user */
+  /**
+   * The email address of the user
+   * @example "john.doe@example.com"
+   */
   email: string;
-  /** The password of the user */
+  /**
+   * The password for the user account
+   * @example "mySecurePassword123"
+   */
   password: string;
+}
+
+export interface EmailCheckResponseDto {
+  /**
+   * Whether the email already exists in the system
+   * @example true
+   */
+  exists: boolean;
 }
 
 import type {
@@ -280,35 +454,41 @@ export class Api<
         /**
          * The search query could be title, author, or ISBN
          * @default ""
+         * @example "Gatsby"
          */
         search?: string;
         /**
          * The page number for pagination
          * @default 1
+         * @example 1
          */
         page?: number;
         /**
-         * The limit of books per page
+         * The number of books per page
          * @default 10
+         * @example 10
          */
         limit?: number;
         /**
          * The field to sort by
          * @default "createdAt"
+         * @example "createdAt"
          */
         sortedBy?: string;
         /**
-         * The order to sort by
+         * The sort order (ascending or descending)
          * @default "desc"
+         * @example "desc"
          */
         sortOrder?: string;
       },
       params: RequestParams = {},
     ) =>
-      this.request<any, object>({
+      this.request<BookResponseDto[], object>({
         path: `/api/v1/books`,
         method: "GET",
         query: query,
+        format: "json",
         ...params,
       }),
 
@@ -321,11 +501,12 @@ export class Api<
      * @request POST:/api/v1/books
      */
     booksControllerCreate: (data: CreateBookDto, params: RequestParams = {}) =>
-      this.request<any, object>({
+      this.request<BookResponseDto, void | object>({
         path: `/api/v1/books`,
         method: "POST",
         body: data,
         type: ContentType.Json,
+        format: "json",
         ...params,
       }),
 
@@ -338,9 +519,10 @@ export class Api<
      * @request GET:/api/v1/books/{id}
      */
     booksControllerFindOne: (id: string, params: RequestParams = {}) =>
-      this.request<any, object>({
+      this.request<BookResponseDto, void | object>({
         path: `/api/v1/books/${id}`,
         method: "GET",
+        format: "json",
         ...params,
       }),
 
@@ -357,11 +539,12 @@ export class Api<
       data: UpdateBookDto,
       params: RequestParams = {},
     ) =>
-      this.request<any, object>({
+      this.request<BookResponseDto, void | object>({
         path: `/api/v1/books/${id}`,
         method: "PUT",
         body: data,
         type: ContentType.Json,
+        format: "json",
         ...params,
       }),
 
@@ -378,11 +561,12 @@ export class Api<
       data: PatchBookDto,
       params: RequestParams = {},
     ) =>
-      this.request<any, object>({
+      this.request<BookResponseDto, void | object>({
         path: `/api/v1/books/${id}`,
         method: "PATCH",
         body: data,
         type: ContentType.Json,
+        format: "json",
         ...params,
       }),
 
@@ -395,9 +579,10 @@ export class Api<
      * @request DELETE:/api/v1/books/{id}
      */
     booksControllerDelete: (id: string, params: RequestParams = {}) =>
-      this.request<any, object>({
+      this.request<BookResponseDto, void | object>({
         path: `/api/v1/books/${id}`,
         method: "DELETE",
+        format: "json",
         ...params,
       }),
 
@@ -410,16 +595,7 @@ export class Api<
      * @request GET:/api/v1/user/{id}
      */
     userControllerGetById: (id: string, params: RequestParams = {}) =>
-      this.request<
-        {
-          id?: string;
-          name?: string;
-          email?: string;
-          createdAt?: string;
-          updatedAt?: string;
-        },
-        void | object
-      >({
+      this.request<ResponseUserDto, void | object>({
         path: `/api/v1/user/${id}`,
         method: "GET",
         format: "json",
@@ -439,16 +615,7 @@ export class Api<
       data: UpdateUserDto,
       params: RequestParams = {},
     ) =>
-      this.request<
-        {
-          id?: string;
-          name?: string;
-          email?: string;
-          createdAt?: string;
-          updatedAt?: string;
-        },
-        void | object
-      >({
+      this.request<ResponseUserDto, void | object>({
         path: `/api/v1/user/${id}`,
         method: "PUT",
         body: data,
@@ -466,16 +633,7 @@ export class Api<
      * @request DELETE:/api/v1/user/{id}
      */
     userControllerDelete: (id: string, params: RequestParams = {}) =>
-      this.request<
-        {
-          id?: string;
-          name?: string;
-          email?: string;
-          createdAt?: string;
-          updatedAt?: string;
-        },
-        void | object
-      >({
+      this.request<ResponseUserDto, void | object>({
         path: `/api/v1/user/${id}`,
         method: "DELETE",
         format: "json",
@@ -491,12 +649,7 @@ export class Api<
      * @request POST:/api/v1/auth/login
      */
     authControllerLogin: (data: LoginDto, params: RequestParams = {}) =>
-      this.request<
-        {
-          access_token?: string;
-        },
-        void
-      >({
+      this.request<AuthResponseDto, void | AuthResponseDto>({
         path: `/api/v1/auth/login`,
         method: "POST",
         body: data,
@@ -515,14 +668,13 @@ export class Api<
      */
     authControllerRegister: (data: RegisterDto, params: RequestParams = {}) =>
       this.request<
-        {
-          access_token?: string;
-        },
-        {
-          message?: string[];
-          error?: string;
-          statusCode?: number;
-        } | void
+        AuthResponseDto,
+        | {
+            message?: string[];
+            error?: string;
+            statusCode?: number;
+          }
+        | AuthResponseDto
       >({
         path: `/api/v1/auth/register`,
         method: "POST",
@@ -542,17 +694,15 @@ export class Api<
      */
     authControllerEmailCheck: (
       query: {
-        /** The email to check */
+        /**
+         * The email address to check for availability
+         * @example "john.doe@example.com"
+         */
         email: string;
       },
       params: RequestParams = {},
     ) =>
-      this.request<
-        {
-          exists?: boolean;
-        },
-        void
-      >({
+      this.request<EmailCheckResponseDto, EmailCheckResponseDto>({
         path: `/api/v1/auth/email-check`,
         method: "GET",
         query: query,
@@ -569,16 +719,7 @@ export class Api<
      * @request GET:/api/v1/auth/me
      */
     authControllerMe: (params: RequestParams = {}) =>
-      this.request<
-        {
-          id?: string;
-          name?: string;
-          email?: string;
-          createdAt?: string;
-          updatedAt?: string;
-        },
-        void | object
-      >({
+      this.request<ResponseUserDto, void | object>({
         path: `/api/v1/auth/me`,
         method: "GET",
         format: "json",

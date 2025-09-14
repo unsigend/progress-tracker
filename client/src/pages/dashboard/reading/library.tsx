@@ -12,21 +12,21 @@ import { toast } from "react-toastify";
 import { ClipLoader } from "react-spinners";
 
 // import api
-import bookAPI from "@/api/book.api";
+import apiClient from "@/api/apiClient";
 
 // import query types
-import { type BookQueryType } from "@/types/book.type";
+import { type QueryParamsType } from "@/api/api";
 
 const DashboardLibraryPage = () => {
     // state for query object
-    const [queryObject, setQueryObject] = useState<BookQueryType>({});
+    const [queryObject, setQueryObject] = useState<QueryParamsType>({});
     // state for search input
     const [searchInput, setSearchInput] = useState<string>("");
 
     // use Query to get all books
     const { data, error, isLoading } = useQuery({
         queryKey: ["books", queryObject],
-        queryFn: () => bookAPI.getAllBooks(queryObject),
+        queryFn: () => apiClient.api.booksControllerFindAll(queryObject),
     });
 
     if (error) {
@@ -98,7 +98,7 @@ const DashboardLibraryPage = () => {
                         />
                     </div>
                 ) : (
-                    <BookShelf books={data} />
+                    <BookShelf books={data?.data || []} />
                 )}
             </CardContent>
         </Card>

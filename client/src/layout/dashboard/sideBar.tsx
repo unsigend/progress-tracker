@@ -17,7 +17,7 @@ import navigationItems from "@/data/dashboard/navigationItems";
 import UserContext from "@/context/userContext";
 
 // import types
-import type { UserType } from "@/types/user.type";
+import type { ResponseUserDto } from "@/api/api";
 
 const SideBar = () => {
     // state for the sidebar
@@ -25,7 +25,7 @@ const SideBar = () => {
 
     // get user from context
     const { user } = useContext(UserContext) as {
-        user: UserType;
+        user: ResponseUserDto;
     };
 
     // get the location
@@ -111,7 +111,7 @@ const SideBar = () => {
                     <div className="border-t border-sidebar-border p-4">
                         <div className="flex items-center gap-3">
                             <Avatar>
-                                <AvatarImage src={user.avatarURL} />
+                                <AvatarImage src="" />
                                 <AvatarFallback>
                                     {user.name?.charAt(0).toUpperCase()}
                                 </AvatarFallback>

@@ -15,27 +15,32 @@ import "react-toastify/dist/ReactToastify.css";
 import UserContext from "@/context/userContext";
 
 // import api
-import authAPI from "@/api/auth.api";
+import apiClient, { setAuthToken } from "@/api/apiClient";
 
 // import types
-import type { UserType } from "@/types/user.type";
+import type { ResponseUserDto } from "@/api/api";
+import type { AxiosResponse } from "axios";
 
 // create query client instance
 const queryClient = new QueryClient();
 
 const App = () => {
     // actual state for user - this is what stores and updates the user data
-    const [user, setUser] = useState<UserType>({} as UserType);
+    const [user, setUser] = useState<ResponseUserDto>({} as ResponseUserDto);
 
-    // restore user data on page load if JWT exists
     useEffect(() => {
         const restoreUser = async () => {
             const jwtToken = localStorage.getItem("jwt-token");
             if (jwtToken) {
                 try {
-                    const userData = await authAPI.getCurrentUser();
-                    setUser(userData);
-                } catch (error) {
+                    // Set auth token for the API client
+                    setAuthToken(jwtToken);
+
+                    // Get user data - apiClient returns AxiosResponse, so we need .data
+                    const response: AxiosResponse<ResponseUserDto> =
+                        await apiClient.api.authControllerMe();
+                    setUser(response.data);
+                } catch {
                     // JWT might be expired or invalid, remove it
                     localStorage.removeItem("jwt-token");
                 }

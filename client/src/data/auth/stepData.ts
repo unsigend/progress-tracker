@@ -33,7 +33,7 @@ const steps: StepData[] = [
         id: 3,
         title: "Choose your username",
         description: "Pick a unique username that represents you",
-        field: "username",
+        field: "name",
         type: "text",
         placeholder: "johndoe",
         buttonText: "Create Account",

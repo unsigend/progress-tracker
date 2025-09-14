@@ -12,10 +12,10 @@ import { Label } from "@/components/ui/label";
 import { toast } from "react-toastify";
 
 // import types
-import { type BookType } from "@/types/book.type";
+import type { CreateBookDto } from "@/api/api";
 
 // import api
-import bookAPI from "@/api/book.api";
+import apiClient from "@/api/apiClient";
 
 const DashboardReadingAddBookPage = () => {
     // navigate
@@ -23,7 +23,8 @@ const DashboardReadingAddBookPage = () => {
 
     // create book mutation
     const mutation = useMutation({
-        mutationFn: (book: BookType) => bookAPI.createBook(book),
+        mutationFn: (book: CreateBookDto) =>
+            apiClient.api.booksControllerCreate(book),
         onSuccess: () => {
             // after successful creation, redirect to the dashboard
             navigate("/dashboard/reading/library");
@@ -34,7 +35,7 @@ const DashboardReadingAddBookPage = () => {
         },
     });
 
-    const [formData, setFormData] = useState<Partial<BookType>>({
+    const [formData, setFormData] = useState<CreateBookDto>({
         title: "",
         author: "",
         description: "",
@@ -45,7 +46,7 @@ const DashboardReadingAddBookPage = () => {
 
     // handle input change with only set specific field with value
     const handleInputChange = (
-        field: keyof BookType,
+        field: keyof CreateBookDto,
         value: string | number
     ) => {
         setFormData((prev) => ({
@@ -56,7 +57,7 @@ const DashboardReadingAddBookPage = () => {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        mutation.mutate(formData as BookType);
+        mutation.mutate(formData as CreateBookDto);
     };
 
     return (

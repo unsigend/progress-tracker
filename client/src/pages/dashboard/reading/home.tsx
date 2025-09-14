@@ -9,11 +9,11 @@ import BookShelf from "@/components/dashboard/bookShelf";
 import LineChart from "@/components/ui/LineChart";
 
 // import types
-import { type BookType } from "@/types/book.type";
+import type { BookResponseDto } from "@/api/api";
 import { Button } from "@/components/ui/button";
 
 // Sample data
-const sampleBooks: BookType[] = [
+const sampleBooks: BookResponseDto[] = [
     {
         id: "68c1eb84a9149ff18971e748",
         title: "Learning SQL: Generate, Manipulate, and Retrieve Data",
@@ -23,8 +23,8 @@ const sampleBooks: BookType[] = [
         pages: 377,
         imageURL: "https://m.media-amazon.com/images/I/81xkjj+FAfL._SY522_.jpg",
         ISBN: "9781492057611",
-        createdAt: new Date("2025-09-10T21:20:04.555Z"),
-        updatedAt: new Date("2025-09-10T21:20:04.555Z"),
+        createdAt: new Date("2025-09-10T21:20:04.555Z").toISOString(),
+        updatedAt: new Date("2025-09-10T21:20:04.555Z").toISOString(),
     },
     {
         id: "68c1eb06a9149ff18971e73c",
@@ -35,8 +35,8 @@ const sampleBooks: BookType[] = [
         pages: 664,
         imageURL: "https://m.media-amazon.com/images/I/71OMPF7vzmL._SY522_.jpg",
         ISBN: "9781839214110",
-        createdAt: new Date("2025-09-10T21:17:58.371Z"),
-        updatedAt: new Date("2025-09-10T21:17:58.371Z"),
+        createdAt: new Date("2025-09-10T21:17:58.371Z").toISOString(),
+        updatedAt: new Date("2025-09-10T21:17:58.371Z").toISOString(),
     },
     {
         id: "68c1eaafa9149ff18971e738",
@@ -47,8 +47,8 @@ const sampleBooks: BookType[] = [
         pages: 280,
         imageURL: "https://m.media-amazon.com/images/I/91hYIGWvKaL._SY522_.jpg",
         ISBN: "9781633436992",
-        createdAt: new Date("2025-09-10T21:16:31.994Z"),
-        updatedAt: new Date("2025-09-10T21:16:31.994Z"),
+        createdAt: new Date("2025-09-10T21:16:31.994Z").toISOString(),
+        updatedAt: new Date("2025-09-10T21:16:31.994Z").toISOString(),
     },
     {
         id: "68c1ea56a9149ff18971e732",
@@ -59,8 +59,8 @@ const sampleBooks: BookType[] = [
         pages: 976,
         imageURL: "https://m.media-amazon.com/images/I/61-8ZU7X3UL._SY522_.jpg",
         ISBN: "9780321573513",
-        createdAt: new Date("2025-09-10T21:15:02.211Z"),
-        updatedAt: new Date("2025-09-10T21:15:02.211Z"),
+        createdAt: new Date("2025-09-10T21:15:02.211Z").toISOString(),
+        updatedAt: new Date("2025-09-10T21:15:02.211Z").toISOString(),
     },
 ];
 
