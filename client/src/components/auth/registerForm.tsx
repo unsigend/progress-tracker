@@ -117,7 +117,7 @@ const RegisterForm = ({
                         email: formData.email || "",
                     });
                 if (result.data.exists) {
-                    toast.error("Email already exists");
+                    toast.error("Email already in use");
                     return;
                 }
             } else if (currentField === "password") {

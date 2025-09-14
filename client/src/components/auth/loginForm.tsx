@@ -40,7 +40,7 @@ const LoginForm = () => {
 
     // if user is already logged in, redirect to dashboard
     useEffect(() => {
-        if (user) {
+        if (user && user.id) {
             navigate("/dashboard");
         }
     }, []);
@@ -65,7 +65,11 @@ const LoginForm = () => {
             navigate("/dashboard");
         } catch (error: any) {
             // get the error message from the backend response
-            const errorMessage = error.response.data.message;
+            const errorMessage =
+                error.response.data.message instanceof Array
+                    ? error.response.data.message[0]
+                    : error.response.data.message;
+
             toast.error(errorMessage);
         }
     };
