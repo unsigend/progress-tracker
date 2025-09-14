@@ -12,7 +12,7 @@ import { toast } from "react-toastify";
 import { ClipLoader } from "react-spinners";
 
 // import api
-import bookAPI from "@/api/book";
+import bookAPI from "@/api/book.api";
 
 // import query types
 import { type BookQueryType } from "@/types/book.type";

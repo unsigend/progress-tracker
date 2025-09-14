@@ -1,7 +1,8 @@
 interface UserType {
-    email: string;
-    password: string;
-    username: string;
+    id?: string;
+    email?: string;
+    password?: string;
+    name?: string;
 }
 
 export type { UserType };

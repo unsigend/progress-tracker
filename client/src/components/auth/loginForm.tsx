@@ -1,11 +1,61 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // import dependencies
 import { Link } from "react-router";
+import { useState } from "react";
+import { useContext } from "react";
+import { useNavigate } from "react-router";
+
 // import components
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { toast } from "react-toastify";
+
+// import api
+import authAPI from "@/api/auth.api";
+
+// import context
+import UserContext from "@/context/userContext";
+
+// import types
+import type { UserType } from "@/types/user.type";
 
 const LoginForm = () => {
+    // get setUser from context
+    const { setUser } = useContext(UserContext) as {
+        setUser: (user: UserType) => void;
+    };
+    // get form data
+    const [formData, setFormData] = useState<{
+        email: string;
+        password: string;
+    }>({
+        email: "",
+        password: "",
+    });
+
+    // navigate
+    const navigate = useNavigate();
+
+    // handle login
+    const handleLogin = async () => {
+        try {
+            const jwtToken = await authAPI.login(
+                formData.email,
+                formData.password
+            );
+            localStorage.setItem("jwt-token", jwtToken);
+            const user = await authAPI.getCurrentUser();
+            setUser(user);
+
+            // redirect to dashboard
+            navigate("/dashboard");
+        } catch (error: any) {
+            // get the error message from the backend response
+            const errorMessage = error.response.data.message;
+            toast.error(errorMessage);
+        }
+    };
     return (
         <div className="w-full space-y-6">
             {/* Header */}
@@ -32,6 +82,10 @@ const LoginForm = () => {
                         type="email"
                         placeholder="m@example.com"
                         required
+                        value={formData.email}
+                        onChange={(e) =>
+                            setFormData({ ...formData, email: e.target.value })
+                        }
                     />
                 </div>
                 <div className="space-y-2">
@@ -44,13 +98,28 @@ const LoginForm = () => {
                             Forgot your password?
                         </a>
                     </div>
-                    <Input id="password" type="password" required />
+                    <Input
+                        id="password"
+                        type="password"
+                        required
+                        value={formData.password}
+                        onChange={(e) =>
+                            setFormData({
+                                ...formData,
+                                password: e.target.value,
+                            })
+                        }
+                    />
                 </div>
             </form>
 
             {/* Actions */}
             <div className="space-y-4">
-                <Button type="submit" className="w-full cursor-pointer">
+                <Button
+                    type="submit"
+                    className="w-full cursor-pointer"
+                    onClick={handleLogin}
+                >
                     Login
                 </Button>
 

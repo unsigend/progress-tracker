@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import BookCard from "@/components/dashboard/bookCard";
 
 // import api
-import bookAPI from "@/api/book";
+import bookAPI from "@/api/book.api";
 
 const BackToLibraryButton = () => {
     const navigate = useNavigate();
@@ -153,7 +153,7 @@ const BookDetailsPage = () => {
                         {/* Book Image - Right Side */}
                         <div className="flex justify-center lg:justify-start lg:flex-shrink-0">
                             <BookCard
-                                image={book.image || "/placeholder-book.jpg"}
+                                image={book.imageURL || "/placeholder-book.jpg"}
                                 alt={book.title || "Book cover"}
                                 className="w-40 h-52 md:w-48 md:h-64"
                             />

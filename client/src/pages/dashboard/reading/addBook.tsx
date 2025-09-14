@@ -15,7 +15,7 @@ import { toast } from "react-toastify";
 import { type BookType } from "@/types/book.type";
 
 // import api
-import bookAPI from "@/api/book";
+import bookAPI from "@/api/book.api";
 
 const DashboardReadingAddBookPage = () => {
     // navigate
@@ -29,6 +29,7 @@ const DashboardReadingAddBookPage = () => {
             navigate("/dashboard/reading/library");
         },
         onError: (error) => {
+            console.log(error);
             toast.error(error.message);
         },
     });

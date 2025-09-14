@@ -7,7 +7,6 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { toast } from "react-toastify";
-
 import StepIndicator from "@/components/auth/stepIndicator";
 import Divider from "@/components/ui/Divider";
 
@@ -15,7 +14,7 @@ import Divider from "@/components/ui/Divider";
 import steps from "@/data/auth/stepData";
 
 // import api
-import authAPI from "@/api/auth";
+import authAPI from "@/api/auth.api";
 
 // import util
 import validate from "@/util/validate";
@@ -80,25 +79,27 @@ const RegisterForm = ({
 
             if (currentField === "email") {
                 // validate email
-                if (!validate.email(formData.email)) {
+                if (!validate.email(formData.email || "")) {
                     toast.error("Please enter a valid email address");
                     return;
                 }
 
-                const exists = await authAPI.checkUserEmail(formData.email);
+                const exists = await authAPI.checkUserEmail(
+                    formData.email || ""
+                );
                 if (exists) {
                     toast.error("Email already exists");
                     return;
                 }
             } else if (currentField === "password") {
                 // validate password
-                if (!validate.password(formData.password)) {
+                if (!validate.password(formData.password || "")) {
                     toast.error("Password must be at least 8 characters long");
                     return;
                 }
             } else if (currentField === "username") {
                 // validate username
-                if (!validate.username(formData.username)) {
+                if (!validate.username(formData.username || "")) {
                     toast.error(
                         "Username must be between 3 and 20 characters long"
                     );

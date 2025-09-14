@@ -1,6 +1,6 @@
 // import dependencies
 import { Link, useLocation } from "react-router";
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 // import utils
 import { cn } from "@/lib/utils";
@@ -13,9 +13,20 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 // import data
 import navigationItems from "@/data/dashboard/navigationItems";
 
+// import context
+import UserContext from "@/context/userContext";
+
+// import types
+import type { UserType } from "@/types/user.type";
+
 const SideBar = () => {
     // state for the sidebar
     const [isOpen, setIsOpen] = useState(false);
+
+    // get user from context
+    const { user } = useContext(UserContext) as {
+        user: UserType;
+    };
 
     // get the location
     const location = useLocation();
@@ -100,15 +111,17 @@ const SideBar = () => {
                     <div className="border-t border-sidebar-border p-4">
                         <div className="flex items-center gap-3">
                             <Avatar>
-                                <AvatarImage src="https://github.com/shadcn.png" />
-                                <AvatarFallback>CN</AvatarFallback>
+                                <AvatarImage src={user.avatarURL} />
+                                <AvatarFallback>
+                                    {user.name?.charAt(0).toUpperCase()}
+                                </AvatarFallback>
                             </Avatar>
                             <div className="flex-1 min-w-0">
                                 <p className="text-sm font-medium text-sidebar-foreground truncate">
-                                    John Doe
+                                    {user.name}
                                 </p>
                                 <p className="text-xs text-sidebar-foreground/70 truncate">
-                                    john@example.com
+                                    {user.email}
                                 </p>
                             </div>
                         </div>
