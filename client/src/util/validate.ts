@@ -12,7 +12,8 @@ const validate = {
     /**
      * Validate a password
      * @param password - the password to validate
-     * @returns {boolean} true if the password is valid (at least 8 characters), false otherwise
+     * @returns {boolean} true if the password is valid (at least 8 characters),
+     *  false otherwise
      */
     password: (password: string): boolean => {
         return password.length >= 8;

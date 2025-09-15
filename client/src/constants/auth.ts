@@ -11,5 +11,6 @@ export const ERROR_MESSAGES = {
     INVALID_EMAIL: "Please enter a valid email address",
     EMAIL_EXISTS: "Email already in use",
     PASSWORD_REQUIRED: "Password must be at least 8 characters long",
+    PASSWORD_MATCH: "Passwords should match",
     USERNAME_REQUIRED: "Username must be between 3 and 20 characters long",
 } as const;

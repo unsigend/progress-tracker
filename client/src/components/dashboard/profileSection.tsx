@@ -1,10 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
+// import components
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Edit3, Github, Mail, User } from "lucide-react";
+import { toast } from "react-toastify";
 
 // import dependencies
 import { useMutation } from "@tanstack/react-query";
@@ -15,7 +18,8 @@ import apiClient from "@/api/apiClient";
 
 // import types
 import type { ResponseUserDto, UpdateUserDto } from "@/api/api";
-import { toast } from "react-toastify";
+
+// import utils
 import { getErrorMessage } from "@/utils/auth";
 
 interface ProfileSectionProps {
@@ -167,24 +171,28 @@ const ProfileSection = ({ user }: ProfileSectionProps) => {
                     Connected accounts
                 </h3>
                 {user.provider?.map((providerItem) => (
-                    <div
-                        key={providerItem}
-                        className="flex items-center justify-between p-3 border rounded-lg"
-                    >
-                        <div className="flex items-center gap-3">
-                            {getProviderIcon(providerItem)}
-                            <span className="font-medium text-gray-900">
-                                {providerItem?.charAt(0).toUpperCase() +
-                                    providerItem?.slice(1)}
-                            </span>
-                        </div>
-                        <Badge
-                            variant="secondary"
-                            className="bg-green-100 text-green-800"
-                        >
-                            Connected
-                        </Badge>
-                    </div>
+                    <>
+                        {providerItem !== "local" ? (
+                            <div
+                                key={providerItem}
+                                className="flex items-center justify-between p-3 border rounded-lg"
+                            >
+                                <div className="flex items-center gap-3">
+                                    {getProviderIcon(providerItem)}
+                                    <span className="font-medium text-gray-900">
+                                        {providerItem?.charAt(0).toUpperCase() +
+                                            providerItem?.slice(1)}
+                                    </span>
+                                </div>
+                                <Badge
+                                    variant="secondary"
+                                    className="bg-green-100 text-green-800"
+                                >
+                                    Connected
+                                </Badge>
+                            </div>
+                        ) : null}
+                    </>
                 ))}
             </div>
 

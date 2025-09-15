@@ -217,13 +217,11 @@ export interface UpdateUserDto {
   password?: string;
   /**
    * The URL of the user's avatar
-   * @default ""
    * @example "https://example.com/avatar.jpg"
    */
   avatarURL?: string;
   /**
    * The providers of the user
-   * @default ["local"]
    * @example ["local","google","github"]
    */
   provider?: string[];
