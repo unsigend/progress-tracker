@@ -93,9 +93,7 @@ const RegisterForm = ({
     // handle github login
     const handleGithubLogin = () => {
         const clientId = import.meta.env.VITE_GITHUB_CLIENT_ID;
-        const redirectUri =
-            import.meta.env.VITE_GITHUB_REDIRECT_URI ||
-            `${window.location.origin}/auth/github/callback`;
+        const redirectUri = import.meta.env.VITE_GITHUB_REDIRECT_URI;
         // generate a random state for security
         const state = Math.random().toString(36).substring(7);
 
@@ -110,7 +108,7 @@ const RegisterForm = ({
             globalConfig.githubOAuthUrl
         }?client_id=${clientId}&redirect_uri=${encodeURIComponent(
             redirectUri
-        )}&state=${state}&scope=user:email`;
+        )}&state=${state}&scope=${encodeURIComponent("user:email")}`;
 
         window.location.href = githubUrl;
     };

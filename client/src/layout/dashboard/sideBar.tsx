@@ -145,7 +145,7 @@ const SideBar = () => {
                     <div className="border-t border-sidebar-border p-4">
                         <div className="flex items-center gap-3 relative">
                             <Avatar>
-                                <AvatarImage src="" />
+                                <AvatarImage src={user.avatarURL || ""} />
                                 <AvatarFallback>
                                     {user.name?.charAt(0).toUpperCase()}
                                 </AvatarFallback>
