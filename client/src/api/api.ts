@@ -187,6 +187,11 @@ export interface ResponseUserDto {
    * @example "2024-01-15T10:30:00.000Z"
    */
   updatedAt: string;
+  /**
+   * The URL of the user's avatar
+   * @example "https://example.com/avatar.jpg"
+   */
+  avatarURL: string | null;
 }
 
 export interface UpdateUserDto {
@@ -205,6 +210,12 @@ export interface UpdateUserDto {
    * @example "newSecurePassword123"
    */
   password?: string;
+  /**
+   * The URL of the user's avatar
+   * @default ""
+   * @example "https://example.com/avatar.jpg"
+   */
+  avatarURL?: string;
 }
 
 export interface LoginDto {
@@ -244,6 +255,12 @@ export interface RegisterDto {
    * @example "mySecurePassword123"
    */
   password: string;
+  /**
+   * The URL of the user's avatar
+   * @default ""
+   * @example "https://example.com/avatar.jpg"
+   */
+  avatarURL?: string;
 }
 
 export interface EmailCheckResponseDto {
