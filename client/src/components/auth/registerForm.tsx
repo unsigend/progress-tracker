@@ -32,6 +32,9 @@ import type { AxiosResponse } from "axios";
 // import context
 import UserContext from "@/context/userContext";
 
+// import global config
+import globalConfig from "@/data/global";
+
 /**
  * Register form component
  * @param currentStep: current step
@@ -86,6 +89,31 @@ const RegisterForm = ({
             toast.error(errorMessage);
         },
     });
+
+    // handle github login
+    const handleGithubLogin = () => {
+        const clientId = import.meta.env.VITE_GITHUB_CLIENT_ID;
+        const redirectUri =
+            import.meta.env.VITE_GITHUB_REDIRECT_URI ||
+            `${window.location.origin}/auth/github/callback`;
+        // generate a random state for security
+        const state = Math.random().toString(36).substring(7);
+
+        if (!clientId) {
+            console.error(
+                "GitHub Client ID not found. Make sure VITE_GITHUB_CLIENT_ID is set in your .env file"
+            );
+            return;
+        }
+
+        const githubUrl = `${
+            globalConfig.githubOAuthUrl
+        }?client_id=${clientId}&redirect_uri=${encodeURIComponent(
+            redirectUri
+        )}&state=${state}&scope=user:email`;
+
+        window.location.href = githubUrl;
+    };
 
     // handle input change and set form data
     const handleInputChange = (value: string) => {
@@ -169,7 +197,7 @@ const RegisterForm = ({
                         {steps[currentStep - 1]?.title}
                     </h1>
                     <Button variant="link" className="text-sm cursor-pointer">
-                        <Link to="/login">Login</Link>
+                        <Link to="/auth/login">Login</Link>
                     </Button>
                 </div>
                 <p className="text-sm text-left text-gray-600 transition-all duration-300">
@@ -252,6 +280,7 @@ const RegisterForm = ({
                             <Button
                                 variant="outline"
                                 className="w-full cursor-pointer"
+                                onClick={handleGithubLogin}
                             >
                                 <img
                                     src="/image/github.svg"

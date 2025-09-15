@@ -192,6 +192,11 @@ export interface ResponseUserDto {
    * @example "https://example.com/avatar.jpg"
    */
   avatarURL: string | null;
+  /**
+   * The providers of the user
+   * @example ["local","google","github"]
+   */
+  provider: string[];
 }
 
 export interface UpdateUserDto {
@@ -216,6 +221,12 @@ export interface UpdateUserDto {
    * @example "https://example.com/avatar.jpg"
    */
   avatarURL?: string;
+  /**
+   * The providers of the user
+   * @default ["local"]
+   * @example ["local","google","github"]
+   */
+  provider?: string[];
 }
 
 export interface LoginDto {
@@ -261,6 +272,12 @@ export interface RegisterDto {
    * @example "https://example.com/avatar.jpg"
    */
   avatarURL?: string;
+  /**
+   * The providers of the user
+   * @default ["local"]
+   * @example ["local","google","github"]
+   */
+  provider?: string[];
 }
 
 export interface EmailCheckResponseDto {
@@ -269,6 +286,14 @@ export interface EmailCheckResponseDto {
    * @example true
    */
   exists: boolean;
+}
+
+export interface GithubAuthDto {
+  /**
+   * The code from github
+   * @example "1234567890"
+   */
+  code: string;
 }
 
 import type {
@@ -739,6 +764,27 @@ export class Api<
       this.request<ResponseUserDto, void | object>({
         path: `/api/v1/auth/me`,
         method: "GET",
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * @description This endpoint authenticates a user with github
+     *
+     * @tags Auth
+     * @name AuthControllerGithubAuth
+     * @summary Authenticate a user with github
+     * @request POST:/api/v1/auth/github
+     */
+    authControllerGithubAuth: (
+      data: GithubAuthDto,
+      params: RequestParams = {},
+    ) =>
+      this.request<AuthResponseDto, void | AuthResponseDto>({
+        path: `/api/v1/auth/github`,
+        method: "POST",
+        body: data,
+        type: ContentType.Json,
         format: "json",
         ...params,
       }),

@@ -82,7 +82,7 @@ const LoginForm = () => {
                         Welcome back!
                     </h1>
                     <Button variant="link" className="text-sm cursor-pointer">
-                        <Link to="/signup">Sign Up</Link>
+                        <Link to="/auth/signup">Sign Up</Link>
                     </Button>
                 </div>
                 <p className="text-sm text-left text-gray-600">

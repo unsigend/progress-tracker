@@ -22,6 +22,7 @@ import DashboardReadingAddBookPage from "@/pages/dashboard/reading/addBook";
 // import auth pages
 import LoginPage from "@/pages/auth/login";
 import RegisterPage from "@/pages/auth/register";
+import GithubCallbackPage from "@/pages/auth/githubCallback";
 
 // import protected route
 import ProtectedRouter from "@/layout/auth/protected";
@@ -72,11 +73,16 @@ const AppRoutes = () => {
             </Route>
 
             {/* auth routes */}
-            <Route element={<AuthMainLayout />}>
+            <Route path="auth" element={<AuthMainLayout />}>
                 {/* auth login page */}
                 <Route path="login" element={<LoginPage />} />
                 {/* auth register page */}
                 <Route path="signup" element={<RegisterPage />} />
+                {/* auth github callback page */}
+                <Route
+                    path="github/callback"
+                    element={<GithubCallbackPage />}
+                />
             </Route>
         </Routes>
     );

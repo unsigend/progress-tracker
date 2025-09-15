@@ -6,6 +6,7 @@ const globalConfig = {
         "https://github.com/unsigend/progress-tracker/blob/main/LICENSE",
     termsOfService:
         "https://github.com/unsigend/progress-tracker/blob/main/LICENSE",
+    githubOAuthUrl: "https://github.com/login/oauth/authorize",
     apiRoot: "http://localhost:3000",
 };
 

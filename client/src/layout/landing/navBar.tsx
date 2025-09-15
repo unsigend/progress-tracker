@@ -50,7 +50,7 @@ const LandingNavBar = () => {
                         </Link>
                     </div>
                     <div className="flex items-center gap-4">
-                        <Link to="/login">
+                        <Link to="/auth/login">
                             <Button
                                 variant="outline"
                                 className="cursor-pointer"
@@ -58,7 +58,7 @@ const LandingNavBar = () => {
                                 Login
                             </Button>
                         </Link>
-                        <Link to="/signup">
+                        <Link to="/auth/signup">
                             <Button
                                 variant="default"
                                 className="cursor-pointer"
