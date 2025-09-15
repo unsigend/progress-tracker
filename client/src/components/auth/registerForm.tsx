@@ -17,10 +17,12 @@ import Divider from "@/components/ui/Divider";
 import steps from "@/data/auth/stepData";
 
 // import api
-import apiClient, { setAuthToken } from "@/api/apiClient";
+import apiClient from "@/api/apiClient";
 
 // import util
 import validate from "@/util/validate";
+import { saveAuthToken, getErrorMessage } from "@/utils/auth";
+import { AUTH_ROUTES, ERROR_MESSAGES } from "@/constants/auth";
 
 // import types
 import type {
@@ -71,23 +73,14 @@ const RegisterForm = ({
         mutationFn: (user: CreateUserDto) =>
             apiClient.api.authControllerRegister(user),
         onSuccess: async (data) => {
-            // save the token to local storage
-            localStorage.setItem("jwt-token", data?.data.access_token);
-            // set the jwt token to the api client
-            setAuthToken(data?.data.access_token);
-            // get the user data
+            saveAuthToken(data?.data.access_token);
             const user: AxiosResponse<ResponseUserDto> =
                 await apiClient.api.authControllerMe();
             setUser(user.data);
-            // after successful creation, redirect to the dashboard
-            navigate("/dashboard");
+            navigate(AUTH_ROUTES.DASHBOARD);
         },
         onError: (error: any) => {
-            const errorMessage =
-                error.response?.data.message instanceof Array
-                    ? error.response?.data.message[0]
-                    : error.response?.data.message;
-            toast.error(errorMessage);
+            toast.error(getErrorMessage(error));
         },
     });
 
@@ -110,9 +103,8 @@ const RegisterForm = ({
             // validate based on current field
 
             if (currentField === "email") {
-                // validate email
                 if (!validate.email(formData.email || "")) {
-                    toast.error("Please enter a valid email address");
+                    toast.error(ERROR_MESSAGES.INVALID_EMAIL);
                     return;
                 }
 
@@ -121,21 +113,17 @@ const RegisterForm = ({
                         email: formData.email || "",
                     });
                 if (result.data.exists) {
-                    toast.error("Email already in use");
+                    toast.error(ERROR_MESSAGES.EMAIL_EXISTS);
                     return;
                 }
             } else if (currentField === "password") {
-                // validate password
                 if (!validate.password(formData.password || "")) {
-                    toast.error("Password must be at least 8 characters long");
+                    toast.error(ERROR_MESSAGES.PASSWORD_REQUIRED);
                     return;
                 }
             } else if (currentField === "name") {
-                // validate username
                 if (!validate.username(formData.name || "")) {
-                    toast.error(
-                        "Username must be between 3 and 20 characters long"
-                    );
+                    toast.error(ERROR_MESSAGES.USERNAME_REQUIRED);
                     return;
                 }
             }
@@ -173,7 +161,7 @@ const RegisterForm = ({
                         {steps[currentStep - 1]?.title}
                     </h1>
                     <Button variant="link" className="text-sm cursor-pointer">
-                        <Link to="/auth/login">Login</Link>
+                        <Link to={AUTH_ROUTES.LOGIN}>Login</Link>
                     </Button>
                 </div>
                 <p className="text-sm text-left text-gray-600 transition-all duration-300">

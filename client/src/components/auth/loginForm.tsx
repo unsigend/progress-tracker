@@ -14,13 +14,15 @@ import { Label } from "@/components/ui/label";
 import { toast } from "react-toastify";
 
 // import api
-import apiClient, { setAuthToken } from "@/api/apiClient";
+import apiClient from "@/api/apiClient";
 
 // import context
 import UserContext from "@/context/userContext";
 
 // import util
 import { handleGithubAuth, handleGoogleAuth } from "@/util/OAuth";
+import { saveAuthToken, getErrorMessage } from "@/utils/auth";
+import { AUTH_ROUTES } from "@/constants/auth";
 
 // import types
 import type { AuthResponseDto, LoginDto, ResponseUserDto } from "@/api/api";
@@ -41,14 +43,12 @@ const LoginForm = () => {
     // navigate
     const navigate = useNavigate();
 
-    // if user is already logged in, redirect to dashboard
     useEffect(() => {
         if (user && user.id) {
-            navigate("/dashboard");
+            navigate(AUTH_ROUTES.DASHBOARD);
         }
     }, []);
 
-    // handle login
     const handleLogin = async () => {
         try {
             const jwtToken: AxiosResponse<AuthResponseDto> =
@@ -56,24 +56,16 @@ const LoginForm = () => {
                     email: formData.email,
                     password: formData.password,
                 });
-            setAuthToken(jwtToken.data.access_token);
-            // save the token to local storage
-            localStorage.setItem("jwt-token", jwtToken.data.access_token);
-            // get the user data
+
+            saveAuthToken(jwtToken.data.access_token);
+
             const user: AxiosResponse<ResponseUserDto> =
                 await apiClient.api.authControllerMe();
             setUser(user.data);
 
-            // redirect to dashboard
-            navigate("/dashboard");
+            navigate(AUTH_ROUTES.DASHBOARD);
         } catch (error: any) {
-            // get the error message from the backend response
-            const errorMessage =
-                error.response.data.message instanceof Array
-                    ? error.response.data.message[0]
-                    : error.response.data.message;
-
-            toast.error(errorMessage);
+            toast.error(getErrorMessage(error));
         }
     };
     return (
@@ -85,7 +77,7 @@ const LoginForm = () => {
                         Welcome back!
                     </h1>
                     <Button variant="link" className="text-sm cursor-pointer">
-                        <Link to="/auth/signup">Sign Up</Link>
+                        <Link to={AUTH_ROUTES.REGISTER}>Sign Up</Link>
                     </Button>
                 </div>
                 <p className="text-sm text-left text-gray-600">
