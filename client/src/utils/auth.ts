@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { setAuthToken } from "@/api/apiClient";
 import { AUTH_STORAGE_KEY } from "@/constants/auth";
 

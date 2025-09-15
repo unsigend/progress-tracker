@@ -1,6 +1,6 @@
 // import dependencies
 import { Link, useLocation } from "react-router";
-import { useContext, useState, useRef, useEffect } from "react";
+import { useContext, useState } from "react";
 
 // import utils
 import { cn } from "@/lib/utils";
@@ -10,7 +10,7 @@ import HamburgerButton from "@/components/ui/HamburgerButton";
 import Logo from "@/components/ui/logo";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { Settings, LogOut } from "lucide-react";
+import { Settings } from "lucide-react";
 
 // import data
 import navigationItems from "@/data/dashboard/navigationItems";
@@ -21,49 +21,16 @@ import UserContext from "@/context/userContext";
 // import types
 import type { ResponseUserDto } from "@/api/api";
 
-// import api client
-import { removeAuthToken } from "@/api/apiClient";
-
 const SideBar = () => {
     // state for the sidebar
     const [isOpen, setIsOpen] = useState(false);
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-    const dropdownRef = useRef<HTMLDivElement>(null);
-
     // get user from context
-    const { user, setUser } = useContext(UserContext) as {
+    const { user } = useContext(UserContext) as {
         user: ResponseUserDto;
-        setUser: (user: ResponseUserDto) => void;
     };
 
     // get the location
     const location = useLocation();
-
-    const handleLogout = () => {
-        // Clear auth token from API client
-        removeAuthToken();
-        // Remove JWT from localStorage
-        localStorage.removeItem("jwt-token");
-        // Clear user from context
-        setUser({} as ResponseUserDto);
-    };
-
-    // close dropdown when clicking outside
-    useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
-            if (
-                dropdownRef.current &&
-                !dropdownRef.current.contains(event.target as Node)
-            ) {
-                setIsDropdownOpen(false);
-            }
-        };
-
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
-    }, []);
 
     // check if the route is active
     const isActiveRoute = (href: string) => {
@@ -159,44 +126,16 @@ const SideBar = () => {
                                 </p>
                             </div>
 
-                            {/* Settings Dropdown */}
-                            <div className="relative" ref={dropdownRef}>
+                            {/* Settings Button */}
+                            <Link to="/dashboard/settings">
                                 <Button
                                     variant="ghost"
                                     size="icon"
                                     className="h-8 w-8 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
-                                    onClick={() =>
-                                        setIsDropdownOpen(!isDropdownOpen)
-                                    }
                                 >
                                     <Settings className="h-4 w-4" />
                                 </Button>
-
-                                {/* Dropdown Menu */}
-                                {isDropdownOpen && (
-                                    <div className="absolute bottom-full right-0 mb-2 w-48 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg z-50 py-1">
-                                        <button
-                                            className="w-full px-4 py-2 text-left text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-2 transition-colors"
-                                            onClick={() =>
-                                                setIsDropdownOpen(false)
-                                            }
-                                        >
-                                            <Settings className="h-4 w-4" />
-                                            Settings
-                                        </button>
-                                        <button
-                                            className="w-full px-4 py-2 text-left text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-2 transition-colors"
-                                            onClick={() => {
-                                                handleLogout();
-                                                setIsDropdownOpen(false);
-                                            }}
-                                        >
-                                            <LogOut className="h-4 w-4" />
-                                            Logout
-                                        </button>
-                                    </div>
-                                )}
-                            </div>
+                            </Link>
                         </div>
                     </div>
                 </div>
