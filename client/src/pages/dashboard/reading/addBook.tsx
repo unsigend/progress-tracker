@@ -12,10 +12,10 @@ import { Label } from "@/components/ui/label";
 import { toast } from "react-toastify";
 
 // import types
-import { type BookType } from "@root/shared/types";
+import type { CreateBookDto } from "@/api/api";
 
 // import api
-import bookAPI from "@/api/book";
+import apiClient from "@/api/apiClient";
 
 const DashboardReadingAddBookPage = () => {
     // navigate
@@ -23,28 +23,30 @@ const DashboardReadingAddBookPage = () => {
 
     // create book mutation
     const mutation = useMutation({
-        mutationFn: (book: BookType) => bookAPI.createBook(book),
+        mutationFn: (book: CreateBookDto) =>
+            apiClient.api.booksControllerCreate(book),
         onSuccess: () => {
             // after successful creation, redirect to the dashboard
             navigate("/dashboard/reading/library");
         },
         onError: (error) => {
+            console.log(error);
             toast.error(error.message);
         },
     });
 
-    const [formData, setFormData] = useState<Partial<BookType>>({
+    const [formData, setFormData] = useState<CreateBookDto>({
         title: "",
         author: "",
         description: "",
         pages: undefined,
         ISBN: "",
-        image: "",
+        imageURL: "",
     });
 
     // handle input change with only set specific field with value
     const handleInputChange = (
-        field: keyof BookType,
+        field: keyof CreateBookDto,
         value: string | number
     ) => {
         setFormData((prev) => ({
@@ -55,7 +57,7 @@ const DashboardReadingAddBookPage = () => {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        mutation.mutate(formData as BookType);
+        mutation.mutate(formData as CreateBookDto);
     };
 
     return (
@@ -214,10 +216,10 @@ const DashboardReadingAddBookPage = () => {
                                     id="image"
                                     type="url"
                                     placeholder="https://example.com/book-cover.jpg"
-                                    value={formData.image || ""}
+                                    value={formData.imageURL || ""}
                                     onChange={(e) =>
                                         handleInputChange(
-                                            "image",
+                                            "imageURL",
                                             e.target.value
                                         )
                                     }

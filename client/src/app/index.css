@@ -3,6 +3,27 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Mobile toast fixes */
+.toast-container-mobile {
+    width: 95% !important;
+    max-width: 400px !important;
+    margin: 0 auto !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+}
+
+.toast-container-mobile .Toastify__toast {
+    font-size: 16px !important;
+    min-height: 60px !important;
+    margin-bottom: 8px !important;
+    border-radius: 8px !important;
+}
+
+.toast-container-mobile .Toastify__toast--error {
+    background-color: #ef4444 !important;
+    color: white !important;
+}
+
 @theme inline {
     --radius-sm: calc(var(--radius) - 4px);
     --radius-md: calc(var(--radius) - 2px);

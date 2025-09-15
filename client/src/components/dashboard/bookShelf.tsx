@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import BookCard from "@/components/dashboard/bookCard";
 
 // import types
-import { type BookType } from "@root/shared/types";
+import type { BookResponseDto } from "@/api/api";
 
 /**
  * BookShelf component
@@ -19,7 +19,7 @@ const BookShelf = ({
     className,
     baseUrl = "",
 }: {
-    books: BookType[];
+    books: BookResponseDto[];
     className?: string;
     baseUrl?: string;
 }) => {
@@ -51,9 +51,9 @@ const BookShelf = ({
             )}
         >
             {books.map((book) => (
-                <div key={book._id} className="flex justify-center">
+                <div key={book.id} className="flex justify-center">
                     <BookCard
-                        image={book.image || "/placeholder-book.jpg"}
+                        image={book.imageURL || "/placeholder-book.jpg"}
                         alt={
                             book.title
                                 ? `${book.title} by ${
@@ -61,9 +61,9 @@ const BookShelf = ({
                                   }`
                                 : "Book cover"
                         }
-                        link={`${baseUrl}/${book._id}`}
+                        link={`${baseUrl}/${book.id}`}
                         className="transition-transform duration-200 hover:scale-105"
-                        key={book._id}
+                        key={book.id}
                     />
                 </div>
             ))}

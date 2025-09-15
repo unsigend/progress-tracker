@@ -9,58 +9,58 @@ import BookShelf from "@/components/dashboard/bookShelf";
 import LineChart from "@/components/ui/LineChart";
 
 // import types
-import { type BookType } from "@root/shared/types";
+import type { BookResponseDto } from "@/api/api";
 import { Button } from "@/components/ui/button";
 
 // Sample data
-const sampleBooks: BookType[] = [
+const sampleBooks: BookResponseDto[] = [
     {
-        _id: "68c1eb84a9149ff18971e748",
+        id: "68c1eb84a9149ff18971e748",
         title: "Learning SQL: Generate, Manipulate, and Retrieve Data",
         author: "Alan Beaulieu",
         description:
             "As data floods into your company, you need to put it to work right away―and SQL is the best tool for the job.",
         pages: 377,
-        image: "https://m.media-amazon.com/images/I/81xkjj+FAfL._SY522_.jpg",
+        imageURL: "https://m.media-amazon.com/images/I/81xkjj+FAfL._SY522_.jpg",
         ISBN: "9781492057611",
-        createdAt: new Date("2025-09-10T21:20:04.555Z"),
-        updatedAt: new Date("2025-09-10T21:20:04.555Z"),
+        createdAt: new Date("2025-09-10T21:20:04.555Z").toISOString(),
+        updatedAt: new Date("2025-09-10T21:20:04.555Z").toISOString(),
     },
     {
-        _id: "68c1eb06a9149ff18971e73c",
+        id: "68c1eb06a9149ff18971e73c",
         title: "Node.js Design Patterns",
         author: "Mario Casciaro",
         description:
             "Learn proven patterns, techniques, and tricks to take full advantage of the Node.js platform.",
         pages: 664,
-        image: "https://m.media-amazon.com/images/I/71OMPF7vzmL._SY522_.jpg",
+        imageURL: "https://m.media-amazon.com/images/I/71OMPF7vzmL._SY522_.jpg",
         ISBN: "9781839214110",
-        createdAt: new Date("2025-09-10T21:17:58.371Z"),
-        updatedAt: new Date("2025-09-10T21:17:58.371Z"),
+        createdAt: new Date("2025-09-10T21:17:58.371Z").toISOString(),
+        updatedAt: new Date("2025-09-10T21:17:58.371Z").toISOString(),
     },
     {
-        _id: "68c1eaafa9149ff18971e738",
+        id: "68c1eaafa9149ff18971e738",
         title: "Grokking Data Structures",
         author: "Marcello La Rocca",
         description:
             "Grokking Data Structures makes it a breeze to learn the most useful day-to-day data structures.",
         pages: 280,
-        image: "https://m.media-amazon.com/images/I/91hYIGWvKaL._SY522_.jpg",
+        imageURL: "https://m.media-amazon.com/images/I/91hYIGWvKaL._SY522_.jpg",
         ISBN: "9781633436992",
-        createdAt: new Date("2025-09-10T21:16:31.994Z"),
-        updatedAt: new Date("2025-09-10T21:16:31.994Z"),
+        createdAt: new Date("2025-09-10T21:16:31.994Z").toISOString(),
+        updatedAt: new Date("2025-09-10T21:16:31.994Z").toISOString(),
     },
     {
-        _id: "68c1ea56a9149ff18971e732",
+        id: "68c1ea56a9149ff18971e732",
         title: "Algorithms",
         author: "Robert Sedgewick",
         description:
             "Princeton Computer Science professors survey the most important computer algorithms in use.",
         pages: 976,
-        image: "https://m.media-amazon.com/images/I/61-8ZU7X3UL._SY522_.jpg",
+        imageURL: "https://m.media-amazon.com/images/I/61-8ZU7X3UL._SY522_.jpg",
         ISBN: "9780321573513",
-        createdAt: new Date("2025-09-10T21:15:02.211Z"),
-        updatedAt: new Date("2025-09-10T21:15:02.211Z"),
+        createdAt: new Date("2025-09-10T21:15:02.211Z").toISOString(),
+        updatedAt: new Date("2025-09-10T21:15:02.211Z").toISOString(),
     },
 ];
 
@@ -147,7 +147,9 @@ const CurrentReading = () => {
                 <div className="flex flex-col lg:flex-row gap-6">
                     <div className="flex justify-center lg:justify-start">
                         <BookCard
-                            image={currentBook.image || "/placeholder-book.jpg"}
+                            image={
+                                currentBook.imageURL || "/placeholder-book.jpg"
+                            }
                             alt={currentBook.title || "Book cover"}
                             className="w-32 h-44"
                         />

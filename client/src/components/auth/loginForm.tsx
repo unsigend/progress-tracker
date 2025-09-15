@@ -1,11 +1,78 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 // import dependencies
 import { Link } from "react-router";
+import { useEffect, useState } from "react";
+import { useContext } from "react";
+import { useNavigate } from "react-router";
+
 // import components
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { toast } from "react-toastify";
+
+// import api
+import apiClient, { setAuthToken } from "@/api/apiClient";
+
+// import context
+import UserContext from "@/context/userContext";
+
+// import types
+import type { AuthResponseDto, LoginDto, ResponseUserDto } from "@/api/api";
+import type { AxiosResponse } from "axios";
 
 const LoginForm = () => {
+    // get setUser from context
+    const { setUser, user } = useContext(UserContext) as {
+        user: ResponseUserDto;
+        setUser: (user: ResponseUserDto) => void;
+    };
+    // get form data
+    const [formData, setFormData] = useState<LoginDto>({
+        email: "",
+        password: "",
+    });
+
+    // navigate
+    const navigate = useNavigate();
+
+    // if user is already logged in, redirect to dashboard
+    useEffect(() => {
+        if (user && user.id) {
+            navigate("/dashboard");
+        }
+    }, []);
+
+    // handle login
+    const handleLogin = async () => {
+        try {
+            const jwtToken: AxiosResponse<AuthResponseDto> =
+                await apiClient.api.authControllerLogin({
+                    email: formData.email,
+                    password: formData.password,
+                });
+            setAuthToken(jwtToken.data.access_token);
+            // save the token to local storage
+            localStorage.setItem("jwt-token", jwtToken.data.access_token);
+            // get the user data
+            const user: AxiosResponse<ResponseUserDto> =
+                await apiClient.api.authControllerMe();
+            setUser(user.data);
+
+            // redirect to dashboard
+            navigate("/dashboard");
+        } catch (error: any) {
+            // get the error message from the backend response
+            const errorMessage =
+                error.response.data.message instanceof Array
+                    ? error.response.data.message[0]
+                    : error.response.data.message;
+
+            toast.error(errorMessage);
+        }
+    };
     return (
         <div className="w-full space-y-6">
             {/* Header */}
@@ -32,6 +99,10 @@ const LoginForm = () => {
                         type="email"
                         placeholder="m@example.com"
                         required
+                        value={formData.email}
+                        onChange={(e) =>
+                            setFormData({ ...formData, email: e.target.value })
+                        }
                     />
                 </div>
                 <div className="space-y-2">
@@ -44,13 +115,28 @@ const LoginForm = () => {
                             Forgot your password?
                         </a>
                     </div>
-                    <Input id="password" type="password" required />
+                    <Input
+                        id="password"
+                        type="password"
+                        required
+                        value={formData.password}
+                        onChange={(e) =>
+                            setFormData({
+                                ...formData,
+                                password: e.target.value,
+                            })
+                        }
+                    />
                 </div>
             </form>
 
             {/* Actions */}
             <div className="space-y-4">
-                <Button type="submit" className="w-full cursor-pointer">
+                <Button
+                    type="submit"
+                    className="w-full cursor-pointer"
+                    onClick={handleLogin}
+                >
                     Login
                 </Button>
 

@@ -23,6 +23,9 @@ import DashboardReadingAddBookPage from "@/pages/dashboard/reading/addBook";
 import LoginPage from "@/pages/auth/login";
 import RegisterPage from "@/pages/auth/register";
 
+// import protected route
+import ProtectedRouter from "@/layout/auth/protected";
+
 const AppRoutes = () => {
     return (
         <Routes>
@@ -34,8 +37,15 @@ const AppRoutes = () => {
                 <Route path="about" element={<LandingAboutPage />} />
             </Route>
 
-            {/* dashboard routes */}
-            <Route path="dashboard" element={<DashboardMainLayout />}>
+            {/* dashboard routes - protected */}
+            <Route
+                path="dashboard"
+                element={
+                    <ProtectedRouter>
+                        <DashboardMainLayout />
+                    </ProtectedRouter>
+                }
+            >
                 {/* dashboard home page */}
                 <Route index element={<DashboardHomePage />} />
                 {/* dashboard reading page */}

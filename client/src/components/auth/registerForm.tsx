@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // import dependencies
+import { useContext } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { Link, useNavigate } from "react-router";
 
@@ -7,7 +9,6 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { toast } from "react-toastify";
-
 import StepIndicator from "@/components/auth/stepIndicator";
 import Divider from "@/components/ui/Divider";
 
@@ -15,22 +16,21 @@ import Divider from "@/components/ui/Divider";
 import steps from "@/data/auth/stepData";
 
 // import api
-import userAPI from "@/api/user";
+import apiClient, { setAuthToken } from "@/api/apiClient";
 
 // import util
 import validate from "@/util/validate";
 
 // import types
-import type { UserType } from "@root/types";
+import type {
+    EmailCheckResponseDto,
+    RegisterDto,
+    ResponseUserDto,
+} from "@/api/api";
+import type { AxiosResponse } from "axios";
 
-/**
- * Form data interface
- */
-interface FormData {
-    email: string;
-    password: string;
-    username: string;
-}
+// import context
+import UserContext from "@/context/userContext";
 
 /**
  * Register form component
@@ -48,9 +48,14 @@ const RegisterForm = ({
 }: {
     currentStep: number;
     setCurrentStep: (step: number) => void;
-    formData: FormData;
-    setFormData: React.Dispatch<React.SetStateAction<FormData>>;
+    formData: RegisterDto;
+    setFormData: React.Dispatch<React.SetStateAction<RegisterDto>>;
 }) => {
+    // get setUser from context
+    const { setUser } = useContext(UserContext) as {
+        user: ResponseUserDto;
+        setUser: (user: ResponseUserDto) => void;
+    };
     // navigate
     const navigate = useNavigate();
 
@@ -59,20 +64,33 @@ const RegisterForm = ({
 
     // create user mutation
     const mutation = useMutation({
-        mutationFn: (user: UserType) => userAPI.createUser(user),
-        onSuccess: () => {
+        mutationFn: (user: RegisterDto) =>
+            apiClient.api.authControllerRegister(user),
+        onSuccess: async (data) => {
+            // save the token to local storage
+            localStorage.setItem("jwt-token", data?.data.access_token);
+            // set the jwt token to the api client
+            setAuthToken(data?.data.access_token);
+            // get the user data
+            const user: AxiosResponse<ResponseUserDto> =
+                await apiClient.api.authControllerMe();
+            setUser(user.data);
             // after successful creation, redirect to the dashboard
             navigate("/dashboard");
         },
-        onError: (error) => {
-            toast.error(error.message);
+        onError: (error: any) => {
+            const errorMessage =
+                error.response?.data.message instanceof Array
+                    ? error.response?.data.message[0]
+                    : error.response?.data.message;
+            toast.error(errorMessage);
         },
     });
 
     // handle input change and set form data
     const handleInputChange = (value: string) => {
         if (currentStepData) {
-            setFormData((prev: FormData) => ({
+            setFormData((prev: RegisterDto) => ({
                 ...prev,
                 [currentStepData.field]: value,
             }));
@@ -89,25 +107,28 @@ const RegisterForm = ({
 
             if (currentField === "email") {
                 // validate email
-                if (!validate.email(formData.email)) {
+                if (!validate.email(formData.email || "")) {
                     toast.error("Please enter a valid email address");
                     return;
                 }
 
-                const response = await userAPI.checkUserEmail(formData.email);
-                if (response.exists) {
-                    toast.error(response.message);
+                const result: AxiosResponse<EmailCheckResponseDto> =
+                    await apiClient.api.authControllerEmailCheck({
+                        email: formData.email || "",
+                    });
+                if (result.data.exists) {
+                    toast.error("Email already in use");
                     return;
                 }
             } else if (currentField === "password") {
                 // validate password
-                if (!validate.password(formData.password)) {
+                if (!validate.password(formData.password || "")) {
                     toast.error("Password must be at least 8 characters long");
                     return;
                 }
-            } else if (currentField === "username") {
+            } else if (currentField === "name") {
                 // validate username
-                if (!validate.username(formData.username)) {
+                if (!validate.username(formData.name || "")) {
                     toast.error(
                         "Username must be between 3 and 20 characters long"
                     );
@@ -117,10 +138,10 @@ const RegisterForm = ({
             // move to next step
             setCurrentStep(currentStep + 1);
         } else {
-            const user: UserType = {
+            const user: RegisterDto = {
                 email: formData.email,
                 password: formData.password,
-                username: formData.username,
+                name: formData.name,
             };
             mutation.mutate(user);
         }
@@ -169,7 +190,7 @@ const RegisterForm = ({
                             placeholder={currentStepData?.placeholder}
                             value={
                                 formData[
-                                    currentStepData?.field as keyof FormData
+                                    currentStepData?.field as keyof RegisterDto
                                 ] || ""
                             }
                             onChange={(e) => handleInputChange(e.target.value)}

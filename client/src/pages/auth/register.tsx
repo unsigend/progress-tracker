@@ -7,21 +7,15 @@ import RegisterForm from "@/components/auth/registerForm";
 // import data
 import graphData from "@/data/auth/graphData";
 
-/**
- * Form data interface
- */
-interface FormData {
-    email: string;
-    password: string;
-    username: string;
-}
+// import types
+import type { RegisterDto } from "@/api/api";
 
 const RegisterPage = () => {
     const [currentStep, setCurrentStep] = useState<number>(1);
-    const [formData, setFormData] = useState<FormData>({
+    const [formData, setFormData] = useState<RegisterDto>({
         email: "",
         password: "",
-        username: "",
+        name: "",
     });
 
     return (
