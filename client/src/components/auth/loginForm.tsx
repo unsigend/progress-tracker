@@ -19,6 +19,9 @@ import apiClient, { setAuthToken } from "@/api/apiClient";
 // import context
 import UserContext from "@/context/userContext";
 
+// import util
+import { handleGithubAuth, handleGoogleAuth } from "@/util/OAuth";
+
 // import types
 import type { AuthResponseDto, LoginDto, ResponseUserDto } from "@/api/api";
 import type { AxiosResponse } from "axios";
@@ -154,7 +157,11 @@ const LoginForm = () => {
 
                 {/* Social Login Buttons */}
                 <div className="space-y-2">
-                    <Button variant="outline" className="w-full cursor-pointer">
+                    <Button
+                        variant="outline"
+                        className="w-full cursor-pointer"
+                        onClick={handleGoogleAuth}
+                    >
                         <img
                             src="/image/google.svg"
                             alt="Google"
@@ -162,7 +169,11 @@ const LoginForm = () => {
                         />
                         Login with Google
                     </Button>
-                    <Button variant="outline" className="w-full cursor-pointer">
+                    <Button
+                        variant="outline"
+                        className="w-full cursor-pointer"
+                        onClick={handleGithubAuth}
+                    >
                         <img
                             src="/image/github.svg"
                             alt="GitHub"

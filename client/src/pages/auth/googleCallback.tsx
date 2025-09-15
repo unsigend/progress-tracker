@@ -1,38 +1,37 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-
 // import dependencies
-import { useEffect, useContext, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router";
+import { useContext, useEffect, useState } from "react";
 import LoadingBar from "@/components/ui/loadingBar";
 
 // import api
 import apiClient, { setAuthToken } from "@/api/apiClient";
 
 // import types
-import type { AuthResponseDto, ResponseUserDto } from "@/api/api";
 import type { AxiosResponse } from "axios";
+import type { AuthResponseDto, ResponseUserDto } from "@/api/api";
 
 // import context
 import UserContext from "@/context/userContext";
 
-const GithubCallbackPage = () => {
+const GoogleCallbackPage = () => {
     // loading state
     const [loading, setLoading] = useState(true);
+    // use search params hook to get the code
+    const [searchParams] = useSearchParams();
     // get setUser from context
     const { setUser } = useContext(UserContext) as {
         user: ResponseUserDto;
         setUser: (user: ResponseUserDto) => void;
     };
-    // use search params hook to get the code
-    const [searchParams] = useSearchParams();
     // navigate
     const navigate = useNavigate();
 
-    // handle github callback
-    const handleGithubCallback = async (code: string) => {
+    // handle google callback
+    const handleGoogleCallback = async (code: string) => {
         try {
             const response: AxiosResponse<AuthResponseDto> =
-                await apiClient.api.authControllerGithubAuth({
+                await apiClient.api.authControllerGoogleAuth({
                     code: code,
                 });
 
@@ -48,7 +47,7 @@ const GithubCallbackPage = () => {
             // redirect to dashboard
             navigate("/dashboard");
         } catch (error) {
-            console.error("GitHub auth failed:", error);
+            console.error("Google auth failed:", error);
             navigate("/auth/login");
         } finally {
             setLoading(false);
@@ -60,7 +59,7 @@ const GithubCallbackPage = () => {
 
     useEffect(() => {
         if (code) {
-            handleGithubCallback(code);
+            handleGoogleCallback(code);
         } else {
             // No code found, redirect to login
             navigate("/auth/login");
@@ -68,10 +67,10 @@ const GithubCallbackPage = () => {
     }, [code]);
 
     if (loading) {
-        return <LoadingBar message="Authenticating with GitHub..." />;
+        return <LoadingBar message="Authenticating with Google..." />;
     }
 
     return null;
 };
 
-export default GithubCallbackPage;
+export default GoogleCallbackPage;

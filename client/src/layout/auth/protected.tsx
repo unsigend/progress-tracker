@@ -10,7 +10,7 @@ const ProtectedRouter = ({ children }: ProtectedRouteProps) => {
     const jwtToken = localStorage.getItem("jwt-token");
 
     if (!jwtToken) {
-        return <Navigate to="/login" replace />;
+        return <Navigate to="/auth/login" replace />;
     }
 
     return <>{children}</>;

@@ -23,6 +23,7 @@ import DashboardReadingAddBookPage from "@/pages/dashboard/reading/addBook";
 import LoginPage from "@/pages/auth/login";
 import RegisterPage from "@/pages/auth/register";
 import GithubCallbackPage from "@/pages/auth/githubCallback";
+import GoogleCallbackPage from "@/pages/auth/googleCallback";
 
 // import protected route
 import ProtectedRouter from "@/layout/auth/protected";
@@ -82,6 +83,11 @@ const AppRoutes = () => {
                 <Route
                     path="github/callback"
                     element={<GithubCallbackPage />}
+                />
+                {/* auth google callback page */}
+                <Route
+                    path="google/callback"
+                    element={<GoogleCallbackPage />}
                 />
             </Route>
         </Routes>

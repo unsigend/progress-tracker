@@ -250,7 +250,7 @@ export interface AuthResponseDto {
   access_token: string;
 }
 
-export interface RegisterDto {
+export interface CreateUserDto {
   /**
    * The full name of the user
    * @example "John Doe"
@@ -291,6 +291,14 @@ export interface EmailCheckResponseDto {
 export interface GithubAuthDto {
   /**
    * The code from github
+   * @example "1234567890"
+   */
+  code: string;
+}
+
+export interface GoogleAuthDto {
+  /**
+   * The code from google
    * @example "1234567890"
    */
   code: string;
@@ -708,7 +716,7 @@ export class Api<
      * @summary Register a user
      * @request POST:/api/v1/auth/register
      */
-    authControllerRegister: (data: RegisterDto, params: RequestParams = {}) =>
+    authControllerRegister: (data: CreateUserDto, params: RequestParams = {}) =>
       this.request<
         AuthResponseDto,
         | {
@@ -782,6 +790,27 @@ export class Api<
     ) =>
       this.request<AuthResponseDto, void | AuthResponseDto>({
         path: `/api/v1/auth/github`,
+        method: "POST",
+        body: data,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * @description This endpoint authenticates a user with google
+     *
+     * @tags Auth
+     * @name AuthControllerGoogleAuth
+     * @summary Authenticate a user with google
+     * @request POST:/api/v1/auth/google
+     */
+    authControllerGoogleAuth: (
+      data: GoogleAuthDto,
+      params: RequestParams = {},
+    ) =>
+      this.request<AuthResponseDto, void | object>({
+        path: `/api/v1/auth/google`,
         method: "POST",
         body: data,
         type: ContentType.Json,

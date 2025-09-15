@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
 // import dependencies
 import { useContext } from "react";
 import { useMutation } from "@tanstack/react-query";
@@ -24,7 +25,7 @@ import validate from "@/util/validate";
 // import types
 import type {
     EmailCheckResponseDto,
-    RegisterDto,
+    CreateUserDto,
     ResponseUserDto,
 } from "@/api/api";
 import type { AxiosResponse } from "axios";
@@ -32,8 +33,8 @@ import type { AxiosResponse } from "axios";
 // import context
 import UserContext from "@/context/userContext";
 
-// import global config
-import globalConfig from "@/data/global";
+// import util
+import { handleGithubAuth, handleGoogleAuth } from "@/util/OAuth";
 
 /**
  * Register form component
@@ -51,8 +52,8 @@ const RegisterForm = ({
 }: {
     currentStep: number;
     setCurrentStep: (step: number) => void;
-    formData: RegisterDto;
-    setFormData: React.Dispatch<React.SetStateAction<RegisterDto>>;
+    formData: CreateUserDto;
+    setFormData: React.Dispatch<React.SetStateAction<CreateUserDto>>;
 }) => {
     // get setUser from context
     const { setUser } = useContext(UserContext) as {
@@ -67,7 +68,7 @@ const RegisterForm = ({
 
     // create user mutation
     const mutation = useMutation({
-        mutationFn: (user: RegisterDto) =>
+        mutationFn: (user: CreateUserDto) =>
             apiClient.api.authControllerRegister(user),
         onSuccess: async (data) => {
             // save the token to local storage
@@ -90,33 +91,10 @@ const RegisterForm = ({
         },
     });
 
-    // handle github login
-    const handleGithubLogin = () => {
-        const clientId = import.meta.env.VITE_GITHUB_CLIENT_ID;
-        const redirectUri = import.meta.env.VITE_GITHUB_REDIRECT_URI;
-        // generate a random state for security
-        const state = Math.random().toString(36).substring(7);
-
-        if (!clientId) {
-            console.error(
-                "GitHub Client ID not found. Make sure VITE_GITHUB_CLIENT_ID is set in your .env file"
-            );
-            return;
-        }
-
-        const githubUrl = `${
-            globalConfig.githubOAuthUrl
-        }?client_id=${clientId}&redirect_uri=${encodeURIComponent(
-            redirectUri
-        )}&state=${state}&scope=${encodeURIComponent("user:email")}`;
-
-        window.location.href = githubUrl;
-    };
-
     // handle input change and set form data
     const handleInputChange = (value: string) => {
         if (currentStepData) {
-            setFormData((prev: RegisterDto) => ({
+            setFormData((prev: CreateUserDto) => ({
                 ...prev,
                 [currentStepData.field]: value,
             }));
@@ -164,7 +142,7 @@ const RegisterForm = ({
             // move to next step
             setCurrentStep(currentStep + 1);
         } else {
-            const user: RegisterDto = {
+            const user: CreateUserDto = {
                 email: formData.email,
                 password: formData.password,
                 name: formData.name,
@@ -216,7 +194,7 @@ const RegisterForm = ({
                             placeholder={currentStepData?.placeholder}
                             value={
                                 formData[
-                                    currentStepData?.field as keyof RegisterDto
+                                    currentStepData?.field as keyof CreateUserDto
                                 ] || ""
                             }
                             onChange={(e) => handleInputChange(e.target.value)}
@@ -267,6 +245,7 @@ const RegisterForm = ({
                             <Button
                                 variant="outline"
                                 className="w-full cursor-pointer"
+                                onClick={handleGoogleAuth}
                             >
                                 <img
                                     src="/image/google.svg"
@@ -278,7 +257,7 @@ const RegisterForm = ({
                             <Button
                                 variant="outline"
                                 className="w-full cursor-pointer"
-                                onClick={handleGithubLogin}
+                                onClick={handleGithubAuth}
                             >
                                 <img
                                     src="/image/github.svg"

@@ -7,6 +7,9 @@ const globalConfig = {
     termsOfService:
         "https://github.com/unsigend/progress-tracker/blob/main/LICENSE",
     githubOAuthUrl: "https://github.com/login/oauth/authorize",
+    githubOAuthScope: "user:email",
+    googleOAuthUrl: "https://accounts.google.com/o/oauth2/v2/auth",
+    googleOAuthScope: "email profile",
     apiRoot: "http://localhost:3000",
 };
 

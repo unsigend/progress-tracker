@@ -35,7 +35,7 @@ const HeroBar = () => {
                         <Button
                             className="w-full sm:w-auto cursor-pointer"
                             onClick={() => {
-                                navigate("/signup");
+                                navigate("/auth/signup");
                             }}
                         >
                             <ArrowRight className="size-4 mr-2" />
