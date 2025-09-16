@@ -2,7 +2,6 @@
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { LogOut } from "lucide-react";
-
 import { ChangePwdDialog } from "@/components/dashboard/changePwdDialog";
 
 interface SecuritySectionProps {

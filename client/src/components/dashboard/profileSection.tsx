@@ -150,10 +150,20 @@ const ProfileSection = ({ user }: ProfileSectionProps) => {
                 {/* Avatar Section */}
                 <div className="flex-shrink-0">
                     <Avatar className="w-28 h-28">
-                        <AvatarImage
-                            src={user.avatarURL || ""}
-                            alt={user.name}
-                        />
+                        {user.avatarURL ? (
+                            <AvatarImage
+                                src={user.avatarURL}
+                                alt={user.name}
+                                onError={(e) => {
+                                    console.log(
+                                        "Avatar image failed to load:",
+                                        user.avatarURL
+                                    );
+                                    // Hide the image element on error
+                                    e.currentTarget.style.display = "none";
+                                }}
+                            />
+                        ) : null}
                         <AvatarFallback className="text-2xl">
                             {user.name?.charAt(0).toUpperCase() || "U"}
                         </AvatarFallback>
@@ -170,30 +180,28 @@ const ProfileSection = ({ user }: ProfileSectionProps) => {
                 <h3 className="text-lg font-semibold text-gray-900">
                     Connected accounts
                 </h3>
-                {user.provider?.map((providerItem) => (
-                    <>
-                        {providerItem !== "local" ? (
-                            <div
-                                key={providerItem}
-                                className="flex items-center justify-between p-3 border rounded-lg"
-                            >
-                                <div className="flex items-center gap-3">
-                                    {getProviderIcon(providerItem)}
-                                    <span className="font-medium text-gray-900">
-                                        {providerItem?.charAt(0).toUpperCase() +
-                                            providerItem?.slice(1)}
-                                    </span>
-                                </div>
-                                <Badge
-                                    variant="secondary"
-                                    className="bg-green-100 text-green-800"
-                                >
-                                    Connected
-                                </Badge>
+                {user.provider?.map((providerItem) =>
+                    providerItem !== "local" ? (
+                        <div
+                            key={providerItem}
+                            className="flex items-center justify-between p-3 border rounded-lg"
+                        >
+                            <div className="flex items-center gap-3">
+                                {getProviderIcon(providerItem)}
+                                <span className="font-medium text-gray-900">
+                                    {providerItem?.charAt(0).toUpperCase() +
+                                        providerItem?.slice(1)}
+                                </span>
                             </div>
-                        ) : null}
-                    </>
-                ))}
+                            <Badge
+                                variant="secondary"
+                                className="bg-green-100 text-green-800"
+                            >
+                                Connected
+                            </Badge>
+                        </div>
+                    ) : null
+                )}
             </div>
 
             <Button onClick={handleUpdateUser}>Update</Button>

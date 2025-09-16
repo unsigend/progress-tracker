@@ -112,9 +112,11 @@ const SideBar = () => {
                     <div className="border-t border-sidebar-border p-4">
                         <div className="flex items-center gap-3 relative">
                             <Avatar>
-                                <AvatarImage src={user.avatarURL || ""} />
+                                <AvatarImage
+                                    src={user.avatarURL || undefined}
+                                />
                                 <AvatarFallback>
-                                    {user.name?.charAt(0).toUpperCase()}
+                                    {user.name?.charAt(0).toUpperCase() || "U"}
                                 </AvatarFallback>
                             </Avatar>
                             <div className="flex-1 min-w-0">
