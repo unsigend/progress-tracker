@@ -2,7 +2,7 @@
 import { cn } from "@/lib/utils";
 
 // import components
-import BookCard from "@/components/dashboard/bookCard";
+import { BookCard } from "@/components/features/books";
 
 // import types
 import type { BookResponseDto } from "@/api/api";

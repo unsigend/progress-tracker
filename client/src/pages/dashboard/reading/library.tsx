@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Link } from "react-router";
 
 // import components
-import BookShelf from "@/components/dashboard/bookShelf";
+import { BookShelf } from "@/components/features/books";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";

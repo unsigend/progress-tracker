@@ -1,4 +1,7 @@
-const validate = {
+/**
+ * Validation utility functions
+ */
+export const validation = {
     /**
      * Validate an email address
      * @param email - the email to validate
@@ -29,4 +32,4 @@ const validate = {
     },
 };
 
-export default validate;
+export default validation;

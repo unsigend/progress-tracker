@@ -7,7 +7,7 @@ import { ArrowLeft } from "lucide-react";
 // import components
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import BookCard from "@/components/dashboard/bookCard";
+import BookCard from "@/components/features/books";
 
 // import api
 import apiClient from "@/api/apiClient";

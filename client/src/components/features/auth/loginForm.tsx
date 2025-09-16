@@ -20,7 +20,7 @@ import apiClient from "@/api/apiClient";
 import UserContext from "@/context/userContext";
 
 // import util
-import { handleGithubAuth, handleGoogleAuth } from "@/util/OAuth";
+import { handleGithubAuth, handleGoogleAuth } from "@/utils";
 import { saveAuthToken, getErrorMessage } from "@/utils/auth";
 import { AUTH_ROUTES } from "@/constants/auth";
 

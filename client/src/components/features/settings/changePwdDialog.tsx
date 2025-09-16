@@ -18,7 +18,7 @@ import { useContext, useState } from "react";
 import { toast } from "react-toastify";
 
 // import validate
-import validate from "@/util/validate";
+import { validation } from "@/utils";
 
 // import constants
 import { ERROR_MESSAGES } from "@/constants/auth";
@@ -74,7 +74,7 @@ export function ChangePwdDialog() {
     // handle submit
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (!validate.password(formData.newPassword)) {
+        if (!validation.password(formData.newPassword)) {
             toast.error(ERROR_MESSAGES.PASSWORD_REQUIRED);
             return;
         }

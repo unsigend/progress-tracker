@@ -3,7 +3,7 @@ import BarChartComponent from "@/components/ui/BarChart";
 import LineChartComponent from "@/components/ui/LineChart";
 import PieChartComponent from "@/components/ui/PieChart";
 
-import random from "@/util/random";
+import random from "@/utils";
 
 const graphData = [
     {

@@ -1,8 +1,7 @@
 // import components
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { KeyRound } from "lucide-react";
-import ProfileSection from "@/components/dashboard/profileSection";
-import SecuritySection from "@/components/dashboard/securitySection";
+import { ProfileSection, SecuritySection } from "@/components/features/settings";
 
 // import api
 import { setAuthToken } from "@/api/apiClient";

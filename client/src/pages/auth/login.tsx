@@ -1,11 +1,11 @@
-import LoginForm from "@/components/auth/loginForm";
+import { LoginForm } from "@/components/features/auth";
 import AuthLayout from "@/layout/auth/authLayout";
-import ChartContainer from "@/components/auth/chartContainer";
+import ChartContainer from "@/components/ui/chartContainer";
 import LineChartComponent from "@/components/ui/LineChart";
-import random from "@/util/random";
+import { crypto } from "@/utils";
 
 const chartData = Array.from({ length: 8 }, () => ({
-    value: random.generateRandomNumber(10, 100),
+    value: crypto.generateRandomNumber(10, 100),
 }));
 
 const LoginPage = () => {

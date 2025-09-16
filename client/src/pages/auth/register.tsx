@@ -1,7 +1,7 @@
 import { useState } from "react";
-import RegisterForm from "@/components/auth/registerForm";
+import { RegisterForm } from "@/components/features/auth";
 import AuthLayout from "@/layout/auth/authLayout";
-import ChartContainer from "@/components/auth/chartContainer";
+import ChartContainer from "@/components/ui/chartContainer";
 import graphData from "@/data/auth/graphData";
 import type { CreateUserDto } from "@/api/api";
 

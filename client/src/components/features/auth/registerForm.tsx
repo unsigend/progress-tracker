@@ -20,7 +20,7 @@ import steps from "@/data/auth/stepData";
 import apiClient from "@/api/apiClient";
 
 // import util
-import validate from "@/util/validate";
+import { validation } from "@/utils";
 import { saveAuthToken, getErrorMessage } from "@/utils/auth";
 import { AUTH_ROUTES, ERROR_MESSAGES } from "@/constants/auth";
 
@@ -36,7 +36,7 @@ import type { AxiosResponse } from "axios";
 import UserContext from "@/context/userContext";
 
 // import util
-import { handleGithubAuth, handleGoogleAuth } from "@/util/OAuth";
+import { handleGithubAuth, handleGoogleAuth } from "@/utils";
 
 /**
  * Register form component
@@ -103,7 +103,7 @@ const RegisterForm = ({
             // validate based on current field
 
             if (currentField === "email") {
-                if (!validate.email(formData.email || "")) {
+                if (!validation.email(formData.email || "")) {
                     toast.error(ERROR_MESSAGES.INVALID_EMAIL);
                     return;
                 }
@@ -117,12 +117,12 @@ const RegisterForm = ({
                     return;
                 }
             } else if (currentField === "password") {
-                if (!validate.password(formData.password || "")) {
+                if (!validation.password(formData.password || "")) {
                     toast.error(ERROR_MESSAGES.PASSWORD_REQUIRED);
                     return;
                 }
             } else if (currentField === "name") {
-                if (!validate.username(formData.name || "")) {
+                if (!validation.username(formData.name || "")) {
                     toast.error(ERROR_MESSAGES.USERNAME_REQUIRED);
                     return;
                 }

@@ -4,8 +4,8 @@ import { Link } from "react-router";
 
 // import components
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import BookCard from "@/components/dashboard/bookCard";
-import BookShelf from "@/components/dashboard/bookShelf";
+import BookCard from "@/components/features/books";
+import BookShelf from "@/components/features/books";
 import LineChart from "@/components/ui/LineChart";
 
 // import types
