@@ -1,3 +1,6 @@
+/**
+ * OAuth constants
+ */
 const OAUTH_CONFIG = {
     OAUTH_STORAGE_KEY: "access_token",
     GITHUB_OAUTH_URL: "https://github.com/login/oauth/authorize",

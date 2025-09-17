@@ -1,3 +1,6 @@
+/**
+ * Routes constants
+ */
 const ROUTES = {
     HOME: "/",
     ABOUT: "/about",

@@ -1,3 +1,6 @@
+/**
+ * Global constants
+ */
 const GLOBAL_CONSTANTS = {
     AUTHOR: "Yixiang Qiu",
     GITHUB_URL: "https://github.com/unsigend/progress-tracker",

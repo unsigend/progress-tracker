@@ -286,17 +286,9 @@ export interface EmailCheckResponseDto {
   exists: boolean;
 }
 
-export interface GithubAuthDto {
+export interface AuthRequestDto {
   /**
-   * The code from github
-   * @example "1234567890"
-   */
-  code: string;
-}
-
-export interface GoogleAuthDto {
-  /**
-   * The code from google
+   * The code from third party authentication
    * @example "1234567890"
    */
   code: string;
@@ -689,6 +681,56 @@ export class Api<
       }),
 
     /**
+     * @description This endpoint returns the current user data
+     *
+     * @tags User
+     * @name UserControllerMe
+     * @summary Get the current user data
+     * @request GET:/api/v1/user/me
+     */
+    userControllerMe: (params: RequestParams = {}) =>
+      this.request<ResponseUserDto, void | object>({
+        path: `/api/v1/user/me`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * @description This endpoint patches the current user data
+     *
+     * @tags User
+     * @name UserControllerPatchMe
+     * @summary Patch the current user data
+     * @request PATCH:/api/v1/user/me
+     */
+    userControllerPatchMe: (data: UpdateUserDto, params: RequestParams = {}) =>
+      this.request<ResponseUserDto, void | object>({
+        path: `/api/v1/user/me`,
+        method: "PATCH",
+        body: data,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * @description This endpoint deletes the current user
+     *
+     * @tags User
+     * @name UserControllerDeleteMe
+     * @summary Delete the current user
+     * @request DELETE:/api/v1/user/me
+     */
+    userControllerDeleteMe: (params: RequestParams = {}) =>
+      this.request<ResponseUserDto, void | object>({
+        path: `/api/v1/user/me`,
+        method: "DELETE",
+        format: "json",
+        ...params,
+      }),
+
+    /**
      * @description This endpoint logs in a user
      *
      * @tags Auth
@@ -759,22 +801,6 @@ export class Api<
       }),
 
     /**
-     * @description This endpoint returns the current user data
-     *
-     * @tags Auth
-     * @name AuthControllerMe
-     * @summary Get the current user data
-     * @request GET:/api/v1/auth/me
-     */
-    authControllerMe: (params: RequestParams = {}) =>
-      this.request<ResponseUserDto, void | object>({
-        path: `/api/v1/auth/me`,
-        method: "GET",
-        format: "json",
-        ...params,
-      }),
-
-    /**
      * @description This endpoint authenticates a user with github
      *
      * @tags Auth
@@ -783,7 +809,7 @@ export class Api<
      * @request POST:/api/v1/auth/github
      */
     authControllerGithubAuth: (
-      data: GithubAuthDto,
+      data: AuthRequestDto,
       params: RequestParams = {},
     ) =>
       this.request<AuthResponseDto, void | AuthResponseDto>({
@@ -804,7 +830,7 @@ export class Api<
      * @request POST:/api/v1/auth/google
      */
     authControllerGoogleAuth: (
-      data: GoogleAuthDto,
+      data: AuthRequestDto,
       params: RequestParams = {},
     ) =>
       this.request<AuthResponseDto, void | object>({
