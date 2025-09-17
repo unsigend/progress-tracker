@@ -1,41 +1,36 @@
 // import dependencies
 import { Link, useLocation } from "react-router";
-import { useContext, useState } from "react";
+import { useState } from "react";
 
 // import utils
 import { cn } from "@/lib/utils";
+
+// import constants
+import ROUTES from "@/constants/routes";
 
 // import components
 import HamburgerButton from "@/components/ui/HamburgerButton";
 import Logo from "@/components/ui/logo";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+
+// import icons
 import { Settings } from "lucide-react";
 
 // import data
 import navigationItems from "@/data/dashboard/navigationItems";
 
-// import context
-import UserContext from "@/context/userContext";
-
-// import types
-import type { ResponseUserDto } from "@/api/api";
-
 const SideBar = () => {
     // state for the sidebar
     const [isOpen, setIsOpen] = useState(false);
-    // get user from context
-    const { user } = useContext(UserContext) as {
-        user: ResponseUserDto;
-    };
 
     // get the location
     const location = useLocation();
 
     // check if the route is active
     const isActiveRoute = (href: string) => {
-        if (href === "/dashboard") {
-            return location.pathname === "/dashboard";
+        if (href === ROUTES.DASHBOARD) {
+            return location.pathname === ROUTES.DASHBOARD;
         }
         return location.pathname.startsWith(href);
     };
@@ -129,7 +124,7 @@ const SideBar = () => {
                             </div>
 
                             {/* Settings Button */}
-                            <Link to="/dashboard/settings">
+                            <Link to={ROUTES.SETTINGS}>
                                 <Button
                                     variant="ghost"
                                     size="icon"

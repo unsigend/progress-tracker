@@ -1,30 +1,32 @@
 // import api instance
 import { Api } from "@/api/api";
 
-// import global config
-import globalConfig from "@/data/global";
-
-const apiClient = new Api({
-    baseURL: globalConfig.apiRoot,
+const apiClientInstance = new Api({
+    baseURL: process.env.REACT_APP_API_ROOT,
 });
 
-/**
- * Set the auth token
- * @param token - the auth token
- * @returns void
- */
-export const setAuthToken = (token: string) => {
-    apiClient.instance.defaults.headers.common[
-        "Authorization"
-    ] = `Bearer ${token}`;
-};
+const apiClient = {
+    ...apiClientInstance,
 
-/**
- * Remove the auth token
- * @returns void
- */
-export const removeAuthToken = () => {
-    delete apiClient.instance.defaults.headers.common["Authorization"];
-};
+    /**
+     * Set the auth token
+     * @param token - the auth token
+     * @returns void
+     */
+    setAuthToken: (token: string) => {
+        apiClientInstance.instance.defaults.headers.common[
+            "Authorization"
+        ] = `Bearer ${token}`;
+    },
 
+    /**
+     * Remove the auth token
+     * @returns void
+     */
+    removeAuthToken: () => {
+        delete apiClientInstance.instance.defaults.headers.common[
+            "Authorization"
+        ];
+    },
+};
 export default apiClient;

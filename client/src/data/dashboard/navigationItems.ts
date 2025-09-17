@@ -1,24 +1,28 @@
+// import icons
 import { BookOpen, GraduationCap, Home, FolderOpen } from "lucide-react";
+
+// import constants
+import ROUTES from "@/constants/routes";
 
 const navigationItems = [
     {
         name: "Home",
-        href: "/dashboard",
+        href: ROUTES.DASHBOARD,
         icon: Home,
     },
     {
         name: "Reading",
-        href: "/dashboard/reading",
+        href: ROUTES.READING,
         icon: BookOpen,
     },
     {
         name: "Courses",
-        href: "/dashboard/courses",
+        href: ROUTES.COURSES,
         icon: GraduationCap,
     },
     {
         name: "Projects",
-        href: "/dashboard/projects",
+        href: ROUTES.PROJECTS,
         icon: FolderOpen,
     },
 ];

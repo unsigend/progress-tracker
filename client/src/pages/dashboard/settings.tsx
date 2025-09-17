@@ -1,37 +1,12 @@
 // import components
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { KeyRound } from "lucide-react";
-import { ProfileSection, SecuritySection } from "@/components/features/settings";
-
-// import api
-import { setAuthToken } from "@/api/apiClient";
-
-// import dependencies
-import { useContext } from "react";
-
-// import context
-import UserContext from "@/context/userContext";
-
-// import types
-import type { ResponseUserDto } from "@/api/api";
+import {
+    ProfileSection,
+    SecuritySection,
+} from "@/components/features/settings";
 
 const DashboardSettingsPage = () => {
-    // get user from context
-    const { user } = useContext(UserContext) as {
-        user: ResponseUserDto;
-    };
-
-    // handle logout
-    const handleLogout = () => {
-        // remove auth token from local storage
-        localStorage.removeItem("jwt-token");
-        // remove auth token from api client
-        setAuthToken("");
-
-        // refresh the page
-        window.location.reload();
-    };
-
     // Show loading state if user data is not available
     if (!user.id) {
         return (

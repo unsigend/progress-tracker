@@ -2,6 +2,9 @@
 import { Link } from "react-router";
 import { useState } from "react";
 
+// import constants
+import ROUTES from "@/constants/routes";
+
 // import components
 import { Button } from "@/components/ui/button";
 import Logo from "@/components/ui/logo";
@@ -24,7 +27,7 @@ const LandingNavBar = () => {
                 <div className="flex items-center justify-between p-4">
                     <Logo fontSize="text-xl" />
                     <div className="flex items-center gap-4">
-                        <Link to="/">
+                        <Link to={ROUTES.HOME}>
                             <Button
                                 variant="link"
                                 className="text-md cursor-pointer"
@@ -32,7 +35,7 @@ const LandingNavBar = () => {
                                 Home
                             </Button>
                         </Link>
-                        <Link to="/about">
+                        <Link to={ROUTES.ABOUT}>
                             <Button
                                 variant="link"
                                 className="text-md cursor-pointer"
@@ -40,7 +43,7 @@ const LandingNavBar = () => {
                                 About
                             </Button>
                         </Link>
-                        <Link to="/contact">
+                        <Link to={ROUTES.CONTACT}>
                             <Button
                                 variant="link"
                                 className="text-md cursor-pointer"
@@ -50,7 +53,7 @@ const LandingNavBar = () => {
                         </Link>
                     </div>
                     <div className="flex items-center gap-4">
-                        <Link to="/auth/login">
+                        <Link to={ROUTES.LOGIN}>
                             <Button
                                 variant="outline"
                                 className="cursor-pointer"
@@ -58,7 +61,7 @@ const LandingNavBar = () => {
                                 Login
                             </Button>
                         </Link>
-                        <Link to="/auth/signup">
+                        <Link to={ROUTES.SIGNUP}>
                             <Button
                                 variant="default"
                                 className="cursor-pointer"
@@ -87,13 +90,16 @@ const LandingNavBar = () => {
                 >
                     {/* main navigation list */}
                     <div className="flex flex-col gap-3 w-full mb-6">
-                        <Link to="/" onClick={() => setIsNavBarOpen(false)}>
+                        <Link
+                            to={ROUTES.HOME}
+                            onClick={() => setIsNavBarOpen(false)}
+                        >
                             <Button variant="link" className={navBarLinkStyle}>
                                 Home
                             </Button>
                         </Link>
                         <Link
-                            to="/about"
+                            to={ROUTES.ABOUT}
                             onClick={() => setIsNavBarOpen(false)}
                         >
                             <Button variant="link" className={navBarLinkStyle}>
@@ -101,7 +107,7 @@ const LandingNavBar = () => {
                             </Button>
                         </Link>
                         <Link
-                            to="/contact"
+                            to={ROUTES.CONTACT}
                             onClick={() => setIsNavBarOpen(false)}
                         >
                             <Button variant="link" className={navBarLinkStyle}>
@@ -113,7 +119,7 @@ const LandingNavBar = () => {
                     {/* login and signup buttons */}
                     <div className="flex flex-col gap-3 w-full max-w-sm">
                         <Link
-                            to="/login"
+                            to={ROUTES.LOGIN}
                             onClick={() => setIsNavBarOpen(false)}
                         >
                             <Button
@@ -124,7 +130,7 @@ const LandingNavBar = () => {
                             </Button>
                         </Link>
                         <Link
-                            to="/signup"
+                            to={ROUTES.SIGNUP}
                             onClick={() => setIsNavBarOpen(false)}
                         >
                             <Button

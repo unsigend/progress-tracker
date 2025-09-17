@@ -1,7 +1,7 @@
 /**
  * Validation utility functions
  */
-export const validation = {
+export const validationUtils = {
     /**
      * Validate an email address
      * @param email - the email to validate
@@ -32,4 +32,4 @@ export const validation = {
     },
 };
 
-export default validation;
+export default validationUtils;

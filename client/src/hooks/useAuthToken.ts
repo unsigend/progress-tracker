@@ -1,61 +1,62 @@
-// Auth token management hook using useLocalStorage
-
 // import hooks
-import { useLocalStorage } from "./useLocalStorage";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 
-// import constants
-import { AUTH_STORAGE_KEY } from "@/constants/auth";
-
-// import api client functions
-import { setAuthToken as setApiAuthToken, removeAuthToken as removeApiAuthToken } from "@/api/apiClient";
+// import api
+import apiClient from "@/api/apiClient";
 
 // import effect hook
 import { useEffect } from "react";
 
+// import constants
+import OAUTH_CONFIG from "@/constants/oauth";
+
 /**
- * Custom hook for managing authentication token
- * Uses useLocalStorage for consistent state management
+ * useAuthToken hook to manage the auth token
+ * @returns {
+ *  token: string | null,
+ *  saveToken: (newToken: string) => void;
+ *  removeToken: () => void;
+ *  isAuthenticated: boolean;
+ * }
  */
 export const useAuthToken = () => {
-    const [token, setTokenState, removeTokenState] = useLocalStorage<string | null>(
-        AUTH_STORAGE_KEY,
-        null
-    );
+    const [localStorageToken, setLocalStorageToken, removeLocalStorageToken] =
+        useLocalStorage<string | null>(OAUTH_CONFIG.OAUTH_STORAGE_KEY, null);
 
     // Sync token with API client whenever it changes
     useEffect(() => {
-        if (token) {
-            setApiAuthToken(token);
+        if (localStorageToken) {
+            apiClient.setAuthToken(localStorageToken);
         } else {
-            removeApiAuthToken();
+            apiClient.removeAuthToken();
         }
-    }, [token]);
+    }, [localStorageToken]);
 
     /**
      * Save auth token to localStorage and update API client
      * @param newToken - The JWT token to save
+     * @returns void
      */
     const saveToken = (newToken: string) => {
-        setTokenState(newToken);
-        // Effect will handle API client update
+        setLocalStorageToken(newToken);
     };
 
     /**
      * Remove auth token from localStorage and API client
+     * @returns void
      */
     const removeToken = () => {
-        removeTokenState();
-        // Effect will handle API client cleanup
+        removeLocalStorageToken();
     };
 
     /**
      * Check if user is authenticated (has valid token)
      * @returns boolean indicating if token exists
      */
-    const isAuthenticated = !!token;
+    const isAuthenticated = !!localStorageToken;
 
     return {
-        token,
+        token: localStorageToken,
         saveToken,
         removeToken,
         isAuthenticated,

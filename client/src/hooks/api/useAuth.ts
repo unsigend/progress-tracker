@@ -1,6 +1,4 @@
-// Combined auth hook with all auth-related operations
-
-// import improved auth services that work with hooks
+// import services
 import {
     useAuthMe,
     useEmailCheck,
@@ -9,13 +7,18 @@ import {
     useGithubAuthMutation,
     useGoogleAuthMutation,
     useLogoutMutation,
-} from "@/services/authWithHooks";
+} from "@/services/auth";
 
 // import auth token hook
 import { useAuthToken } from "@/hooks/useAuthToken";
 
 // import types
-import type { LoginDto, CreateUserDto, GithubAuthDto, GoogleAuthDto } from "@/api/api";
+import type {
+    LoginDto,
+    CreateUserDto,
+    GithubAuthDto,
+    GoogleAuthDto,
+} from "@/api/api";
 
 /**
  * Combined auth hook with all authentication operations
@@ -40,12 +43,11 @@ const useAuth = () => {
     const isAuthenticated = hasToken && !!user && !isError;
 
     // Helper to check if any auth operation is in progress
-    const isAuthenticating = (
+    const isAuthenticating =
         loginMutation.isPending ||
         registerMutation.isPending ||
         githubAuthMutation.isPending ||
-        googleAuthMutation.isPending
-    );
+        googleAuthMutation.isPending;
 
     return {
         // User state
@@ -59,9 +61,12 @@ const useAuth = () => {
 
         // Auth actions
         login: (credentials: LoginDto) => loginMutation.mutate(credentials),
-        register: (userData: CreateUserDto) => registerMutation.mutate(userData),
-        githubAuth: (authData: GithubAuthDto) => githubAuthMutation.mutate(authData),
-        googleAuth: (authData: GoogleAuthDto) => googleAuthMutation.mutate(authData),
+        register: (userData: CreateUserDto) =>
+            registerMutation.mutate(userData),
+        githubAuth: (authData: GithubAuthDto) =>
+            githubAuthMutation.mutate(authData),
+        googleAuth: (authData: GoogleAuthDto) =>
+            googleAuthMutation.mutate(authData),
         logout: () => logoutMutation.mutate(),
 
         // Mutation states

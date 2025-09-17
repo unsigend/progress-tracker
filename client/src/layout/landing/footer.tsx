@@ -1,5 +1,11 @@
-import globalConfig from "@/data/global";
+// import constants
+import GLOBAL_CONSTANTS from "@/constants/global";
+import ROUTES from "@/constants/routes";
+
+// import icons
 import { Github, Mail } from "lucide-react";
+
+const linkStyle = "text-gray-400 hover:text-white transition-colors";
 
 const LandingFooter = () => {
     return (
@@ -26,34 +32,25 @@ const LandingFooter = () => {
                             </h4>
                             <ul className="space-y-2 text-sm">
                                 <li>
-                                    <a
-                                        href="#features"
-                                        className="text-gray-400 hover:text-white transition-colors"
-                                    >
+                                    <a href="#features" className={linkStyle}>
                                         Features
                                     </a>
                                 </li>
                                 <li>
-                                    <a
-                                        href="#pricing"
-                                        className="text-gray-400 hover:text-white transition-colors"
-                                    >
+                                    <a href="#pricing" className={linkStyle}>
                                         Pricing
                                     </a>
                                 </li>
                                 <li>
                                     <a
                                         href="#integrations"
-                                        className="text-gray-400 hover:text-white transition-colors"
+                                        className={linkStyle}
                                     >
                                         Integrations
                                     </a>
                                 </li>
                                 <li>
-                                    <a
-                                        href="#api"
-                                        className="text-gray-400 hover:text-white transition-colors"
-                                    >
+                                    <a href="#api" className={linkStyle}>
                                         API
                                     </a>
                                 </li>
@@ -68,33 +65,24 @@ const LandingFooter = () => {
                             <ul className="space-y-2 text-sm">
                                 <li>
                                     <a
-                                        href="/about"
-                                        className="text-gray-400 hover:text-white transition-colors"
+                                        href={ROUTES.ABOUT}
+                                        className={linkStyle}
                                     >
                                         About
                                     </a>
                                 </li>
                                 <li>
-                                    <a
-                                        href="#blog"
-                                        className="text-gray-400 hover:text-white transition-colors"
-                                    >
+                                    <a href="#blog" className={linkStyle}>
                                         Blog
                                     </a>
                                 </li>
                                 <li>
-                                    <a
-                                        href="#careers"
-                                        className="text-gray-400 hover:text-white transition-colors"
-                                    >
+                                    <a href="#careers" className={linkStyle}>
                                         Careers
                                     </a>
                                 </li>
                                 <li>
-                                    <a
-                                        href="#contact"
-                                        className="text-gray-400 hover:text-white transition-colors"
-                                    >
+                                    <a href="#contact" className={linkStyle}>
                                         Contact
                                     </a>
                                 </li>
@@ -108,34 +96,22 @@ const LandingFooter = () => {
                             </h4>
                             <ul className="space-y-2 text-sm">
                                 <li>
-                                    <a
-                                        href="#docs"
-                                        className="text-gray-400 hover:text-white transition-colors"
-                                    >
+                                    <a href="#docs" className={linkStyle}>
                                         Documentation
                                     </a>
                                 </li>
                                 <li>
-                                    <a
-                                        href="#help"
-                                        className="text-gray-400 hover:text-white transition-colors"
-                                    >
+                                    <a href="#help" className={linkStyle}>
                                         Help Center
                                     </a>
                                 </li>
                                 <li>
-                                    <a
-                                        href="#community"
-                                        className="text-gray-400 hover:text-white transition-colors"
-                                    >
+                                    <a href="#community" className={linkStyle}>
                                         Community
                                     </a>
                                 </li>
                                 <li>
-                                    <a
-                                        href="#status"
-                                        className="text-gray-400 hover:text-white transition-colors"
-                                    >
+                                    <a href="#status" className={linkStyle}>
                                         Status
                                     </a>
                                 </li>
@@ -154,8 +130,8 @@ const LandingFooter = () => {
                             {/* Social Links */}
                             <div className="flex items-center gap-4">
                                 <a
-                                    href={`${globalConfig.github}`}
-                                    className="text-gray-400 hover:text-white transition-colors"
+                                    href={`${GLOBAL_CONSTANTS.GITHUB_URL}`}
+                                    className={linkStyle}
                                     aria-label="GitHub"
                                     target="_blank"
                                     rel="noopener noreferrer"
@@ -163,8 +139,8 @@ const LandingFooter = () => {
                                     <Github className="w-5 h-5" />
                                 </a>
                                 <a
-                                    href={`mailto:${globalConfig.email}`}
-                                    className="text-gray-400 hover:text-white transition-colors"
+                                    href={`mailto:${GLOBAL_CONSTANTS.EMAIL}`}
+                                    className={linkStyle}
                                     aria-label="Email"
                                     target="_blank"
                                     rel="noopener noreferrer"
@@ -176,14 +152,14 @@ const LandingFooter = () => {
                             {/* Legal Links */}
                             <div className="flex items-center gap-6 text-sm">
                                 <a
-                                    href={`${globalConfig.privacyPolicy}`}
-                                    className="text-gray-400 hover:text-white transition-colors"
+                                    href={`${GLOBAL_CONSTANTS.PRIVACY_POLICY}`}
+                                    className={linkStyle}
                                 >
                                     Privacy Policy
                                 </a>
                                 <a
-                                    href={`${globalConfig.termsOfService}`}
-                                    className="text-gray-400 hover:text-white transition-colors"
+                                    href={`${GLOBAL_CONSTANTS.TERMS_OF_SERVICE}`}
+                                    className={linkStyle}
                                 >
                                     Terms of Service
                                 </a>

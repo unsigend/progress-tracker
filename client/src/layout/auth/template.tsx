@@ -1,18 +1,20 @@
+// import dependencies
 import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router";
 
-interface AuthLayoutProps {
-    children: React.ReactNode;
-    leftContent: React.ReactNode;
-}
-
 /**
- * AuthLayout component
- * @param children - The children to render
- * @param leftContent - The left content to render
- * @returns The AuthLayout component
+ * AuthTemplateLayout component
+ * @param left - The left content to render
+ * @param right - The right content to render
+ * @returns The AuthTemplateLayout component
  */
-const AuthLayout = ({ children, leftContent }: AuthLayoutProps) => {
+const AuthTemplateLayout = ({
+    left,
+    right,
+}: {
+    left: React.ReactNode;
+    right: React.ReactNode;
+}) => {
     return (
         <div className="relative grid md:grid-cols-2 min-h-[600px]">
             <Link
@@ -23,14 +25,14 @@ const AuthLayout = ({ children, leftContent }: AuthLayoutProps) => {
             </Link>
 
             <div className="bg-gray-50/50 p-8 flex items-center justify-center">
-                <div className="w-full max-w-sm">{leftContent}</div>
+                <div className="w-full max-w-sm">{left}</div>
             </div>
 
             <div className="p-8 flex items-center justify-center">
-                <div className="w-full max-w-sm">{children}</div>
+                <div className="w-full max-w-sm">{right}</div>
             </div>
         </div>
     );
 };
 
-export default AuthLayout;
+export default AuthTemplateLayout;

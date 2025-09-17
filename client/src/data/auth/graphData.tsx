@@ -3,7 +3,7 @@ import BarChartComponent from "@/components/ui/BarChart";
 import LineChartComponent from "@/components/ui/LineChart";
 import PieChartComponent from "@/components/ui/PieChart";
 
-import random from "@/utils";
+import random from "@/utils/random";
 
 const graphData = [
     {
@@ -29,7 +29,7 @@ const graphData = [
         incremental1: "+160 pages",
         incremental2: "+28% from last week",
         chartData: Array.from({ length: 8 }, () => ({
-            value: random.generateRandomNumber(10, 100),
+            value: random.number(10, 100),
         })),
         component: ({ chartData }: { chartData: any }) => (
             <LineChartComponent chartData={chartData} />

@@ -1,11 +1,11 @@
 import { LoginForm } from "@/components/features/auth";
-import AuthLayout from "@/layout/auth/authLayout";
+import AuthLayout from "@/layout/auth/template";
 import ChartContainer from "@/components/ui/chartContainer";
 import LineChartComponent from "@/components/ui/LineChart";
-import { crypto } from "@/utils";
+import { random } from "@/utils";
 
 const chartData = Array.from({ length: 8 }, () => ({
-    value: crypto.generateRandomNumber(10, 100),
+    value: random.number(10, 100),
 }));
 
 const LoginPage = () => {
@@ -18,11 +18,7 @@ const LoginPage = () => {
         />
     );
 
-    return (
-        <AuthLayout leftContent={leftContent}>
-            <LoginForm />
-        </AuthLayout>
-    );
+    return <AuthLayout left={leftContent} right={<LoginForm />} />;
 };
 
 export default LoginPage;

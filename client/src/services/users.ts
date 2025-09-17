@@ -13,9 +13,8 @@ import { queryKeys } from "@/services/queryKeys";
 import type { UpdateUserDto } from "@/api/api";
 
 // import utils
-import { getErrorMessage } from "@/utils/auth";
-
-// ============= QUERIES =============
+import errorUtils from "@/utils/error";
+import { useAuthToken } from "@/hooks/useAuthToken";
 
 /**
  * useUser hook to get a user by id
@@ -24,15 +23,12 @@ import { getErrorMessage } from "@/utils/auth";
  */
 export const useUser = (id: string) => {
     return useQuery({
-        queryKey: queryKeys.users.detail(id),
+        queryKey: queryKeys.auth.me(),
         queryFn: () => apiClient.api.userControllerGetById(id),
         select: (data) => data.data,
         enabled: !!id,
-        staleTime: 5 * 60 * 1000, // 5 minutes
     });
 };
-
-// ============= MUTATIONS =============
 
 /**
  * useUpdateUserMutation hook for updating a user
@@ -44,20 +40,17 @@ export const useUpdateUserMutation = () => {
     return useMutation({
         mutationFn: ({ id, data }: { id: string; data: UpdateUserDto }) =>
             apiClient.api.userControllerUpdate(id, data),
-        onSuccess: (response, { id }) => {
+        onSuccess: (response) => {
             const updatedUser = response.data;
 
-            // Update specific user in cache
-            queryClient.setQueryData(queryKeys.users.detail(id), { data: updatedUser });
-
-            // Also update auth.me if it's the same user
-            const currentUser = queryClient.getQueryData(queryKeys.auth.me());
-            if (currentUser && (currentUser as any).id === id) {
-                queryClient.setQueryData(queryKeys.auth.me(), updatedUser);
-            }
+            // update cache
+            queryClient.setQueryData(queryKeys.auth.me(), updatedUser);
         },
         onError: (error) => {
-            console.error("Update user failed:", getErrorMessage(error));
+            console.error(
+                "Update user failed:",
+                errorUtils.extractErrorMessage(error)
+            );
         },
     });
 };
@@ -67,24 +60,23 @@ export const useUpdateUserMutation = () => {
  * @returns mutate, isPending, isError, error
  */
 export const useDeleteUserMutation = () => {
+    const { removeToken } = useAuthToken();
     const queryClient = useQueryClient();
 
     return useMutation({
-        mutationFn: (id: string) =>
-            apiClient.api.userControllerDelete(id),
-        onSuccess: (_, id) => {
-            // Remove user from cache
-            queryClient.removeQueries({ queryKey: queryKeys.users.detail(id) });
+        mutationFn: (id: string) => apiClient.api.userControllerDelete(id),
+        onSuccess: () => {
+            // remove token both from localStorage and API client
+            removeToken();
 
-            // If deleting current user, clear auth data
-            const currentUser = queryClient.getQueryData(queryKeys.auth.me());
-            if (currentUser && (currentUser as any).id === id) {
-                queryClient.clear();
-                localStorage.removeItem("jwt-token");
-            }
+            // clear auth data
+            queryClient.clear();
         },
         onError: (error) => {
-            console.error("Delete user failed:", getErrorMessage(error));
+            console.error(
+                "Delete user failed:",
+                errorUtils.extractErrorMessage(error)
+            );
         },
     });
 };

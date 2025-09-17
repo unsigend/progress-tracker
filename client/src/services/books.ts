@@ -10,12 +10,15 @@ import apiClient from "@/api/apiClient";
 import { queryKeys } from "@/services/queryKeys";
 
 // import types
-import type { QueryParamsType, CreateBookDto, UpdateBookDto, PatchBookDto } from "@/api/api";
+import type {
+    QueryParamsType,
+    CreateBookDto,
+    UpdateBookDto,
+    PatchBookDto,
+} from "@/api/api";
 
 // import utils
-import { getErrorMessage } from "@/utils/auth";
-
-// ============= QUERIES =============
+import errorUtils from "@/utils/error";
 
 /**
  * useBooks hook to get all books
@@ -27,7 +30,6 @@ export const useBooks = (params?: QueryParamsType) => {
         queryKey: queryKeys.books.all(params),
         queryFn: () => apiClient.api.booksControllerFindAll(params),
         select: (data) => data.data,
-        staleTime: 30 * 1000, // 30 seconds
     });
 };
 
@@ -42,11 +44,8 @@ export const useBook = (id: string) => {
         queryFn: () => apiClient.api.booksControllerFindOne(id),
         select: (data) => data.data,
         enabled: !!id,
-        staleTime: 5 * 60 * 1000, // 5 minutes
     });
 };
-
-// ============= MUTATIONS =============
 
 /**
  * useCreateBookMutation hook for creating a new book
@@ -59,11 +58,13 @@ export const useCreateBookMutation = () => {
         mutationFn: (bookData: CreateBookDto) =>
             apiClient.api.booksControllerCreate(bookData),
         onSuccess: () => {
-            // Invalidate books list to refetch
             queryClient.invalidateQueries({ queryKey: queryKeys.books.all() });
         },
         onError: (error) => {
-            console.error("Create book failed:", getErrorMessage(error));
+            console.error(
+                "Create book failed:",
+                errorUtils.extractErrorMessage(error)
+            );
         },
     });
 };
@@ -82,13 +83,18 @@ export const useUpdateBookMutation = () => {
             const updatedBook = response.data;
 
             // Update specific book in cache
-            queryClient.setQueryData(queryKeys.books.detail(id), { data: updatedBook });
+            queryClient.setQueryData(queryKeys.books.detail(id), {
+                data: updatedBook,
+            });
 
             // Invalidate books list to refetch
             queryClient.invalidateQueries({ queryKey: queryKeys.books.all() });
         },
         onError: (error) => {
-            console.error("Update book failed:", getErrorMessage(error));
+            console.error(
+                "Update book failed:",
+                errorUtils.extractErrorMessage(error)
+            );
         },
     });
 };
@@ -107,13 +113,18 @@ export const usePatchBookMutation = () => {
             const updatedBook = response.data;
 
             // Update specific book in cache
-            queryClient.setQueryData(queryKeys.books.detail(id), { data: updatedBook });
+            queryClient.setQueryData(queryKeys.books.detail(id), {
+                data: updatedBook,
+            });
 
             // Invalidate books list to refetch
             queryClient.invalidateQueries({ queryKey: queryKeys.books.all() });
         },
         onError: (error) => {
-            console.error("Patch book failed:", getErrorMessage(error));
+            console.error(
+                "Patch book failed:",
+                errorUtils.extractErrorMessage(error)
+            );
         },
     });
 };
@@ -126,8 +137,7 @@ export const useDeleteBookMutation = () => {
     const queryClient = useQueryClient();
 
     return useMutation({
-        mutationFn: (id: string) =>
-            apiClient.api.booksControllerDelete(id),
+        mutationFn: (id: string) => apiClient.api.booksControllerDelete(id),
         onSuccess: (_, id) => {
             // Remove book from cache
             queryClient.removeQueries({ queryKey: queryKeys.books.detail(id) });
@@ -136,7 +146,10 @@ export const useDeleteBookMutation = () => {
             queryClient.invalidateQueries({ queryKey: queryKeys.books.all() });
         },
         onError: (error) => {
-            console.error("Delete book failed:", getErrorMessage(error));
+            console.error(
+                "Delete book failed:",
+                errorUtils.extractErrorMessage(error)
+            );
         },
     });
 };

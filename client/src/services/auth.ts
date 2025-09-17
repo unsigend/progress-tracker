@@ -1,18 +1,14 @@
-// ⚠️ DEPRECATED: This file is deprecated
-// Use /services/authWithHooks.ts instead
-// This version uses direct localStorage calls which is not recommended
-// The new version properly integrates with React hooks
-
-// Auth-related services - queries and mutations
-
 // import dependencies
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
 // import api
-import apiClient, { setAuthToken, removeAuthToken } from "@/api/apiClient";
+import apiClient from "@/api/apiClient";
 
 // import query keys
 import { queryKeys } from "@/services/queryKeys";
+
+// import hooks
+import { useAuthToken } from "@/hooks/useAuthToken";
 
 // import types
 import type {
@@ -20,32 +16,32 @@ import type {
     CreateUserDto,
     GithubAuthDto,
     GoogleAuthDto,
-    AuthResponseDto,
 } from "@/api/api";
 
 // import utils
-import { saveAuthToken, getErrorMessage } from "@/utils/auth";
-import type { AxiosResponse } from "axios";
-
-// ============= QUERIES =============
+import errorUtils from "@/utils/error";
+import validationUtils from "@/utils/validation";
 
 /**
  * useAuthMe hook to get the current user
  * @returns data, isLoading, isError
  */
 export const useAuthMe = () => {
+    const { token } = useAuthToken();
+
     return useQuery({
         queryKey: queryKeys.auth.me(),
         queryFn: () => apiClient.api.authControllerMe(),
         select: (data) => data.data,
         retry: false,
         staleTime: 5 * 60 * 1000,
+        enabled: !!token,
     });
 };
 
 /**
  * useEmailCheck hook to check if email exists
- * @param email - The email to check
+ * @param email - the email to check
  * @returns data, isLoading, isError
  */
 export const useEmailCheck = (email: string) => {
@@ -53,123 +49,147 @@ export const useEmailCheck = (email: string) => {
         queryKey: queryKeys.auth.emailCheck(email),
         queryFn: () => apiClient.api.authControllerEmailCheck({ email }),
         select: (data) => data.data,
-        enabled: !!email && email.includes("@"),
-        staleTime: 30 * 1000,
+        enabled: !!email && validationUtils.email(email),
     });
 };
 
-// ============= MUTATIONS =============
-
 /**
  * useLoginMutation hook for user login
- * @returns mutate, isPending, isError, error
+ * @returns data, isLoading, isError
  */
 export const useLoginMutation = () => {
     const queryClient = useQueryClient();
+    const { saveToken } = useAuthToken();
 
     return useMutation({
         mutationFn: (credentials: LoginDto) =>
             apiClient.api.authControllerLogin(credentials),
-        onSuccess: (response: AxiosResponse<AuthResponseDto>) => {
+        onSuccess: (response) => {
+            // get token
             const token = response.data.access_token;
-            saveAuthToken(token);
-            setAuthToken(token);
+
+            // Save token using hook
+            saveToken(token);
 
             // Invalidate auth queries to refetch user data
             queryClient.invalidateQueries({ queryKey: queryKeys.auth.me() });
         },
         onError: (error) => {
-            console.error("Login failed:", getErrorMessage(error));
+            console.error(
+                "Login failed:",
+                errorUtils.extractErrorMessage(error)
+            );
         },
     });
 };
 
 /**
  * useRegisterMutation hook for user registration
- * @returns mutate, isPending, isError, error
+ * @returns data, isLoading, isError
  */
 export const useRegisterMutation = () => {
     const queryClient = useQueryClient();
+    const { saveToken } = useAuthToken();
 
     return useMutation({
         mutationFn: (userData: CreateUserDto) =>
             apiClient.api.authControllerRegister(userData),
         onSuccess: (response) => {
+            // get token
             const token = response.data.access_token;
-            saveAuthToken(token);
-            setAuthToken(token);
+
+            // Save token using hook
+            saveToken(token);
 
             // Invalidate auth queries to refetch user data
             queryClient.invalidateQueries({ queryKey: queryKeys.auth.me() });
         },
         onError: (error) => {
-            console.error("Registration failed:", getErrorMessage(error));
+            console.error(
+                "Registration failed:",
+                errorUtils.extractErrorMessage(error)
+            );
         },
     });
 };
 
 /**
  * useGithubAuthMutation hook for GitHub OAuth
- * @returns mutate, isPending, isError, error
+ * @returns data, isLoading, isError
  */
 export const useGithubAuthMutation = () => {
     const queryClient = useQueryClient();
+    const { saveToken } = useAuthToken();
 
     return useMutation({
-        mutationFn: (authData: GithubAuthDto) =>
-            apiClient.api.authControllerGithubAuth(authData),
+        mutationFn: (code: GithubAuthDto) =>
+            apiClient.api.authControllerGithubAuth(code),
         onSuccess: (response) => {
+            // get token
             const token = response.data.access_token;
-            saveAuthToken(token);
-            setAuthToken(token);
+
+            // Save token using hook
+            saveToken(token);
 
             // Invalidate auth queries to refetch user data
             queryClient.invalidateQueries({ queryKey: queryKeys.auth.me() });
         },
         onError: (error) => {
-            console.error("GitHub auth failed:", getErrorMessage(error));
+            console.error(
+                "GitHub auth failed:",
+                errorUtils.extractErrorMessage(error)
+            );
         },
     });
 };
 
 /**
  * useGoogleAuthMutation hook for Google OAuth
- * @returns mutate, isPending, isError, error
+ * @returns data, isLoading, isError
  */
 export const useGoogleAuthMutation = () => {
     const queryClient = useQueryClient();
+    const { saveToken } = useAuthToken();
 
     return useMutation({
-        mutationFn: (authData: GoogleAuthDto) =>
-            apiClient.api.authControllerGoogleAuth(authData),
+        mutationFn: (code: GoogleAuthDto) =>
+            apiClient.api.authControllerGoogleAuth(code),
         onSuccess: (response) => {
+            // get token
             const token = response.data.access_token;
-            saveAuthToken(token);
-            setAuthToken(token);
+
+            // Save token using hook
+            saveToken(token);
 
             // Invalidate auth queries to refetch user data
             queryClient.invalidateQueries({ queryKey: queryKeys.auth.me() });
         },
         onError: (error) => {
-            console.error("Google auth failed:", getErrorMessage(error));
+            console.error(
+                "Google auth failed:",
+                errorUtils.extractErrorMessage(error)
+            );
         },
     });
 };
 
 /**
  * useLogoutMutation hook for user logout
- * @returns mutate, isPending, isError, error
+ * @returns data, isLoading, isError
  */
 export const useLogoutMutation = () => {
     const queryClient = useQueryClient();
+    const { removeToken } = useAuthToken();
 
     return useMutation({
         mutationFn: async () => {
-            // Clear token from storage and API client
-            localStorage.removeItem("jwt-token");
-            removeAuthToken();
+            // Just a placeholder
+            return Promise.resolve();
         },
         onSuccess: () => {
+            // Remove token using hook
+            removeToken();
+
             // Clear all cached data
             queryClient.clear();
         },
