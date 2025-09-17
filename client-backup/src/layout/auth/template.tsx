@@ -1,0 +1,38 @@
+// import dependencies
+import { ArrowLeft } from "lucide-react";
+import { Link } from "react-router";
+
+/**
+ * AuthTemplateLayout component
+ * @param left - The left content to render
+ * @param right - The right content to render
+ * @returns The AuthTemplateLayout component
+ */
+const AuthTemplateLayout = ({
+    left,
+    right,
+}: {
+    left: React.ReactNode;
+    right: React.ReactNode;
+}) => {
+    return (
+        <div className="relative grid md:grid-cols-2 min-h-[600px]">
+            <Link
+                to="/"
+                className="absolute top-6 left-6 z-10 p-2 rounded-full hover:bg-gray-100 transition-colors duration-200"
+            >
+                <ArrowLeft className="w-5 h-5 text-gray-600" />
+            </Link>
+
+            <div className="bg-gray-50/50 p-8 flex items-center justify-center">
+                <div className="w-full max-w-sm">{left}</div>
+            </div>
+
+            <div className="p-8 flex items-center justify-center">
+                <div className="w-full max-w-sm">{right}</div>
+            </div>
+        </div>
+    );
+};
+
+export default AuthTemplateLayout;
