@@ -42,7 +42,6 @@ To learn more about **Refine**, please check out the [Documentation](https://ref
 - **REST Data Provider** [Docs](https://refine.dev/docs/core/providers/data-provider/#overview)
 - **shadcn/ui** [Docs](https://refine.dev/docs/guides-concepts/general-concepts/#headless-concept)
 - **React Router** [Docs](https://refine.dev/docs/core/providers/router-provider/)
-- **Custom Auth Provider** [Docs](https://refine.dev/docs/core/providers/auth-provider/)
 
 ## License
 
