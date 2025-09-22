@@ -14,7 +14,11 @@ import LandingAboutPage from "@/pages/landing/about";
 // import dashboard pages
 import DashboardHomePage from "@/pages/dashboard/home";
 import DashboardSettingsPage from "@/pages/dashboard/settings";
+// import dashboard reading pages
 import DashboardReadingPage from "@/pages/dashboard/reading/home";
+import DashboardReadingLibraryPage from "@/pages/dashboard/reading/library";
+import DashboardReadingBookDetailPage from "@/pages/dashboard/reading/book-detail";
+import DashboardReadingBookAddPage from "@/pages/dashboard/reading/book-add";
 
 // import auth pages
 import LoginPage from "@/pages/auth/login";
@@ -52,7 +56,21 @@ function AppRoutes() {
                 <Route path="settings" element={<DashboardSettingsPage />} />
 
                 {/* Reading Page */}
-                <Route path="reading" element={<DashboardReadingPage />} />
+                <Route path="reading">
+                    <Route index element={<DashboardReadingPage />} />
+                    <Route
+                        path="library"
+                        element={<DashboardReadingLibraryPage />}
+                    />
+                    <Route
+                        path="library/add"
+                        element={<DashboardReadingBookAddPage />}
+                    />
+                    <Route
+                        path="library/:id"
+                        element={<DashboardReadingBookDetailPage />}
+                    />
+                </Route>
             </Route>
 
             {/* Auth Pages */}

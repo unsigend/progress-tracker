@@ -23,7 +23,9 @@ const LoginForm = () => {
     });
     const { mutate: login } = useLogin();
 
-    const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleLogin = (
+        e: React.FormEvent<HTMLFormElement | HTMLButtonElement>
+    ) => {
         e.preventDefault();
         login(loginFormData);
     };

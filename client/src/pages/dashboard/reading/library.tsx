@@ -1,42 +1,19 @@
 // import dependencies
-import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
-import { Link } from "react-router";
+import { Link, useList } from "@refinedev/core";
 
 // import components
-import { BookShelf } from "@/components/features/books";
+import BookShelf from "@/components/modules/books/bookShelf";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { toast } from "react-toastify";
 import { ClipLoader } from "react-spinners";
 
-// import api
-import apiClient from "@/api/apiClient";
-
-// import query types
-import { type QueryParamsType } from "@/api/api";
+import { BookResponseDto } from "@/api/api";
 
 const DashboardLibraryPage = () => {
-    // state for query object
-    const [queryObject, setQueryObject] = useState<QueryParamsType>({});
-    // state for search input
-    const [searchInput, setSearchInput] = useState<string>("");
-
-    // use Query to get all books
-    const { data, error, isLoading } = useQuery({
-        queryKey: ["books", queryObject],
-        queryFn: () => apiClient.api.booksControllerFindAll(queryObject),
+    const { query, result } = useList({
+        resource: "books",
     });
-
-    if (error) {
-        toast.error(error.message);
-    }
-
-    const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        setQueryObject({ ...queryObject, search: searchInput });
-    };
 
     return (
         <Card>
@@ -52,17 +29,15 @@ const DashboardLibraryPage = () => {
                     {/* Search Section */}
                     <div className="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
                         <form
-                            onSubmit={handleSearch}
+                            onSubmit={() => {}}
                             className="flex gap-2 flex-1 max-w-md"
                         >
                             <Input
                                 type="text"
                                 placeholder="Search by title, author, or ISBN..."
                                 className="flex-1"
-                                value={searchInput}
-                                onChange={(
-                                    e: React.ChangeEvent<HTMLInputElement>
-                                ) => setSearchInput(e.target.value)}
+                                value={""}
+                                onChange={() => {}}
                             />
                             <Button
                                 type="submit"
@@ -89,16 +64,12 @@ const DashboardLibraryPage = () => {
             </CardHeader>
             <CardContent>
                 {/* Loading State */}
-                {isLoading ? (
+                {query?.isLoading ? (
                     <div className="flex justify-center items-center py-12">
-                        <ClipLoader
-                            color="#6b7280"
-                            size={40}
-                            speedMultiplier={0.8}
-                        />
+                        <ClipLoader size={40} />
                     </div>
                 ) : (
-                    <BookShelf books={data?.data || []} />
+                    <BookShelf books={result.data as BookResponseDto[]} />
                 )}
             </CardContent>
         </Card>

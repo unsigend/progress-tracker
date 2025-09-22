@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 // import dependencies
 import { AuthProvider } from "@refinedev/core";
 
@@ -16,6 +18,7 @@ import type { AxiosResponse } from "axios";
 // import constants
 import ROUTES_CONSTANTS from "@/constants/routes";
 import AUTH_CONSTANTS from "@/constants/auth";
+import errorUtils from "@/utils/error";
 
 export const authProvider: AuthProvider = {
     /**
@@ -28,12 +31,12 @@ export const authProvider: AuthProvider = {
      * }
      */
     login: async (loginRequest: LoginRequestDto) => {
-        const response: AxiosResponse<LoginResponseDto> =
-            (await ApiClient.api.authControllerLogin(
-                loginRequest
-            )) as unknown as AxiosResponse<LoginResponseDto>;
+        try {
+            const response: AxiosResponse<LoginResponseDto> =
+                (await ApiClient.api.authControllerLogin(
+                    loginRequest
+                )) as unknown as AxiosResponse<LoginResponseDto>;
 
-        if (response.status === 201 || response.status === 200) {
             const data: LoginResponseDto = response.data as LoginResponseDto;
 
             // Store the token
@@ -46,11 +49,12 @@ export const authProvider: AuthProvider = {
                 success: true,
                 redirectTo: ROUTES_CONSTANTS.DASHBOARD_HOME,
             };
-        } else {
+        } catch (error) {
             return {
                 success: false,
                 error: {
-                    name: "Login failed",
+                    name:
+                        errorUtils.extractErrorMessage(error) || "Login failed",
                     message: "Invalid email or password",
                 },
                 redirectTo: ROUTES_CONSTANTS.LOGIN,
@@ -82,7 +86,7 @@ export const authProvider: AuthProvider = {
 
         return { authenticated: Boolean(token) };
     },
-    onError: async (error) => {
+    onError: async (_error) => {
         throw new Error("Not implemented");
     },
     // optional methods
@@ -121,10 +125,10 @@ export const authProvider: AuthProvider = {
             };
         }
     },
-    forgotPassword: async (params) => {
+    forgotPassword: async (_params) => {
         throw new Error("Not implemented");
     },
-    updatePassword: async (params) => {
+    updatePassword: async (_params) => {
         throw new Error("Not implemented");
     },
     getIdentity: async () => {
