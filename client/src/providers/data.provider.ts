@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 
 // import dependencies
 import { DataProvider } from "@refinedev/core";
@@ -30,19 +29,59 @@ const getControllerMethod = (
 };
 
 export const dataProvider: DataProvider = {
-    getOne: async ({ resource, id, meta }) => {
+    /**
+     * Get a resource by id
+     * @param resource The resource to get by id
+     * @param id The id of the resource to get
+     * @returns {
+     *  data: any
+     * }
+     */
+    getOne: async ({ resource, id }) => {
+        // get the controller method for the resource
         const controllerMethod = getControllerMethod(resource, "FindById");
 
         if (controllerMethod === null) {
             throw new Error(`Controller method ${resource} not found`);
         }
         const response = await controllerMethod(id);
-        return { data: response.data };
+        return {
+            data: response.data,
+        };
     },
-    update: () => {
-        throw new Error("Not implemented");
+
+    /**
+     * Update a resource
+     * @param resource The resource to update
+     * @param id The id of the resource to update
+     * @param variables The variables to update the resource with
+     * @returns {
+     *  data: any
+     * }
+     */
+    update: async ({ resource, id, variables }) => {
+        // get the controller method for the resource
+        const controllerMethod = getControllerMethod(resource, "Replace");
+        if (controllerMethod === null) {
+            throw new Error(`Controller method ${resource} not found`);
+        }
+        const response = await controllerMethod(id, variables);
+
+        return {
+            data: response.data,
+        };
     },
+
+    /**
+     * Get the list of a resource
+     * @param resource The resource to get the list of
+     * @returns {
+     *  data: any,
+     *  total: number
+     * }
+     */
     getList: async ({ resource }) => {
+        // get the controller method for the resource
         const controllerMethod:
             | ((...args: any[]) => Promise<AxiosResponse<any>>)
             | null = getControllerMethod(resource, "FindAll");
@@ -51,6 +90,42 @@ export const dataProvider: DataProvider = {
         }
         const response = await controllerMethod();
         return { data: response.data, total: response.data.length };
+    },
+
+    /**
+     * Create a resource
+     * @param resource The resource to create
+     * @param variables The variables to create the resource with
+     * @returns {
+     *  data: any
+     * }
+     */
+    create: async ({ resource, variables }) => {
+        // get the controller method for the resource
+        const controllerMethod = getControllerMethod(resource, "Create");
+        if (controllerMethod === null) {
+            throw new Error(`Controller method ${resource} not found`);
+        }
+        const response = await controllerMethod(variables);
+        return { data: response.data };
+    },
+
+    /**
+     * Delete a resource
+     * @param resource The resource to delete
+     * @param id The id of the resource to delete
+     * @returns {
+     *  data: any
+     * }
+     */
+    deleteOne: async ({ resource, id }) => {
+        // get the controller method for the resource
+        const controllerMethod = getControllerMethod(resource, "DeleteById");
+        if (controllerMethod === null) {
+            throw new Error(`Controller method ${resource} not found`);
+        }
+        const response = await controllerMethod(id);
+        return { data: response.data };
     },
 
     /**

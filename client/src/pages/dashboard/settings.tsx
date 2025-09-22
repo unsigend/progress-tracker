@@ -6,9 +6,16 @@ import SecuritySection from "@/components/modules/settings/securitySection";
 // import icons
 import { KeyRound } from "lucide-react";
 
+// import types
+import type { UserResponseDto } from "@/api/api";
+
+// import hooks
+import { useGetIdentity } from "@refinedev/core";
+
 const DashboardSettingsPage = () => {
+    const { isLoading } = useGetIdentity<UserResponseDto>();
     // Show loading state if user data is not available
-    if (false) {
+    if (isLoading) {
         return (
             <div className="min-h-screen bg-gray-50/50 py-8">
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">

@@ -36,17 +36,7 @@ function App() {
                     {/* App Routes */}
                     <AppRoutes />
                     {/* Toaster from sonner */}
-                    <Toaster
-                        position="top-right"
-                        toastOptions={{
-                            style: {
-                                background: "hsl(var(--background))",
-                                color: "hsl(var(--foreground))",
-                                border: "1px solid hsl(var(--border))",
-                            },
-                        }}
-                        className="toaster group"
-                    />
+                    <Toaster position="top-right" />
                     {/* Unsaved Changes Notifier */}
                     <UnsavedChangesNotifier />
                     {/* Document Title Handler */}

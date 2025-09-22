@@ -27,7 +27,10 @@ export const authProvider: AuthProvider = {
      * @returns {
      *  success: boolean,
      *  redirectTo: string,
-     *  error: {name: string, message: string}
+     *  error: {
+     *    name: string,
+     *    message: string
+     *  }
      * }
      */
     login: async (loginRequest: LoginRequestDto) => {
@@ -61,6 +64,7 @@ export const authProvider: AuthProvider = {
             };
         }
     },
+
     /**
      * Logout a user
      * @returns {
@@ -75,6 +79,7 @@ export const authProvider: AuthProvider = {
             redirectTo: ROUTES_CONSTANTS.HOME,
         };
     },
+
     /**
      * Check if a user is authenticated
      * @returns {
@@ -86,6 +91,14 @@ export const authProvider: AuthProvider = {
 
         return { authenticated: Boolean(token) };
     },
+
+    /**
+     * Handle error
+     * @param _error
+     * @returns {
+     *  error: {name: string, message: string}
+     * }
+     */
     onError: async (_error) => {
         throw new Error("Not implemented");
     },
@@ -125,12 +138,35 @@ export const authProvider: AuthProvider = {
             };
         }
     },
+
+    /**
+     * Forgot password
+     * @param _params
+     * @returns {
+     *  error: {name: string, message: string}
+     * }
+     */
     forgotPassword: async (_params) => {
         throw new Error("Not implemented");
     },
+
+    /**
+     * Update password
+     * @param _params
+     * @returns {
+     *  error: {name: string, message: string}
+     * }
+     */
     updatePassword: async (_params) => {
         throw new Error("Not implemented");
     },
+
+    /**
+     * Get identity
+     * @returns {
+     *  error: {name: string, message: string}
+     * }
+     */
     getIdentity: async () => {
         const response: AxiosResponse<UserResponseDto> =
             await ApiClient.api.userControllerGetMe();
@@ -141,6 +177,13 @@ export const authProvider: AuthProvider = {
 
         return response.data;
     },
+
+    /**
+     * Get permissions
+     * @returns {
+     *  error: {name: string, message: string}
+     * }
+     */
     getPermissions: async () => {
         throw new Error("Not implemented");
     },

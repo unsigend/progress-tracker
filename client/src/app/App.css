@@ -121,3 +121,18 @@
         @apply bg-background text-foreground;
     }
 }
+
+/* Ensure toaster appears above all other elements */
+[data-sonner-toaster] {
+    z-index: 999999 !important;
+    position: fixed !important;
+}
+
+[data-sonner-toast] {
+    z-index: 999999 !important;
+    position: relative !important;
+}
+
+.toaster {
+    z-index: 999999 !important;
+}

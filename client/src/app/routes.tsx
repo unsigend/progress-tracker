@@ -14,11 +14,18 @@ import LandingAboutPage from "@/pages/landing/about";
 // import dashboard pages
 import DashboardHomePage from "@/pages/dashboard/home";
 import DashboardSettingsPage from "@/pages/dashboard/settings";
+
 // import dashboard reading pages
 import DashboardReadingPage from "@/pages/dashboard/reading/home";
 import DashboardReadingLibraryPage from "@/pages/dashboard/reading/library";
 import DashboardReadingBookDetailPage from "@/pages/dashboard/reading/book-detail";
 import DashboardReadingBookAddPage from "@/pages/dashboard/reading/book-add";
+
+// import dashboard projects pages
+import DashboardProjectsPage from "@/pages/dashboard/projects/home";
+
+// import dashboard courses pages
+import DashboardCoursesPage from "@/pages/dashboard/courses/home";
 
 // import auth pages
 import LoginPage from "@/pages/auth/login";
@@ -71,6 +78,12 @@ function AppRoutes() {
                         element={<DashboardReadingBookDetailPage />}
                     />
                 </Route>
+
+                {/* Projects Page */}
+                <Route path="projects" element={<DashboardProjectsPage />} />
+
+                {/* Courses Page */}
+                <Route path="courses" element={<DashboardCoursesPage />} />
             </Route>
 
             {/* Auth Pages */}

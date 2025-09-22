@@ -7,10 +7,13 @@ import { Badge } from "@/components/ui/badge";
 import { Edit3, Github, Mail, User } from "lucide-react";
 
 // import types
-import type { UserResponseDto } from "@/api/api";
+import type { UpdateUserDto, UserResponseDto } from "@/api/api";
 
-// import hooks
-import { useGetIdentity } from "@refinedev/core";
+// import dependencies
+import { useGetIdentity, useUpdate } from "@refinedev/core";
+import { useState } from "react";
+import { toast } from "sonner";
+import useInvalidateCurrentUser from "@/hooks/use-invalidate-current-user";
 
 // get provider icon
 const getProviderIcon = (provider: string) => {
@@ -26,6 +29,25 @@ const getProviderIcon = (provider: string) => {
 
 const ProfileSection = () => {
     const { data: user, isLoading } = useGetIdentity<UserResponseDto>();
+
+    const { invalidateCurrentUser } = useInvalidateCurrentUser();
+
+    const { mutate: updateUser } = useUpdate({
+        resource: "users",
+        mutationOptions: {
+            onSuccess: () => {
+                toast.success("Profile updated successfully");
+                invalidateCurrentUser();
+            },
+            onError: () => {
+                toast.error("Failed to update profile");
+            },
+        },
+    });
+    const [updateUserData, setUpdateUserData] = useState<UpdateUserDto>({
+        username: user?.username,
+        email: user?.email,
+    });
 
     // Show loading state if user data is not available
     if (isLoading) {
@@ -48,7 +70,13 @@ const ProfileSection = () => {
                         <Input
                             id="name"
                             className="text-gray-900"
-                            value={user?.username || ""}
+                            value={updateUserData.username || ""}
+                            onChange={(e) =>
+                                setUpdateUserData({
+                                    ...updateUserData,
+                                    username: e.target.value,
+                                })
+                            }
                         />
                         <p className="text-sm text-gray-500">
                             Your username will be used to identify you on the
@@ -62,7 +90,13 @@ const ProfileSection = () => {
                             <Input
                                 id="email"
                                 className="text-gray-900 pr-10"
-                                value={user?.email || ""}
+                                value={updateUserData.email || ""}
+                                onChange={(e) =>
+                                    setUpdateUserData({
+                                        ...updateUserData,
+                                        email: e.target.value,
+                                    })
+                                }
                             />
                             <div className="absolute inset-y-0 right-0 flex items-center pr-3">
                                 <svg
@@ -135,7 +169,19 @@ const ProfileSection = () => {
                 )}
             </div>
 
-            <Button onClick={() => {}}>Update</Button>
+            <Button
+                onClick={() => {
+                    updateUser({
+                        id: user?.id,
+                        values: {
+                            username: updateUserData.username,
+                            email: updateUserData.email,
+                        },
+                    });
+                }}
+            >
+                Update
+            </Button>
         </div>
     );
 };
