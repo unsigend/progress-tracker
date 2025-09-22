@@ -1,5 +1,6 @@
 // import dependencies
 import { Link } from "@refinedev/core";
+import { useState } from "react";
 
 // import components
 import { Button } from "@/components/ui/button";
@@ -9,7 +10,24 @@ import { Label } from "@/components/ui/label";
 // import constants
 import ROUTES_CONSTANTS from "@/constants/routes";
 
+// import hooks
+import { useLogin } from "@refinedev/core";
+
+// import types
+import type { LoginRequestDto } from "@/api/api";
+
 const LoginForm = () => {
+    const [loginFormData, setLoginFormData] = useState<LoginRequestDto>({
+        email: "",
+        password: "",
+    });
+    const { mutate: login } = useLogin();
+
+    const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        login(loginFormData);
+    };
+
     return (
         <div className="w-full space-y-6">
             {/* Header */}
@@ -36,7 +54,13 @@ const LoginForm = () => {
                         type="email"
                         placeholder="m@example.com"
                         required
-                        value={""}
+                        value={loginFormData.email}
+                        onChange={(e) =>
+                            setLoginFormData({
+                                ...loginFormData,
+                                email: e.target.value,
+                            })
+                        }
                     />
                 </div>
                 <div className="space-y-2">
@@ -49,13 +73,28 @@ const LoginForm = () => {
                             Forgot your password?
                         </a>
                     </div>
-                    <Input id="password" type="password" required value={""} />
+                    <Input
+                        id="password"
+                        type="password"
+                        required
+                        value={loginFormData.password}
+                        onChange={(e) =>
+                            setLoginFormData({
+                                ...loginFormData,
+                                password: e.target.value,
+                            })
+                        }
+                    />
                 </div>
             </form>
 
             {/* Actions */}
             <div className="space-y-4">
-                <Button type="submit" className="w-full cursor-pointer">
+                <Button
+                    type="submit"
+                    className="w-full cursor-pointer"
+                    onClick={(e) => handleLogin(e)}
+                >
                     Login
                 </Button>
 

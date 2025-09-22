@@ -6,6 +6,12 @@ import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Edit3, Github, Mail, User } from "lucide-react";
 
+// import types
+import type { UserResponseDto } from "@/api/api";
+
+// import hooks
+import { useGetIdentity } from "@refinedev/core";
+
 // get provider icon
 const getProviderIcon = (provider: string) => {
     switch (provider) {
@@ -19,8 +25,10 @@ const getProviderIcon = (provider: string) => {
 };
 
 const ProfileSection = () => {
+    const { data: user, isLoading } = useGetIdentity<UserResponseDto>();
+
     // Show loading state if user data is not available
-    if (false) {
+    if (isLoading) {
         return (
             <div className="space-y-6">
                 <div className="flex items-center justify-center py-8">
@@ -37,7 +45,11 @@ const ProfileSection = () => {
                 <div className="flex-1 space-y-6">
                     <div className="space-y-2">
                         <Label htmlFor="name">Username</Label>
-                        <Input id="name" className="text-gray-900" value={""} />
+                        <Input
+                            id="name"
+                            className="text-gray-900"
+                            value={user?.username || ""}
+                        />
                         <p className="text-sm text-gray-500">
                             Your username will be used to identify you on the
                             platform.
@@ -50,7 +62,7 @@ const ProfileSection = () => {
                             <Input
                                 id="email"
                                 className="text-gray-900 pr-10"
-                                value={""}
+                                value={user?.email || ""}
                             />
                             <div className="absolute inset-y-0 right-0 flex items-center pr-3">
                                 <svg
@@ -77,9 +89,14 @@ const ProfileSection = () => {
                 {/* Avatar Section */}
                 <div className="flex-shrink-0">
                     <Avatar className="w-28 h-28">
-                        {false ? <AvatarImage src={""} alt={""} /> : null}
+                        {user?.avatar_url ? (
+                            <AvatarImage
+                                src={user?.avatar_url}
+                                alt={user?.username + " avatar"}
+                            />
+                        ) : null}
                         <AvatarFallback className="text-2xl">
-                            {"U"}
+                            {user?.username.charAt(0).toUpperCase() || ""}
                         </AvatarFallback>
                     </Avatar>
                     <Button variant="outline" size="sm" className="w-full mt-3">
@@ -94,7 +111,7 @@ const ProfileSection = () => {
                 <h3 className="text-lg font-semibold text-gray-900">
                     Connected accounts
                 </h3>
-                {["github", "google"].map((providerItem) =>
+                {user?.provider.map((providerItem: string) =>
                     providerItem !== "local" ? (
                         <div
                             key={providerItem}

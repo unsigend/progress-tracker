@@ -4,9 +4,9 @@ import { Link } from "react-router";
 
 // import components
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import BookCard from "@/components/features/books";
-import BookShelf from "@/components/features/books";
-import LineChart from "@/components/ui/LineChart";
+import BookCard from "@/components/modules/books/bookCard";
+import BookShelf from "@/components/modules/books/bookShelf";
+import LineChart from "@/components/modules/ui/LineChart";
 
 // import types
 import type { BookResponseDto } from "@/api/api";
@@ -21,8 +21,10 @@ const sampleBooks: BookResponseDto[] = [
         description:
             "As data floods into your company, you need to put it to work right away―and SQL is the best tool for the job.",
         pages: 377,
-        imageURL: "https://m.media-amazon.com/images/I/81xkjj+FAfL._SY522_.jpg",
-        ISBN: "9781492057611",
+        cover_url:
+            "https://m.media-amazon.com/images/I/81xkjj+FAfL._SY522_.jpg",
+        ISBN10: "9781492057611",
+        ISBN13: "9781492057611",
         createdAt: new Date("2025-09-10T21:20:04.555Z").toISOString(),
         updatedAt: new Date("2025-09-10T21:20:04.555Z").toISOString(),
     },
@@ -33,8 +35,10 @@ const sampleBooks: BookResponseDto[] = [
         description:
             "Learn proven patterns, techniques, and tricks to take full advantage of the Node.js platform.",
         pages: 664,
-        imageURL: "https://m.media-amazon.com/images/I/71OMPF7vzmL._SY522_.jpg",
-        ISBN: "9781839214110",
+        cover_url:
+            "https://m.media-amazon.com/images/I/71OMPF7vzmL._SY522_.jpg",
+        ISBN10: "9781839214110",
+        ISBN13: "9781839214110",
         createdAt: new Date("2025-09-10T21:17:58.371Z").toISOString(),
         updatedAt: new Date("2025-09-10T21:17:58.371Z").toISOString(),
     },
@@ -45,8 +49,10 @@ const sampleBooks: BookResponseDto[] = [
         description:
             "Grokking Data Structures makes it a breeze to learn the most useful day-to-day data structures.",
         pages: 280,
-        imageURL: "https://m.media-amazon.com/images/I/91hYIGWvKaL._SY522_.jpg",
-        ISBN: "9781633436992",
+        cover_url:
+            "https://m.media-amazon.com/images/I/91hYIGWvKaL._SY522_.jpg",
+        ISBN10: "9781633436992",
+        ISBN13: "9781633436992",
         createdAt: new Date("2025-09-10T21:16:31.994Z").toISOString(),
         updatedAt: new Date("2025-09-10T21:16:31.994Z").toISOString(),
     },
@@ -57,8 +63,10 @@ const sampleBooks: BookResponseDto[] = [
         description:
             "Princeton Computer Science professors survey the most important computer algorithms in use.",
         pages: 976,
-        imageURL: "https://m.media-amazon.com/images/I/61-8ZU7X3UL._SY522_.jpg",
-        ISBN: "9780321573513",
+        cover_url:
+            "https://m.media-amazon.com/images/I/61-8ZU7X3UL._SY522_.jpg",
+        ISBN10: "9780321573513",
+        ISBN13: "9780321573513",
         createdAt: new Date("2025-09-10T21:15:02.211Z").toISOString(),
         updatedAt: new Date("2025-09-10T21:15:02.211Z").toISOString(),
     },
@@ -148,7 +156,7 @@ const CurrentReading = () => {
                     <div className="flex justify-center lg:justify-start">
                         <BookCard
                             image={
-                                currentBook.imageURL || "/placeholder-book.jpg"
+                                currentBook.cover_url || "/placeholder-book.jpg"
                             }
                             alt={currentBook.title || "Book cover"}
                             className="w-32 h-44"

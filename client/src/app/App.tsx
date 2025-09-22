@@ -7,11 +7,12 @@ import {
 import { BrowserRouter } from "react-router";
 
 // import components
-import { Toaster } from "@/components/refine-ui/notification/toaster";
+import { Toaster } from "sonner";
 
 // import providers
 import routerProvider from "@refinedev/react-router";
 import dataProvider from "@/providers/data.provider";
+import authProvider from "@/providers/auth.provider";
 import { useNotificationProvider } from "@/components/refine-ui/notification/use-notification-provider";
 import { ThemeProvider } from "@/components/refine-ui/theme/theme-provider";
 
@@ -26,6 +27,7 @@ function App() {
                     dataProvider={dataProvider}
                     notificationProvider={useNotificationProvider()}
                     routerProvider={routerProvider}
+                    authProvider={authProvider}
                     options={{
                         syncWithLocation: true,
                         warnWhenUnsavedChanges: true,
@@ -34,7 +36,7 @@ function App() {
                     {/* App Routes */}
                     <AppRoutes />
                     {/* Toaster */}
-                    <Toaster />
+                    <Toaster position="top-right" />
                     {/* Unsaved Changes Notifier */}
                     <UnsavedChangesNotifier />
                     {/* Document Title Handler */}

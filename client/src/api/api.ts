@@ -19,6 +19,8 @@ export interface UserResponseDto {
   email: string;
   /** The avatar url of the user */
   avatar_url: string;
+  /** The provider of the user */
+  provider: string[];
   /** The role of the user */
   role: string;
   /**
@@ -171,6 +173,11 @@ export interface RegisterUserDto {
 export interface LoginResponseDto {
   /** The access token */
   access_token: string;
+}
+
+export interface EmailCheckResponseDto {
+  /** Whether the email exists */
+  exists: boolean;
 }
 
 import type {
@@ -726,12 +733,14 @@ export class Api<
      *
      * @tags Auth
      * @name AuthControllerEmailCheck
+     * @summary Check if an email exists
      * @request GET:/api/v1/auth/email-check/{email}
      */
     authControllerEmailCheck: (email: string, params: RequestParams = {}) =>
-      this.request<void, any>({
+      this.request<EmailCheckResponseDto, any>({
         path: `/api/v1/auth/email-check/${email}`,
         method: "GET",
+        format: "json",
         ...params,
       }),
   };

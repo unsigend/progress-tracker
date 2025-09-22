@@ -6,7 +6,7 @@ import { useState } from "react";
 import { cn } from "@/lib/utils";
 
 // import constants
-import ROUTES from "@/constants/routes";
+import ROUTES_CONSTANTS from "@/constants/routes";
 
 // import components
 import HamburgerButton from "@/components/modules/ui/HamburgerButton";
@@ -20,7 +20,16 @@ import { Settings } from "lucide-react";
 // import data
 import navigationItems from "@/data/dashboard/navigationItems";
 
+// import types
+import type { UserResponseDto } from "@/api/api";
+
+// import hooks
+import { useGetIdentity } from "@refinedev/core";
+
 const SideBar = () => {
+    // get the user
+    const { data: user } = useGetIdentity<UserResponseDto>();
+
     // state for the sidebar
     const [isOpen, setIsOpen] = useState(false);
 
@@ -29,8 +38,8 @@ const SideBar = () => {
 
     // check if the route is active
     const isActiveRoute = (href: string) => {
-        if (href === ROUTES.DASHBOARD_HOME) {
-            return location.pathname === ROUTES.DASHBOARD_HOME;
+        if (href === ROUTES_CONSTANTS.DASHBOARD_HOME) {
+            return location.pathname === ROUTES_CONSTANTS.DASHBOARD_HOME;
         }
         return location.pathname.startsWith(href);
     };
@@ -107,20 +116,25 @@ const SideBar = () => {
                     <div className="border-t border-sidebar-border p-4">
                         <div className="flex items-center gap-3 relative">
                             <Avatar>
-                                <AvatarImage src={undefined} />
-                                <AvatarFallback>{"U"}</AvatarFallback>
+                                <AvatarImage
+                                    src={user?.avatar_url || undefined}
+                                />
+                                <AvatarFallback>
+                                    {user?.username.charAt(0).toUpperCase() ||
+                                        ""}
+                                </AvatarFallback>
                             </Avatar>
                             <div className="flex-1 min-w-0">
                                 <p className="text-sm font-medium text-sidebar-foreground truncate">
-                                    {"User"}
+                                    {user?.username || ""}
                                 </p>
                                 <p className="text-xs text-sidebar-foreground/70 truncate">
-                                    {"user@example.com"}
+                                    {user?.email || ""}
                                 </p>
                             </div>
 
                             {/* Settings Button */}
-                            <Link to={ROUTES.DASHBOARD_HOME}>
+                            <Link to={ROUTES_CONSTANTS.DASHBOARD_SETTINGS}>
                                 <Button
                                     variant="ghost"
                                     size="icon"

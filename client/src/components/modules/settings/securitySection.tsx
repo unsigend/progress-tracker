@@ -6,7 +6,12 @@ import { ChangePwdDialog } from "@/components/modules/settings/changePwdDialog";
 // import icons
 import { LogOut } from "lucide-react";
 
+// import hooks
+import { useLogout } from "@refinedev/core";
+
 const SecuritySection = () => {
+    const { mutate: logout, isPending } = useLogout();
+
     return (
         <div className="space-y-4">
             <div className="flex items-center justify-between p-4 border rounded-lg">
@@ -28,7 +33,10 @@ const SecuritySection = () => {
                 <Button
                     variant="destructive"
                     className="w-full"
-                    onClick={() => {}}
+                    onClick={() => {
+                        logout();
+                    }}
+                    disabled={isPending}
                 >
                     <LogOut className="w-4 h-4 mr-2" />
                     Sign out

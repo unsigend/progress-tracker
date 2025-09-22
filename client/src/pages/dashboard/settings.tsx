@@ -1,14 +1,14 @@
 // import components
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import ProfileSection from "@/components/modules/settings/profileSection";
+import SecuritySection from "@/components/modules/settings/securitySection";
+
+// import icons
 import { KeyRound } from "lucide-react";
-import {
-    ProfileSection,
-    SecuritySection,
-} from "@/components/features/settings";
 
 const DashboardSettingsPage = () => {
     // Show loading state if user data is not available
-    if (!user.id) {
+    if (false) {
         return (
             <div className="min-h-screen bg-gray-50/50 py-8">
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -39,7 +39,7 @@ const DashboardSettingsPage = () => {
                             </p>
                         </CardHeader>
                         <CardContent className="p-6">
-                            <ProfileSection user={user} />
+                            <ProfileSection />
                         </CardContent>
                     </Card>
 
@@ -52,7 +52,7 @@ const DashboardSettingsPage = () => {
                             </CardTitle>
                         </CardHeader>
                         <CardContent>
-                            <SecuritySection onLogout={handleLogout} />
+                            <SecuritySection />
                         </CardContent>
                     </Card>
                 </div>

@@ -10,6 +10,7 @@ const ROUTES_CONSTANTS = {
     READING_HOME: "/dashboard/reading",
     COURSES_HOME: "/dashboard/courses",
     PROJECTS_HOME: "/dashboard/projects",
+    DASHBOARD_SETTINGS: "/dashboard/settings",
 };
 
 export default ROUTES_CONSTANTS;

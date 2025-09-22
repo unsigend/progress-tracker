@@ -25,4 +25,3 @@ _.njsproj
 _.sln
 \*.sw?
 .env
-client-back

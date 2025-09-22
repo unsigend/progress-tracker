@@ -9,33 +9,22 @@ import Divider from "@/components/modules/ui/Divider";
 import steps from "@/data/auth/stepData";
 
 // import dependencies
-import { Link } from "@refinedev/core";
+import { Link, useRegister } from "@refinedev/core";
+import { useState } from "react";
 
 // import constants
 import ROUTES_CONSTANTS from "@/constants/routes";
+import VALIDATION_CONSTANTS from "@/constants/validation";
 
-/**
- * Helper function to handle step change
- * @param step: step to change to, could be positive or negative
- * @param setCurrentStep: set current step
- * @note currentStep start from 1
- * @returns void
- */
-const handleStepChange = (
-    step: number,
-    currentStep: number,
-    setCurrentStep: (step: number) => void
-) => {
-    // if step is greater than 1, return
-    if (step > 1) return;
-    // if current step is greater than 1 and step is negative,
-    // set current step to current step + step
-    if (currentStep > 1 && step < 0) setCurrentStep(currentStep + step);
-    // if step is positive and current step is less than steps length,
-    // set current step to current step + step
-    if (step > 0 && currentStep < steps.length)
-        setCurrentStep(currentStep + step);
-};
+// import types
+import type { EmailCheckResponseDto, RegisterUserDto } from "@/api/api";
+
+// import hooks
+import { useEmailCheck } from "@/hooks/use-email-check";
+
+// import utils
+import { validationUtils } from "@/utils/validation";
+import { toast } from "sonner";
 
 /**
  * Register form component
@@ -52,7 +41,76 @@ const RegisterForm = ({
     currentStep: number;
     setCurrentStep: (step: number) => void;
 }) => {
+    const [formData, setFormData] = useState<RegisterUserDto>({
+        email: "",
+        password: "",
+        username: "",
+    });
+    const { mutate: register } = useRegister();
+    const { mutate: checkEmail } = useEmailCheck();
+
     const currentStepData = steps[currentStep - 1];
+
+    /**
+     * Handle previous step
+     * @returns void
+     */
+    const handlePreviousStep = () => {
+        if (currentStep > 1) {
+            setCurrentStep(currentStep - 1);
+        }
+    };
+
+    /**
+     * Handle next step with validation
+     * @returns void
+     */
+    const handleNextStep = () => {
+        if (currentStep !== steps.length) {
+            if (steps[currentStep - 1].field === "email") {
+                if (!validationUtils.email(formData.email)) {
+                    toast.error("Invalid email format");
+                    return;
+                } else {
+                    checkEmail(formData.email, {
+                        onSuccess: (response: EmailCheckResponseDto) => {
+                            if (response.exists) {
+                                toast.error("Email already exists");
+                                return;
+                            }
+                            setCurrentStep(currentStep + 1);
+                        },
+                        onError: () => {
+                            toast.error("Failed to check email");
+                        },
+                    });
+                }
+            } else if (steps[currentStep - 1].field === "password") {
+                if (!validationUtils.password(formData.password)) {
+                    toast.error(
+                        `Password must between ${VALIDATION_CONSTANTS.PASSWORD_MIN_LENGTH}
+                         and ${VALIDATION_CONSTANTS.PASSWORD_MAX_LENGTH} characters long`
+                    );
+                    return;
+                } else {
+                    setCurrentStep(currentStep + 1);
+                }
+            } else if (steps[currentStep - 1].field === "username") {
+                if (!validationUtils.username(formData.username)) {
+                    toast.error(
+                        `Username must between ${VALIDATION_CONSTANTS.USERNAME_MIN_LENGTH}
+                         and ${VALIDATION_CONSTANTS.USERNAME_MAX_LENGTH} characters long`
+                    );
+                    return;
+                }
+                setCurrentStep(currentStep + 1);
+            }
+        } else {
+            // last step
+            console.log(formData);
+            register(formData);
+        }
+    };
 
     return (
         <div className="w-full space-y-6">
@@ -88,7 +146,17 @@ const RegisterForm = ({
                             id={currentStepData?.field}
                             type={currentStepData?.type}
                             placeholder={currentStepData?.placeholder}
-                            value={""}
+                            value={
+                                formData[
+                                    currentStepData?.field as keyof RegisterUserDto
+                                ] || ""
+                            }
+                            onChange={(e) =>
+                                setFormData({
+                                    ...formData,
+                                    [currentStepData?.field]: e.target.value,
+                                })
+                            }
                             required
                             autoFocus
                             className="transition-all duration-200"
@@ -108,23 +176,15 @@ const RegisterForm = ({
                         <Button
                             type="button"
                             variant="outline"
-                            onClick={() =>
-                                handleStepChange(
-                                    -1,
-                                    currentStep,
-                                    setCurrentStep
-                                )
-                            }
+                            onClick={handlePreviousStep}
                             className="flex-1 transition-all duration-200 cursor-pointer"
                         >
                             Back
                         </Button>
                     )}
                     <Button
-                        type="submit"
-                        onClick={() =>
-                            handleStepChange(1, currentStep, setCurrentStep)
-                        }
+                        type="button"
+                        onClick={handleNextStep}
                         className={`transition-all duration-200 ${
                             currentStep === 1 ? "w-full" : "flex-1"
                         } cursor-pointer`}
