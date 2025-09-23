@@ -27,7 +27,7 @@ const ChartContainer = ({
     return (
         <>
             <div className="flex items-center justify-start gap-4 mb-8">
-                <BackLink to={ROUTES_CONSTANTS.DASHBOARD().HOME()} />
+                <BackLink to={ROUTES_CONSTANTS.LANDING().HOME()} />
                 <h2 className="text-gray-600 text-xl font-medium">{title}</h2>
             </div>
 

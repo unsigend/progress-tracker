@@ -1,5 +1,5 @@
 // import dependencies
-import { useGetIdentity, useUpdate } from "@refinedev/core";
+import { useGetIdentity, useForm } from "@refinedev/core";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -20,44 +20,25 @@ import type { UpdateUserDto, UserResponseDto } from "@/api/api";
 // import hooks
 import useInvalidateCurrentUser from "@/hooks/use-invalidate-current-user";
 
-const ProfileSectionOuter = ({ children }: { children: React.ReactNode }) => {
-    return (
-        <Card>
-            <CardHeader>
-                <CardTitle>Profile</CardTitle>
-            </CardHeader>
-            <CardContent>{children}</CardContent>
-        </Card>
-    );
-};
-
-// get provider icon
-const getProviderIcon = (provider: string) => {
-    switch (provider) {
-        case "github":
-            return <Github className="w-4 h-4" />;
-        case "google":
-            return <Mail className="w-4 h-4" />;
-        default:
-            return <User className="w-4 h-4" />;
-    }
-};
+// import utils
+import errorUtils from "@/utils/error";
+import validationUtils from "@/utils/validation";
 
 const ProfileSection = () => {
-    const { data: user, isLoading } = useGetIdentity<UserResponseDto>();
-
+    const { data: user } = useGetIdentity<UserResponseDto>();
     const { invalidateCurrentUser } = useInvalidateCurrentUser();
-
-    const { mutate: updateUser } = useUpdate({
+    const { onFinish } = useForm({
         resource: "users",
-        mutationOptions: {
-            onSuccess: () => {
-                toast.success("Profile updated successfully");
-                invalidateCurrentUser();
-            },
-            onError: () => {
-                toast.error("Failed to update profile");
-            },
+        action: "edit",
+        id: user?.id,
+        errorNotification: false,
+        successNotification: false,
+        onMutationSuccess: () => {
+            toast.success("Profile updated successfully");
+            invalidateCurrentUser();
+        },
+        onMutationError: (error) => {
+            toast.error(errorUtils.extractErrorMessage(error));
         },
     });
     const [updateUserData, setUpdateUserData] = useState<UpdateUserDto>({
@@ -65,154 +46,156 @@ const ProfileSection = () => {
         email: user?.email,
     });
 
-    // Show loading state if user data is not available
-    if (isLoading) {
-        return (
-            <ProfileSectionOuter>
-                <div className="space-y-6">
-                    <div className="flex items-center justify-center py-8">
-                        <div className="text-gray-500">
-                            Loading user data...
-                        </div>
-                    </div>
-                </div>
-            </ProfileSectionOuter>
-        );
-    }
+    // Just simple validation the rest validation is done in the backend
+    const handleUpdate = () => {
+        if (!user?.id) return;
+        if (
+            updateUserData.username === user?.username &&
+            updateUserData.email === user?.email
+        ) {
+            toast.error("No changes to update");
+            return;
+        } else if (!validationUtils.email(updateUserData?.email || "")) {
+            toast.error("Invalid email format");
+            return;
+        }
+        onFinish(updateUserData);
+    };
 
     return (
-        <ProfileSectionOuter>
-            <div className="space-y-6">
-                {/* Profile Section */}
-                <div className="flex items-start justify-between gap-16">
-                    <div className="flex-1 space-y-6">
-                        <div className="space-y-2">
-                            <Label htmlFor="name">Username</Label>
-                            <Input
-                                id="name"
-                                className="text-gray-900"
-                                value={updateUserData.username || ""}
-                                onChange={(e) =>
-                                    setUpdateUserData({
-                                        ...updateUserData,
-                                        username: e.target.value,
-                                    })
-                                }
-                            />
-                            <p className="text-sm text-gray-500">
-                                Your username will be used to identify you on
-                                the platform.
-                            </p>
-                        </div>
-
-                        <div className="space-y-2">
-                            <Label htmlFor="email">Email</Label>
-                            <div className="relative">
+        <Card>
+            <CardHeader>
+                <CardTitle>Profile</CardTitle>
+            </CardHeader>
+            <CardContent>
+                <div className="space-y-6">
+                    {/* Profile Section */}
+                    <div className="flex items-start justify-between gap-16">
+                        <div className="flex-1 space-y-6">
+                            <div className="space-y-2">
+                                <Label htmlFor="name">Username</Label>
                                 <Input
-                                    id="email"
-                                    className="text-gray-900 pr-10"
-                                    value={updateUserData.email || ""}
+                                    id="name"
+                                    className="text-gray-900"
+                                    value={updateUserData.username || ""}
                                     onChange={(e) =>
                                         setUpdateUserData({
                                             ...updateUserData,
-                                            email: e.target.value,
+                                            username: e.target.value,
                                         })
                                     }
                                 />
-                                <div className="absolute inset-y-0 right-0 flex items-center pr-3">
-                                    <svg
-                                        className="w-4 h-4 text-gray-400"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth={2}
-                                            d="M19 9l-7 7-7-7"
-                                        />
-                                    </svg>
-                                </div>
+                                <p className="text-sm text-gray-500">
+                                    Your username will be used to identify you
+                                    on the platform.
+                                </p>
                             </div>
-                            <p className="text-sm text-gray-500">
-                                This email should be unique and used for login.
-                            </p>
+
+                            <div className="space-y-2">
+                                <Label htmlFor="email">Email</Label>
+                                <div className="relative">
+                                    <Input
+                                        id="email"
+                                        className="text-gray-900 pr-10"
+                                        value={updateUserData.email || ""}
+                                        onChange={(e) =>
+                                            setUpdateUserData({
+                                                ...updateUserData,
+                                                email: e.target.value,
+                                            })
+                                        }
+                                    />
+                                    <div className="absolute inset-y-0 right-0 flex items-center pr-3">
+                                        <svg
+                                            className="w-4 h-4 text-gray-400"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                strokeWidth={2}
+                                                d="M19 9l-7 7-7-7"
+                                            />
+                                        </svg>
+                                    </div>
+                                </div>
+                                <p className="text-sm text-gray-500">
+                                    This email should be unique and used for
+                                    login.
+                                </p>
+                            </div>
+                        </div>
+
+                        {/* Avatar Section */}
+                        <div className="flex-shrink-0">
+                            <Avatar className="w-28 h-28">
+                                {user?.avatar_url ? (
+                                    <AvatarImage
+                                        src={user?.avatar_url}
+                                        alt={user?.username + " avatar"}
+                                    />
+                                ) : null}
+                                <AvatarFallback className="text-2xl">
+                                    {user?.username.charAt(0).toUpperCase() ||
+                                        ""}
+                                </AvatarFallback>
+                            </Avatar>
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                className="w-full mt-3"
+                            >
+                                <Edit3 className="w-4 h-4 mr-2" />
+                                Edit
+                            </Button>
                         </div>
                     </div>
 
-                    {/* Avatar Section */}
-                    <div className="flex-shrink-0">
-                        <Avatar className="w-28 h-28">
-                            {user?.avatar_url ? (
-                                <AvatarImage
-                                    src={user?.avatar_url}
-                                    alt={user?.username + " avatar"}
-                                />
-                            ) : null}
-                            <AvatarFallback className="text-2xl">
-                                {user?.username.charAt(0).toUpperCase() || ""}
-                            </AvatarFallback>
-                        </Avatar>
-                        <Button
-                            variant="outline"
-                            size="sm"
-                            className="w-full mt-3"
-                        >
-                            <Edit3 className="w-4 h-4 mr-2" />
-                            Edit
-                        </Button>
-                    </div>
-                </div>
-
-                {/* Connected Accounts Section */}
-                {user?.provider && user?.provider.length > 1 && (
-                    <div className="space-y-3">
-                        <h3 className="text-lg font-semibold text-gray-900">
-                            Connected accounts
-                        </h3>
-                        {user?.provider.map((providerItem: string) =>
-                            providerItem !== "local" ? (
-                                <div
-                                    key={providerItem}
-                                    className="flex items-center justify-between p-3 border rounded-lg"
-                                >
-                                    <div className="flex items-center gap-3">
-                                        {getProviderIcon(providerItem)}
-                                        <span className="font-medium text-gray-900">
-                                            {providerItem
-                                                ?.charAt(0)
-                                                .toUpperCase() +
-                                                providerItem?.slice(1)}
-                                        </span>
-                                    </div>
-                                    <Badge
-                                        variant="secondary"
-                                        className="bg-green-100 text-green-800"
+                    {/* Connected Accounts Section */}
+                    {user?.provider && user?.provider.length > 1 && (
+                        <div className="space-y-3">
+                            <h3 className="text-lg font-semibold text-gray-900">
+                                Connected accounts
+                            </h3>
+                            {user?.provider.map((providerItem: string) =>
+                                providerItem !== "local" ? (
+                                    <div
+                                        key={providerItem}
+                                        className="flex items-center justify-between p-3 border rounded-lg"
                                     >
-                                        Connected
-                                    </Badge>
-                                </div>
-                            ) : null
-                        )}
-                    </div>
-                )}
+                                        <div className="flex items-center gap-3">
+                                            {providerItem === "github" ? (
+                                                <Github className="w-4 h-4" />
+                                            ) : providerItem === "google" ? (
+                                                <Mail className="w-4 h-4" />
+                                            ) : (
+                                                <User className="w-4 h-4" />
+                                            )}
+                                            <span className="font-medium text-gray-900">
+                                                {providerItem
+                                                    ?.charAt(0)
+                                                    .toUpperCase() +
+                                                    providerItem?.slice(1)}
+                                            </span>
+                                        </div>
+                                        <Badge
+                                            variant="secondary"
+                                            className="bg-green-100 text-green-800"
+                                        >
+                                            Connected
+                                        </Badge>
+                                    </div>
+                                ) : null
+                            )}
+                        </div>
+                    )}
 
-                <Button
-                    onClick={() => {
-                        updateUser({
-                            id: user?.id,
-                            values: {
-                                username: updateUserData.username,
-                                email: updateUserData.email,
-                            },
-                        });
-                    }}
-                >
-                    Update
-                </Button>
-            </div>
-        </ProfileSectionOuter>
+                    <Button onClick={handleUpdate}>Update</Button>
+                </div>
+            </CardContent>
+        </Card>
     );
 };
 

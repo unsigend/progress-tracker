@@ -56,8 +56,7 @@ export const authProvider: AuthProvider = {
             return {
                 success: false,
                 error: {
-                    name:
-                        errorUtils.extractErrorMessage(error) || "Login failed",
+                    name: "Login failed",
                     message: "Invalid email or password",
                 },
                 redirectTo: ROUTES_CONSTANTS.AUTH().LOGIN(),
@@ -132,7 +131,7 @@ export const authProvider: AuthProvider = {
                 success: false,
                 error: {
                     name: "Register failed",
-                    message: "Register Failed",
+                    message: "Internal server error",
                 },
                 redirectTo: ROUTES_CONSTANTS.AUTH().SIGNUP(),
             };

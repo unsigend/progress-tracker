@@ -36,8 +36,14 @@ const timelineData: TimelineItem[] = [
         title: "OAuth Authentication System",
         description:
             "Implemented GitHub and Google OAuth integration, providing users with seamless authentication experience.",
-        date: "September 15th, 2025",
-        status: "completed",
+        status: "coming-soon",
+    },
+    {
+        id: "reading-library",
+        title: "Reading Library",
+        description:
+            "Reading library with comprehensive book management featuring dual-mode navigation - switch between infinite scroll and pagination mode for precise control.",
+        status: "coming-soon",
     },
 ];
 

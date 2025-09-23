@@ -22,8 +22,12 @@ const DashboardReadingAddBookPage = () => {
         redirect: "list",
         action: "create",
         errorNotification: false,
+        successNotification: false,
         onMutationError(error) {
             toast.error(errorUtils.extractErrorMessage(error));
+        },
+        onMutationSuccess() {
+            toast.success("Book created successfully");
         },
     });
 

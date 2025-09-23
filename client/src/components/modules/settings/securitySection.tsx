@@ -9,8 +9,9 @@ import { ChangePwdDialog } from "@/components/modules/settings/changePwdDialog";
 // import icons
 import { KeyRound, LogOut } from "lucide-react";
 
-// import hooks
+// import dependencies
 import { useLogout } from "@refinedev/core";
+import { useState } from "react";
 
 /**
  * SecuritySection component
@@ -19,6 +20,8 @@ import { useLogout } from "@refinedev/core";
 const SecuritySection = () => {
     // get the logout function
     const { mutate: logout, isPending } = useLogout();
+    const [isChangePwdDialogOpen, setIsChangePwdDialogOpen] =
+        useState<boolean>(false);
 
     return (
         <Card>
@@ -39,14 +42,22 @@ const SecuritySection = () => {
                                 reset your password
                             </p>
                         </div>
+
                         {/* Change password dialog */}
-                        <Dialog>
+                        <Dialog
+                            open={isChangePwdDialogOpen}
+                            onOpenChange={setIsChangePwdDialogOpen}
+                        >
                             <DialogTrigger asChild>
                                 <Button variant="outline">
                                     Change password
                                 </Button>
                             </DialogTrigger>
-                            <ChangePwdDialog />
+                            <ChangePwdDialog
+                                closeDialog={() =>
+                                    setIsChangePwdDialogOpen(false)
+                                }
+                            />
                         </Dialog>
                     </div>
 

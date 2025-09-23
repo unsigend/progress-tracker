@@ -15,7 +15,7 @@ const COURSES_ROOT = `${DASHBOARD_ROOT}/courses`;
 const ROUTES_CONSTANTS = {
     LANDING() {
         return {
-            HOME: (): string => `${LANDING_ROOT}`,
+            HOME: (): string => `${LANDING_ROOT}/`,
             ABOUT: (): string => `${LANDING_ROOT}/about`,
         };
     },

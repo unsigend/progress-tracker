@@ -109,7 +109,6 @@ const RegisterForm = ({
             }
         } else {
             // last step
-            console.log(formData);
             register(formData);
         }
     };
