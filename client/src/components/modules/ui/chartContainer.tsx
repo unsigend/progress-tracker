@@ -5,6 +5,12 @@ interface ChartContainerProps {
     chart: React.ReactNode;
 }
 
+// import components
+import BackLink from "@/components/modules/ui/backButton";
+
+// import constants
+import ROUTES_CONSTANTS from "@/constants/routes";
+
 /**
  * ChartContainer component
  * @param title - The title of the chart
@@ -22,7 +28,8 @@ const ChartContainer = ({
 }: ChartContainerProps) => {
     return (
         <>
-            <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center justify-start gap-4 mb-8">
+                <BackLink to={ROUTES_CONSTANTS.HOME} />
                 <h2 className="text-gray-600 text-xl font-medium">{title}</h2>
             </div>
 

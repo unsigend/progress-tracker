@@ -9,6 +9,7 @@ import LoginForm from "@/components/modules/auth/loginForm";
 // import utils
 import random from "@/utils/random";
 
+// generate random data
 const chartData = Array.from({ length: 8 }, () => ({
     value: random.number(10, 100),
 }));

@@ -3,16 +3,30 @@ import { Link, useList } from "@refinedev/core";
 
 // import components
 import BookShelf from "@/components/modules/books/bookShelf";
+import SearchBar from "@/components/modules/ui/searchBar";
+
+// import shadcn/ui components
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+
+// import dependencies
 import { ClipLoader } from "react-spinners";
 
-import { BookResponseDto } from "@/api/api";
+// import types
+import type { BookResponseDto } from "@/api/api";
 
+// import constants
+import RESOURCES_CONSTANTS from "@/constants/resources";
+import ROUTES_CONSTANTS from "@/constants/routes";
+
+/**
+ * DashboardLibraryPage component
+ * @returns The DashboardLibraryPage component
+ */
 const DashboardLibraryPage = () => {
+    // get the books
     const { query, result } = useList({
-        resource: "books",
+        resource: RESOURCES_CONSTANTS.BOOKS,
     });
 
     return (
@@ -26,30 +40,18 @@ const DashboardLibraryPage = () => {
                         </h1>
                     </div>
 
-                    {/* Search Section */}
                     <div className="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
-                        <form
+                        {/* Search Section */}
+                        <SearchBar
+                            placeholder="Search by title, author, or ISBN..."
                             onSubmit={() => {}}
-                            className="flex gap-2 flex-1 max-w-md"
-                        >
-                            <Input
-                                type="text"
-                                placeholder="Search by title, author, or ISBN..."
-                                className="flex-1"
-                                value={""}
-                                onChange={() => {}}
-                            />
-                            <Button
-                                type="submit"
-                                variant="default"
-                                className="px-6"
-                            >
-                                Search
-                            </Button>
-                        </form>
+                            searchTerm={""}
+                            setSearchTerm={() => {}}
+                        />
 
+                        {/* Add Book Button */}
                         <div className="flex gap-2">
-                            <Link to="/dashboard/reading/library/add">
+                            <Link to={ROUTES_CONSTANTS.READING_LIBRARY_ADD}>
                                 <Button
                                     variant="outline"
                                     size="sm"
@@ -62,6 +64,7 @@ const DashboardLibraryPage = () => {
                     </div>
                 </div>
             </CardHeader>
+
             <CardContent>
                 {/* Loading State */}
                 {query?.isLoading ? (

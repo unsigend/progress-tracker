@@ -130,7 +130,7 @@ const LandingFooter = () => {
                             {/* Social Links */}
                             <div className="flex items-center gap-4">
                                 <a
-                                    href={`${GLOBAL_CONSTANTS.GITHUB_URL}`}
+                                    href={`${GLOBAL_CONSTANTS.GITHUB}`}
                                     className={linkStyle}
                                     aria-label="GitHub"
                                     target="_blank"
@@ -139,7 +139,7 @@ const LandingFooter = () => {
                                     <Github className="w-5 h-5" />
                                 </a>
                                 <a
-                                    href={`mailto:${GLOBAL_CONSTANTS.EMAIL}`}
+                                    href={`mailto:${GLOBAL_CONSTANTS.AUTHOR_EMAIL}`}
                                     className={linkStyle}
                                     aria-label="Email"
                                     target="_blank"
@@ -152,13 +152,13 @@ const LandingFooter = () => {
                             {/* Legal Links */}
                             <div className="flex items-center gap-6 text-sm">
                                 <a
-                                    href={`${GLOBAL_CONSTANTS.PRIVACY_POLICY}`}
+                                    href={`${GLOBAL_CONSTANTS.PRIVACY_POLICY_URL}`}
                                     className={linkStyle}
                                 >
                                     Privacy Policy
                                 </a>
                                 <a
-                                    href={`${GLOBAL_CONSTANTS.TERMS_OF_SERVICE}`}
+                                    href={`${GLOBAL_CONSTANTS.TERMS_OF_SERVICE_URL}`}
                                     className={linkStyle}
                                 >
                                     Terms of Service
