@@ -46,6 +46,8 @@ const RegisterForm = ({
         password: "",
         username: "",
     });
+
+    // setup mutation hooks
     const { mutate: register } = useRegister();
     const { mutate: checkEmail } = useEmailCheck();
 

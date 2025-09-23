@@ -10,6 +10,7 @@ const ROUTES_CONSTANTS = {
     READING_HOME: "/dashboard/reading",
     READING_LIBRARY: "/dashboard/reading/library",
     READING_LIBRARY_ADD: "/dashboard/reading/library/add",
+    READING_LIBRARY_EDIT: "/dashboard/reading/library/edit",
     COURSES_HOME: "/dashboard/courses",
     PROJECTS_HOME: "/dashboard/projects",
     DASHBOARD_SETTINGS: "/dashboard/settings",
