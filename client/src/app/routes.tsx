@@ -17,10 +17,10 @@ import DashboardSettingsPage from "@/pages/dashboard/settings";
 
 // import dashboard reading pages
 import DashboardReadingPage from "@/pages/dashboard/reading/home";
-import DashboardReadingLibraryPage from "@/pages/dashboard/reading/library";
-import DashboardReadingBookDetailPage from "@/pages/dashboard/reading/book-detail";
-import DashboardReadingBookAddPage from "@/pages/dashboard/reading/book-add";
-import DashboardReadingBookEditPage from "@/pages/dashboard/reading/book-edit";
+import DashboardReadingLibraryPage from "@/pages/dashboard/reading/book/list";
+import DashboardReadingBookDetailPage from "@/pages/dashboard/reading/book/show";
+import DashboardReadingBookAddPage from "@/pages/dashboard/reading/book/new";
+import DashboardReadingBookEditPage from "@/pages/dashboard/reading/book/edit";
 
 // import dashboard projects pages
 import DashboardProjectsPage from "@/pages/dashboard/projects/home";

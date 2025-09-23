@@ -29,6 +29,7 @@ const BookEditCard = ({
     formData,
     setFormData,
     onSubmit,
+    action,
 }: {
     title: string;
     description: string;
@@ -37,6 +38,7 @@ const BookEditCard = ({
         React.SetStateAction<UpdateBookDto | CreateBookDto>
     >;
     onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+    action: "add" | "edit";
 }) => {
     // get the back function
     const back = useBack();
@@ -129,7 +131,9 @@ const BookEditCard = ({
                                     description: e.target.value,
                                 })
                             }
-                            className="w-full min-h-[200px] px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent resize-none"
+                            className="w-full min-h-[200px] px-3 py-2 border border-gray-300 
+                            rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-500
+                             focus:border-transparent resize-none"
                         />
                     </div>
 
@@ -251,7 +255,7 @@ const BookEditCard = ({
                             type="submit"
                             className="px-6 bg-black text-white hover:bg-gray-800"
                         >
-                            Add Book
+                            {action === "add" ? "Add Book" : "Update Book"}
                         </Button>
                     </div>
                 </form>

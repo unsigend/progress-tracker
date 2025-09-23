@@ -28,6 +28,9 @@ function App() {
                     resources={[
                         {
                             name: RESOURCES_CONSTANTS.BOOKS,
+                            list: `${ROUTES_CONSTANTS.DASHBOARD()
+                                .READING()
+                                .BOOKS_LIST()}`,
                             show: `${ROUTES_CONSTANTS.DASHBOARD()
                                 .READING()
                                 .BOOKS_SHOW()}`,

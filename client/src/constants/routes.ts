@@ -1,7 +1,6 @@
 /**
  * Routes Constants for the application
  */
-
 const LANDING_ROOT = "";
 const DASHBOARD_ROOT = `${LANDING_ROOT}/dashboard`;
 const AUTH_ROOT = `${LANDING_ROOT}/auth`;
@@ -10,6 +9,9 @@ const BOOKS_ROOT = `${READING_ROOT}/books`;
 const PROJECTS_ROOT = `${DASHBOARD_ROOT}/projects`;
 const COURSES_ROOT = `${DASHBOARD_ROOT}/courses`;
 
+/**
+ * Constants Factory for the application
+ */
 const ROUTES_CONSTANTS = {
     LANDING() {
         return {
@@ -33,9 +35,7 @@ const ROUTES_CONSTANTS = {
                     BOOKS: (): string => `${BOOKS_ROOT}`,
                     BOOKS_LIST: (): string => `${BOOKS_ROOT}`,
                     BOOKS_SHOW: (id?: string): string =>
-                        id
-                            ? `${BOOKS_ROOT}/${id}/show`
-                            : `${BOOKS_ROOT}/:id/show`,
+                        id ? `${BOOKS_ROOT}/${id}` : `${BOOKS_ROOT}/:id`,
                     BOOKS_EDIT: (id?: string): string =>
                         id
                             ? `${BOOKS_ROOT}/${id}/edit`

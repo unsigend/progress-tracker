@@ -27,16 +27,12 @@ import type { BookResponseDto } from "@/api/api";
 
 const BookDetailsPage = () => {
     // get the id from the parsed url
-    const { id } = useParsed();
-
+    const globalID = useParsed().id;
     const go = useGo();
-
     // get the book data
     const { query, result } = useShow();
-
     // delete book mutation
     const { mutate: deleteBook } = useDelete();
-
     // state for delete confirmation dialog
     const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
@@ -51,11 +47,11 @@ const BookDetailsPage = () => {
      * On click edit button, will navigate to the edit page
      */
     const onClickEditButton = () => {
-        if (!id) return;
+        if (!globalID) return;
         go({
             to: `${ROUTES_CONSTANTS.DASHBOARD()
                 .READING()
-                .BOOKS_EDIT(String(id))}`,
+                .BOOKS_EDIT(String(globalID))}`,
         });
     };
 
@@ -70,10 +66,10 @@ const BookDetailsPage = () => {
      * On confirm delete, will delete the book
      */
     const confirmDelete = () => {
-        if (!id) return;
+        if (!globalID) return;
         deleteBook({
             resource: RESOURCES_CONSTANTS.BOOKS,
-            id: id,
+            id: globalID,
             successNotification: {
                 type: "success",
                 message: "Book deleted successfully",

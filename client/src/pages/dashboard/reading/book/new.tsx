@@ -1,26 +1,31 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 // import components
-import { toast } from "sonner";
 import BookEditCard from "@/components/modules/books/Edit";
 
 // import dependencies
 import { useState } from "react";
-import { useGo } from "@refinedev/core";
-import { useCreate } from "@refinedev/core";
+import { toast } from "sonner";
+import { useForm } from "@refinedev/core";
 
 // import types
 import type { CreateBookDto, UpdateBookDto } from "@/api/api";
 
 // import constants
 import RESOURCES_CONSTANTS from "@/constants/resources";
-import ROUTES_CONSTANTS from "@/constants/routes";
 
 // import utils
+import genericUtils from "@/utils/generic";
 import errorUtils from "@/utils/error";
 
 const DashboardReadingAddBookPage = () => {
-    const go = useGo();
+    const { onFinish } = useForm({
+        resource: RESOURCES_CONSTANTS.BOOKS,
+        redirect: "list",
+        action: "create",
+        errorNotification: false,
+        onMutationError(error) {
+            toast.error(errorUtils.extractErrorMessage(error));
+        },
+    });
 
     const [formData, setFormData] = useState<CreateBookDto>({
         title: "",
@@ -28,41 +33,15 @@ const DashboardReadingAddBookPage = () => {
         description: "",
         ISBN10: "",
         ISBN13: "",
-        pages: 0,
+        pages: undefined,
         cover_url: "",
-    });
-
-    const { mutate: createBook } = useCreate({
-        resource: RESOURCES_CONSTANTS.BOOKS,
-        mutationOptions: {
-            onError: (error) => {
-                toast.error(errorUtils.extractErrorMessage(error));
-            },
-            onSuccess: () => {
-                toast.success("Book created successfully");
-                go({
-                    to: ROUTES_CONSTANTS.DASHBOARD().READING().BOOKS_LIST(),
-                });
-            },
-        },
     });
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
         // remove empty fields
-        const filteredFormData = Object.fromEntries(
-            Object.entries(formData).filter(([_, value]) => value !== "")
-        );
-
-        // if pages is 0, remove it
-        if (filteredFormData.pages === 0) {
-            delete filteredFormData.pages;
-        }
-
-        createBook({
-            values: filteredFormData,
-        });
+        const filteredFormData = genericUtils.removeEmptyFields(formData);
+        onFinish(filteredFormData);
     };
 
     return (
@@ -78,6 +57,7 @@ const DashboardReadingAddBookPage = () => {
                         >
                     }
                     onSubmit={handleSubmit}
+                    action="add"
                 />
             </div>
         </div>
