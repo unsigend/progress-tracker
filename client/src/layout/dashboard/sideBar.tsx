@@ -38,8 +38,8 @@ const SideBar = () => {
 
     // check if the route is active
     const isActiveRoute = (href: string) => {
-        if (href === ROUTES_CONSTANTS.DASHBOARD_HOME) {
-            return location.pathname === ROUTES_CONSTANTS.DASHBOARD_HOME;
+        if (href === ROUTES_CONSTANTS.DASHBOARD().HOME()) {
+            return location.pathname === ROUTES_CONSTANTS.DASHBOARD().HOME();
         }
         return location.pathname.startsWith(href);
     };
@@ -134,7 +134,7 @@ const SideBar = () => {
                             </div>
 
                             {/* Settings Button */}
-                            <Link to={ROUTES_CONSTANTS.DASHBOARD_SETTINGS}>
+                            <Link to={ROUTES_CONSTANTS.DASHBOARD().SETTINGS()}>
                                 <Button
                                     variant="ghost"
                                     size="icon"

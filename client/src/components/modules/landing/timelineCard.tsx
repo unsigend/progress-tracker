@@ -1,13 +1,19 @@
+// import shadcn/ui components
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
+
+// import icons
 import { CheckCircle, Clock } from "lucide-react";
+
+// import data
 import type { TimelineItem } from "@/data/landing/devProgress";
 
-interface TimelineCardProps {
-    item: TimelineItem;
-}
-
-const TimelineCard = ({ item }: TimelineCardProps) => {
+/**
+ * TimelineCard component
+ * @param item - The item to display
+ * @returns TimelineCard component
+ */
+const TimelineCard = ({ item }: { item: TimelineItem }) => {
     return (
         <div className="relative flex items-start">
             <div

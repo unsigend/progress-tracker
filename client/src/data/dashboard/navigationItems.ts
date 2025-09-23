@@ -2,27 +2,27 @@
 import { BookOpen, GraduationCap, Home, FolderOpen } from "lucide-react";
 
 // import constants
-import ROUTES from "@/constants/routes";
+import ROUTES_CONSTANTS from "@/constants/routes";
 
 const navigationItems = [
     {
         name: "Home",
-        href: ROUTES.DASHBOARD_HOME,
+        href: ROUTES_CONSTANTS.DASHBOARD().HOME(),
         icon: Home,
     },
     {
         name: "Reading",
-        href: ROUTES.READING_HOME,
+        href: ROUTES_CONSTANTS.DASHBOARD().READING().HOME(),
         icon: BookOpen,
     },
     {
         name: "Courses",
-        href: ROUTES.COURSES_HOME,
+        href: ROUTES_CONSTANTS.DASHBOARD().COURSES().HOME(),
         icon: GraduationCap,
     },
     {
         name: "Projects",
-        href: ROUTES.PROJECTS_HOME,
+        href: ROUTES_CONSTANTS.DASHBOARD().PROJECTS().HOME(),
         icon: FolderOpen,
     },
 ];

@@ -3,7 +3,7 @@ import AuthLayout from "@/layout/auth/template";
 
 // import components
 import ChartContainer from "@/components/modules/ui/chartContainer";
-import LineChartComponent from "@/components/modules/ui/LineChart";
+import LineChartComponent from "@/components/modules/ui/chart/LineChart";
 import LoginForm from "@/components/modules/auth/loginForm";
 
 // import utils

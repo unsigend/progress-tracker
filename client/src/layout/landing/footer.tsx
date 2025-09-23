@@ -1,6 +1,6 @@
 // import constants
 import GLOBAL_CONSTANTS from "@/constants/global";
-import ROUTES from "@/constants/routes";
+import ROUTES_CONSTANTS from "@/constants/routes";
 
 // import icons
 import { Github, Mail } from "lucide-react";
@@ -65,7 +65,7 @@ const LandingFooter = () => {
                             <ul className="space-y-2 text-sm">
                                 <li>
                                     <a
-                                        href={ROUTES.ABOUT}
+                                        href={ROUTES_CONSTANTS.LANDING().ABOUT()}
                                         className={linkStyle}
                                     >
                                         About
@@ -151,16 +151,10 @@ const LandingFooter = () => {
 
                             {/* Legal Links */}
                             <div className="flex items-center gap-6 text-sm">
-                                <a
-                                    href={`${GLOBAL_CONSTANTS.PRIVACY_POLICY_URL}`}
-                                    className={linkStyle}
-                                >
+                                <a href="#" className={linkStyle}>
                                     Privacy Policy
                                 </a>
-                                <a
-                                    href={`${GLOBAL_CONSTANTS.TERMS_OF_SERVICE_URL}`}
-                                    className={linkStyle}
-                                >
+                                <a href="#" className={linkStyle}>
                                     Terms of Service
                                 </a>
                             </div>

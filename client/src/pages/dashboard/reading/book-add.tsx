@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+
 // import components
 import { toast } from "sonner";
-import BookEditCard from "@/components/modules/books/bookEditCard";
+import BookEditCard from "@/components/modules/books/Edit";
 
 // import dependencies
 import { useState } from "react";
@@ -40,7 +41,7 @@ const DashboardReadingAddBookPage = () => {
             onSuccess: () => {
                 toast.success("Book created successfully");
                 go({
-                    to: ROUTES_CONSTANTS.READING_LIBRARY,
+                    to: ROUTES_CONSTANTS.DASHBOARD().READING().BOOKS_LIST(),
                 });
             },
         },

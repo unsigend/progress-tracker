@@ -1,12 +1,11 @@
 // import dependencies
-import { useDelete, useGo, useParsed } from "@refinedev/core";
-import { useOne } from "@refinedev/core";
+import { useDelete, useGo, useParsed, useShow } from "@refinedev/core";
 import { ClipLoader } from "react-spinners";
 import { useState } from "react";
 
 // import components
 import BackLink from "@/components/modules/ui/backButton";
-import BookDetailCard from "@/components/modules/books/bookShowCard";
+import BookDetailCard from "@/components/modules/books/Show";
 import DeleteDialog from "@/components/modules/ui/deleteDialog";
 
 // import shadcn/ui components
@@ -33,10 +32,7 @@ const BookDetailsPage = () => {
     const go = useGo();
 
     // get the book data
-    const { query, result } = useOne({
-        resource: RESOURCES_CONSTANTS.BOOKS,
-        id: id,
-    });
+    const { query, result } = useShow();
 
     // delete book mutation
     const { mutate: deleteBook } = useDelete();
@@ -57,7 +53,9 @@ const BookDetailsPage = () => {
     const onClickEditButton = () => {
         if (!id) return;
         go({
-            to: `${ROUTES_CONSTANTS.READING_LIBRARY_EDIT}/${id}`,
+            to: `${ROUTES_CONSTANTS.DASHBOARD()
+                .READING()
+                .BOOKS_EDIT(String(id))}`,
         });
     };
 
@@ -83,7 +81,7 @@ const BookDetailsPage = () => {
         });
         // navigate to the library page
         go({
-            to: ROUTES_CONSTANTS.READING_LIBRARY,
+            to: ROUTES_CONSTANTS.DASHBOARD().READING().BOOKS_LIST(),
         });
     };
 
@@ -115,7 +113,11 @@ const BookDetailsPage = () => {
                     {/* Navigation Buttons */}
                     <div className="mb-6 flex justify-between items-center">
                         {/* Back to Library */}
-                        <BackLink to={ROUTES_CONSTANTS.READING_LIBRARY} />
+                        <BackLink
+                            to={ROUTES_CONSTANTS.DASHBOARD()
+                                .READING()
+                                .BOOKS_LIST()}
+                        />
 
                         {/* Dropdown Menu */}
                         <DropdownMenu>

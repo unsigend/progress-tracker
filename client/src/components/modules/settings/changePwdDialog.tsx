@@ -1,4 +1,4 @@
-// import components
+// import shadcn/ui components
 import { Button } from "@/components/ui/button";
 import {
     DialogContent,

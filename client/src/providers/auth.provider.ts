@@ -50,7 +50,7 @@ export const authProvider: AuthProvider = {
 
             return {
                 success: true,
-                redirectTo: ROUTES_CONSTANTS.DASHBOARD_HOME,
+                redirectTo: ROUTES_CONSTANTS.DASHBOARD().HOME(),
             };
         } catch (error) {
             return {
@@ -60,7 +60,7 @@ export const authProvider: AuthProvider = {
                         errorUtils.extractErrorMessage(error) || "Login failed",
                     message: "Invalid email or password",
                 },
-                redirectTo: ROUTES_CONSTANTS.LOGIN,
+                redirectTo: ROUTES_CONSTANTS.AUTH().LOGIN(),
             };
         }
     },
@@ -76,7 +76,7 @@ export const authProvider: AuthProvider = {
         localStorage.removeItem(AUTH_CONSTANTS.ACCESS_TOKEN_KEY);
         return {
             success: true,
-            redirectTo: ROUTES_CONSTANTS.HOME,
+            redirectTo: ROUTES_CONSTANTS.LANDING().HOME(),
         };
     },
 
@@ -125,7 +125,7 @@ export const authProvider: AuthProvider = {
             );
             return {
                 success: true,
-                redirectTo: ROUTES_CONSTANTS.DASHBOARD_HOME,
+                redirectTo: ROUTES_CONSTANTS.DASHBOARD().HOME(),
             };
         } else {
             return {
@@ -134,7 +134,7 @@ export const authProvider: AuthProvider = {
                     name: "Register failed",
                     message: "Register Failed",
                 },
-                redirectTo: ROUTES_CONSTANTS.SIGNUP,
+                redirectTo: ROUTES_CONSTANTS.AUTH().SIGNUP(),
             };
         }
     },

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 // import components
 import { toast } from "sonner";
-import BookEditCard from "@/components/modules/books/bookEditCard";
+import BookEditCard from "@/components/modules/books/Edit";
 import { ClipLoader } from "react-spinners";
 
 // import dependencies
@@ -62,7 +62,7 @@ const DashboardReadingEditBookPage = () => {
             onSuccess: () => {
                 toast.success("Book updated successfully");
                 go({
-                    to: ROUTES_CONSTANTS.READING_LIBRARY,
+                    to: ROUTES_CONSTANTS.DASHBOARD().READING().BOOKS_LIST(),
                 });
             },
         },

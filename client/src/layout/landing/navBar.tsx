@@ -1,12 +1,14 @@
 // import dependencies
-import { Link } from "react-router";
+import { Link } from "@refinedev/core";
 import { useState } from "react";
 
+// import shadcn/ui components
+import { Button } from "@/components/ui/button";
+
 // import constants
-import ROUTES from "@/constants/routes";
+import ROUTES_CONSTANTS from "@/constants/routes";
 
 // import components
-import { Button } from "@/components/ui/button";
 import Logo from "@/components/modules/ui/logo";
 import HamburgerButton from "@/components/modules/ui/HamburgerButton";
 
@@ -27,7 +29,7 @@ const LandingNavBar = () => {
                 <div className="flex items-center justify-between p-4">
                     <Logo fontSize="text-xl" />
                     <div className="flex items-center gap-4">
-                        <Link to={ROUTES.HOME}>
+                        <Link to={ROUTES_CONSTANTS.LANDING().HOME()}>
                             <Button
                                 variant="link"
                                 className="text-md cursor-pointer"
@@ -35,7 +37,7 @@ const LandingNavBar = () => {
                                 Home
                             </Button>
                         </Link>
-                        <Link to={ROUTES.ABOUT}>
+                        <Link to={ROUTES_CONSTANTS.LANDING().ABOUT()}>
                             <Button
                                 variant="link"
                                 className="text-md cursor-pointer"
@@ -43,7 +45,7 @@ const LandingNavBar = () => {
                                 About
                             </Button>
                         </Link>
-                        <Link to={ROUTES.ABOUT}>
+                        <Link to={ROUTES_CONSTANTS.LANDING().ABOUT()}>
                             <Button
                                 variant="link"
                                 className="text-md cursor-pointer"
@@ -53,7 +55,7 @@ const LandingNavBar = () => {
                         </Link>
                     </div>
                     <div className="flex items-center gap-4">
-                        <Link to={ROUTES.LOGIN}>
+                        <Link to={ROUTES_CONSTANTS.AUTH().LOGIN()}>
                             <Button
                                 variant="outline"
                                 className="cursor-pointer"
@@ -61,7 +63,7 @@ const LandingNavBar = () => {
                                 Login
                             </Button>
                         </Link>
-                        <Link to={ROUTES.SIGNUP}>
+                        <Link to={ROUTES_CONSTANTS.AUTH().SIGNUP()}>
                             <Button
                                 variant="default"
                                 className="cursor-pointer"
@@ -91,7 +93,7 @@ const LandingNavBar = () => {
                     {/* main navigation list */}
                     <div className="flex flex-col gap-3 w-full mb-6">
                         <Link
-                            to={ROUTES.HOME}
+                            to={ROUTES_CONSTANTS.LANDING().HOME()}
                             onClick={() => setIsNavBarOpen(false)}
                         >
                             <Button variant="link" className={navBarLinkStyle}>
@@ -99,7 +101,7 @@ const LandingNavBar = () => {
                             </Button>
                         </Link>
                         <Link
-                            to={ROUTES.ABOUT}
+                            to={ROUTES_CONSTANTS.LANDING().ABOUT()}
                             onClick={() => setIsNavBarOpen(false)}
                         >
                             <Button variant="link" className={navBarLinkStyle}>
@@ -107,7 +109,7 @@ const LandingNavBar = () => {
                             </Button>
                         </Link>
                         <Link
-                            to={ROUTES.ABOUT}
+                            to={ROUTES_CONSTANTS.LANDING().ABOUT()}
                             onClick={() => setIsNavBarOpen(false)}
                         >
                             <Button variant="link" className={navBarLinkStyle}>
@@ -119,7 +121,7 @@ const LandingNavBar = () => {
                     {/* login and signup buttons */}
                     <div className="flex flex-col gap-3 w-full max-w-sm">
                         <Link
-                            to={ROUTES.LOGIN}
+                            to={ROUTES_CONSTANTS.AUTH().LOGIN()}
                             onClick={() => setIsNavBarOpen(false)}
                         >
                             <Button
@@ -130,7 +132,7 @@ const LandingNavBar = () => {
                             </Button>
                         </Link>
                         <Link
-                            to={ROUTES.SIGNUP}
+                            to={ROUTES_CONSTANTS.AUTH().SIGNUP()}
                             onClick={() => setIsNavBarOpen(false)}
                         >
                             <Button

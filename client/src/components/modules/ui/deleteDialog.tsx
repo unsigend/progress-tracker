@@ -10,16 +10,6 @@ import {
     AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 
-interface DeleteDialogProps {
-    open: boolean;
-    onOpenChange: (open: boolean) => void;
-    title: string;
-    description: string;
-    onConfirm: () => void;
-    confirmText?: string;
-    cancelText?: string;
-}
-
 /**
  * Generic delete confirmation dialog component
  * @param open - Whether the dialog is open
@@ -38,12 +28,26 @@ const DeleteDialog = ({
     onConfirm,
     confirmText = "Delete",
     cancelText = "Cancel",
-}: DeleteDialogProps) => {
+}: {
+    open: boolean;
+    onOpenChange: (open: boolean) => void;
+    title: string;
+    description: string;
+    onConfirm: () => void;
+    confirmText?: string;
+    cancelText?: string;
+}) => {
+    /**
+     * Handle the confirm action
+     */
     const handleConfirm = () => {
         onConfirm();
         onOpenChange(false);
     };
 
+    /**
+     * Handle the cancel action
+     */
     const handleCancel = () => {
         onOpenChange(false);
     };

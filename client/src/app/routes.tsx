@@ -35,23 +35,37 @@ import RegisterPage from "@/pages/auth/register";
 // import common pages
 import NotFoundPage from "@/pages/common/notFound";
 
+// import constants
+import ROUTES_CONSTANTS from "@/constants/routes";
+
 function AppRoutes() {
     return (
         <Routes>
             {/* Landing Pages */}
-            <Route path="/" element={<LandingMainLayout />}>
+            <Route
+                path={ROUTES_CONSTANTS.LANDING().HOME()}
+                element={<LandingMainLayout />}
+            >
                 {/* Landing Home Page */}
                 <Route index element={<LandingHomePage />} />
-                <Route path="about" element={<LandingAboutPage />} />
+                <Route
+                    path={ROUTES_CONSTANTS.LANDING().ABOUT()}
+                    element={<LandingAboutPage />}
+                />
             </Route>
 
             {/* Dashboard Pages */}
             <Route
-                path="dashboard"
+                path={ROUTES_CONSTANTS.DASHBOARD().HOME()}
                 element={
                     <Authenticated
                         key="protected"
-                        fallback={<Navigate to="/auth/login" replace />}
+                        fallback={
+                            <Navigate
+                                to={ROUTES_CONSTANTS.AUTH().LOGIN()}
+                                replace
+                            />
+                        }
                     >
                         <DashboardMainLayout />
                     </Authenticated>
@@ -61,42 +75,68 @@ function AppRoutes() {
                 <Route index element={<DashboardHomePage />} />
 
                 {/* Settings Page */}
-                <Route path="settings" element={<DashboardSettingsPage />} />
+                <Route
+                    path={ROUTES_CONSTANTS.DASHBOARD().SETTINGS()}
+                    element={<DashboardSettingsPage />}
+                />
 
                 {/* Reading Page */}
-                <Route path="reading">
+                <Route path={ROUTES_CONSTANTS.DASHBOARD().READING().HOME()}>
                     <Route index element={<DashboardReadingPage />} />
                     <Route
-                        path="library"
+                        path={ROUTES_CONSTANTS.DASHBOARD()
+                            .READING()
+                            .BOOKS_LIST()}
                         element={<DashboardReadingLibraryPage />}
                     />
                     <Route
-                        path="library/add"
+                        path={ROUTES_CONSTANTS.DASHBOARD()
+                            .READING()
+                            .BOOKS_NEW()}
                         element={<DashboardReadingBookAddPage />}
                     />
                     <Route
-                        path="library/:id"
+                        path={ROUTES_CONSTANTS.DASHBOARD()
+                            .READING()
+                            .BOOKS_SHOW()}
                         element={<DashboardReadingBookDetailPage />}
                     />
                     <Route
-                        path="library/edit/:id"
+                        path={ROUTES_CONSTANTS.DASHBOARD()
+                            .READING()
+                            .BOOKS_EDIT()}
                         element={<DashboardReadingBookEditPage />}
                     />
                 </Route>
 
                 {/* Projects Page */}
-                <Route path="projects" element={<DashboardProjectsPage />} />
+                <Route
+                    path={ROUTES_CONSTANTS.DASHBOARD().PROJECTS().HOME()}
+                    element={<DashboardProjectsPage />}
+                />
 
                 {/* Courses Page */}
-                <Route path="courses" element={<DashboardCoursesPage />} />
+                <Route
+                    path={ROUTES_CONSTANTS.DASHBOARD().COURSES().HOME()}
+                    element={<DashboardCoursesPage />}
+                />
             </Route>
 
             {/* Auth Pages */}
-            <Route path="auth" element={<AuthMainLayout />}>
+            <Route
+                path={ROUTES_CONSTANTS.AUTH().HOME()}
+                element={<AuthMainLayout />}
+            >
                 {/* Login Page */}
-                <Route path="login" element={<LoginPage />} />
+                <Route
+                    path={ROUTES_CONSTANTS.AUTH().LOGIN()}
+                    element={<LoginPage />}
+                />
                 {/* Signup Page */}
-                <Route path="signup" element={<RegisterPage />} />
+                <Route
+                    path={ROUTES_CONSTANTS.AUTH().SIGNUP()}
+                    element={<RegisterPage />}
+                />
             </Route>
 
             {/* Not Found Page */}

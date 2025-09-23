@@ -234,7 +234,11 @@ const BookEditCard = ({
 
                     {/* Submit Button */}
                     <div className="flex justify-end gap-3 pt-4">
-                        <Link to={ROUTES_CONSTANTS.READING_LIBRARY}>
+                        <Link
+                            to={ROUTES_CONSTANTS.DASHBOARD()
+                                .READING()
+                                .BOOKS_LIST()}
+                        >
                             <Button
                                 type="button"
                                 variant="outline"

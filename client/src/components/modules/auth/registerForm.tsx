@@ -129,7 +129,7 @@ const RegisterForm = ({
                         {steps[currentStep - 1]?.title}
                     </h1>
                     <Button variant="link" className="text-sm cursor-pointer">
-                        <Link to={ROUTES_CONSTANTS.LOGIN}>Login</Link>
+                        <Link to={ROUTES_CONSTANTS.AUTH().LOGIN()}>Login</Link>
                     </Button>
                 </div>
                 <p className="text-sm text-left text-gray-600 transition-all duration-300">

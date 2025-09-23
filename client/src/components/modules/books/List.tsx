@@ -2,26 +2,23 @@
 import { cn } from "@/lib/utils";
 
 // import components
-import BookCard from "@/components/modules/books/bookCard";
+import BookCover from "@/components/modules/books/Cover";
 
 // import types
 import type { BookResponseDto } from "@/api/api";
 
 /**
- * BookShelf component
+ * BookList component
  * @param books - Array of books to display
  * @param className - Additional CSS classes
- * @param baseUrl - The base url of the book default is ""
  * @returns - A grid of book cards
  */
-const BookShelf = ({
+const BookList = ({
     books,
     className,
-    baseUrl = "",
 }: {
     books: BookResponseDto[];
     className?: string;
-    baseUrl?: string;
 }) => {
     if (!books || books.length === 0) {
         return (
@@ -40,19 +37,18 @@ const BookShelf = ({
         <div
             className={cn(
                 "grid gap-6 w-full",
-                // Responsive grid columns
-                "grid-cols-2", // Mobile: 2 columns
-                "sm:grid-cols-3", // Small: 3 columns
-                "md:grid-cols-4", // Medium: 4 columns
-                "lg:grid-cols-5", // Large: 5 columns
-                "xl:grid-cols-6", // Extra large: 6 columns
-                "2xl:grid-cols-7", // 2X large: 7 columns
+                "grid-cols-2",
+                "sm:grid-cols-3",
+                "md:grid-cols-4",
+                "lg:grid-cols-5",
+                "xl:grid-cols-6",
+                "2xl:grid-cols-7",
                 className
             )}
         >
             {books.map((book) => (
                 <div key={book.id} className="flex justify-center">
-                    <BookCard
+                    <BookCover
                         image={book.cover_url || "/placeholder-book.jpg"}
                         alt={
                             book.title
@@ -61,7 +57,7 @@ const BookShelf = ({
                                   }`
                                 : "Book cover"
                         }
-                        link={`${baseUrl}/${book.id}`}
+                        id={book.id}
                         className="transition-transform duration-200 hover:scale-105"
                         key={book.id}
                     />
@@ -71,4 +67,4 @@ const BookShelf = ({
     );
 };
 
-export default BookShelf;
+export default BookList;

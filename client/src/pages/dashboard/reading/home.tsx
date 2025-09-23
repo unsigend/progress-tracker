@@ -1,16 +1,23 @@
 // import dependencies
+import { Link } from "@refinedev/core";
+
+// import icons
 import { BookOpen, TrendingUp, Clock, CheckCircle, Plus } from "lucide-react";
-import { Link } from "react-router";
+
+// import shadcn/ui components
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 // import components
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import BookCard from "@/components/modules/books/bookCard";
-import BookShelf from "@/components/modules/books/bookShelf";
-import LineChart from "@/components/modules/ui/LineChart";
+import BookCard from "@/components/modules/books/Cover";
+import BookShelf from "@/components/modules/books/List";
+import LineChart from "@/components/modules/ui/chart/LineChart";
+
+// import constants
+import ROUTES_CONSTANTS from "@/constants/routes";
 
 // import types
 import type { BookResponseDto } from "@/api/api";
-import { Button } from "@/components/ui/button";
 
 // Sample data
 const sampleBooks: BookResponseDto[] = [
@@ -139,7 +146,9 @@ const CurrentReading = () => {
                         <Clock className="w-5 h-5" />
                         Current Reading
                     </CardTitle>
-                    <Link to="/dashboard/reading/library">
+                    <Link
+                        to={ROUTES_CONSTANTS.DASHBOARD().READING().BOOKS_LIST()}
+                    >
                         <Button
                             variant="outline"
                             size="sm"
@@ -208,7 +217,7 @@ const FinishedBooks = () => {
                 </CardTitle>
             </CardHeader>
             <CardContent>
-                <BookShelf books={finishedBooks} baseUrl="/library" />
+                <BookShelf books={finishedBooks} />
             </CardContent>
         </Card>
     );

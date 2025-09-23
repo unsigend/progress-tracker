@@ -1,7 +1,9 @@
-// import components
+// import shadcn/ui components
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+
+// import components
 import { ChangePwdDialog } from "@/components/modules/settings/changePwdDialog";
 
 // import icons

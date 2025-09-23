@@ -1,15 +1,15 @@
 // import components
-import BookCard from "@/components/modules/books/bookCard";
+import BookCover from "@/components/modules/books/Cover";
 
 // import types
 import type { BookResponseDto } from "@/api/api";
 
 /**
- * BookDetailCard component
+ * BookShowCard component
  * @param book - The book to display
- * @returns The BookDetailCard component
+ * @returns The BookShowCard component
  */
-const BookDetailCard = ({ book }: { book: BookResponseDto }) => {
+const BookShowCard = ({ book }: { book: BookResponseDto }) => {
     return (
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 mt-12">
             {/* Book Information - Left Side */}
@@ -75,7 +75,7 @@ const BookDetailCard = ({ book }: { book: BookResponseDto }) => {
 
             {/* Book Image - Right Side */}
             <div className="flex justify-center lg:justify-start lg:flex-shrink-0">
-                <BookCard
+                <BookCover
                     image={book.cover_url}
                     alt={book.title || "unknown book cover"}
                     className="w-40 h-52 md:w-48 md:h-64"
@@ -85,4 +85,4 @@ const BookDetailCard = ({ book }: { book: BookResponseDto }) => {
     );
 };
 
-export default BookDetailCard;
+export default BookShowCard;

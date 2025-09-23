@@ -1,31 +1,28 @@
 // import dependencies
-import { Link, useLocation } from "react-router";
-
+import { Link } from "@refinedev/core";
 import { cn } from "@/lib/utils";
 
-interface BookCardProps {
-    image: string;
-    link?: string;
-    alt?: string;
-    className?: string;
-}
+// import constants
+import ROUTES_CONSTANTS from "@/constants/routes";
 
 /**
- * BookCard component
+ * BookCover component
  * @param image - The image of the book
- * @param link - The link of the book it should be the id of the book
+ * @param id - The id of the book
  * @param alt - The alt of the book
  * @param className - The class name of the book
  */
-const BookCard = ({
+const BookCoverCard = ({
     image,
-    link,
+    id,
     alt = "Book cover",
     className,
-}: BookCardProps) => {
-    // get the location
-    const location = useLocation();
-
+}: {
+    image: string;
+    id?: string;
+    alt?: string;
+    className?: string;
+}) => {
     const cardContent = (
         <div
             className={cn(
@@ -82,10 +79,10 @@ const BookCard = ({
         </div>
     );
 
-    if (link) {
+    if (id) {
         return (
             <Link
-                to={`${location.pathname}${link}`}
+                to={`${ROUTES_CONSTANTS.DASHBOARD().READING().BOOKS_SHOW(id)}`}
                 className="inline-block focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded-sm cursor-pointer"
             >
                 {cardContent}
@@ -96,4 +93,4 @@ const BookCard = ({
     return cardContent;
 };
 
-export default BookCard;
+export default BookCoverCard;

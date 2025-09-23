@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
  * @param setSearchTerm - function to handle the change event
  * @returns SearchBar component
  */
+
 const SearchBar = ({
     placeholder,
     onSubmit,

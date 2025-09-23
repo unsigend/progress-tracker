@@ -2,7 +2,7 @@
 import { Link, useList } from "@refinedev/core";
 
 // import components
-import BookShelf from "@/components/modules/books/bookShelf";
+import BookShelf from "@/components/modules/books/List";
 import SearchBar from "@/components/modules/ui/searchBar";
 
 // import shadcn/ui components
@@ -51,7 +51,11 @@ const DashboardLibraryPage = () => {
 
                         {/* Add Book Button */}
                         <div className="flex gap-2">
-                            <Link to={ROUTES_CONSTANTS.READING_LIBRARY_ADD}>
+                            <Link
+                                to={ROUTES_CONSTANTS.DASHBOARD()
+                                    .READING()
+                                    .BOOKS_NEW()}
+                            >
                                 <Button
                                     variant="outline"
                                     size="sm"

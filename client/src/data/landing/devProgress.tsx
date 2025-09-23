@@ -23,7 +23,7 @@ export interface TimelineItem {
  * timelineData - The data for the timeline
  * @returns The timeline data
  */
-export const timelineData: TimelineItem[] = [
+const timelineData: TimelineItem[] = [
     {
         id: "aws-s3-cloud-image-storage",
         title: "Amazon AWS S3 Cloud Image Storage",
@@ -40,3 +40,5 @@ export const timelineData: TimelineItem[] = [
         status: "completed",
     },
 ];
+
+export default timelineData;

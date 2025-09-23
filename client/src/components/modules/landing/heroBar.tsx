@@ -6,13 +6,13 @@ import { Button } from "@/components/ui/button";
 
 // import constants
 import GLOBAL_CONSTANTS from "@/constants/global";
-import ROUTES from "@/constants/routes";
+import ROUTES_CONSTANTS from "@/constants/routes";
 
 // import dependencies
-import { useNavigate } from "react-router";
+import { useGo } from "@refinedev/core";
 
 const HeroBar = () => {
-    const navigate = useNavigate();
+    const go = useGo();
 
     return (
         <div className="max-w-6xl mx-auto">
@@ -36,7 +36,9 @@ const HeroBar = () => {
                         <Button
                             className="w-full sm:w-auto cursor-pointer"
                             onClick={() => {
-                                navigate(ROUTES.SIGNUP);
+                                go({
+                                    to: ROUTES_CONSTANTS.AUTH().SIGNUP(),
+                                });
                             }}
                         >
                             <ArrowRight className="size-4 mr-2" />

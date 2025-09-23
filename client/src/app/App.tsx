@@ -1,11 +1,8 @@
 // import dependencies
 import { Refine } from "@refinedev/core";
-import {
-    DocumentTitleHandler,
-    UnsavedChangesNotifier,
-} from "@refinedev/react-router";
+import { UnsavedChangesNotifier } from "@refinedev/react-router";
+import { DocumentTitleHandler } from "@refinedev/react-router";
 import { BrowserRouter } from "react-router";
-
 // import components
 import { Toaster } from "sonner";
 
@@ -19,11 +16,29 @@ import { ThemeProvider } from "@/components/refine-ui/theme/theme-provider";
 // import routes
 import AppRoutes from "@/app/routes";
 
+// import constants
+import RESOURCES_CONSTANTS from "@/constants/resources";
+import ROUTES_CONSTANTS from "@/constants/routes";
+
 function App() {
     return (
         <BrowserRouter>
             <ThemeProvider defaultTheme="system" storageKey="refine-ui-theme">
                 <Refine
+                    resources={[
+                        {
+                            name: RESOURCES_CONSTANTS.BOOKS,
+                            show: `${ROUTES_CONSTANTS.DASHBOARD()
+                                .READING()
+                                .BOOKS_SHOW()}`,
+                            edit: `${ROUTES_CONSTANTS.DASHBOARD()
+                                .READING()
+                                .BOOKS_EDIT()}`,
+                            create: `${ROUTES_CONSTANTS.DASHBOARD()
+                                .READING()
+                                .BOOKS_NEW()}`,
+                        },
+                    ]}
                     dataProvider={dataProvider}
                     notificationProvider={useNotificationProvider()}
                     routerProvider={routerProvider}

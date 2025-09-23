@@ -1,11 +1,11 @@
-// import Icons
+// import icons
 import { Clock } from "lucide-react";
 
-// import Components
+// import components
 import TimelineCard from "@/components/modules/landing/timelineCard";
 
 // import data
-import { timelineData } from "@/data/landing/devProgress";
+import timelineData from "@/data/landing/devProgress";
 
 const LandingAboutPage = () => {
     return (

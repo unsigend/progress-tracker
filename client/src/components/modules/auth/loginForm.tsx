@@ -39,7 +39,9 @@ const LoginForm = () => {
                         Welcome back!
                     </h1>
                     <Button variant="link" className="text-sm cursor-pointer">
-                        <Link to={ROUTES_CONSTANTS.SIGNUP}>Sign Up</Link>
+                        <Link to={ROUTES_CONSTANTS.AUTH().SIGNUP()}>
+                            Sign Up
+                        </Link>
                     </Button>
                 </div>
                 <p className="text-sm text-left text-gray-600">

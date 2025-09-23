@@ -3,14 +3,16 @@ import { useGetIdentity, useUpdate } from "@refinedev/core";
 import { useState } from "react";
 import { toast } from "sonner";
 
-// import components
+// import shadcn/ui components
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { Edit3, Github, Mail, User } from "lucide-react";
 import { Card, CardTitle, CardHeader, CardContent } from "@/components/ui/card";
+
+// import icons
+import { Edit3, Github, Mail, User } from "lucide-react";
 
 // import types
 import type { UpdateUserDto, UserResponseDto } from "@/api/api";

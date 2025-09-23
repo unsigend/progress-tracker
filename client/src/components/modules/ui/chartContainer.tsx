@@ -1,10 +1,3 @@
-interface ChartContainerProps {
-    title: string;
-    primaryMetric: string;
-    secondaryMetric: string;
-    chart: React.ReactNode;
-}
-
 // import components
 import BackLink from "@/components/modules/ui/backButton";
 
@@ -25,11 +18,16 @@ const ChartContainer = ({
     primaryMetric,
     secondaryMetric,
     chart,
-}: ChartContainerProps) => {
+}: {
+    title: string;
+    primaryMetric: string;
+    secondaryMetric: string;
+    chart: React.ReactNode;
+}) => {
     return (
         <>
             <div className="flex items-center justify-start gap-4 mb-8">
-                <BackLink to={ROUTES_CONSTANTS.HOME} />
+                <BackLink to={ROUTES_CONSTANTS.DASHBOARD().HOME()} />
                 <h2 className="text-gray-600 text-xl font-medium">{title}</h2>
             </div>
 

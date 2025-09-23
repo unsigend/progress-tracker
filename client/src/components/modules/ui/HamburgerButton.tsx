@@ -1,3 +1,4 @@
+// import icons
 import { Menu, X } from "lucide-react";
 
 /**
@@ -15,6 +16,10 @@ const HamburgerButton = ({
     isOpen: boolean;
     onClick: () => void;
 }) => {
+    /**
+     * If the isOpen is true, return the X icon
+     * if the isOpen is false, return the Menu icon
+     */
     return isOpen ? (
         <X className="size-6" onClick={onClick} />
     ) : (
