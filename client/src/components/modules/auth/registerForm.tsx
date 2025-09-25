@@ -21,6 +21,7 @@ import type { EmailCheckResponseDto, RegisterUserDto } from "@/api/api";
 
 // import hooks
 import { useEmailCheck } from "@/hooks/use-email-check";
+import { useOAuthLogin } from "@/hooks/use-oauth";
 
 // import utils
 import { validationUtils } from "@/utils/validation";
@@ -41,6 +42,7 @@ const RegisterForm = ({
     currentStep: number;
     setCurrentStep: (step: number) => void;
 }) => {
+    const { login: loginWithOAuth } = useOAuthLogin();
     const [formData, setFormData] = useState<RegisterUserDto>({
         email: "",
         password: "",
@@ -205,7 +207,7 @@ const RegisterForm = ({
                             <Button
                                 variant="outline"
                                 className="w-full cursor-pointer"
-                                onClick={() => {}}
+                                onClick={() => loginWithOAuth("google")}
                             >
                                 <img
                                     src="/image/google.svg"
@@ -217,7 +219,7 @@ const RegisterForm = ({
                             <Button
                                 variant="outline"
                                 className="w-full cursor-pointer"
-                                onClick={() => {}}
+                                onClick={() => loginWithOAuth("github")}
                             >
                                 <img
                                     src="/image/github.svg"

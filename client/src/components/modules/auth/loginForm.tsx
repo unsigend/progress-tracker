@@ -133,7 +133,7 @@ const LoginForm = () => {
                     <Button
                         variant="outline"
                         className="w-full cursor-pointer"
-                        onClick={() => {}}
+                        onClick={() => loginWithOAuth("github")}
                     >
                         <img
                             src="/image/github.svg"
