@@ -1,7 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 // import dependencies
-import { DataProvider } from "@refinedev/core";
+import {
+    CrudFilters,
+    CrudSorting,
+    DataProvider,
+    Pagination,
+} from "@refinedev/core";
 import { AxiosResponse } from "axios";
 
 // import api
@@ -80,7 +85,25 @@ export const dataProvider: DataProvider = {
      *  total: number
      * }
      */
-    getList: async ({ resource }) => {
+    getList: async ({
+        resource,
+        pagination,
+        sorters,
+        filters,
+    }: {
+        resource: string;
+        pagination?: Pagination | undefined;
+        sorters?: CrudSorting | undefined;
+        filters?: CrudFilters | undefined;
+    }) => {
+        // build the query object
+        const query = {
+            sort: sorters?.[0]?.field,
+            order: sorters?.[0]?.order,
+            page: pagination?.currentPage,
+            limit: pagination?.pageSize,
+            search: filters?.[0]?.value,
+        };
         // get the controller method for the resource
         const controllerMethod:
             | ((...args: any[]) => Promise<AxiosResponse<any>>)
@@ -88,7 +111,7 @@ export const dataProvider: DataProvider = {
         if (controllerMethod === null) {
             throw new Error(`Controller method ${resource} not found`);
         }
-        const response = await controllerMethod();
+        const response = await controllerMethod(query);
         return { data: response.data, total: response.data.length };
     },
 

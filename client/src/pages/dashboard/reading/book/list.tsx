@@ -1,5 +1,6 @@
 // import dependencies
 import { Link, useList } from "@refinedev/core";
+import { useState } from "react";
 
 // import components
 import BookShelf from "@/components/modules/books/List";
@@ -24,9 +25,27 @@ import ROUTES_CONSTANTS from "@/constants/routes";
  * @returns The DashboardLibraryPage component
  */
 const DashboardLibraryPage = () => {
+    // build the search term
+    const [searchTerm, setSearchTerm] = useState<string>("");
+    const [finalSearchTerm, setFinalSearchTerm] = useState<string>("");
+
     // get the books
     const { query, result } = useList({
         resource: RESOURCES_CONSTANTS.BOOKS,
+        sorters: [
+            {
+                field: "title",
+                order: "asc",
+            },
+        ],
+        pagination: { currentPage: 1, pageSize: 10 },
+        filters: [
+            {
+                field: "title",
+                value: finalSearchTerm,
+                operator: "contains",
+            },
+        ],
     });
 
     return (
@@ -44,9 +63,12 @@ const DashboardLibraryPage = () => {
                         {/* Search Section */}
                         <SearchBar
                             placeholder="Search by title, author, or ISBN..."
-                            onSubmit={() => {}}
-                            searchTerm={""}
-                            setSearchTerm={() => {}}
+                            onSubmit={(e) => {
+                                e.preventDefault();
+                                setFinalSearchTerm(searchTerm);
+                            }}
+                            searchTerm={searchTerm}
+                            setSearchTerm={setSearchTerm}
                         />
 
                         {/* Add Book Button */}

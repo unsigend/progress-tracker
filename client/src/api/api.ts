@@ -591,7 +591,7 @@ export class Api<
       },
       params: RequestParams = {},
     ) =>
-      this.request<BookResponseDto, void>({
+      this.request<BookResponseDto[], void>({
         path: `/api/v1/books`,
         method: "GET",
         query: query,
