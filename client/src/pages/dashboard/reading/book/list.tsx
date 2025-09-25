@@ -1,17 +1,23 @@
 // import dependencies
 import { Link, useList } from "@refinedev/core";
-import { useState } from "react";
 
 // import components
 import BookShelf from "@/components/modules/books/List";
 import SearchBar from "@/components/modules/ui/searchBar";
+import { ClipLoader } from "react-spinners";
 
 // import shadcn/ui components
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-
-// import dependencies
-import { ClipLoader } from "react-spinners";
+import {
+    Pagination,
+    PaginationContent,
+    PaginationItem,
+    PaginationPrevious,
+    PaginationLink,
+    PaginationEllipsis,
+    PaginationNext,
+} from "@/components/ui/pagination";
 
 // import types
 import type { BookResponseDto } from "@/api/api";
@@ -25,27 +31,9 @@ import ROUTES_CONSTANTS from "@/constants/routes";
  * @returns The DashboardLibraryPage component
  */
 const DashboardLibraryPage = () => {
-    // build the search term
-    const [searchTerm, setSearchTerm] = useState<string>("");
-    const [finalSearchTerm, setFinalSearchTerm] = useState<string>("");
-
     // get the books
     const { query, result } = useList({
         resource: RESOURCES_CONSTANTS.BOOKS,
-        sorters: [
-            {
-                field: "title",
-                order: "asc",
-            },
-        ],
-        pagination: { currentPage: 1, pageSize: 10 },
-        filters: [
-            {
-                field: "title",
-                value: finalSearchTerm,
-                operator: "contains",
-            },
-        ],
     });
 
     return (
@@ -65,10 +53,9 @@ const DashboardLibraryPage = () => {
                             placeholder="Search by title, author, or ISBN..."
                             onSubmit={(e) => {
                                 e.preventDefault();
-                                setFinalSearchTerm(searchTerm);
                             }}
-                            searchTerm={searchTerm}
-                            setSearchTerm={setSearchTerm}
+                            searchTerm={""}
+                            setSearchTerm={() => {}}
                         />
 
                         {/* Add Book Button */}
@@ -101,6 +88,28 @@ const DashboardLibraryPage = () => {
                     <BookShelf books={result.data as BookResponseDto[]} />
                 )}
             </CardContent>
+
+            {/* Pagination */}
+            <Pagination>
+                <PaginationContent>
+                    {/* Previous Page */}
+                    <PaginationItem>
+                        <PaginationPrevious href="#" onClick={() => {}} />
+                    </PaginationItem>
+
+                    <PaginationItem>
+                        <PaginationLink href="#">1</PaginationLink>
+                    </PaginationItem>
+                    <PaginationItem>
+                        <PaginationEllipsis />
+                    </PaginationItem>
+
+                    {/* Next Page */}
+                    <PaginationItem>
+                        <PaginationNext href="#" onClick={() => {}} />
+                    </PaginationItem>
+                </PaginationContent>
+            </Pagination>
         </Card>
     );
 };

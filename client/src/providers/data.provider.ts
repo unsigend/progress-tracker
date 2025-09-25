@@ -112,7 +112,8 @@ export const dataProvider: DataProvider = {
             throw new Error(`Controller method ${resource} not found`);
         }
         const response = await controllerMethod(query);
-        return { data: response.data, total: response.data.length };
+        const total = response.headers["x-total-count"] ?? response.data.length;
+        return { data: response.data, total: total };
     },
 
     /**
