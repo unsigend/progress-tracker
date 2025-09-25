@@ -26,6 +26,7 @@ import validationUtils from "@/utils/validation";
 
 const ProfileSection = () => {
     const { data: user } = useGetIdentity<UserResponseDto>();
+    console.log(user);
     const { invalidateCurrentUser } = useInvalidateCurrentUser();
     const { onFinish } = useForm({
         resource: "users",
@@ -131,15 +132,14 @@ const ProfileSection = () => {
                         {/* Avatar Section */}
                         <div className="flex-shrink-0">
                             <Avatar className="w-28 h-28">
-                                {user?.avatar_url ? (
-                                    <AvatarImage
-                                        src={user?.avatar_url}
-                                        alt={user?.username + " avatar"}
-                                    />
-                                ) : null}
-                                <AvatarFallback className="text-2xl">
-                                    {user?.username.charAt(0).toUpperCase() ||
-                                        ""}
+                                <AvatarImage
+                                    src={user?.avatar_url || ""}
+                                    alt={user?.username + " avatar"}
+                                    className="object-cover"
+                                />
+                                <AvatarFallback className="text-2xl bg-gray-100">
+                                    {user?.username?.charAt(0)?.toUpperCase() ||
+                                        "U"}
                                 </AvatarFallback>
                             </Avatar>
                             <Button
@@ -154,7 +154,7 @@ const ProfileSection = () => {
                     </div>
 
                     {/* Connected Accounts Section */}
-                    {user?.provider && user?.provider.length > 1 && (
+                    {user?.provider && (
                         <div className="space-y-3">
                             <h3 className="text-lg font-semibold text-gray-900">
                                 Connected accounts

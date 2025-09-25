@@ -25,7 +25,7 @@ const GoogleCallbackPage = () => {
         }
     }, [access_token, go]);
 
-    return <div>Google Callback Page - Processing login...</div>;
+    return null;
 };
 
 export default GoogleCallbackPage;
