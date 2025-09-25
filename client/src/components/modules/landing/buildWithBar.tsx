@@ -6,7 +6,12 @@ import buildWith from "@/data/landing/buildWith";
 // @ts-expect-error
 import LogoLoop from "@/components/react-bits/LogoLoop/LogoLoop";
 
+// import hooks
+import { useTheme } from "@/components/refine-ui/theme/theme-provider";
+
 const BuildWithBar = () => {
+    const { theme } = useTheme();
+
     // Transform buildWith data to LogoLoop format
     const logoData = buildWith.map((tech) => ({
         src: tech.url,
@@ -14,6 +19,13 @@ const BuildWithBar = () => {
         title: tech.name,
         href: undefined,
     }));
+
+    // Determine fade color based on theme
+    const getFadeColor = () => {
+        if (theme === "dark") return "#0b0b0b";
+        if (theme === "light") return "#ffffff";
+        return undefined;
+    };
 
     return (
         <div className="mb-12">
@@ -36,7 +48,7 @@ const BuildWithBar = () => {
                         pauseOnHover={true}
                         scaleOnHover={true}
                         fadeOut={true}
-                        fadeOutColor="#ffffff"
+                        fadeOutColor={getFadeColor()}
                         ariaLabel="Technology stack logos"
                         className="py-4"
                     />

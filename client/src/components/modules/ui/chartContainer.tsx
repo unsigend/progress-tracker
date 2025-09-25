@@ -28,14 +28,18 @@ const ChartContainer = ({
         <>
             <div className="flex items-center justify-start gap-4 mb-8">
                 <BackLink to={ROUTES_CONSTANTS.LANDING().HOME()} />
-                <h2 className="text-gray-600 text-xl font-medium">{title}</h2>
+                <h2 className="text-muted-foreground text-xl font-medium">
+                    {title}
+                </h2>
             </div>
 
             <div className="mb-12">
-                <div className="text-4xl font-bold text-gray-900 mb-4 leading-none">
+                <div className="text-4xl font-bold text-foreground mb-4 leading-none">
                     {primaryMetric}
                 </div>
-                <div className="text-gray-500 text-base">{secondaryMetric}</div>
+                <div className="text-muted-foreground text-base">
+                    {secondaryMetric}
+                </div>
             </div>
 
             {chart}

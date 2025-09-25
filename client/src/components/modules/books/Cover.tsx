@@ -26,8 +26,8 @@ const BookCoverCard = ({
     const cardContent = (
         <div
             className={cn(
-                "group relative w-40 h-52 bg-white rounded-sm shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1",
-                "before:absolute before:inset-y-0 before:left-0 before:w-1 before:bg-gray-300 before:rounded-l-sm",
+                "group relative w-40 h-52 bg-card rounded-sm shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1",
+                "before:absolute before:inset-y-0 before:left-0 before:w-1 before:bg-muted before:rounded-l-sm",
                 className
             )}
         >
@@ -59,18 +59,18 @@ const BookCoverCard = ({
                     }`}
                 >
                     {/* Book cover */}
-                    <div className="absolute inset-0 bg-white rounded-sm border border-gray-200 flex items-center justify-center">
+                    <div className="absolute inset-0 bg-card rounded-sm border border-border flex items-center justify-center">
                         {/* Book spine */}
-                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-gray-300 rounded-l-sm" />
+                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-muted rounded-l-sm" />
 
                         {/* Book title initial */}
-                        <span className="text-4xl font-semibold text-gray-600 uppercase">
+                        <span className="text-4xl font-semibold text-muted-foreground uppercase">
                             {alt && alt !== "Book cover" ? alt.charAt(0) : "B"}
                         </span>
                     </div>
 
                     {/* Book shadow */}
-                    <div className="absolute inset-0 bg-white rounded-sm transform translate-x-1 -translate-y-1 -z-10 border border-gray-100" />
+                    <div className="absolute inset-0 bg-card rounded-sm transform translate-x-1 -translate-y-1 -z-10 border border-border/50" />
                 </div>
 
                 {/* Subtle overlay for depth */}

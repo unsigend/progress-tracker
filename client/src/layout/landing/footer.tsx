@@ -5,11 +5,12 @@ import ROUTES_CONSTANTS from "@/constants/routes";
 // import icons
 import { Github, Mail } from "lucide-react";
 
-const linkStyle = "text-gray-400 hover:text-white transition-colors";
+const linkStyle =
+    "text-muted-foreground hover:text-foreground transition-colors";
 
 const LandingFooter = () => {
     return (
-        <footer className="bg-black text-white w-full">
+        <footer className="bg-background text-foreground w-full">
             <div className="px-4 py-12">
                 <div className="max-w-7xl mx-auto">
                     {/* Main Footer Content */}
@@ -19,7 +20,7 @@ const LandingFooter = () => {
                             <h3 className="text-xl font-bold">
                                 Progress Tracker
                             </h3>
-                            <p className="text-gray-400 text-sm leading-relaxed">
+                            <p className="text-muted-foreground text-sm leading-relaxed">
                                 Track your progress across multiple domains with
                                 seamless integrations and modern analytics.
                             </p>
@@ -27,7 +28,7 @@ const LandingFooter = () => {
 
                         {/* Product Links */}
                         <div className="space-y-4">
-                            <h4 className="font-semibold text-white">
+                            <h4 className="font-semibold text-foreground">
                                 Product
                             </h4>
                             <ul className="space-y-2 text-sm">
@@ -59,7 +60,7 @@ const LandingFooter = () => {
 
                         {/* Company Links */}
                         <div className="space-y-4">
-                            <h4 className="font-semibold text-white">
+                            <h4 className="font-semibold text-foreground">
                                 Company
                             </h4>
                             <ul className="space-y-2 text-sm">
@@ -91,7 +92,7 @@ const LandingFooter = () => {
 
                         {/* Resources Links */}
                         <div className="space-y-4">
-                            <h4 className="font-semibold text-white">
+                            <h4 className="font-semibold text-foreground">
                                 Resources
                             </h4>
                             <ul className="space-y-2 text-sm">
@@ -120,10 +121,10 @@ const LandingFooter = () => {
                     </div>
 
                     {/* Bottom Section */}
-                    <div className="border-t border-gray-800 pt-8">
+                    <div className="border-t border-border pt-8">
                         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
                             {/* Copyright */}
-                            <p className="text-gray-400 text-sm">
+                            <p className="text-muted-foreground text-sm">
                                 © 2024 Progress Tracker. All rights reserved.
                             </p>
 

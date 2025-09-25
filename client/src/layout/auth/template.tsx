@@ -14,7 +14,7 @@ const AuthTemplateLayout = ({
     return (
         <div className="relative grid md:grid-cols-2 min-h-[600px]">
             {/* Left Content */}
-            <div className="bg-gray-50/50 p-8 flex items-center justify-center">
+            <div className="bg-muted/50 p-8 flex items-center justify-center">
                 <div className="w-full max-w-sm">{left}</div>
             </div>
 

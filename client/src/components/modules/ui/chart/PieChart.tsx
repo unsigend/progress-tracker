@@ -8,6 +8,7 @@ import {
     ChartLegend,
     ChartLegendContent,
 } from "@/components/ui/chart";
+import { useTheme } from "next-themes";
 
 /**
  * Chart data interface
@@ -42,18 +43,47 @@ interface PieChartProps {
 }
 
 /**
- * Generate grayscale colors for chart segments
+ * Generate theme-aware colors for chart segments
  */
-const generateGrayscaleColors = (dataLength: number) => {
-    const colors = [
-        "#000000", // black
-        "#374151", // gray-700
-        "#6b7280", // gray-500
-        "#9ca3af", // gray-400
-        "#d1d5db", // gray-300
-        "#f3f4f6", // gray-100
-    ];
-    return colors.slice(0, dataLength);
+const generateThemeColors = (dataLength: number, theme: string | undefined) => {
+    // Check if we're in dark mode by looking at the document class
+    const isDarkMode =
+        document.documentElement.classList.contains("dark") ||
+        theme === "dark" ||
+        (theme === "system" &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches);
+
+    if (isDarkMode) {
+        // Dark theme colors - natural, harmonious light colors
+        const colors = [
+            "#f8fafc", // Slate-50 (soft white)
+            "#e2e8f0", // Slate-200 (warm light gray)
+            "#cbd5e1", // Slate-300 (cool light gray)
+            "#94a3b8", // Slate-400 (medium gray)
+            "#64748b", // Slate-500 (darker gray)
+            "#475569", // Slate-600 (dark gray)
+            "#334155", // Slate-700 (very dark gray)
+            "#1e293b", // Slate-800 (almost black)
+            "#0f172a", // Slate-900 (deep dark)
+            "#1e40af", // Blue-700 (deep blue accent)
+        ];
+        return colors.slice(0, dataLength);
+    } else {
+        // Light theme colors - natural, harmonious dark colors
+        const colors = [
+            "#0f172a", // Slate-900 (deep dark)
+            "#1e293b", // Slate-800 (dark gray)
+            "#334155", // Slate-700 (medium dark)
+            "#475569", // Slate-600 (lighter dark)
+            "#64748b", // Slate-500 (medium gray)
+            "#94a3b8", // Slate-400 (light gray)
+            "#cbd5e1", // Slate-300 (very light gray)
+            "#e2e8f0", // Slate-200 (pale gray)
+            "#f1f5f9", // Slate-100 (very pale)
+            "#3b82f6", // Blue-500 (blue accent)
+        ];
+        return colors.slice(0, dataLength);
+    }
 };
 
 /**
@@ -67,10 +97,12 @@ const PieChartComponent = ({
     outerRadius = 80,
     showLegend = false,
 }: PieChartProps) => {
+    const { theme } = useTheme();
+
     // Process data to ensure all items have fill colors
     const processedData = data.map((item, index) => ({
         ...item,
-        fill: item.fill || generateGrayscaleColors(data.length)[index],
+        fill: item.fill || generateThemeColors(data.length, theme)[index],
     }));
 
     // Create chart config for shadcn/ui

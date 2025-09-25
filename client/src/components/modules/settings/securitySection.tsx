@@ -35,10 +35,10 @@ const SecuritySection = () => {
                 <div className="space-y-4">
                     <div className="flex items-center justify-between p-4 border rounded-lg">
                         <div>
-                            <h3 className="font-medium text-gray-900">
+                            <h3 className="font-medium text-foreground">
                                 Password
                             </h3>
-                            <p className="text-sm text-gray-500">
+                            <p className="text-sm text-muted-foreground">
                                 reset your password
                             </p>
                         </div>

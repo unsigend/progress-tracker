@@ -19,9 +19,9 @@ function BackLink({ to = "", onClick }: { to?: string; onClick?: () => void }) {
         return (
             <button
                 onClick={onClick}
-                className="p-2 rounded-full hover:bg-gray-100 transition-colors duration-200"
+                className="p-2 rounded-full hover:bg-accent transition-colors duration-200"
             >
-                <ArrowLeft className="w-5 h-5 text-gray-600" />
+                <ArrowLeft className="w-5 h-5 text-foreground" />
             </button>
         );
     }
@@ -33,9 +33,9 @@ function BackLink({ to = "", onClick }: { to?: string; onClick?: () => void }) {
     return (
         <Link
             to={to}
-            className="p-2 rounded-full hover:bg-gray-100 transition-colors duration-200"
+            className="p-2 rounded-full hover:bg-accent transition-colors duration-200"
         >
-            <ArrowLeft className="w-5 h-5 text-gray-600" />
+            <ArrowLeft className="w-5 h-5 text-foreground" />
         </Link>
     );
 }

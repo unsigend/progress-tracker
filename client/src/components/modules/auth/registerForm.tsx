@@ -126,14 +126,14 @@ const RegisterForm = ({
             {/* Header */}
             <div className="text-center space-y-2">
                 <div className="flex items-center justify-between">
-                    <h1 className="text-2xl font-semibold text-gray-900 transition-all duration-300">
+                    <h1 className="text-2xl font-semibold text-foreground transition-all duration-300">
                         {steps[currentStep - 1]?.title}
                     </h1>
                     <Button variant="link" className="text-sm cursor-pointer">
                         <Link to={ROUTES_CONSTANTS.AUTH().LOGIN()}>Login</Link>
                     </Button>
                 </div>
-                <p className="text-sm text-left text-gray-600 transition-all duration-300">
+                <p className="text-sm text-left text-muted-foreground transition-all duration-300">
                     {steps[currentStep - 1]?.description}
                 </p>
             </div>
@@ -165,7 +165,7 @@ const RegisterForm = ({
                             className="transition-all duration-200"
                         />
                         {currentStepData?.hint && (
-                            <p className="text-xs text-gray-500">
+                            <p className="text-xs text-muted-foreground">
                                 {currentStepData?.hint}
                             </p>
                         )}
@@ -212,7 +212,7 @@ const RegisterForm = ({
                                 <img
                                     src="/image/google.svg"
                                     alt="Google"
-                                    className="size-4 mr-2"
+                                    className="size-4 mr-2 dark:invert"
                                 />
                                 Sign up with Google
                             </Button>
@@ -224,7 +224,7 @@ const RegisterForm = ({
                                 <img
                                     src="/image/github.svg"
                                     alt="GitHub"
-                                    className="size-4 mr-2"
+                                    className="size-4 mr-2 dark:invert"
                                 />
                                 Sign up with GitHub
                             </Button>

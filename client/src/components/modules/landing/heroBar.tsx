@@ -10,9 +10,14 @@ import ROUTES_CONSTANTS from "@/constants/routes";
 
 // import dependencies
 import { useGo } from "@refinedev/core";
+import { useTheme } from "@/components/refine-ui/theme/theme-provider";
 
 const HeroBar = () => {
     const go = useGo();
+    const { theme } = useTheme();
+
+    const heroImage =
+        theme === "dark" ? "/image/hero-dark.png" : "/image/hero-light.png";
 
     return (
         <div className="max-w-6xl mx-auto">
@@ -63,7 +68,7 @@ const HeroBar = () => {
                 {/* Right Image */}
                 <div className="flex justify-center lg:justify-end">
                     <img
-                        src="/image/hero.png"
+                        src={heroImage}
                         alt="Progress Tracker Hero Illustration"
                         className="w-full max-w-md lg:max-w-sm xl:max-w-md h-auto"
                     />

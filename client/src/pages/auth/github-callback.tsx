@@ -5,19 +5,20 @@ import { useGo } from "@refinedev/core";
 
 // import constants
 import ROUTES_CONSTANTS from "@/constants/routes";
+import AUTH_CONSTANTS from "@/constants/auth";
 
 /**
  * Github Callback Page
  */
 const GithubCallbackPage = () => {
     const [searchParams] = useSearchParams();
-    const access_token = searchParams.get("access_token");
+    const access_token = searchParams.get(AUTH_CONSTANTS.ACCESS_TOKEN_KEY);
     const go = useGo();
 
     useEffect(() => {
         if (access_token) {
             // Handle the OAuth login with the access token
-            localStorage.setItem("access_token", access_token);
+            localStorage.setItem(AUTH_CONSTANTS.ACCESS_TOKEN_KEY, access_token);
             // Redirect to dashboard or handle login
             go({
                 to: ROUTES_CONSTANTS.DASHBOARD().HOME(),

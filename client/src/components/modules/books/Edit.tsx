@@ -52,14 +52,14 @@ const BookEditCard = ({
                 </div>
 
                 <div className="flex justify-center mb-4">
-                    <div className="p-3 bg-gray-100 rounded-full">
-                        <BookOpen className="w-8 h-8 text-gray-600" />
+                    <div className="p-3 bg-muted rounded-full">
+                        <BookOpen className="w-8 h-8 text-muted-foreground" />
                     </div>
                 </div>
-                <CardTitle className="text-2xl font-semibold text-gray-900">
+                <CardTitle className="text-2xl font-semibold text-foreground">
                     {title}
                 </CardTitle>
-                <p className="text-gray-600 mt-2">{description}</p>
+                <p className="text-muted-foreground mt-2">{description}</p>
             </CardHeader>
 
             <CardContent>
@@ -68,7 +68,7 @@ const BookEditCard = ({
                     <div className="space-y-2">
                         <Label
                             htmlFor="title"
-                            className="flex items-center gap-2 text-sm font-medium text-gray-700"
+                            className="flex items-center gap-2 text-sm font-medium text-foreground"
                         >
                             <BookOpen className="w-4 h-4" />
                             Book Title
@@ -92,7 +92,7 @@ const BookEditCard = ({
                     <div className="space-y-2">
                         <Label
                             htmlFor="author"
-                            className="flex items-center gap-2 text-sm font-medium text-gray-700"
+                            className="flex items-center gap-2 text-sm font-medium text-foreground"
                         >
                             <User className="w-4 h-4" />
                             Author
@@ -116,7 +116,7 @@ const BookEditCard = ({
                     <div className="space-y-2">
                         <Label
                             htmlFor="description"
-                            className="flex items-center gap-2 text-sm font-medium text-gray-700"
+                            className="flex items-center gap-2 text-sm font-medium text-foreground"
                         >
                             <FileText className="w-4 h-4" />
                             Description
@@ -131,9 +131,9 @@ const BookEditCard = ({
                                     description: e.target.value,
                                 })
                             }
-                            className="w-full min-h-[200px] px-3 py-2 border border-gray-300 
-                            rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-500
-                             focus:border-transparent resize-none"
+                            className="w-full min-h-[200px] px-3 py-2 border border-input 
+                            rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-ring
+                             focus:border-transparent resize-none bg-background text-foreground"
                         />
                     </div>
 
@@ -141,7 +141,7 @@ const BookEditCard = ({
                     <div className="space-y-2">
                         <Label
                             htmlFor="pages"
-                            className="flex items-center gap-2 text-sm font-medium text-gray-700"
+                            className="flex items-center gap-2 text-sm font-medium text-foreground"
                         >
                             <FileText className="w-4 h-4" />
                             Pages
@@ -167,7 +167,7 @@ const BookEditCard = ({
                         <div className="space-y-2">
                             <Label
                                 htmlFor="isbn10"
-                                className="flex items-center gap-2 text-sm font-medium text-gray-700"
+                                className="flex items-center gap-2 text-sm font-medium text-foreground"
                             >
                                 <Hash className="w-4 h-4" />
                                 ISBN 10
@@ -191,7 +191,7 @@ const BookEditCard = ({
                         <div className="space-y-2">
                             <Label
                                 htmlFor="isbn13"
-                                className="flex items-center gap-2 text-sm font-medium text-gray-700"
+                                className="flex items-center gap-2 text-sm font-medium text-foreground"
                             >
                                 <Hash className="w-4 h-4" />
                                 ISBN 13
@@ -216,7 +216,7 @@ const BookEditCard = ({
                     <div className="space-y-2">
                         <Label
                             htmlFor="image"
-                            className="flex items-center gap-2 text-sm font-medium text-gray-700"
+                            className="flex items-center gap-2 text-sm font-medium text-foreground"
                         >
                             <Image className="w-4 h-4" />
                             Cover Image URL
@@ -251,10 +251,7 @@ const BookEditCard = ({
                                 Cancel
                             </Button>
                         </Link>
-                        <Button
-                            type="submit"
-                            className="px-6 bg-black text-white hover:bg-gray-800"
-                        >
+                        <Button type="submit" className="px-6">
                             {action === "add" ? "Add Book" : "Update Book"}
                         </Button>
                     </div>

@@ -34,6 +34,15 @@ const BarChartComponent = ({
     color: string | undefined;
     label: string;
 }) => {
+    // Simple theme-aware color logic
+    const getBarColor = () => {
+        if (color) return color;
+
+        // Check if we're in dark mode
+        const isDarkMode = document.documentElement.classList.contains("dark");
+        return isDarkMode ? "#ffffff" : "#1e293b";
+    };
+
     const chartConfig: ChartConfig = {
         value: {
             label: label,
@@ -57,7 +66,7 @@ const BarChartComponent = ({
                 />
                 <Bar
                     dataKey="value"
-                    fill={color}
+                    fill={getBarColor()}
                     radius={8}
                     className="outline-none focus:outline-none"
                 />

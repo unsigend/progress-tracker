@@ -77,7 +77,6 @@ const ProfileSection = () => {
                                 <Label htmlFor="name">Username</Label>
                                 <Input
                                     id="name"
-                                    className="text-gray-900"
                                     value={updateUserData.username || ""}
                                     onChange={(e) =>
                                         setUpdateUserData({
@@ -86,7 +85,7 @@ const ProfileSection = () => {
                                         })
                                     }
                                 />
-                                <p className="text-sm text-gray-500">
+                                <p className="text-sm text-muted-foreground">
                                     Your username will be used to identify you
                                     on the platform.
                                 </p>
@@ -97,7 +96,7 @@ const ProfileSection = () => {
                                 <div className="relative">
                                     <Input
                                         id="email"
-                                        className="text-gray-900 pr-10"
+                                        className="pr-10"
                                         value={updateUserData.email || ""}
                                         onChange={(e) =>
                                             setUpdateUserData({
@@ -108,7 +107,7 @@ const ProfileSection = () => {
                                     />
                                     <div className="absolute inset-y-0 right-0 flex items-center pr-3">
                                         <svg
-                                            className="w-4 h-4 text-gray-400"
+                                            className="w-4 h-4 text-muted-foreground"
                                             fill="none"
                                             stroke="currentColor"
                                             viewBox="0 0 24 24"
@@ -122,7 +121,7 @@ const ProfileSection = () => {
                                         </svg>
                                     </div>
                                 </div>
-                                <p className="text-sm text-gray-500">
+                                <p className="text-sm text-muted-foreground">
                                     This email should be unique and used for
                                     login.
                                 </p>
@@ -137,7 +136,7 @@ const ProfileSection = () => {
                                     alt={user?.username + " avatar"}
                                     className="object-cover"
                                 />
-                                <AvatarFallback className="text-2xl bg-gray-100">
+                                <AvatarFallback className="text-2xl">
                                     {user?.username?.charAt(0)?.toUpperCase() ||
                                         "U"}
                                 </AvatarFallback>
@@ -156,7 +155,7 @@ const ProfileSection = () => {
                     {/* Connected Accounts Section */}
                     {user?.provider && (
                         <div className="space-y-3">
-                            <h3 className="text-lg font-semibold text-gray-900">
+                            <h3 className="text-lg font-semibold text-foreground">
                                 Connected accounts
                             </h3>
                             {user?.provider.map((providerItem: string) =>
@@ -173,7 +172,7 @@ const ProfileSection = () => {
                                             ) : (
                                                 <User className="w-4 h-4" />
                                             )}
-                                            <span className="font-medium text-gray-900">
+                                            <span className="font-medium text-foreground">
                                                 {providerItem
                                                     ?.charAt(0)
                                                     .toUpperCase() +
@@ -182,7 +181,7 @@ const ProfileSection = () => {
                                         </div>
                                         <Badge
                                             variant="secondary"
-                                            className="bg-green-100 text-green-800"
+                                            className="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100"
                                         >
                                             Connected
                                         </Badge>
