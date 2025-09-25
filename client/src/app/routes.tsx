@@ -31,6 +31,7 @@ import DashboardCoursesPage from "@/pages/dashboard/courses/home";
 // import auth pages
 import LoginPage from "@/pages/auth/login";
 import RegisterPage from "@/pages/auth/register";
+import GoogleCallbackPage from "@/pages/auth/google-callback";
 
 // import common pages
 import NotFoundPage from "@/pages/common/notFound";
@@ -137,6 +138,12 @@ function AppRoutes() {
                     path={ROUTES_CONSTANTS.AUTH().SIGNUP()}
                     element={<RegisterPage />}
                 />
+                {/* Google Callback Page */}
+                <Route
+                    path={ROUTES_CONSTANTS.AUTH().GOOGLE_CALLBACK()}
+                    element={<GoogleCallbackPage />}
+                />
+                {/* GitHub Callback Page */}
             </Route>
 
             {/* Not Found Page */}

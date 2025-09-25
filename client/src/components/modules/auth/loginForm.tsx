@@ -12,6 +12,7 @@ import ROUTES_CONSTANTS from "@/constants/routes";
 
 // import hooks
 import { useLogin } from "@refinedev/core";
+import { useOAuthLogin } from "@/hooks/use-oauth";
 
 // import types
 import type { LoginRequestDto } from "@/api/api";
@@ -22,6 +23,7 @@ const LoginForm = () => {
         password: "",
     });
     const { mutate: login } = useLogin();
+    const { login: loginWithOAuth } = useOAuthLogin();
 
     const handleLogin = (
         e: React.FormEvent<HTMLFormElement | HTMLButtonElement>
@@ -119,7 +121,7 @@ const LoginForm = () => {
                     <Button
                         variant="outline"
                         className="w-full cursor-pointer"
-                        onClick={() => {}}
+                        onClick={() => loginWithOAuth("google")}
                     >
                         <img
                             src="/image/google.svg"
