@@ -9,6 +9,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import HamburgerButton from "@/components/modules/ui/HamburgerButton";
 
 // import icons
 import { Bell, ChevronDown, Settings, LogOut } from "lucide-react";
@@ -22,15 +23,32 @@ import { useGetIdentity, useLogout } from "@refinedev/core";
 // import constants
 import ROUTES_CONSTANTS from "@/constants/routes";
 
-const Header = () => {
+const Header = ({
+    isSidebarOpen,
+    toggleSidebar,
+}: {
+    isSidebarOpen: boolean;
+    toggleSidebar: () => void;
+}) => {
     // get the user
     const { data: user } = useGetIdentity<UserResponseDto>();
     const { mutate: logout } = useLogout();
 
     return (
-        <header className="sticky top-0 z-30 flex h-16 shrink-0 items-center gap-x-4 border-b border-border bg-background px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
-            {/* Left side - Empty space to balance with sidebar */}
-            <div className="flex-1" />
+        <header
+            className="sticky top-0 z-30 flex h-16 shrink-0 items-center justify-between border-b 
+        border-border bg-background px-4 shadow-sm sm:px-6 lg:px-8"
+        >
+            {/* Left side - Hamburger button on mobile, empty space on desktop */}
+            <div className="flex items-center">
+                {/* Hamburger button - only visible on mobile */}
+                <div className="lg:hidden">
+                    <HamburgerButton
+                        isOpen={isSidebarOpen}
+                        onClick={toggleSidebar}
+                    />
+                </div>
+            </div>
 
             {/* Right side - User actions */}
             <div className="flex items-center gap-x-4">

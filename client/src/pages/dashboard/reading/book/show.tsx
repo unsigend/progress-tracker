@@ -1,5 +1,5 @@
 // import dependencies
-import { useDelete, useGo, useParsed, useShow } from "@refinedev/core";
+import { useDelete, useBack, useParsed, useShow, useGo } from "@refinedev/core";
 import { ClipLoader } from "react-spinners";
 import { useState } from "react";
 
@@ -29,6 +29,7 @@ const BookDetailsPage = () => {
     // get the id from the parsed url
     const globalID = useParsed().id;
     const go = useGo();
+    const back = useBack();
     // get the book data
     const { query, result } = useShow();
     // delete book mutation
@@ -109,11 +110,7 @@ const BookDetailsPage = () => {
                     {/* Navigation Buttons */}
                     <div className="mb-6 flex justify-between items-center">
                         {/* Back to Library */}
-                        <BackLink
-                            to={ROUTES_CONSTANTS.DASHBOARD()
-                                .READING()
-                                .BOOKS_LIST()}
-                        />
+                        <BackLink onClick={back} />
 
                         {/* Dropdown Menu */}
                         <DropdownMenu>

@@ -1,23 +1,15 @@
 // import dependencies
-import { Link, useList } from "@refinedev/core";
+import { Link, useTable, useParsed } from "@refinedev/core";
 
 // import components
 import BookShelf from "@/components/modules/books/List";
 import SearchBar from "@/components/modules/ui/searchBar";
 import { ClipLoader } from "react-spinners";
+import SmartPagination from "@/components/modules/ui/smartPagination";
 
 // import shadcn/ui components
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import {
-    Pagination,
-    PaginationContent,
-    PaginationItem,
-    PaginationPrevious,
-    PaginationLink,
-    PaginationEllipsis,
-    PaginationNext,
-} from "@/components/ui/pagination";
 
 // import types
 import type { BookResponseDto } from "@/api/api";
@@ -31,10 +23,24 @@ import ROUTES_CONSTANTS from "@/constants/routes";
  * @returns The DashboardLibraryPage component
  */
 const DashboardLibraryPage = () => {
+    // get parsed URL parameters
+    const parsed = useParsed();
+    const currentPageFromUrl = parsed?.params?.currentPage;
+    const pageSizeFromUrl = parsed?.params?.pageSize;
+
     // get the books
-    const { query, result } = useList({
-        resource: RESOURCES_CONSTANTS.BOOKS,
-    });
+    const { setCurrentPage, currentPage, pageSize, tableQuery, result } =
+        useTable({
+            resource: RESOURCES_CONSTANTS.BOOKS,
+            pagination: {
+                pageSize: parseInt(String(pageSizeFromUrl), 10) || 10,
+                currentPage: parseInt(currentPageFromUrl, 10) || 1,
+            },
+            syncWithLocation: true,
+        });
+
+    // get the total pages
+    const totalPages = Math.ceil((tableQuery?.data?.total ?? 0) / pageSize);
 
     return (
         <Card>
@@ -80,7 +86,7 @@ const DashboardLibraryPage = () => {
 
             <CardContent>
                 {/* Loading State */}
-                {query?.isLoading ? (
+                {tableQuery?.isLoading ? (
                     <div className="flex justify-center items-center py-12">
                         <ClipLoader size={40} />
                     </div>
@@ -90,26 +96,11 @@ const DashboardLibraryPage = () => {
             </CardContent>
 
             {/* Pagination */}
-            <Pagination>
-                <PaginationContent>
-                    {/* Previous Page */}
-                    <PaginationItem>
-                        <PaginationPrevious href="#" onClick={() => {}} />
-                    </PaginationItem>
-
-                    <PaginationItem>
-                        <PaginationLink href="#">1</PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem>
-                        <PaginationEllipsis />
-                    </PaginationItem>
-
-                    {/* Next Page */}
-                    <PaginationItem>
-                        <PaginationNext href="#" onClick={() => {}} />
-                    </PaginationItem>
-                </PaginationContent>
-            </Pagination>
+            <SmartPagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                setCurrentPage={setCurrentPage}
+            />
         </Card>
     );
 };

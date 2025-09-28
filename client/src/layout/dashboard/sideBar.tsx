@@ -1,6 +1,5 @@
 // import dependencies
 import { Link, useLocation } from "react-router";
-import { useState } from "react";
 
 // import utils
 import { cn } from "@/lib/utils";
@@ -9,7 +8,6 @@ import { cn } from "@/lib/utils";
 import ROUTES_CONSTANTS from "@/constants/routes";
 
 // import components
-import HamburgerButton from "@/components/modules/ui/HamburgerButton";
 import Logo from "@/components/modules/ui/logo";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -26,12 +24,15 @@ import type { UserResponseDto } from "@/api/api";
 // import hooks
 import { useGetIdentity } from "@refinedev/core";
 
-const SideBar = () => {
+const SideBar = ({
+    isOpen,
+    setIsOpen,
+}: {
+    isOpen: boolean;
+    setIsOpen: (open: boolean) => void;
+}) => {
     // get the user
     const { data: user } = useGetIdentity<UserResponseDto>();
-
-    // state for the sidebar
-    const [isOpen, setIsOpen] = useState(false);
 
     // get the location
     const location = useLocation();
@@ -49,20 +50,8 @@ const SideBar = () => {
         setIsOpen(false);
     };
 
-    // toggle the sidebar
-    const toggleSidebar = () => {
-        setIsOpen(!isOpen);
-    };
-
     return (
         <>
-            {/* Mobile menu button */}
-            {!isOpen && (
-                <div className="sticky top-0 z-50 flex h-16 shrink-0 items-center gap-x-4 border-b border-border bg-background px-4 sm:gap-x-6 sm:px-6 lg:hidden">
-                    <HamburgerButton isOpen={isOpen} onClick={toggleSidebar} />
-                </div>
-            )}
-
             {/* Mobile sidebar overlay */}
             {isOpen && (
                 <div
