@@ -102,7 +102,9 @@ export const dataProvider: DataProvider = {
             order: sorters?.[0]?.order,
             page: pagination?.currentPage,
             limit: pagination?.pageSize,
-            search: filters?.[0]?.value,
+            search: filters?.[0]?.value
+                ? decodeURIComponent(filters[0].value)
+                : "",
         };
         // get the controller method for the resource
         const controllerMethod:

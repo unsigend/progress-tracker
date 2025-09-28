@@ -1,5 +1,6 @@
 // import dependencies
 import { Link, useTable, useParsed } from "@refinedev/core";
+import { useState } from "react";
 
 // import components
 import BookShelf from "@/components/modules/books/List";
@@ -12,7 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
 // import types
-import type { BookResponseDto } from "@/api/api";
+import type { AllBookResponseDto } from "@/api/api";
 
 // import constants
 import RESOURCES_CONSTANTS from "@/constants/resources";
@@ -27,20 +28,45 @@ const DashboardLibraryPage = () => {
     const parsed = useParsed();
     const currentPageFromUrl = parsed?.params?.currentPage;
     const pageSizeFromUrl = parsed?.params?.pageSize;
+    const searchTermFromUrl = parsed?.params?.filters?.[0]?.value
+        ? decodeURIComponent(parsed.params.filters[0].value)
+        : undefined;
 
     // get the books
-    const { setCurrentPage, currentPage, pageSize, tableQuery, result } =
-        useTable({
-            resource: RESOURCES_CONSTANTS.BOOKS,
-            pagination: {
-                pageSize: parseInt(String(pageSizeFromUrl), 10) || 10,
-                currentPage: parseInt(currentPageFromUrl, 10) || 1,
-            },
-            syncWithLocation: true,
-        });
+    const {
+        setCurrentPage,
+        currentPage,
+        pageSize,
+        setFilters,
+        tableQuery,
+        result,
+    } = useTable({
+        resource: RESOURCES_CONSTANTS.BOOKS,
+        pagination: {
+            pageSize: parseInt(String(pageSizeFromUrl), 10) || 10,
+            currentPage: parseInt(currentPageFromUrl, 10) || 1,
+        },
+        filters: {
+            initial: [
+                {
+                    field: "title",
+                    operator: "contains",
+                    value: searchTermFromUrl || "",
+                },
+            ],
+        },
+        syncWithLocation: true,
+    });
 
     // get the total pages
-    const totalPages = Math.ceil((tableQuery?.data?.total ?? 0) / pageSize);
+    const totalPages = Math.ceil((result.total ?? 0) / pageSize);
+    const [searchTerm, setSearchTerm] = useState(searchTermFromUrl || "");
+
+    // clear search function
+    const clearSearch = () => {
+        setSearchTerm("");
+        setFilters([], "replace");
+    };
 
     return (
         <Card>
@@ -57,11 +83,27 @@ const DashboardLibraryPage = () => {
                         {/* Search Section */}
                         <SearchBar
                             placeholder="Search by title, author, or ISBN..."
+                            searchTerm={searchTerm}
+                            setSearchTerm={setSearchTerm}
+                            onClear={clearSearch}
                             onSubmit={(e) => {
                                 e.preventDefault();
+                                setCurrentPage(1);
+
+                                if (searchTerm.trim()) {
+                                    setFilters([
+                                        {
+                                            field: "title",
+                                            operator: "contains",
+                                            value: encodeURIComponent(
+                                                searchTerm
+                                            ),
+                                        },
+                                    ]);
+                                } else {
+                                    setFilters([], "replace");
+                                }
                             }}
-                            searchTerm={""}
-                            setSearchTerm={() => {}}
                         />
 
                         {/* Add Book Button */}
@@ -91,7 +133,12 @@ const DashboardLibraryPage = () => {
                         <ClipLoader size={40} />
                     </div>
                 ) : (
-                    <BookShelf books={result.data as BookResponseDto[]} />
+                    <BookShelf
+                        books={
+                            (result.data as unknown as AllBookResponseDto)
+                                .books || []
+                        }
+                    />
                 )}
             </CardContent>
 

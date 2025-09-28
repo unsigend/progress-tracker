@@ -154,6 +154,13 @@ export interface UpdateBookDto {
   cover_url?: string;
 }
 
+export interface AllBookResponseDto {
+  /** The book list */
+  books: BookResponseDto[];
+  /** The total count of the books */
+  totalCount: number;
+}
+
 export interface LoginRequestDto {
   /** The email of the user */
   email: string;
@@ -555,7 +562,7 @@ export class Api<
      *
      * @tags Books
      * @name BookControllerFindAll
-     * @summary Get all books
+     * @summary Get all books and set header x-total-count
      * @request GET:/api/v1/books
      */
     bookControllerFindAll: (
@@ -591,7 +598,7 @@ export class Api<
       },
       params: RequestParams = {},
     ) =>
-      this.request<BookResponseDto[], void>({
+      this.request<AllBookResponseDto, void>({
         path: `/api/v1/books`,
         method: "GET",
         query: query,
@@ -741,6 +748,66 @@ export class Api<
         path: `/api/v1/auth/email-check/${email}`,
         method: "GET",
         format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Auth
+     * @name AuthControllerGoogle
+     * @summary Login with Google only the entry point
+     * @request GET:/api/v1/auth/google
+     */
+    authControllerGoogle: (params: RequestParams = {}) =>
+      this.request<void, void>({
+        path: `/api/v1/auth/google`,
+        method: "GET",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Auth
+     * @name AuthControllerGoogleCallback
+     * @summary Google OAuth callback redirect to the frontend with the access_token
+     * @request GET:/api/v1/auth/google/callback
+     */
+    authControllerGoogleCallback: (params: RequestParams = {}) =>
+      this.request<void, void>({
+        path: `/api/v1/auth/google/callback`,
+        method: "GET",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Auth
+     * @name AuthControllerGithub
+     * @summary Login with Github only the entry point
+     * @request GET:/api/v1/auth/github
+     */
+    authControllerGithub: (params: RequestParams = {}) =>
+      this.request<void, void>({
+        path: `/api/v1/auth/github`,
+        method: "GET",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Auth
+     * @name AuthControllerGithubCallback
+     * @summary Github OAuth callback redirect to the frontend with the access_token
+     * @request GET:/api/v1/auth/github/callback
+     */
+    authControllerGithubCallback: (params: RequestParams = {}) =>
+      this.request<void, void>({
+        path: `/api/v1/auth/github/callback`,
+        method: "GET",
         ...params,
       }),
   };

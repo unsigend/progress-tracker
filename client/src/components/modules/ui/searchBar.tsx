@@ -13,17 +13,19 @@ import { Input } from "@/components/ui/input";
 
 const SearchBar = ({
     placeholder,
-    onSubmit,
     searchTerm,
     setSearchTerm,
+    onSubmit,
+    onClear,
 }: {
     placeholder: string;
-    onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
     searchTerm: string;
     setSearchTerm: (searchTerm: string) => void;
+    onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+    onClear: () => void;
 }) => {
     return (
-        <form onSubmit={onSubmit} className="flex gap-2 flex-1 max-w-md">
+        <form className="flex gap-2 flex-1 max-w-md" onSubmit={onSubmit}>
             <Input
                 type="text"
                 placeholder={placeholder}
@@ -34,6 +36,16 @@ const SearchBar = ({
             <Button type="submit" variant="default" className="px-6">
                 Search
             </Button>
+            {searchTerm && onClear && (
+                <Button
+                    type="button"
+                    variant="outline"
+                    className="px-6"
+                    onClick={onClear}
+                >
+                    Clear
+                </Button>
+            )}
         </form>
     );
 };
