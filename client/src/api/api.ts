@@ -187,6 +187,13 @@ export interface EmailCheckResponseDto {
   exists: boolean;
 }
 
+export interface FileUploadResponseDto {
+  /** The file url */
+  file_url: string;
+  /** Whether the file was uploaded successfully */
+  success: boolean;
+}
+
 import type {
   AxiosInstance,
   AxiosRequestConfig,
@@ -808,6 +815,30 @@ export class Api<
       this.request<void, void>({
         path: `/api/v1/auth/github/callback`,
         method: "GET",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags File
+     * @name FileControllerUploadFile
+     * @summary Upload a file to cloud
+     * @request POST:/api/v1/file/upload
+     */
+    fileControllerUploadFile: (
+      data: {
+        /** @format binary */
+        file?: File;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<FileUploadResponseDto, void>({
+        path: `/api/v1/file/upload`,
+        method: "POST",
+        body: data,
+        type: ContentType.FormData,
+        format: "json",
         ...params,
       }),
   };
