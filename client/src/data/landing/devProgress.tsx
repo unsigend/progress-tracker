@@ -36,7 +36,8 @@ const timelineData: TimelineItem[] = [
         title: "Amazon AWS S3 Cloud Image Storage",
         description:
             "Secure cloud storage with AWS S3 integration for user-uploaded images and data assets.",
-        status: "coming-soon",
+        status: "completed",
+        date: "September 29, 2025",
     },
     {
         id: "books-library",

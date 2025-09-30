@@ -26,7 +26,6 @@ import validationUtils from "@/utils/validation";
 
 const ProfileSection = () => {
     const { data: user } = useGetIdentity<UserResponseDto>();
-    console.log(user);
     const { invalidateCurrentUser } = useInvalidateCurrentUser();
     const { onFinish } = useForm({
         resource: "users",
