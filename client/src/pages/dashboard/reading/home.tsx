@@ -1,20 +1,13 @@
-// import dependencies
-import { Link } from "@refinedev/core";
-
 // import icons
-import { BookOpen, TrendingUp, Clock, CheckCircle, Plus } from "lucide-react";
+import { BookOpen, TrendingUp, CheckCircle } from "lucide-react";
 
 // import shadcn/ui components
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 
 // import components
-import BookCard from "@/components/modules/books/Cover";
 import BookShelf from "@/components/modules/books/List";
 import LineChart from "@/components/modules/ui/chart/LineChart";
-
-// import constants
-import ROUTES_CONSTANTS from "@/constants/routes";
+import InProgressReading from "@/components/modules/reading/in-progress";
 
 // import types
 import type { BookResponseDto } from "@/api/api";
@@ -131,80 +124,6 @@ const WeeklyAnalysis = () => {
     );
 };
 
-const CurrentReading = () => {
-    const currentBook = sampleBooks[0];
-    const pagesRead = 150;
-    const totalPages = currentBook.pages || 377;
-    const pagesLeft = totalPages - pagesRead;
-    const progressPercentage = Math.round((pagesRead / totalPages) * 100);
-
-    return (
-        <Card>
-            <CardHeader>
-                <div className="flex justify-between items-center">
-                    <CardTitle className="flex items-center gap-2 text-lg font-semibold text-gray-900">
-                        <Clock className="w-5 h-5" />
-                        Current Reading
-                    </CardTitle>
-                    <Link
-                        to={ROUTES_CONSTANTS.DASHBOARD().READING().BOOKS_LIST()}
-                    >
-                        <Button
-                            variant="outline"
-                            size="sm"
-                            className="flex items-center gap-2"
-                        >
-                            <Plus className="w-4 h-4" />
-                            Track More
-                        </Button>
-                    </Link>
-                </div>
-            </CardHeader>
-            <CardContent>
-                <div className="flex flex-col lg:flex-row gap-6">
-                    <div className="flex justify-center lg:justify-start">
-                        <BookCard
-                            image={
-                                currentBook.cover_url || "/placeholder-book.jpg"
-                            }
-                            alt={currentBook.title || "Book cover"}
-                            className="w-32 h-44"
-                        />
-                    </div>
-
-                    <div className="flex-1 space-y-4">
-                        <div>
-                            <h3 className="text-xl font-semibold text-gray-900">
-                                {currentBook.title}
-                            </h3>
-                            <p className="text-gray-600">
-                                by {currentBook.author}
-                            </p>
-                        </div>
-
-                        <div className="space-y-2">
-                            <div className="flex justify-between text-sm text-gray-600">
-                                <span>Progress</span>
-                                <span>{progressPercentage}%</span>
-                            </div>
-                            <div className="w-full bg-gray-200 rounded-full h-2">
-                                <div
-                                    className="bg-gray-900 h-2 rounded-full transition-all duration-300"
-                                    style={{ width: `${progressPercentage}%` }}
-                                ></div>
-                            </div>
-                            <div className="flex justify-between text-sm text-gray-600">
-                                <span>{pagesRead} pages read</span>
-                                <span>{pagesLeft} pages left</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </CardContent>
-        </Card>
-    );
-};
-
 const FinishedBooks = () => {
     const finishedBooks = sampleBooks.slice(1, 5);
 
@@ -232,7 +151,7 @@ const DashboardReadingHomePage = () => {
             </div>
 
             {/* Current Reading */}
-            <CurrentReading />
+            <InProgressReading />
 
             {/* Finished Books */}
             <FinishedBooks />

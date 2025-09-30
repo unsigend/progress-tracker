@@ -6,6 +6,8 @@ import {
     CrudSorting,
     DataProvider,
     Pagination,
+    MetaQuery,
+    LogicalFilter,
 } from "@refinedev/core";
 import { AxiosResponse } from "axios";
 
@@ -95,14 +97,18 @@ export const dataProvider: DataProvider = {
         pagination?: Pagination | undefined;
         sorters?: CrudSorting | undefined;
         filters?: CrudFilters | undefined;
+        meta?: MetaQuery | undefined;
     }) => {
+        const _filter = (filters?.[0] as LogicalFilter)?.field;
+        console.log(_filter);
         // build the query object
         const query = {
+            field: _filter,
             sort: sorters?.[0]?.field,
             order: sorters?.[0]?.order,
             page: pagination?.currentPage,
             limit: pagination?.pageSize,
-            search: filters?.[0]?.value
+            value: filters?.[0]?.value
                 ? decodeURIComponent(filters[0].value)
                 : "",
         };

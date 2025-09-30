@@ -10,13 +10,6 @@
  * ---------------------------------------------------------------
  */
 
-/** the status of the book */
-export enum ReadingStatus {
-  NOT_STARTED = "NOT_STARTED",
-  IN_PROGRESS = "IN_PROGRESS",
-  COMPLETED = "COMPLETED",
-}
-
 export interface UserResponseDto {
   /** The unique identifier of the user */
   id: string;
@@ -243,10 +236,17 @@ export interface UserBookResponseDto {
   updatedAt: string;
 }
 
+export interface BookProgressDto {
+  /** book data */
+  book: BookResponseDto;
+  /** user book data */
+  userBook: UserBookResponseDto;
+}
+
 export interface UserBooksResponseDto {
-  /** The user books */
-  userBooks: UserBookResponseDto[];
-  /** The total count of the user books */
+  /** The books */
+  books: BookProgressDto[];
+  /** The total count of the books */
   totalCount: number;
 }
 
@@ -631,10 +631,10 @@ export class Api<
     bookControllerFindAll: (
       query?: {
         /**
-         * Search term to filter books by title, author, ISBN10 or ISBN13
+         * Value to filter books by title, author, ISBN10 or ISBN13
          * @example ""
          */
-        search?: string;
+        value?: string;
         /**
          * Page number for pagination index starts from 1
          * @min 1
@@ -923,17 +923,16 @@ export class Api<
      * No description
      *
      * @tags UserBook
-     * @name UserBookControllerGetTrackedBooks
-     * @summary Get tracked books for a user
+     * @name UserBookControllerFindAll
+     * @summary Get all tracked books for a user
      * @request GET:/api/v1/user-books
      */
-    userBookControllerGetTrackedBooks: (
+    userBookControllerFindAll: (
       query?: {
-        /**
-         * the status of the book
-         * @example "NOT_STARTED"
-         */
-        status?: ReadingStatus;
+        /** The search field */
+        field?: object;
+        /** The search value */
+        value?: object;
       },
       params: RequestParams = {},
     ) =>
