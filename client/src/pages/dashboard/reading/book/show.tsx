@@ -1,7 +1,15 @@
 // import dependencies
-import { useDelete, useBack, useParsed, useShow, useGo } from "@refinedev/core";
+import {
+    useDelete,
+    useBack,
+    useParsed,
+    useShow,
+    useGo,
+    useCreate,
+} from "@refinedev/core";
 import { ClipLoader } from "react-spinners";
 import { useState } from "react";
+import { toast } from "sonner";
 
 // import components
 import BackLink from "@/components/modules/ui/backButton";
@@ -25,11 +33,31 @@ import ROUTES_CONSTANTS from "@/constants/routes";
 // import types
 import type { BookResponseDto } from "@/api/api";
 
+// import utils
+import errorUtils from "@/utils/error";
+
 const BookDetailsPage = () => {
     // get the id from the parsed url
     const globalID = useParsed().id;
+
+    // create track book mutation
+    const { mutate: createTrackBook } = useCreate({
+        resource: RESOURCES_CONSTANTS.USER_BOOKS,
+        mutationOptions: {
+            retry: false,
+            onSuccess: () => {
+                toast.success("Book tracked successfully");
+            },
+            onError: (error) => {
+                toast.error(errorUtils.extractErrorMessage(error));
+            },
+        },
+    });
+
+    // navigate functions
     const go = useGo();
     const back = useBack();
+
     // get the book data
     const { query, result } = useShow();
     // delete book mutation
@@ -41,7 +69,12 @@ const BookDetailsPage = () => {
      * On click add button, will navigate to the add page
      */
     const onClickAddButton = () => {
-        // TODO: Implement add book functionality
+        // track the book to the current user
+        createTrackBook({
+            values: {
+                book_id: globalID,
+            },
+        });
     };
 
     /**

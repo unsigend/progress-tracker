@@ -18,7 +18,6 @@ import type { AxiosResponse } from "axios";
 // import constants
 import ROUTES_CONSTANTS from "@/constants/routes";
 import AUTH_CONSTANTS from "@/constants/auth";
-import errorUtils from "@/utils/error";
 
 export const authProvider: AuthProvider = {
     /**

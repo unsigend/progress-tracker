@@ -10,6 +10,13 @@
  * ---------------------------------------------------------------
  */
 
+/** the status of the book */
+export enum ReadingStatus {
+  NOT_STARTED = "NOT_STARTED",
+  IN_PROGRESS = "IN_PROGRESS",
+  COMPLETED = "COMPLETED",
+}
+
 export interface UserResponseDto {
   /** The unique identifier of the user */
   id: string;
@@ -192,6 +199,55 @@ export interface FileUploadResponseDto {
   file_url: string;
   /** Whether the file was uploaded successfully */
   success: boolean;
+}
+
+export interface TrackBookRequestDto {
+  /** The book id to track */
+  book_id: string;
+}
+
+export interface UserBookResponseDto {
+  /** The unique identifier of the user book */
+  id: string;
+  /** The book id of the user book */
+  book_id: string;
+  /** The user id of the user book */
+  user_id: string;
+  /** The status of the user book */
+  status: string;
+  /** The current page of the user book */
+  current_page: number;
+  /**
+   * The start date of the user book
+   * @format date-time
+   */
+  start_date: string;
+  /**
+   * The completed date of the user book
+   * @format date-time
+   */
+  completed_date: string;
+  /** The total minutes of the user book */
+  total_minutes: number;
+  /** The total days of the user book */
+  total_days: number;
+  /**
+   * The created at date of the user book
+   * @format date-time
+   */
+  createdAt: string;
+  /**
+   * The updated at date of the user book
+   * @format date-time
+   */
+  updatedAt: string;
+}
+
+export interface UserBooksResponseDto {
+  /** The user books */
+  userBooks: UserBookResponseDto[];
+  /** The total count of the user books */
+  totalCount: number;
 }
 
 import type {
@@ -829,7 +885,7 @@ export class Api<
     fileControllerUploadFile: (
       data: {
         /** @format binary */
-        file?: File;
+        file: File;
       },
       params: RequestParams = {},
     ) =>
@@ -838,6 +894,69 @@ export class Api<
         method: "POST",
         body: data,
         type: ContentType.FormData,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags UserBook
+     * @name UserBookControllerCreate
+     * @summary Track a book for current user
+     * @request POST:/api/v1/user-books
+     */
+    userBookControllerCreate: (
+      data: TrackBookRequestDto,
+      params: RequestParams = {},
+    ) =>
+      this.request<UserBookResponseDto, void>({
+        path: `/api/v1/user-books`,
+        method: "POST",
+        body: data,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags UserBook
+     * @name UserBookControllerGetTrackedBooks
+     * @summary Get tracked books for a user
+     * @request GET:/api/v1/user-books
+     */
+    userBookControllerGetTrackedBooks: (
+      query?: {
+        /**
+         * the status of the book
+         * @example "NOT_STARTED"
+         */
+        status?: ReadingStatus;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<UserBooksResponseDto, void>({
+        path: `/api/v1/user-books`,
+        method: "GET",
+        query: query,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags UserBook
+     * @name UserBookControllerDelete
+     * @summary Untrack a book for current user
+     * @request DELETE:/api/v1/user-books/{id}
+     */
+    userBookControllerDelete: (id: string, params: RequestParams = {}) =>
+      this.request<UserBookResponseDto, void>({
+        path: `/api/v1/user-books/${id}`,
+        method: "DELETE",
         format: "json",
         ...params,
       }),
