@@ -1,4 +1,12 @@
+// import dependencies
+import { Link } from "@refinedev/core";
 import React from "react";
+
+// import constants
+import ROUTES_CONSTANTS from "@/constants/routes";
+
+// import icons
+import { ArrowRight } from "lucide-react";
 
 interface BooksWeLoveProps {
     coverImageUrls: string[];
@@ -75,7 +83,7 @@ const BooksWeLove: React.FC<BooksWeLoveProps> = ({
                         src={url}
                         alt={`Book ${index + 1}`}
                         className="w-auto rounded-md shadow-[0_4px_6px_rgba(0,0,0,0.2),0_10px_20px_rgba(0,0,0,0.3),0_20px_40px_rgba(0,0,0,0.4)]
-                                   h-[200px] sm:h-[280px] md:h-[300px] lg:h-[340px]"
+                                   h-[150px] sm:h-[200px] md:h-[220px] lg:h-[260px]"
                     />
                 </div>
             );
@@ -83,17 +91,24 @@ const BooksWeLove: React.FC<BooksWeLoveProps> = ({
     };
 
     return (
-        <div className={className}>
+        <div
+            className={`bg-gradient-to-br from-red-800 via-red-700 to-red-900 rounded-lg p-4 sm:p-6 lg:p-8 xl:p-16 ${className}`}
+        >
             {/* Header */}
-            <div className="max-w-7xl mx-auto mb-8 sm:mb-10 lg:mb-12">
+            <div className="max-w-7xl mx-auto mb-6">
                 <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-2 sm:mb-3 flex items-center gap-2 sm:gap-3">
                     {title}
+                    <Link
+                        to={ROUTES_CONSTANTS.DASHBOARD().READING().BOOKS_LIST()}
+                    >
+                        <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7" />
+                    </Link>
                 </h1>
                 <p className="text-base sm:text-lg text-white/70">{subtitle}</p>
             </div>
 
             {/* Books Display */}
-            <div className="max-w-7xl mx-auto relative h-[220px] sm:h-[300px] md:h-[340px] lg:h-[400px] flex justify-center items-end">
+            <div className="max-w-7xl mx-auto relative h-[170px] sm:h-[220px] md:h-[240px] flex justify-center items-end">
                 {/* Small Devices */}
                 <div className="sm:hidden w-full h-full relative">
                     {renderBooks(3, smDevicePositions)}

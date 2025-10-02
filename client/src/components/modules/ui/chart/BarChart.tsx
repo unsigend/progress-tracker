@@ -50,14 +50,19 @@ const BarChartComponent = ({
     } satisfies ChartConfig;
 
     return (
-        <ChartContainer config={chartConfig}>
-            <BarChart accessibilityLayer data={chartData}>
+        <ChartContainer config={chartConfig} className="h-full w-full">
+            <BarChart
+                accessibilityLayer
+                data={chartData}
+                margin={{ top: 10, right: 20, left: 10, bottom: 10 }}
+            >
                 <CartesianGrid vertical={false} />
                 <XAxis
                     dataKey="key"
                     tickLine={false}
-                    tickMargin={10}
+                    tickMargin={8}
                     axisLine={false}
+                    tick={{ fontSize: 12 }}
                     tickFormatter={(value) => value.slice(0, 3)}
                 />
                 <ChartTooltip
@@ -67,8 +72,9 @@ const BarChartComponent = ({
                 <Bar
                     dataKey="value"
                     fill={getBarColor()}
-                    radius={8}
+                    radius={[4, 4, 0, 0]}
                     className="outline-none focus:outline-none"
+                    maxBarSize={40}
                 />
             </BarChart>
         </ChartContainer>

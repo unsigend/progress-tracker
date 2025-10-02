@@ -1,7 +1,11 @@
-// import components
+// imports for components
 import WelcomeCard from "@/components/modules/reading/welcome-card";
 import FeatureBookCard from "@/components/modules/reading/feature-book-card";
 import BooksWeLove from "@/components/modules/reading/books-we-love";
+import DailySummary from "@/components/modules/reading/daily-summary";
+import WeeklyAnalysis from "@/components/modules/reading/weekly-analysis";
+import CompletedBooks from "@/components/modules/reading/completed-books";
+import InProgressReading from "@/components/modules/reading/in-progress";
 
 const DashboardReadingHomePage = () => {
     // Sample book cover URLs for the Books We Love section - NO REPEATS
@@ -19,23 +23,56 @@ const DashboardReadingHomePage = () => {
     ];
 
     return (
-        <div className="mx-auto max-w-screen-2xl space-y-6">
-            {/* Top Row - Equal Layout */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <WelcomeCard />
-                <FeatureBookCard
-                    coverImageUrl="https://m.media-amazon.com/images/I/71OMPF7vzmL._SY522_.jpg"
-                    title="Check out this amazing thriller!"
-                />
-            </div>
+        <div className="mx-auto max-w-screen-2xl p-4 sm:p-6 lg:p-8">
+            {/* Advanced CSS Grid Layout */}
+            <div className="grid grid-cols-12 gap-4 sm:gap-6 lg:gap-8 auto-rows-min">
+                {/* Row 1: Hero Section - Equal heights and centered */}
+                <div className="col-span-12 lg:col-span-5 flex items-start justify-center lg:justify-start">
+                    <div className="w-full h-[400px]">
+                        <WelcomeCard />
+                    </div>
+                </div>
 
-            {/* Books We Love Section - 5 Books */}
-            <div className="bg-gradient-to-br from-red-800 via-red-700 to-red-900 rounded-lg p-10 lg:p-16">
-                <BooksWeLove
-                    coverImageUrls={sampleBookCoverUrls}
-                    title="Featured Reads"
-                    subtitle="Curated selection of our top recommendations."
-                />
+                <div className="col-span-12 lg:col-span-7 flex items-start justify-center lg:justify-end">
+                    <div className="w-full h-[400px]">
+                        <WeeklyAnalysis />
+                    </div>
+                </div>
+
+                {/* Row 2: Daily Summary and Feature Book Card - Equal heights */}
+                <div className="col-span-12 lg:col-span-6 xl:col-span-8 flex items-start justify-center lg:justify-start">
+                    <div className="w-full h-[350px]">
+                        <DailySummary />
+                    </div>
+                </div>
+
+                <div className="col-span-12 lg:col-span-6 xl:col-span-4 flex items-start justify-center lg:justify-end">
+                    <div className="w-full h-[350px]">
+                        <FeatureBookCard
+                            coverImageUrl="https://m.media-amazon.com/images/I/71OMPF7vzmL._SY522_.jpg"
+                            title="Check out this amazing thriller!"
+                        />
+                    </div>
+                </div>
+
+                {/* Row 3: In Progress Reading - Full Width */}
+                <div className="col-span-12">
+                    <InProgressReading />
+                </div>
+
+                {/* Row 4: Completed Books - Full Width */}
+                <div className="col-span-12">
+                    <CompletedBooks />
+                </div>
+
+                {/* Row 5: Books We Love */}
+                <div className="col-span-12">
+                    <BooksWeLove
+                        coverImageUrls={sampleBookCoverUrls}
+                        title="Featured Reads"
+                        subtitle="Curated selection of our top recommendations."
+                    />
+                </div>
             </div>
         </div>
     );

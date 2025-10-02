@@ -12,13 +12,13 @@ const FeatureBookCard: React.FC<FeatureBookCardProps> = ({
     title = "Start reading this captivating thriller before it's out.",
 }) => {
     return (
-        <div className="space-y-3">
+        <div className="h-full flex flex-col space-y-3">
             {/* Header Section */}
-            <div className="space-y-3">
+            <div className="space-y-2 flex-shrink-0">
                 <p className="text-xs font-semibold uppercase tracking-wider">
                     Sneak Peek
                 </p>
-                <h2 className="text-2xl lg:text-3xl xl:text-4xl font-bold leading-tight">
+                <h2 className="text-lg lg:text-xl xl:text-2xl font-bold leading-tight">
                     {title}
                 </h2>
             </div>
@@ -26,8 +26,8 @@ const FeatureBookCard: React.FC<FeatureBookCardProps> = ({
             {/* Main Card */}
             <div
                 className="relative overflow-hidden rounded-xl bg-gradient-to-br from-slate-900 via-slate-800 via-gray-800 
-            to-slate-700 dark:from-black dark:via-slate-900 dark:via-gray-900 dark:to-slate-800 p-4 sm:p-6 lg:p-8 shadow-xl 
-            hover:shadow-2xl hover:scale-[1.01] transition-all duration-300 ease-out"
+            to-slate-700 dark:from-black dark:via-slate-900 dark:via-gray-900 dark:to-slate-800 p-4 sm:p-4 lg:p-6 shadow-xl 
+            hover:shadow-2xl hover:scale-[1.01] transition-all duration-300 ease-out flex-1 flex items-center"
             >
                 {/* Colorful radial gradient overlays for enhanced fading effects */}
                 <div
@@ -53,8 +53,8 @@ const FeatureBookCard: React.FC<FeatureBookCardProps> = ({
                 />
 
                 {/* Book Container */}
-                <div className="relative z-10 flex justify-center items-center">
-                    <div className="relative max-w-[180px] sm:max-w-[220px] w-full">
+                <div className="relative z-10 flex justify-center items-center w-full">
+                    <div className="relative max-w-[160px] sm:max-w-[180px] w-full">
                         <div
                             className="relative group cursor-pointer transition-all duration-200 ease-out hover:-translate-y-1"
                             style={{

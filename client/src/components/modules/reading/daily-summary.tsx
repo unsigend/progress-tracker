@@ -3,14 +3,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const DailySummary = () => {
     return (
-        <Card>
-            <CardHeader>
+        <Card className="h-full flex flex-col">
+            <CardHeader className="flex-shrink-0">
                 <CardTitle className="text-lg font-semibold">
                     Daily Summary
                 </CardTitle>
             </CardHeader>
-            <CardContent>
-                <div className="space-y-6 py-4">
+            <CardContent className="flex-1 flex flex-col justify-center">
+                <div className="space-y-6">
                     {/* Date */}
                     <div>
                         <p className="text-sm font-medium text-muted-foreground uppercase tracking-wide">

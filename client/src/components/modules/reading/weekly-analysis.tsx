@@ -5,8 +5,8 @@ import BarChartComponent from "@/components/modules/ui/chart/BarChart";
 
 const WeeklyAnalysis = () => {
     return (
-        <Card>
-            <CardHeader>
+        <Card className="h-full flex flex-col">
+            <CardHeader className="flex-shrink-0">
                 <CardTitle className="text-lg font-semibold">
                     Weekly Analysis
                 </CardTitle>
@@ -32,20 +32,22 @@ const WeeklyAnalysis = () => {
                     </div>
                 </div>
             </CardHeader>
-            <CardContent className="space-y-6">
-                <BarChartComponent
-                    chartData={[
-                        { key: "Mon", value: 25 },
-                        { key: "Tue", value: 42 },
-                        { key: "Wed", value: 18 },
-                        { key: "Thu", value: 55 },
-                        { key: "Fri", value: 34 },
-                        { key: "Sat", value: 0 },
-                        { key: "Sun", value: 0 },
-                    ]}
-                    color={undefined}
-                    label="Pages"
-                />
+            <CardContent className="flex items-center justify-center p-4">
+                <div className="w-[80%] sm:w-[60%] h-[200px]">
+                    <BarChartComponent
+                        chartData={[
+                            { key: "Mon", value: 25 },
+                            { key: "Tue", value: 42 },
+                            { key: "Wed", value: 18 },
+                            { key: "Thu", value: 55 },
+                            { key: "Fri", value: 34 },
+                            { key: "Sat", value: 0 },
+                            { key: "Sun", value: 0 },
+                        ]}
+                        color={undefined}
+                        label="Pages"
+                    />
+                </div>
             </CardContent>
         </Card>
     );

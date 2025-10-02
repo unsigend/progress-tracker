@@ -7,7 +7,6 @@ import BookShelf from "@/components/modules/books/List";
 import SearchBar from "@/components/modules/ui/searchBar";
 import { ClipLoader } from "react-spinners";
 import SmartPagination from "@/components/modules/ui/smartPagination";
-import FeatureBookCard from "@/components/modules/reading/feature-book-card";
 
 // import shadcn/ui components
 import { Button } from "@/components/ui/button";
@@ -44,7 +43,7 @@ const DashboardLibraryPage = () => {
     } = useTable({
         resource: RESOURCES_CONSTANTS.BOOKS,
         pagination: {
-            pageSize: parseInt(String(pageSizeFromUrl), 10) || 10,
+            pageSize: parseInt(String(pageSizeFromUrl), 10) || 21,
             currentPage: parseInt(currentPageFromUrl, 10) || 1,
         },
         filters: {
@@ -70,95 +69,87 @@ const DashboardLibraryPage = () => {
     };
 
     return (
-        <div>
-            <FeatureBookCard
-                coverImageUrl="https://m.media-amazon.com/images/I/71OMPF7vzmL._SY522_.jpg"
-                title="Check out this amazing thriller!"
-            />
-            <Card>
-                <CardHeader>
-                    <div className="flex flex-col gap-6">
-                        {/* Header Title */}
-                        <div className="flex items-center justify-between">
-                            <h1 className="text-2xl font-semibold text-foreground">
-                                The Library
-                            </h1>
-                        </div>
+        <Card>
+            <CardHeader className="pb-4">
+                {/* Library Title - Centered above search */}
+                <div className="flex justify-center mb-6">
+                    <h1 className="text-3xl font-bold bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900 dark:from-gray-50 dark:via-gray-200 dark:to-gray-50 bg-clip-text text-transparent">
+                        The Library
+                    </h1>
+                </div>
 
-                        <div className="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
-                            {/* Search Section */}
-                            <SearchBar
-                                placeholder="Search by title, author, or ISBN..."
-                                searchTerm={searchTerm}
-                                setSearchTerm={setSearchTerm}
-                                onClear={clearSearch}
-                                onSubmit={(e) => {
-                                    e.preventDefault();
-                                    setCurrentPage(1);
+                {/* Search Section - Centered */}
+                <div className="flex justify-center mb-4">
+                    <div className="w-full max-w-2xl">
+                        <SearchBar
+                            placeholder="Search by title, author, or ISBN..."
+                            searchTerm={searchTerm}
+                            setSearchTerm={setSearchTerm}
+                            onClear={clearSearch}
+                            size="large"
+                            onSubmit={(e) => {
+                                e.preventDefault();
+                                setCurrentPage(1);
 
-                                    if (searchTerm.trim()) {
-                                        setFilters([
-                                            {
-                                                field: "title",
-                                                operator: "contains",
-                                                value: encodeURIComponent(
-                                                    searchTerm
-                                                ),
-                                            },
-                                        ]);
-                                    } else {
-                                        setFilters([], "replace");
-                                    }
-                                }}
-                            />
-
-                            {/* Add Book Button */}
-                            <div className="flex gap-2">
-                                <Link
-                                    to={ROUTES_CONSTANTS.DASHBOARD()
-                                        .READING()
-                                        .BOOKS_NEW()}
-                                >
-                                    <Button
-                                        variant="outline"
-                                        size="sm"
-                                        className="text-xs"
-                                    >
-                                        Add Book
-                                    </Button>
-                                </Link>
-                            </div>
-                        </div>
-                    </div>
-                </CardHeader>
-
-                <CardContent>
-                    {/* Loading State */}
-                    {tableQuery?.isLoading ? (
-                        <div className="flex justify-center items-center py-12">
-                            <ClipLoader
-                                size={40}
-                                color="hsl(var(--foreground))"
-                            />
-                        </div>
-                    ) : (
-                        <BookShelf
-                            books={
-                                (result.data as unknown as AllBookResponseDto)
-                                    .books || []
-                            }
+                                if (searchTerm.trim()) {
+                                    setFilters([
+                                        {
+                                            field: "title",
+                                            operator: "contains",
+                                            value: encodeURIComponent(
+                                                searchTerm
+                                            ),
+                                        },
+                                    ]);
+                                } else {
+                                    setFilters([], "replace");
+                                }
+                            }}
                         />
-                    )}
-                </CardContent>
+                    </div>
+                </div>
 
+                {/* Add Book Button - Right Aligned */}
+                <div className="flex justify-end mb-4">
+                    <Link
+                        to={ROUTES_CONSTANTS.DASHBOARD().READING().BOOKS_NEW()}
+                    >
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            className="text-xs hover:bg-accent hover:text-accent-foreground transition-colors"
+                        >
+                            Add Book
+                        </Button>
+                    </Link>
+                </div>
+            </CardHeader>
+
+            <CardContent>
+                {/* Loading State */}
+                {tableQuery?.isLoading ? (
+                    <div className="flex justify-center items-center py-12">
+                        <ClipLoader size={40} color="hsl(var(--foreground))" />
+                    </div>
+                ) : (
+                    <BookShelf
+                        books={
+                            (result.data as unknown as AllBookResponseDto)
+                                .books || []
+                        }
+                    />
+                )}
+            </CardContent>
+
+            <div className="mt-5">
                 {/* Pagination */}
                 <SmartPagination
                     currentPage={currentPage}
                     totalPages={totalPages}
                     setCurrentPage={setCurrentPage}
                 />
-            </Card>
-        </div>
+            </div>
+        </Card>
     );
 };
 
