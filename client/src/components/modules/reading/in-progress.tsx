@@ -5,7 +5,9 @@ const InProgressReading = () => {
     return (
         <Card>
             <CardHeader>
-                <CardTitle>In Progress Reading</CardTitle>
+                <CardTitle className="text-lg font-semibold">
+                    In Progress Reading
+                </CardTitle>
             </CardHeader>
             <CardContent></CardContent>
         </Card>
