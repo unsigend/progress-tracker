@@ -16,7 +16,7 @@ const DashboardSettingsPage = () => {
                 <div className="max-w-3xl mx-auto space-y-6">
                     {isLoading ? (
                         <div className="flex justify-center items-center py-20">
-                            <ClipLoader />
+                            <ClipLoader color="hsl(var(--foreground))" />
                         </div>
                     ) : (
                         <div className="flex flex-col gap-4">

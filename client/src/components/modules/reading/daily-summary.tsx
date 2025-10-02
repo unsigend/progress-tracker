@@ -1,15 +1,15 @@
 // import shadcn/ui components
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-const InProgressReading = () => {
+const DailySummary = () => {
     return (
         <Card>
             <CardHeader>
-                <CardTitle>In Progress Reading</CardTitle>
+                <CardTitle>Daily Summary</CardTitle>
             </CardHeader>
             <CardContent></CardContent>
         </Card>
     );
 };
 
-export default InProgressReading;
+export default DailySummary;

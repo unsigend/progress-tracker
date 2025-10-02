@@ -120,7 +120,7 @@ const BookDetailsPage = () => {
         if (query?.isLoading) {
             return (
                 <div className="flex justify-center items-center py-12">
-                    <ClipLoader size={40} />
+                    <ClipLoader size={40} color="hsl(var(--foreground))" />
                 </div>
             );
         }
