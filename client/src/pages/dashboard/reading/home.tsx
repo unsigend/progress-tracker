@@ -6,6 +6,7 @@ import DailySummaryCard from "@/components/modules/reading/daily-summary";
 import WeeklyAnalysis from "@/components/modules/reading/weekly-analysis";
 import CompletedBooks from "@/components/modules/reading/completed-books";
 import InProgressReading from "@/components/modules/reading/in-progress";
+import QuickActionsCard from "@/components/modules/reading/quick-action";
 
 const DashboardReadingHomePage = () => {
     // Sample book cover URLs for the Books We Love section - NO REPEATS
@@ -40,14 +41,24 @@ const DashboardReadingHomePage = () => {
                 </div>
 
                 {/* Row 2: Daily Summary Card */}
-                <div className="col-span-12 lg:col-span-6 xl:col-span-8 flex items-start justify-center lg:justify-start">
+                <div className="col-span-12 lg:col-span-4 xl:col-span-4 flex items-start justify-center lg:justify-start">
                     <div className="w-full h-[350px]">
                         <DailySummaryCard />
                     </div>
                 </div>
 
+                {/* Row 2: Quick Actions Card */}
+                <div
+                    className="hidden lg:block col-span-12 lg:col-span-4 xl:col-span-4 flex 
+                items-start justify-center lg:justify-start"
+                >
+                    <div className="w-full h-[350px]">
+                        <QuickActionsCard />
+                    </div>
+                </div>
+
                 {/* Row 2: Feature Book Card */}
-                <div className="col-span-12 lg:col-span-6 xl:col-span-4 flex items-start justify-center lg:justify-end">
+                <div className="col-span-12 lg:col-span-4 xl:col-span-4 flex items-start justify-center lg:justify-end">
                     <div className="w-full h-[350px]">
                         <FeatureBookCard
                             coverImageUrl="https://m.media-amazon.com/images/I/71OMPF7vzmL._SY522_.jpg"

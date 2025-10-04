@@ -72,7 +72,7 @@ const BookDetailsPage = () => {
         // track the book to the current user
         createTrackBook({
             values: {
-                book_id: globalID,
+                id: globalID,
             },
         });
     };

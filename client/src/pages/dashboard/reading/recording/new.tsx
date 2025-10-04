@@ -1,7 +1,8 @@
 // import dependencies
 import { useState } from "react";
-import { useList } from "@refinedev/core";
+import { useList, useForm } from "@refinedev/core";
 import { ClipLoader } from "react-spinners";
+import { toast } from "sonner";
 
 // import components
 import RecordingNewCard from "@/components/modules/reading/recording/New";
@@ -16,7 +17,24 @@ import type {
 // import constants
 import RESOURCES_CONSTANTS from "@/constants/resources";
 
+// import utils
+import errorUtils from "@/utils/error";
+
 const DashboardReadingRecordingNewPage = () => {
+    const { onFinish } = useForm({
+        resource: RESOURCES_CONSTANTS.READING_RECORDINGS,
+        redirect: "list",
+        action: "create",
+        errorNotification: false,
+        successNotification: false,
+        onMutationError(error) {
+            toast.error(errorUtils.extractErrorMessage(error));
+        },
+        onMutationSuccess() {
+            toast.success("Recording created successfully");
+        },
+    });
+
     // form state
     const [formData, setFormData] = useState<CreateRecordingDto>({
         user_book_id: "",
@@ -30,6 +48,7 @@ const DashboardReadingRecordingNewPage = () => {
     const { result: userBooks, query } = useList<UserBooksResponseDto>({
         resource: RESOURCES_CONSTANTS.USER_BOOKS,
     });
+
     let selectableUserBooks;
     if (query.isSuccess && userBooks.data) {
         // filter out the completed books
@@ -47,8 +66,7 @@ const DashboardReadingRecordingNewPage = () => {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log("Recording data:", formData);
-        // TODO: Implement actual submission logic
+        onFinish(formData);
     };
 
     return (

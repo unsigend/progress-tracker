@@ -1,5 +1,5 @@
 // import dependencies
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 
 // import shadcn/ui components
 import { Label } from "@/components/ui/label";
@@ -26,27 +26,6 @@ const TimePicker = ({ value, onChange, placeholder }: TimePickerProps) => {
     const [minutes, setMinutes] = useState("00");
     const [period, setPeriod] = useState("PM");
     const [isOpen, setIsOpen] = useState(false);
-    const containerRef = useRef<HTMLDivElement>(null);
-
-    // Handle click outside to close
-    useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
-            if (
-                containerRef.current &&
-                !containerRef.current.contains(event.target as Node)
-            ) {
-                setIsOpen(false);
-            }
-        };
-
-        if (isOpen) {
-            document.addEventListener("mousedown", handleClickOutside);
-        }
-
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
-    }, [isOpen]);
 
     const toggleOpen = () => {
         setIsOpen(!isOpen);
@@ -56,17 +35,18 @@ const TimePicker = ({ value, onChange, placeholder }: TimePickerProps) => {
         return `${h.padStart(2, "0")}:${m.padStart(2, "0")} ${p}`;
     };
 
-    const handleTimeChange = (h: string, m: string) => {
-        const timeString = `${h.padStart(2, "0")}:${m.padStart(2, "0")}`;
+    const handleTimeChange = (h: string, m: string, p: string) => {
+        const timeString = `${h.padStart(2, "0")}:${m.padStart(2, "0")} ${p}`;
         onChange(timeString);
     };
 
     return (
-        <div className="relative" ref={containerRef}>
+        <div className="relative">
             <Button
                 variant="outline"
                 className="w-full justify-start text-left font-normal"
                 onClick={toggleOpen}
+                type="button"
             >
                 <Clock className="mr-2 h-4 w-4" />
                 {value ? formatTime(hours, minutes, period) : placeholder}
@@ -78,17 +58,23 @@ const TimePicker = ({ value, onChange, placeholder }: TimePickerProps) => {
                     <div className="grid grid-cols-3 gap-3">
                         {/* Hours */}
                         <div className="space-y-2">
-                            <Label className="text-xs text-muted-foreground">
+                            <Label
+                                htmlFor="time-hours"
+                                className="text-xs text-muted-foreground"
+                            >
                                 Hour
                             </Label>
                             <Select
                                 value={hours}
                                 onValueChange={(val) => {
                                     setHours(val);
-                                    handleTimeChange(val, minutes);
+                                    handleTimeChange(val, minutes, period);
                                 }}
                             >
-                                <SelectTrigger className="h-9 w-full min-w-[80px]">
+                                <SelectTrigger
+                                    id="time-hours"
+                                    className="h-9 w-full min-w-[80px]"
+                                >
                                     <SelectValue />
                                 </SelectTrigger>
                                 <SelectContent className="min-w-[80px]">
@@ -109,17 +95,23 @@ const TimePicker = ({ value, onChange, placeholder }: TimePickerProps) => {
 
                         {/* Minutes */}
                         <div className="space-y-2">
-                            <Label className="text-xs text-muted-foreground">
+                            <Label
+                                htmlFor="time-minutes"
+                                className="text-xs text-muted-foreground"
+                            >
                                 Min
                             </Label>
                             <Select
                                 value={minutes}
                                 onValueChange={(val) => {
                                     setMinutes(val);
-                                    handleTimeChange(hours, val);
+                                    handleTimeChange(hours, val, period);
                                 }}
                             >
-                                <SelectTrigger className="h-9 w-full min-w-[80px]">
+                                <SelectTrigger
+                                    id="time-minutes"
+                                    className="h-9 w-full min-w-[80px]"
+                                >
                                     <SelectValue />
                                 </SelectTrigger>
                                 <SelectContent className="min-w-[80px]">
@@ -142,17 +134,23 @@ const TimePicker = ({ value, onChange, placeholder }: TimePickerProps) => {
 
                         {/* AM/PM */}
                         <div className="space-y-2">
-                            <Label className="text-xs text-muted-foreground">
+                            <Label
+                                htmlFor="time-period"
+                                className="text-xs text-muted-foreground"
+                            >
                                 Period
                             </Label>
                             <Select
                                 value={period}
                                 onValueChange={(val) => {
                                     setPeriod(val);
-                                    handleTimeChange(hours, minutes);
+                                    handleTimeChange(hours, minutes, val);
                                 }}
                             >
-                                <SelectTrigger className="h-9 w-full min-w-[80px]">
+                                <SelectTrigger
+                                    id="time-period"
+                                    className="h-9 w-full min-w-[80px]"
+                                >
                                     <SelectValue />
                                 </SelectTrigger>
                                 <SelectContent className="min-w-[80px]">

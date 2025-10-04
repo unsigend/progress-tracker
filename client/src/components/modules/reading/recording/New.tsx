@@ -99,11 +99,23 @@ const RecordingNewCard = ({
     const calculateMinutes = (fromTime: string, toTime: string) => {
         if (!fromTime || !toTime) return 0;
 
-        const [fromHour, fromMin] = fromTime.split(":").map(Number);
-        const [toHour, toMin] = toTime.split(":").map(Number);
+        // Parse time with AM/PM format (e.g., "11:30 AM", "12:30 PM")
+        const parseTime = (timeStr: string) => {
+            const [time, period] = timeStr.split(" ");
+            const [hour, minute] = time.split(":").map(Number);
 
-        const fromMinutes = fromHour * 60 + fromMin;
-        const toMinutes = toHour * 60 + toMin;
+            let hour24 = hour;
+            if (period === "AM" && hour === 12) {
+                hour24 = 0; // 12:xx AM becomes 00:xx
+            } else if (period === "PM" && hour !== 12) {
+                hour24 = hour + 12; // 1:xx PM becomes 13:xx
+            }
+
+            return hour24 * 60 + minute;
+        };
+
+        const fromMinutes = parseTime(fromTime);
+        const toMinutes = parseTime(toTime);
 
         if (toMinutes >= fromMinutes) {
             return toMinutes - fromMinutes;
@@ -167,7 +179,7 @@ const RecordingNewCard = ({
                     {/* Book Selection */}
                     <div className="space-y-2">
                         <Label
-                            htmlFor="book"
+                            htmlFor="book-select"
                             className="flex items-center gap-2 text-sm font-medium text-foreground"
                         >
                             <BookOpen className="w-4 h-4" />
@@ -182,11 +194,41 @@ const RecordingNewCard = ({
                                 })
                             }
                         >
-                            <SelectTrigger className="w-full">
-                                <SelectValue placeholder="Choose a book to read" />
+                            <SelectTrigger id="book-select" className="w-full">
+                                <SelectValue placeholder="Choose a book to read">
+                                    {formData.user_book_id &&
+                                    userBooks &&
+                                    userBooks.length > 0
+                                        ? (() => {
+                                              const selectedBook =
+                                                  userBooks.find(
+                                                      (book) =>
+                                                          book.id ===
+                                                          formData.user_book_id
+                                                  );
+                                              return selectedBook ? (
+                                                  <div className="flex flex-col text-left">
+                                                      <span className="font-medium">
+                                                          {selectedBook.title.includes(
+                                                              ":"
+                                                          )
+                                                              ? selectedBook.title.split(
+                                                                    ":"
+                                                                )[0]
+                                                              : selectedBook.title}
+                                                      </span>
+                                                      <span className="text-xs text-muted-foreground">
+                                                          by{" "}
+                                                          {selectedBook.author}
+                                                      </span>
+                                                  </div>
+                                              ) : null;
+                                          })()
+                                        : null}
+                                </SelectValue>
                             </SelectTrigger>
                             <SelectContent>
-                                {userBooks ? (
+                                {userBooks && userBooks.length > 0 ? (
                                     userBooks.map((book) => (
                                         <SelectItem
                                             key={book.id}
@@ -207,8 +249,8 @@ const RecordingNewCard = ({
                                         </SelectItem>
                                     ))
                                 ) : (
-                                    <SelectItem value="no-books">
-                                        No books found
+                                    <SelectItem value="no-books" disabled>
+                                        No books found - add book first
                                     </SelectItem>
                                 )}
                             </SelectContent>
@@ -217,7 +259,10 @@ const RecordingNewCard = ({
 
                     {/* Date Selection */}
                     <div className="space-y-2">
-                        <Label className="flex items-center gap-2 text-sm font-medium text-foreground">
+                        <Label
+                            htmlFor="date-picker"
+                            className="flex items-center gap-2 text-sm font-medium text-foreground"
+                        >
                             <CalendarIcon className="w-4 h-4" />
                             Reading Date
                         </Label>
@@ -227,6 +272,7 @@ const RecordingNewCard = ({
                         >
                             <PopoverTrigger asChild>
                                 <Button
+                                    id="date-picker"
                                     variant="outline"
                                     className="w-full justify-start text-left font-normal"
                                 >
@@ -320,10 +366,7 @@ const RecordingNewCard = ({
                         </Label>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div className="space-y-1">
-                                <Label
-                                    htmlFor="time-from"
-                                    className="text-xs text-muted-foreground"
-                                >
+                                <Label className="text-xs text-muted-foreground">
                                     Start Time
                                 </Label>
                                 <TimePicker
@@ -335,10 +378,7 @@ const RecordingNewCard = ({
                                 />
                             </div>
                             <div className="space-y-1">
-                                <Label
-                                    htmlFor="time-to"
-                                    className="text-xs text-muted-foreground"
-                                >
+                                <Label className="text-xs text-muted-foreground">
                                     End Time
                                 </Label>
                                 <TimePicker
@@ -400,7 +440,10 @@ const RecordingNewCard = ({
                             type="submit"
                             className="px-6"
                             disabled={
+                                !userBooks ||
+                                userBooks.length === 0 ||
                                 !formData.user_book_id ||
+                                formData.user_book_id === "no-books" ||
                                 !pageRange.from ||
                                 !pageRange.to ||
                                 !timeRange.from ||

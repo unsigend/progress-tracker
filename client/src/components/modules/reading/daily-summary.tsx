@@ -12,7 +12,9 @@ import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 
 const DailySummaryCard = () => {
+    // use the go navigation hook
     const go = useGo();
+
     return (
         <Card className="h-full flex flex-col">
             <CardHeader className="flex-shrink-0">
