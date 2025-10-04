@@ -1,3 +1,9 @@
+// import dependencies
+import { useGo } from "@refinedev/core";
+
+// import constants
+import ROUTES_CONSTANTS from "@/constants/routes";
+
 // import shadcn/ui components
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -6,12 +12,24 @@ import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 
 const DailySummaryCard = () => {
+    const go = useGo();
     return (
         <Card className="h-full flex flex-col">
             <CardHeader className="flex-shrink-0">
                 <CardTitle className="text-lg font-semibold flex items-center justify-between">
                     Daily Summary
-                    <Button variant="ghost" size="icon" className="h-8 w-8">
+                    <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-8 w-8"
+                        onClick={() =>
+                            go({
+                                to: ROUTES_CONSTANTS.DASHBOARD()
+                                    .READING()
+                                    .RECORDINGS_NEW(),
+                            })
+                        }
+                    >
                         <Plus className="h-4 w-4" />
                     </Button>
                 </CardTitle>

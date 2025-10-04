@@ -10,6 +10,13 @@
  * ---------------------------------------------------------------
  */
 
+/** The search value for status */
+export enum ReadingStatus {
+  NOT_STARTED = "NOT_STARTED",
+  IN_PROGRESS = "IN_PROGRESS",
+  COMPLETED = "COMPLETED",
+}
+
 export interface UserResponseDto {
   /** The unique identifier of the user */
   id: string;
@@ -194,9 +201,19 @@ export interface FileUploadResponseDto {
   success: boolean;
 }
 
-export interface TrackBookRequestDto {
-  /** The book id to track */
-  book_id: string;
+export interface FileDeleteRequestDto {
+  /** The file url */
+  file_url: string;
+}
+
+export interface FileDeleteResponseDto {
+  /** Whether the file was deleted successfully */
+  success: boolean;
+}
+
+export interface ObjectIdDto {
+  /** The object id */
+  id: string;
 }
 
 export interface UserBookResponseDto {
@@ -247,6 +264,47 @@ export interface UserBooksResponseDto {
   /** The books */
   books: BookProgressDto[];
   /** The total count of the books */
+  totalCount: number;
+}
+
+export interface CreateRecordingDto {
+  /** The user book id */
+  user_book_id: string;
+  /**
+   * The date of the recording
+   * @format date-time
+   */
+  date: string;
+  /** The pages */
+  pages: number;
+  /** The minutes */
+  minutes: number;
+  /** The notes */
+  notes: string;
+}
+
+export interface RecordingResponseDto {
+  /** The recording id */
+  id: string;
+  /** The user book id */
+  user_book_id: string;
+  /**
+   * The date
+   * @format date-time
+   */
+  date: string;
+  /** The pages */
+  pages: number;
+  /** The minutes */
+  minutes: number;
+  /** The notes */
+  notes: string;
+}
+
+export interface RecordingsResponseDto {
+  /** The recordings */
+  recordings: RecordingResponseDto[];
+  /** The total count of the recordings */
   totalCount: number;
 }
 
@@ -901,15 +959,33 @@ export class Api<
     /**
      * No description
      *
+     * @tags File
+     * @name FileControllerDeleteFile
+     * @summary Delete a file from cloud
+     * @request DELETE:/api/v1/file/delete
+     */
+    fileControllerDeleteFile: (
+      data: FileDeleteRequestDto,
+      params: RequestParams = {},
+    ) =>
+      this.request<FileDeleteResponseDto, void>({
+        path: `/api/v1/file/delete`,
+        method: "DELETE",
+        body: data,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
      * @tags UserBook
      * @name UserBookControllerCreate
      * @summary Track a book for current user
      * @request POST:/api/v1/user-books
      */
-    userBookControllerCreate: (
-      data: TrackBookRequestDto,
-      params: RequestParams = {},
-    ) =>
+    userBookControllerCreate: (data: ObjectIdDto, params: RequestParams = {}) =>
       this.request<UserBookResponseDto, void>({
         path: `/api/v1/user-books`,
         method: "POST",
@@ -929,10 +1005,11 @@ export class Api<
      */
     userBookControllerFindAll: (
       query?: {
-        /** The search field */
-        field?: object;
-        /** The search value */
-        value?: object;
+        /**
+         * The search value for status
+         * @example "NOT_STARTED"
+         */
+        value?: ReadingStatus;
       },
       params: RequestParams = {},
     ) =>
@@ -955,6 +1032,65 @@ export class Api<
     userBookControllerDelete: (id: string, params: RequestParams = {}) =>
       this.request<UserBookResponseDto, void>({
         path: `/api/v1/user-books/${id}`,
+        method: "DELETE",
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags ReadingRecording
+     * @name ReadingRecordingControllerCreate
+     * @summary Create a recording
+     * @request POST:/api/v1/reading-recordings
+     */
+    readingRecordingControllerCreate: (
+      data: CreateRecordingDto,
+      params: RequestParams = {},
+    ) =>
+      this.request<RecordingResponseDto, void>({
+        path: `/api/v1/reading-recordings`,
+        method: "POST",
+        body: data,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags ReadingRecording
+     * @name ReadingRecordingControllerFindById
+     * @summary Get recordings by user book id
+     * @request GET:/api/v1/reading-recordings/{id}
+     */
+    readingRecordingControllerFindById: (
+      id: string,
+      params: RequestParams = {},
+    ) =>
+      this.request<RecordingsResponseDto, void>({
+        path: `/api/v1/reading-recordings/${id}`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags ReadingRecording
+     * @name ReadingRecordingControllerDeleteById
+     * @summary Delete a recording
+     * @request DELETE:/api/v1/reading-recordings/{id}
+     */
+    readingRecordingControllerDeleteById: (
+      id: string,
+      params: RequestParams = {},
+    ) =>
+      this.request<RecordingResponseDto, void>({
+        path: `/api/v1/reading-recordings/${id}`,
         method: "DELETE",
         format: "json",
         ...params,
