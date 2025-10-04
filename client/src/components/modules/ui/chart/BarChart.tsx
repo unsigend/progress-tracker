@@ -38,9 +38,8 @@ const BarChartComponent = ({
     const getBarColor = () => {
         if (color) return color;
 
-        // Check if we're in dark mode
-        const isDarkMode = document.documentElement.classList.contains("dark");
-        return isDarkMode ? "#ffffff" : "#1e293b";
+        // Always use dark color for consistency with light backgrounds
+        return "#1e293b"; // Dark blue-gray color for light theme
     };
 
     const chartConfig: ChartConfig = {

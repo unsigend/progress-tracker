@@ -33,7 +33,7 @@ const WeeklyAnalysis = () => {
                 </div>
             </CardHeader>
             <CardContent className="flex items-center justify-center p-4">
-                <div className="w-[80%] sm:w-[60%] h-[200px]">
+                <div className="w-[90%] sm:w-[60%] h-[200px]">
                     <BarChartComponent
                         chartData={[
                             { key: "Mon", value: 25 },

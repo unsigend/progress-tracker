@@ -1,12 +1,19 @@
 // import shadcn/ui components
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
-const DailySummary = () => {
+// import icons
+import { Plus } from "lucide-react";
+
+const DailySummaryCard = () => {
     return (
         <Card className="h-full flex flex-col">
             <CardHeader className="flex-shrink-0">
-                <CardTitle className="text-lg font-semibold">
+                <CardTitle className="text-lg font-semibold flex items-center justify-between">
                     Daily Summary
+                    <Button variant="ghost" size="icon" className="h-8 w-8">
+                        <Plus className="h-4 w-4" />
+                    </Button>
                 </CardTitle>
             </CardHeader>
             <CardContent className="flex-1 flex flex-col justify-center">
@@ -50,4 +57,4 @@ const DailySummary = () => {
     );
 };
 
-export default DailySummary;
+export default DailySummaryCard;

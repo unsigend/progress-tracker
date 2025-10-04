@@ -2,7 +2,7 @@
 import WelcomeCard from "@/components/modules/reading/welcome-card";
 import FeatureBookCard from "@/components/modules/reading/feature-book-card";
 import BooksWeLove from "@/components/modules/reading/books-we-love";
-import DailySummary from "@/components/modules/reading/daily-summary";
+import DailySummaryCard from "@/components/modules/reading/daily-summary";
 import WeeklyAnalysis from "@/components/modules/reading/weekly-analysis";
 import CompletedBooks from "@/components/modules/reading/completed-books";
 import InProgressReading from "@/components/modules/reading/in-progress";
@@ -39,13 +39,14 @@ const DashboardReadingHomePage = () => {
                     </div>
                 </div>
 
-                {/* Row 2: Daily Summary and Feature Book Card - Equal heights */}
+                {/* Row 2: Daily Summary Card */}
                 <div className="col-span-12 lg:col-span-6 xl:col-span-8 flex items-start justify-center lg:justify-start">
                     <div className="w-full h-[350px]">
-                        <DailySummary />
+                        <DailySummaryCard />
                     </div>
                 </div>
 
+                {/* Row 2: Feature Book Card */}
                 <div className="col-span-12 lg:col-span-6 xl:col-span-4 flex items-start justify-center lg:justify-end">
                     <div className="w-full h-[350px]">
                         <FeatureBookCard

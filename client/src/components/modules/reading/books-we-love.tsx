@@ -82,8 +82,16 @@ const BooksWeLove: React.FC<BooksWeLoveProps> = ({
                     <img
                         src={url}
                         alt={`Book ${index + 1}`}
-                        className="w-auto rounded-md shadow-[0_4px_6px_rgba(0,0,0,0.2),0_10px_20px_rgba(0,0,0,0.3),0_20px_40px_rgba(0,0,0,0.4)]
+                        className="w-auto rounded-lg shadow-[0_8px_16px_rgba(0,0,0,0.3),0_16px_32px_rgba(0,0,0,0.4),0_24px_48px_rgba(0,0,0,0.5)]
                                    h-[150px] sm:h-[200px] md:h-[220px] lg:h-[260px]"
+                        style={{
+                            boxShadow: `
+                                0 4px 8px rgba(0, 0, 0, 0.2),
+                                0 12px 24px rgba(0, 0, 0, 0.3),
+                                0 20px 40px rgba(0, 0, 0, 0.4),
+                                -8px 0 16px rgba(0, 0, 0, 0.2)
+                            `,
+                        }}
                     />
                 </div>
             );
@@ -92,10 +100,34 @@ const BooksWeLove: React.FC<BooksWeLoveProps> = ({
 
     return (
         <div
-            className={`bg-gradient-to-br from-red-800 via-red-700 to-red-900 rounded-lg p-4 sm:p-6 lg:p-8 xl:p-16 ${className}`}
+            className={`relative overflow-hidden rounded-xl bg-gradient-to-br from-slate-900 via-slate-800 via-gray-800 
+            to-slate-700 dark:from-black dark:via-slate-900 dark:via-gray-900 dark:to-slate-800 p-4 sm:p-6 lg:p-8 xl:p-16 shadow-xl 
+            hover:shadow-2xl hover:scale-[1.01] transition-all duration-300 ease-out ${className}`}
         >
+            {/* Colorful radial gradient overlays for enhanced fading effects */}
+            <div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                    background:
+                        "radial-gradient(ellipse at 25% 25%, rgba(147, 51, 234, 0.2) 0%, rgba(79, 172, 254, 0.15) 30%, rgba(56, 189, 248, 0.08) 60%, transparent 80%)",
+                }}
+            />
+            <div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                    background:
+                        "radial-gradient(ellipse at 75% 75%, rgba(59, 130, 246, 0.15) 0%, rgba(16, 185, 129, 0.1) 40%, rgba(34, 197, 94, 0.05) 70%, transparent 85%)",
+                }}
+            />
+            <div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                    background:
+                        "radial-gradient(ellipse at 50% 10%, rgba(255, 255, 255, 0.1) 0%, rgba(147, 197, 253, 0.05) 50%, transparent 75%)",
+                }}
+            />
             {/* Header */}
-            <div className="max-w-7xl mx-auto mb-6">
+            <div className="max-w-7xl mx-auto mb-6 relative z-10">
                 <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-2 sm:mb-3 flex items-center gap-2 sm:gap-3">
                     {title}
                     <Link
@@ -104,11 +136,11 @@ const BooksWeLove: React.FC<BooksWeLoveProps> = ({
                         <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7" />
                     </Link>
                 </h1>
-                <p className="text-base sm:text-lg text-white/70">{subtitle}</p>
+                <p className="text-base sm:text-lg text-white/90">{subtitle}</p>
             </div>
 
             {/* Books Display */}
-            <div className="max-w-7xl mx-auto relative h-[170px] sm:h-[220px] md:h-[240px] flex justify-center items-end">
+            <div className="max-w-7xl mx-auto relative h-[170px] sm:h-[220px] md:h-[240px] flex justify-center items-end z-10">
                 {/* Small Devices */}
                 <div className="sm:hidden w-full h-full relative">
                     {renderBooks(3, smDevicePositions)}
