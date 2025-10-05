@@ -22,6 +22,7 @@ import DashboardReadingBookDetailPage from "@/pages/dashboard/reading/book/show"
 import DashboardReadingBookAddPage from "@/pages/dashboard/reading/book/new";
 import DashboardReadingBookEditPage from "@/pages/dashboard/reading/book/edit";
 import DashboardReadingRecordingNewPage from "@/pages/dashboard/reading/recording/new";
+import DashboardReadingRecordingShowPage from "@/pages/dashboard/reading/recording/show";
 
 // import dashboard projects pages
 import DashboardProjectsPage from "@/pages/dashboard/projects/home";
@@ -94,6 +95,12 @@ function AppRoutes() {
                             .READING()
                             .RECORDINGS_NEW()}
                         element={<DashboardReadingRecordingNewPage />}
+                    />
+                    <Route
+                        path={ROUTES_CONSTANTS.DASHBOARD()
+                            .READING()
+                            .RECORDINGS_SHOW()}
+                        element={<DashboardReadingRecordingShowPage />}
                     />
 
                     {/* Reading Books Page */}

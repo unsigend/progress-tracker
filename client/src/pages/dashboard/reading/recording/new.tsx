@@ -1,6 +1,6 @@
 // import dependencies
 import { useState } from "react";
-import { useList, useForm } from "@refinedev/core";
+import { useList, useForm, useGo } from "@refinedev/core";
 import { ClipLoader } from "react-spinners";
 import { toast } from "sonner";
 
@@ -16,11 +16,13 @@ import type {
 
 // import constants
 import RESOURCES_CONSTANTS from "@/constants/resources";
+import ROUTES_CONSTANTS from "@/constants/routes";
 
 // import utils
 import errorUtils from "@/utils/error";
 
 const DashboardReadingRecordingNewPage = () => {
+    const go = useGo();
     const { onFinish } = useForm({
         resource: RESOURCES_CONSTANTS.READING_RECORDINGS,
         redirect: "list",
@@ -32,6 +34,9 @@ const DashboardReadingRecordingNewPage = () => {
         },
         onMutationSuccess() {
             toast.success("Recording created successfully");
+            go({
+                to: ROUTES_CONSTANTS.DASHBOARD().READING().HOME(),
+            });
         },
     });
 

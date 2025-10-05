@@ -2,24 +2,21 @@
 import { Link } from "@refinedev/core";
 import { cn } from "@/lib/utils";
 
-// import constants
-import ROUTES_CONSTANTS from "@/constants/routes";
-
 /**
  * BookCover component
  * @param image - The image of the book
- * @param id - The id of the book
+ * @param to - to the url
  * @param alt - The alt of the book
  * @param className - The class name of the book
  */
 const BookCoverCard = ({
     image,
-    id,
+    to,
     alt = "Book cover",
     className,
 }: {
     image: string;
-    id?: string;
+    to?: string;
     alt?: string;
     className?: string;
 }) => {
@@ -79,10 +76,10 @@ const BookCoverCard = ({
         </div>
     );
 
-    if (id) {
+    if (to) {
         return (
             <Link
-                to={`${ROUTES_CONSTANTS.DASHBOARD().READING().BOOKS_SHOW(id)}`}
+                to={to}
                 className="inline-block focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded-sm cursor-pointer"
             >
                 {cardContent}

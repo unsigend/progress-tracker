@@ -35,6 +35,10 @@ const ROUTES_CONSTANTS = {
                 return {
                     HOME: (): string => `${READING_ROOT}`,
                     RECORDINGS: (): string => `${READING_ROOT}/recordings`,
+                    RECORDINGS_SHOW: (id?: string): string =>
+                        id
+                            ? `${READING_ROOT}/recordings/${id}`
+                            : `${READING_ROOT}/recordings/:id`,
                     RECORDINGS_NEW: (): string =>
                         `${READING_ROOT}/recordings/new`,
                     BOOKS: (): string => `${BOOKS_ROOT}`,

@@ -7,6 +7,9 @@ import BookCover from "@/components/modules/books/Cover";
 // import types
 import type { BookResponseDto } from "@/api/api";
 
+// import constants
+import ROUTES_CONSTANTS from "@/constants/routes";
+
 /**
  * BookList component
  * @param books - Array of books to display
@@ -57,7 +60,9 @@ const BookList = ({
                                   }`
                                 : "Book cover"
                         }
-                        id={book.id}
+                        to={`${ROUTES_CONSTANTS.DASHBOARD()
+                            .READING()
+                            .BOOKS_SHOW(book.id)}`}
                         className="transition-transform duration-200 hover:scale-105"
                         key={book.id}
                     />

@@ -1,3 +1,7 @@
+// import dependencies
+import { useList } from "@refinedev/core";
+import { ClipLoader } from "react-spinners";
+
 // import shadcn/ui components
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -5,103 +9,53 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import BookList from "@/components/modules/books/List";
 
 // import types
-import type { BookResponseDto } from "@/api/api";
+import type { UserBooksResponseDto } from "@/api/api";
 
-// Mock data for demonstration
-const mockCompletedBooks: BookResponseDto[] = [
-    {
-        id: "1",
-        title: "The Pragmatic Programmer",
-        author: "David Thomas, Andrew Hunt",
-        cover_url:
-            "https://images-na.ssl-images-amazon.com/images/I/41as+WafrFL._SX342_SY445_.jpg",
-        isbn: "978-0201616224",
-        published_date: "1999-10-20",
-        pages: 352,
-        description: "Your journey to mastery",
-        language: "English",
-        publisher: "Addison-Wesley Professional",
-        created_at: "2024-01-01T00:00:00Z",
-        updated_at: "2024-01-01T00:00:00Z",
-    },
-    {
-        id: "2",
-        title: "Clean Architecture",
-        author: "Robert C. Martin",
-        cover_url:
-            "https://images-na.ssl-images-amazon.com/images/I/41xShlnTZTL._SX376_BO1,204,203,200_.jpg",
-        isbn: "978-0134494272",
-        published_date: "2017-09-20",
-        pages: 432,
-        description: "A Craftsman's Guide to Software Structure and Design",
-        language: "English",
-        publisher: "Prentice Hall",
-        created_at: "2024-01-01T00:00:00Z",
-        updated_at: "2024-01-01T00:00:00Z",
-    },
-    {
-        id: "3",
-        title: "Design Patterns",
-        author: "Gang of Four",
-        cover_url:
-            "https://images-na.ssl-images-amazon.com/images/I/51V8JjVJjVL._SX342_SY445_.jpg",
-        isbn: "978-0201633610",
-        published_date: "1994-10-21",
-        pages: 395,
-        description: "Elements of Reusable Object-Oriented Software",
-        language: "English",
-        publisher: "Addison-Wesley Professional",
-        created_at: "2024-01-01T00:00:00Z",
-        updated_at: "2024-01-01T00:00:00Z",
-    },
-    {
-        id: "4",
-        title: "System Design Interview",
-        author: "Alex Xu",
-        cover_url:
-            "https://images-na.ssl-images-amazon.com/images/I/41xShlnTZTL._SX376_BO1,204,203,200_.jpg",
-        isbn: "978-1736049112",
-        published_date: "2020-06-12",
-        pages: 320,
-        description: "An Insider's Guide",
-        language: "English",
-        publisher: "System Design Interview",
-        created_at: "2024-01-01T00:00:00Z",
-        updated_at: "2024-01-01T00:00:00Z",
-    },
-    {
-        id: "5",
-        title: "Cracking the Coding Interview",
-        author: "Gayle Laakmann McDowell",
-        cover_url:
-            "https://images-na.ssl-images-amazon.com/images/I/51V8JjVJjVL._SX342_SY445_.jpg",
-        pages: 687,
-        description: "189 Programming Questions and Solutions",
-        publisher: "CareerCup",
-        created_at: "2024-01-01T00:00:00Z",
-        updated_at: "2024-01-01T00:00:00Z",
-    },
-    {
-        id: "6",
-        title: "JavaScript: The Good Parts",
-        author: "Douglas Crockford",
-        cover_url:
-            "https://images-na.ssl-images-amazon.com/images/I/41xShlnTZTL._SX376_BO1,204,203,200_.jpg",
-        pages: 176,
-        description: "The Good Parts",
-        publisher: "O'Reilly Media",
-        created_at: "2024-01-01T00:00:00Z",
-        updated_at: "2024-01-01T00:00:00Z",
-    },
-];
+// import constants
+import RESOURCES_CONSTANTS from "@/constants/resources";
 
 const CompletedBooks = () => {
-    // Calculate summary data
-    const totalBooks = mockCompletedBooks.length;
-    const totalPages = mockCompletedBooks.reduce(
-        (sum, book) => sum + book.pages,
-        0
-    );
+    // get the completed books
+    const { result: completedBooks, query } = useList<UserBooksResponseDto>({
+        resource: RESOURCES_CONSTANTS.USER_BOOKS,
+        filters: [
+            {
+                field: "",
+                operator: "eq",
+                value: "COMPLETED",
+            },
+        ],
+    });
+
+    // Show loading animation while query is loading
+    if (query.isLoading) {
+        return (
+            <Card className="min-h-[200px]">
+                <CardHeader>
+                    <CardTitle className="text-xl font-semibold text-foreground">
+                        Completed Books
+                    </CardTitle>
+                </CardHeader>
+                <CardContent className="min-h-[150px] flex items-center justify-center">
+                    <ClipLoader
+                        color="hsl(var(--primary))"
+                        size={40}
+                        loading={true}
+                    />
+                </CardContent>
+            </Card>
+        );
+    }
+
+    // get the books
+    const Books = (completedBooks.data as unknown as UserBooksResponseDto)
+        .books;
+    // only books no user book
+    const PureBooks = Books.map((book) => book.book);
+    // get the total books
+    const totalBooks = (completedBooks.data as unknown as UserBooksResponseDto)
+        .totalCount;
+    const totalPages = Books.reduce((sum, book) => sum + book.book.pages, 0);
 
     return (
         <Card className="min-h-[200px]">
@@ -111,7 +65,7 @@ const CompletedBooks = () => {
                 </CardTitle>
             </CardHeader>
             <CardContent className="min-h-[150px]">
-                {mockCompletedBooks.length > 0 ? (
+                {Books.length > 0 ? (
                     <div className="space-y-6">
                         {/* Summary Bar */}
                         <div className="flex items-center justify-between p-4 bg-muted/30 rounded-lg border border-border/50">
@@ -143,7 +97,7 @@ const CompletedBooks = () => {
                                     Your Library
                                 </h3>
                             </div>
-                            <BookList books={mockCompletedBooks} />
+                            <BookList books={PureBooks} />
                         </div>
                     </div>
                 ) : (

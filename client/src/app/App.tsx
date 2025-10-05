@@ -41,6 +41,15 @@ function App() {
                                 .READING()
                                 .BOOKS_NEW()}`,
                         },
+                        {
+                            name: RESOURCES_CONSTANTS.READING_RECORDINGS,
+                            show: `${ROUTES_CONSTANTS.DASHBOARD()
+                                .READING()
+                                .RECORDINGS_SHOW()}`,
+                            create: `${ROUTES_CONSTANTS.DASHBOARD()
+                                .READING()
+                                .RECORDINGS_NEW()}`,
+                        },
                     ]}
                     dataProvider={dataProvider}
                     notificationProvider={useNotificationProvider()}

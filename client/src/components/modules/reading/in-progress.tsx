@@ -105,7 +105,11 @@ const InProgressReading = () => {
                                 <div className="flex-shrink-0">
                                     <BookCoverCard
                                         image={book.book.cover_url}
-                                        id={book.userBook.id}
+                                        to={`${ROUTES_CONSTANTS.DASHBOARD()
+                                            .READING()
+                                            .RECORDINGS_SHOW(
+                                                book.userBook.id
+                                            )}`}
                                         alt={book.book.title}
                                         className="w-25 h-32"
                                     />

@@ -12,7 +12,6 @@
 
 /** The search value for status */
 export enum ReadingStatus {
-  NOT_STARTED = "NOT_STARTED",
   IN_PROGRESS = "IN_PROGRESS",
   COMPLETED = "COMPLETED",
 }
@@ -227,16 +226,10 @@ export interface UserBookResponseDto {
   status: string;
   /** The current page of the user book */
   current_page: number;
-  /**
-   * The start date of the user book
-   * @format date-time
-   */
-  start_date: string;
-  /**
-   * The completed date of the user book
-   * @format date-time
-   */
-  completed_date: string;
+  /** The start date of the user book */
+  start_date: object;
+  /** The completed date of the user book */
+  completed_date: object;
   /** The total minutes of the user book */
   total_minutes: number;
   /** The total days of the user book */
@@ -265,6 +258,15 @@ export interface UserBooksResponseDto {
   books: BookProgressDto[];
   /** The total count of the books */
   totalCount: number;
+}
+
+export interface UserBookUpdateDto {
+  /** The added pages of the user book */
+  pages: number;
+  /** The added minutes of the user book */
+  minutes: number;
+  /** The added days of the user book */
+  days: number;
 }
 
 export interface CreateRecordingDto {
@@ -1007,7 +1009,7 @@ export class Api<
       query?: {
         /**
          * The search value for status
-         * @example "NOT_STARTED"
+         * @example "IN_PROGRESS"
          */
         value?: ReadingStatus;
       },
@@ -1025,14 +1027,52 @@ export class Api<
      * No description
      *
      * @tags UserBook
-     * @name UserBookControllerDelete
+     * @name UserBookControllerDeleteById
      * @summary Untrack a book for current user
      * @request DELETE:/api/v1/user-books/{id}
      */
-    userBookControllerDelete: (id: string, params: RequestParams = {}) =>
+    userBookControllerDeleteById: (id: string, params: RequestParams = {}) =>
       this.request<UserBookResponseDto, void>({
         path: `/api/v1/user-books/${id}`,
         method: "DELETE",
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags UserBook
+     * @name UserBookControllerFindById
+     * @summary Get a user book by id
+     * @request GET:/api/v1/user-books/{id}
+     */
+    userBookControllerFindById: (id: string, params: RequestParams = {}) =>
+      this.request<UserBookResponseDto, void>({
+        path: `/api/v1/user-books/${id}`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags UserBook
+     * @name UserBookControllerUpdate
+     * @summary Update a user book
+     * @request PATCH:/api/v1/user-books/{id}
+     */
+    userBookControllerUpdate: (
+      id: string,
+      data: UserBookUpdateDto,
+      params: RequestParams = {},
+    ) =>
+      this.request<UserBookResponseDto, void>({
+        path: `/api/v1/user-books/${id}`,
+        method: "PATCH",
+        body: data,
+        type: ContentType.Json,
         format: "json",
         ...params,
       }),
