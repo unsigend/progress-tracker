@@ -33,33 +33,17 @@ const RecordingShowCard = ({ UserBook }: { UserBook: UserBookResponseDto }) => {
     });
 
     // Format dates for display
-    const formatDate = (date: any) => {
-        if (!date) return "Not available";
+    const formatDate = (dateString: any) => {
+        if (!dateString) return "Not available";
 
-        // Handle different date formats
-        let dateObj;
-        if (typeof date === "string") {
-            dateObj = new Date(date);
-        } else if (date instanceof Date) {
-            dateObj = date;
-        } else if (date.$date) {
-            // MongoDB date format
-            dateObj = new Date(date.$date);
-        } else {
-            dateObj = new Date(date);
-        }
-
-        return dateObj.toLocaleDateString("en-US", {
+        const datePart = dateString.split("T")[0];
+        const [year, month, day] = datePart.split("-");
+        const dateObj = new Date(Number(year), Number(month) - 1, Number(day));
+        return dateObj.toLocaleDateString("en-GB", {
             year: "numeric",
             month: "long",
             day: "numeric",
         });
-    };
-
-    // Format hours from minutes
-    const formatHours = (minutes: number) => {
-        const hours = minutes / 60;
-        return hours.toFixed(1);
     };
 
     // Show loading animation while book query is loading
@@ -233,9 +217,10 @@ const RecordingShowCard = ({ UserBook }: { UserBook: UserBookResponseDto }) => {
                                             </div>
                                             <div>
                                                 <p className="text-2xl font-bold text-foreground">
-                                                    {formatHours(
-                                                        UserBook.total_minutes
-                                                    )}
+                                                    {(
+                                                        UserBook.total_minutes /
+                                                        60
+                                                    ).toFixed(1)}
                                                 </p>
                                                 <p className="text-sm text-muted-foreground">
                                                     Total Hours

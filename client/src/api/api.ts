@@ -223,13 +223,19 @@ export interface UserBookResponseDto {
   /** The user id of the user book */
   user_id: string;
   /** The status of the user book */
-  status: string;
+  status: "IN_PROGRESS" | "COMPLETED";
   /** The current page of the user book */
   current_page: number;
-  /** The start date of the user book */
-  start_date: object;
-  /** The completed date of the user book */
-  completed_date: object;
+  /**
+   * The start date of the user book
+   * @format date-time
+   */
+  start_date: string;
+  /**
+   * The completed date of the user book
+   * @format date-time
+   */
+  completed_date: string;
   /** The total minutes of the user book */
   total_minutes: number;
   /** The total days of the user book */

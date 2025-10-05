@@ -13,6 +13,7 @@ import type { UserBooksResponseDto } from "@/api/api";
 
 // import constants
 import RESOURCES_CONSTANTS from "@/constants/resources";
+import ROUTES_CONSTANTS from "@/constants/routes";
 
 const CompletedBooks = () => {
     // get the completed books
@@ -97,7 +98,21 @@ const CompletedBooks = () => {
                                     Your Library
                                 </h3>
                             </div>
-                            <BookList books={PureBooks} />
+                            <BookList
+                                books={Books.map((book, index) => ({
+                                    cover_url: book.book.cover_url,
+                                    id: (
+                                        completedBooks.data as unknown as UserBooksResponseDto
+                                    ).books[index].userBook.id,
+                                    title: book.book.title,
+                                    author: book.book.author,
+                                }))}
+                                to={(id) =>
+                                    `${ROUTES_CONSTANTS.DASHBOARD()
+                                        .READING()
+                                        .RECORDINGS_SHOW(id)}`
+                                }
+                            />
                         </div>
                     </div>
                 ) : (

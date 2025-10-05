@@ -2,10 +2,7 @@
 import { cn } from "@/lib/utils";
 
 // import components
-import BookCover from "@/components/modules/books/Cover";
-
-// import types
-import type { BookResponseDto } from "@/api/api";
+import BookCoverCard from "@/components/modules/books/Cover";
 
 // import constants
 import ROUTES_CONSTANTS from "@/constants/routes";
@@ -19,9 +16,17 @@ import ROUTES_CONSTANTS from "@/constants/routes";
 const BookList = ({
     books,
     className,
+    to = (id: string) =>
+        `${ROUTES_CONSTANTS.DASHBOARD().READING().BOOKS_SHOW(id)}`,
 }: {
-    books: BookResponseDto[];
+    books: Array<{
+        cover_url: string;
+        id: string;
+        title: string;
+        author: string;
+    }>;
     className?: string;
+    to?: (id: string) => string;
 }) => {
     if (!books || books.length === 0) {
         return (
@@ -51,7 +56,7 @@ const BookList = ({
         >
             {books.map((book) => (
                 <div key={book.id} className="flex justify-center">
-                    <BookCover
+                    <BookCoverCard
                         image={book.cover_url || "/placeholder-book.jpg"}
                         alt={
                             book.title
@@ -60,9 +65,7 @@ const BookList = ({
                                   }`
                                 : "Book cover"
                         }
-                        to={`${ROUTES_CONSTANTS.DASHBOARD()
-                            .READING()
-                            .BOOKS_SHOW(book.id)}`}
+                        to={to(book.id)}
                         className="transition-transform duration-200 hover:scale-105"
                         key={book.id}
                     />
