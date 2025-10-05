@@ -136,16 +136,21 @@ const InProgressReading = () => {
                                                     / {book.book.pages} pages
                                                 </span>
                                                 <span className="font-medium text-foreground">
-                                                    {
-                                                        book.userBook
-                                                            .total_minutes
-                                                    }
+                                                    {Math.round(
+                                                        (book.userBook
+                                                            .current_page /
+                                                            book.book.pages) *
+                                                            100
+                                                    )}
                                                     %
                                                 </span>
                                             </div>
                                             <Progress
                                                 value={
-                                                    book.userBook.total_minutes
+                                                    (book.userBook
+                                                        .current_page /
+                                                        book.book.pages) *
+                                                    100
                                                 }
                                                 className="h-2"
                                             />
