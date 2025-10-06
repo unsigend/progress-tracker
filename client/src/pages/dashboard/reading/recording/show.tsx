@@ -7,6 +7,7 @@ import { useState } from "react";
 import BackLink from "@/components/modules/ui/backButton";
 import RecordingShowCard from "@/components/modules/reading/recording/Show";
 import DeleteDialog from "@/components/modules/ui/deleteDialog";
+import RecordingList from "@/components/modules/reading/recording/List";
 
 // import shadcn/ui components
 import { Card, CardContent } from "@/components/ui/card";
@@ -88,14 +89,17 @@ const DashboardReadingRecordingShowPage = () => {
             );
         }
         return (
-            <RecordingShowCard
-                UserBook={userBookResult as UserBookResponseDto}
-            />
+            <div>
+                <RecordingShowCard
+                    UserBook={userBookResult as UserBookResponseDto}
+                />
+                <RecordingList userBookId={globalID as string} />
+            </div>
         );
     };
 
     return (
-        <div className="flex items-center justify-center p-4">
+        <div className="flex items-center justify-center md:p-4">
             <div className="w-full max-w-7xl">
                 <Card>
                     <CardContent className="p-8 md:p-12">

@@ -273,6 +273,11 @@ export interface UserBookUpdateDto {
   minutes: number;
   /** The added days of the user book */
   days: number;
+  /**
+   * The updated date of the user book
+   * @format date-time
+   */
+  date: string;
 }
 
 export interface CreateRecordingDto {

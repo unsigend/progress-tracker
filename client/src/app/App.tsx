@@ -49,6 +49,9 @@ function App() {
                             create: `${ROUTES_CONSTANTS.DASHBOARD()
                                 .READING()
                                 .RECORDINGS_NEW()}`,
+                            list: `${ROUTES_CONSTANTS.DASHBOARD()
+                                .READING()
+                                .HOME()}`,
                         },
                     ]}
                     dataProvider={dataProvider}

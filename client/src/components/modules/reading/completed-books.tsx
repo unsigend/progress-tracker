@@ -51,8 +51,6 @@ const CompletedBooks = () => {
     // get the books
     const Books = (completedBooks.data as unknown as UserBooksResponseDto)
         .books;
-    // only books no user book
-    const PureBooks = Books.map((book) => book.book);
     // get the total books
     const totalBooks = (completedBooks.data as unknown as UserBooksResponseDto)
         .totalCount;
