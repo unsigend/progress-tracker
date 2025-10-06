@@ -6,7 +6,7 @@ import AuthLayout from "@/components/layout/auth/template";
 
 // import components
 import ChartContainer from "@/components/charts/ChartContainer";
-import RegisterForm from "@/features/auth/components/registerForm";
+import RegisterForm from "../components/registerForm";
 
 // import data
 import graphData from "@/data/auth/graphData";

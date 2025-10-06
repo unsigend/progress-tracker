@@ -5,7 +5,7 @@ import { ClipLoader } from "react-spinners";
 import { toast } from "sonner";
 
 // import components
-import RecordingForm from "@/features/recordings/components/RecordingForm";
+import RecordingNewCard from "@/features/recordings/components/New";
 
 // import types
 import type {
@@ -81,7 +81,7 @@ const DashboardReadingRecordingNewPage = () => {
                         />
                     </div>
                 ) : (
-                    <RecordingForm
+                    <RecordingNewCard
                         formData={formData}
                         setFormData={setFormData}
                         onSubmit={handleSubmit}

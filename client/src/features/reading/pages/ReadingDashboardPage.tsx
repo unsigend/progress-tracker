@@ -1,12 +1,12 @@
 // imports for components
-import WelcomeCard from "@/features/reading/components/WelcomeCard";
-import FeatureBookCard from "@/features/reading/components/FeatureBookCard";
-import BooksWeLove from "@/features/reading/components/BooksWeLove";
-import DailySummaryCard from "@/features/reading/components/DailySummary";
-import WeeklyAnalysis from "@/features/reading/components/WeeklyAnalysis";
-import CompletedBooks from "@/features/reading/components/CompletedBooks";
-import InProgressReading from "@/features/reading/components/InProgressReading";
-import QuickActionsCard from "@/features/reading/components/QuickActions";
+import WelcomeCard from "../components/WelcomeCard";
+import FeatureBookCard from "../components/FeatureBookCard";
+import BooksWeLove from "../components/BooksWeLove";
+import DailySummaryCard from "../components/DailySummary";
+import WeeklyAnalysis from "../components/WeeklyAnalysis";
+import CompletedBooks from "../components/CompletedBooks";
+import InProgressReading from "../components/InProgressReading";
+import QuickActionsCard from "../components/QuickActions";
 
 const DashboardReadingHomePage = () => {
     // Sample book cover URLs for the Books We Love section - NO REPEATS

@@ -1,5 +1,5 @@
 // import components
-import FileUploadButton from "@/components/modules/ui/fileUpload";
+import FileUploadButton from "@/components/common/FileUpload";
 import { toast } from "sonner";
 
 /**

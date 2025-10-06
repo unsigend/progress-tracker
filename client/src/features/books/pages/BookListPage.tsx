@@ -3,7 +3,7 @@ import { Link, useTable, useParsed } from "@refinedev/core";
 import { useState } from "react";
 
 // import components
-import BookShelf from "@/features/books/components/BookGrid";
+import BookGrid from "../components/BookGrid";
 import SearchBar from "@/components/common/SearchBar";
 import { ClipLoader } from "react-spinners";
 import SmartPagination from "@/components/common/SmartPagination";
@@ -20,10 +20,10 @@ import RESOURCES_CONSTANTS from "@/constants/resources";
 import ROUTES_CONSTANTS from "@/constants/routes";
 
 /**
- * DashboardLibraryPage component
- * @returns The DashboardLibraryPage component
+ * BookListPage component
+ * @returns The BookListPage component
  */
-const DashboardLibraryPage = () => {
+const BookListPage = () => {
     // get parsed URL parameters
     const parsed = useParsed();
     const currentPageFromUrl = parsed?.params?.currentPage;
@@ -132,7 +132,7 @@ const DashboardLibraryPage = () => {
                         <ClipLoader size={40} color="hsl(var(--foreground))" />
                     </div>
                 ) : (
-                    <BookShelf
+                    <BookGrid
                         books={
                             (result.data as unknown as AllBookResponseDto)
                                 .books || []
@@ -153,4 +153,4 @@ const DashboardLibraryPage = () => {
     );
 };
 
-export default DashboardLibraryPage;
+export default BookListPage;

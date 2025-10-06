@@ -1,5 +1,5 @@
 // import components
-import BookEditCard from "@/features/books/components/BookEditForm";
+import BookEditForm from "../components/BookEditForm";
 
 // import dependencies
 import { useState } from "react";
@@ -51,7 +51,7 @@ const DashboardReadingAddBookPage = () => {
     return (
         <div className="min-h-screen flex items-center justify-center p-4">
             <div className="w-full max-w-2xl">
-                <BookEditCard
+                <BookEditForm
                     title="Add New Book"
                     description="Fill in the details to add a new book to the public library"
                     formData={formData}

@@ -12,8 +12,8 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 // import components
-import BackLink from "@/components/common/BackButton";
-import BookDetailCard from "@/features/books/components/BookShowCard";
+import BackButton from "@/components/common/BackButton";
+import BookShowCard from "../components/BookShowCard";
 import DeleteDialog from "@/components/common/DeleteDialog";
 
 // import shadcn/ui components
@@ -133,7 +133,7 @@ const BookDetailsPage = () => {
             );
         }
 
-        return <BookDetailCard book={result as BookResponseDto} />;
+        return <BookShowCard book={result as BookResponseDto} />;
     };
 
     return (
@@ -143,7 +143,7 @@ const BookDetailsPage = () => {
                     {/* Navigation Buttons */}
                     <div className="mb-6 flex justify-between items-center">
                         {/* Back to Library */}
-                        <BackLink onClick={back} />
+                        <BackButton onClick={back} />
 
                         {/* Dropdown Menu */}
                         <DropdownMenu>

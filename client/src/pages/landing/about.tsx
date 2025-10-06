@@ -2,7 +2,7 @@
 import { Clock } from "lucide-react";
 
 // import components
-import TimelineCard from "@/components/modules/landing/timelineCard";
+import TimelineCard from "./components/timelineCard";
 
 // import data
 import timelineData from "@/data/landing/devProgress";

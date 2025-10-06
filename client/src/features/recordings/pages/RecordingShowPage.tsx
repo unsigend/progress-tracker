@@ -5,9 +5,9 @@ import { useState } from "react";
 
 // import components
 import BackLink from "@/components/common/BackButton";
-import RecordingShow from "@/features/recordings/components/RecordingShow";
+import RecordingShowCard from "@/features/recordings/components/Show";
 import DeleteDialog from "@/components/common/DeleteDialog";
-import RecordingList from "@/features/recordings/components/RecordingList";
+import RecordingList from "@/features/recordings/components/List";
 
 // import shadcn/ui components
 import { Card, CardContent } from "@/components/ui/card";
@@ -90,7 +90,7 @@ const DashboardReadingRecordingShowPage = () => {
         }
         return (
             <div>
-                <RecordingShow
+                <RecordingShowCard
                     UserBook={userBookResult as UserBookResponseDto}
                 />
                 <RecordingList userBookId={globalID as string} />

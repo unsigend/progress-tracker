@@ -1,7 +1,7 @@
 // import components
 import { toast } from "sonner";
 import { ClipLoader } from "react-spinners";
-import BookEditCard from "@/features/books/components/BookEditForm";
+import BookEditForm from "../components/BookEditForm";
 
 // import dependencies
 import { useState, useEffect } from "react";
@@ -74,7 +74,7 @@ const DashboardReadingEditBookPage = () => {
     return (
         <div className="min-h-screen flex items-center justify-center p-4">
             <div className="w-full max-w-2xl">
-                <BookEditCard
+                <BookEditForm
                     title="Edit Book"
                     description="Fill in the details to change the book"
                     formData={formData}

@@ -4,7 +4,7 @@ import AuthLayout from "@/components/layout/auth/template";
 // import components
 import ChartContainer from "@/components/charts/ChartContainer";
 import LineChartComponent from "@/components/charts/LineChart";
-import LoginForm from "@/features/auth/components/loginForm";
+import LoginForm from "../components/loginForm";
 
 // import utils
 import random from "@/utils/random";

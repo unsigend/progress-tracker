@@ -1,6 +1,6 @@
 // import components
-import ProfileSection from "@/features/settings/components/profileSection";
-import SecuritySection from "@/features/settings/components/securitySection";
+import ProfileSection from "../components/profileSection";
+import SecuritySection from "../components/securitySection";
 import { ClipLoader } from "react-spinners";
 
 // import hooks

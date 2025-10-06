@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import BarChartComponent from "@/components/modules/ui/chart/BarChart";
-import LineChartComponent from "@/components/modules/ui/chart/LineChart";
-import PieChartComponent from "@/components/modules/ui/chart/PieChart";
+import BarChartComponent from "@/components/charts/BarChart";
+import LineChartComponent from "@/components/charts/LineChart";
+import PieChartComponent from "@/components/charts/PieChart";
 
 import random from "@/utils/random";
 

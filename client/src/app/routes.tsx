@@ -3,9 +3,9 @@ import { Route, Routes, Navigate } from "react-router";
 import { Authenticated } from "@refinedev/core";
 
 // import layout
-import LandingMainLayout from "@/layout/landing/main";
-import DashboardMainLayout from "@/layout/dashboard/main";
-import AuthMainLayout from "@/layout/auth/main";
+import LandingMainLayout from "@/components/layout/landing/main";
+import DashboardMainLayout from "@/components/layout/dashboard/main";
+import AuthMainLayout from "@/components/layout/auth/main";
 
 // import landing pages
 import LandingHomePage from "@/pages/landing/home";
@@ -13,16 +13,16 @@ import LandingAboutPage from "@/pages/landing/about";
 
 // import dashboard pages
 import DashboardHomePage from "@/pages/dashboard/home";
-import DashboardSettingsPage from "@/pages/dashboard/settings";
 
-// import dashboard reading pages
-import DashboardReadingPage from "@/pages/dashboard/reading/home";
-import DashboardReadingLibraryPage from "@/pages/dashboard/reading/book/list";
-import DashboardReadingBookDetailPage from "@/pages/dashboard/reading/book/show";
-import DashboardReadingBookAddPage from "@/pages/dashboard/reading/book/new";
-import DashboardReadingBookEditPage from "@/pages/dashboard/reading/book/edit";
-import DashboardReadingRecordingNewPage from "@/pages/dashboard/reading/recording/new";
-import DashboardReadingRecordingShowPage from "@/pages/dashboard/reading/recording/show";
+// import feature pages
+import SettingsPage from "@/features/settings/pages/SettingsPage";
+import ReadingDashboardPage from "@/features/reading/pages/ReadingDashboardPage";
+import BookListPage from "@/features/books/pages/BookListPage";
+import BookShowPage from "@/features/books/pages/BookShowPage";
+import BookNewPage from "@/features/books/pages/BookNewPage";
+import BookEditPage from "@/features/books/pages/BookEditPage";
+import RecordingNewPage from "@/features/recordings/pages/RecordingNewPage";
+import RecordingShowPage from "@/features/recordings/pages/RecordingShowPage";
 
 // import dashboard projects pages
 import DashboardProjectsPage from "@/pages/dashboard/projects/home";
@@ -31,10 +31,10 @@ import DashboardProjectsPage from "@/pages/dashboard/projects/home";
 import DashboardCoursesPage from "@/pages/dashboard/courses/home";
 
 // import auth pages
-import LoginPage from "@/pages/auth/login";
-import RegisterPage from "@/pages/auth/register";
-import GoogleCallbackPage from "@/pages/auth/google-callback";
-import GithubCallbackPage from "@/pages/auth/github-callback";
+import LoginPage from "@/features/auth/pages/LoginPage";
+import RegisterPage from "@/features/auth/pages/RegisterPage";
+import GoogleCallbackPage from "@/features/auth/pages/GoogleCallbackPage";
+import GithubCallbackPage from "@/features/auth/pages/GithubCallbackPage";
 
 // import common pages
 import NotFoundPage from "@/pages/common/notFound";
@@ -81,26 +81,26 @@ function AppRoutes() {
                 {/* Settings Page */}
                 <Route
                     path={ROUTES_CONSTANTS.DASHBOARD().SETTINGS()}
-                    element={<DashboardSettingsPage />}
+                    element={<SettingsPage />}
                 />
 
                 {/* Reading Page */}
                 <Route path={ROUTES_CONSTANTS.DASHBOARD().READING().HOME()}>
                     {/* Reading Home Page */}
-                    <Route index element={<DashboardReadingPage />} />
+                    <Route index element={<ReadingDashboardPage />} />
 
                     {/* Reading Recordings Page */}
                     <Route
                         path={ROUTES_CONSTANTS.DASHBOARD()
                             .READING()
                             .RECORDINGS_NEW()}
-                        element={<DashboardReadingRecordingNewPage />}
+                        element={<RecordingNewPage />}
                     />
                     <Route
                         path={ROUTES_CONSTANTS.DASHBOARD()
                             .READING()
                             .RECORDINGS_SHOW()}
-                        element={<DashboardReadingRecordingShowPage />}
+                        element={<RecordingShowPage />}
                     />
 
                     {/* Reading Books Page */}
@@ -108,25 +108,25 @@ function AppRoutes() {
                         path={ROUTES_CONSTANTS.DASHBOARD()
                             .READING()
                             .BOOKS_LIST()}
-                        element={<DashboardReadingLibraryPage />}
+                        element={<BookListPage />}
                     />
                     <Route
                         path={ROUTES_CONSTANTS.DASHBOARD()
                             .READING()
                             .BOOKS_NEW()}
-                        element={<DashboardReadingBookAddPage />}
+                        element={<BookNewPage />}
                     />
                     <Route
                         path={ROUTES_CONSTANTS.DASHBOARD()
                             .READING()
                             .BOOKS_SHOW()}
-                        element={<DashboardReadingBookDetailPage />}
+                        element={<BookShowPage />}
                     />
                     <Route
                         path={ROUTES_CONSTANTS.DASHBOARD()
                             .READING()
                             .BOOKS_EDIT()}
-                        element={<DashboardReadingBookEditPage />}
+                        element={<BookEditPage />}
                     />
                 </Route>
 
