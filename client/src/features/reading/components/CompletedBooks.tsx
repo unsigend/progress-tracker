@@ -1,5 +1,4 @@
 // import dependencies
-import { useList } from "@refinedev/core";
 import { ClipLoader } from "react-spinners";
 
 // import shadcn/ui components
@@ -9,27 +8,20 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import BookGrid from "@/features/books/components/BookGrid";
 
 // import types
-import type { UserBooksResponseDto } from "@/api/api";
+import type { UserBooksResponseDto } from "@/lib/api/api";
 
 // import constants
-import RESOURCES_CONSTANTS from "@/constants/resources";
-import ROUTES_CONSTANTS from "@/constants/routes";
+import ROUTES_CONSTANTS from "@/lib/constants/routes";
 
-const CompletedBooks = () => {
-    // get the completed books
-    const { result: completedBooks, query } = useList<UserBooksResponseDto>({
-        resource: RESOURCES_CONSTANTS.USER_BOOKS,
-        filters: [
-            {
-                field: "",
-                operator: "eq",
-                value: "COMPLETED",
-            },
-        ],
-    });
-
-    // Show loading animation while query is loading
-    if (query.isLoading) {
+const CompletedBooks = ({
+    completedBooks,
+    isLoading = false,
+}: {
+    completedBooks: UserBooksResponseDto;
+    isLoading?: boolean;
+}) => {
+    // Show loading animation while data is loading
+    if (isLoading) {
         return (
             <Card className="min-h-[200px]">
                 <CardHeader>
@@ -47,15 +39,6 @@ const CompletedBooks = () => {
             </Card>
         );
     }
-
-    // get the books
-    const Books = (completedBooks.data as unknown as UserBooksResponseDto)
-        .books;
-    // get the total books
-    const totalBooks = (completedBooks.data as unknown as UserBooksResponseDto)
-        .totalCount;
-    const totalPages = Books.reduce((sum, book) => sum + book.book.pages, 0);
-
     return (
         <Card className="min-h-[200px]">
             <CardHeader>
@@ -64,14 +47,14 @@ const CompletedBooks = () => {
                 </CardTitle>
             </CardHeader>
             <CardContent className="min-h-[150px]">
-                {Books.length > 0 ? (
+                {completedBooks.books.length > 0 ? (
                     <div className="space-y-6">
                         {/* Summary Bar */}
                         <div className="flex items-center justify-between p-4 bg-muted/30 rounded-lg border border-border/50">
                             <div className="flex items-center gap-6">
                                 <div className="text-center">
                                     <div className="text-2xl font-bold text-foreground">
-                                        {totalBooks}
+                                        {completedBooks.totalCount}
                                     </div>
                                     <div className="text-xs text-muted-foreground">
                                         Books Completed
@@ -80,7 +63,13 @@ const CompletedBooks = () => {
                                 <div className="w-px h-8 bg-border"></div>
                                 <div className="text-center">
                                     <div className="text-2xl font-bold text-foreground">
-                                        {totalPages.toLocaleString()}
+                                        {completedBooks.books
+                                            .reduce(
+                                                (sum, book) =>
+                                                    sum + book.book.pages,
+                                                0
+                                            )
+                                            .toLocaleString()}
                                     </div>
                                     <div className="text-xs text-muted-foreground">
                                         Pages Read
@@ -97,14 +86,15 @@ const CompletedBooks = () => {
                                 </h3>
                             </div>
                             <BookGrid
-                                books={Books.map((book, index) => ({
-                                    cover_url: book.book.cover_url,
-                                    id: (
-                                        completedBooks.data as unknown as UserBooksResponseDto
-                                    ).books[index].userBook.id,
-                                    title: book.book.title,
-                                    author: book.book.author,
-                                }))}
+                                books={completedBooks.books.map(
+                                    (book, index) => ({
+                                        cover_url: book.book.cover_url,
+                                        id: completedBooks.books[index].userBook
+                                            .id,
+                                        title: book.book.title,
+                                        author: book.book.author,
+                                    })
+                                )}
                                 to={(id) =>
                                     `${ROUTES_CONSTANTS.DASHBOARD()
                                         .READING()

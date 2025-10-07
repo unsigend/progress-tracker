@@ -6,25 +6,25 @@ import StepIndicator from "@/features/auth/components/StepIndicator";
 import Divider from "@/components/common/Divider";
 
 // import data
-import steps from "@/data/auth/stepData";
+import steps from "@/features/auth/data/stepData";
 
 // import dependencies
 import { Link, useRegister } from "@refinedev/core";
 import { useState } from "react";
 
 // import constants
-import ROUTES_CONSTANTS from "@/constants/routes";
-import VALIDATION_CONSTANTS from "@/constants/validation";
+import ROUTES_CONSTANTS from "@/lib/constants/routes";
+import VALIDATION_CONSTANTS from "@/features/auth/constants/validation";
 
 // import types
-import type { EmailCheckResponseDto, RegisterUserDto } from "@/api/api";
+import type { EmailCheckResponseDto, RegisterUserDto } from "@/lib/api/api";
 
 // import hooks
-import { useEmailCheck } from "@/hooks/use-email-check";
-import { useOAuthLogin } from "@/hooks/use-oauth";
+import { useEmailCheck } from "@/features/auth/hooks/use-email-check";
+import { useOAuthLogin } from "@/features/auth/hooks/use-oauth";
 
 // import utils
-import { validationUtils } from "@/utils/validation";
+import { validationUtils } from "@/lib/utils/validation";
 import { toast } from "sonner";
 
 /**

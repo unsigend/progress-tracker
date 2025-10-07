@@ -2,7 +2,7 @@
 import BackLink from "@/components/common/BackButton";
 
 // import constants
-import ROUTES_CONSTANTS from "@/constants/routes";
+import ROUTES_CONSTANTS from "@/lib/constants/routes";
 
 /**
  * ChartContainer component

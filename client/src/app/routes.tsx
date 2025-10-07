@@ -3,44 +3,50 @@ import { Route, Routes, Navigate } from "react-router";
 import { Authenticated } from "@refinedev/core";
 
 // import layout
-import LandingMainLayout from "@/components/layout/landing/main";
-import DashboardMainLayout from "@/components/layout/dashboard/main";
-import AuthMainLayout from "@/components/layout/auth/main";
+import LandingMainLayout from "@/features/landing/layouts/main";
+import DashboardMainLayout from "@/features/dashboard/layouts/main";
+import AuthMainLayout from "@/features/auth/layouts/main";
 
 // import landing pages
-import LandingHomePage from "@/pages/landing/home";
-import LandingAboutPage from "@/pages/landing/about";
+import LandingHomePage from "@/features/landing/pages/home";
+import LandingAboutPage from "@/features/landing/pages/about";
 
 // import dashboard pages
-import DashboardHomePage from "@/pages/dashboard/home";
+import DashboardHomePage from "@/features/dashboard/pages/home";
 
-// import feature pages
-import SettingsPage from "@/features/settings/pages/SettingsPage";
-import ReadingDashboardPage from "@/features/reading/pages/ReadingDashboardPage";
-import BookListPage from "@/features/books/pages/BookListPage";
-import BookShowPage from "@/features/books/pages/BookShowPage";
-import BookNewPage from "@/features/books/pages/BookNewPage";
-import BookEditPage from "@/features/books/pages/BookEditPage";
-import RecordingNewPage from "@/features/recordings/pages/RecordingNewPage";
-import RecordingShowPage from "@/features/recordings/pages/RecordingShowPage";
+// import books pages
+import BookListPage from "@/features/books/pages/list";
+import BookShowPage from "@/features/books/pages/show";
+import BookNewPage from "@/features/books/pages/new";
+import BookEditPage from "@/features/books/pages/edit";
 
-// import dashboard projects pages
-import DashboardProjectsPage from "@/pages/dashboard/projects/home";
+// import settings pages
+import SettingsPage from "@/features/settings/pages/home";
 
-// import dashboard courses pages
-import DashboardCoursesPage from "@/pages/dashboard/courses/home";
+// import reading pages
+import ReadingDashboardPage from "@/features/reading/pages/home";
+
+// import recordings pages
+import RecordingNewPage from "@/features/recordings/pages/new";
+import RecordingShowPage from "@/features/recordings/pages/show";
+
+// import projects pages
+import DashboardProjectsPage from "@/features/projects/pages/home";
+
+// import courses pages
+import DashboardCoursesPage from "@/features/courses/pages/home";
 
 // import auth pages
-import LoginPage from "@/features/auth/pages/LoginPage";
-import RegisterPage from "@/features/auth/pages/RegisterPage";
-import GoogleCallbackPage from "@/features/auth/pages/GoogleCallbackPage";
-import GithubCallbackPage from "@/features/auth/pages/GithubCallbackPage";
+import LoginPage from "@/features/auth/pages/login";
+import RegisterPage from "@/features/auth/pages/register";
+import GoogleCallbackPage from "@/features/auth/pages/google-callback";
+import GithubCallbackPage from "@/features/auth/pages/github-callback";
 
 // import common pages
 import NotFoundPage from "@/pages/common/notFound";
 
 // import constants
-import ROUTES_CONSTANTS from "@/constants/routes";
+import ROUTES_CONSTANTS from "@/lib/constants/routes";
 
 function AppRoutes() {
     return (

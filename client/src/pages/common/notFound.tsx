@@ -1,4 +1,4 @@
-import { ErrorComponent } from "@/components/refine-ui/layout/error-component";
+import { ErrorComponent } from "@/components/refine/layout/error-component";
 
 export default function NotFoundPage() {
     return (

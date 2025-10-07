@@ -14,10 +14,10 @@ import { BookOpen, User, FileText, Hash, Image } from "lucide-react";
 import BackButton from "@/components/common/BackButton";
 
 // import types
-import type { CreateBookDto, UpdateBookDto } from "@/api/api";
+import type { CreateBookDto, UpdateBookDto } from "@/lib/api/api";
 
 // import constants
-import ROUTES_CONSTANTS from "@/constants/routes";
+import ROUTES_CONSTANTS from "@/lib/constants/routes";
 
 /**
  * BookAddCard component

@@ -16,10 +16,10 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 // import types
-import type { UserResponseDto } from "@/api/api";
+import type { UserResponseDto } from "@/lib/api/api";
 
 // import utils
-import errorUtils from "@/utils/error";
+import errorUtils from "@/lib/utils/error";
 
 /**
  * Change password dialog

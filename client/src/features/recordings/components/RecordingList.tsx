@@ -38,10 +38,10 @@ import {
 import { ArrowUpDown, Calendar, BookOpen, GitMerge } from "lucide-react";
 
 // import constants
-import RESOURCES_CONSTANTS from "@/constants/resources";
+import RESOURCES_CONSTANTS from "@/lib/constants/resources";
 
 // import types
-import type { RecordingsResponseDto, RecordingResponseDto } from "@/api/api";
+import type { RecordingsResponseDto, RecordingResponseDto } from "@/lib/api/api";
 
 // Define the recording type for the table
 type Recording = RecordingResponseDto;

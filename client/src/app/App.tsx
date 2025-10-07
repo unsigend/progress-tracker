@@ -8,17 +8,17 @@ import { Toaster } from "sonner";
 
 // import providers
 import routerProvider from "@refinedev/react-router";
-import dataProvider from "@/providers/data.provider";
-import authProvider from "@/providers/auth.provider";
-import { useNotificationProvider } from "@/components/refine-ui/notification/use-notification-provider";
-import { ThemeProvider } from "@/components/refine-ui/theme/theme-provider";
+import dataProvider from "@/lib/providers/data.provider";
+import authProvider from "@/lib/providers/auth.provider";
+import { useNotificationProvider } from "@/components/refine/notification/use-notification-provider";
+import { ThemeProvider } from "@/components/refine/theme/theme-provider";
 
 // import routes
 import AppRoutes from "@/app/routes";
 
 // import constants
-import RESOURCES_CONSTANTS from "@/constants/resources";
-import ROUTES_CONSTANTS from "@/constants/routes";
+import RESOURCES_CONSTANTS from "@/lib/constants/resources";
+import ROUTES_CONSTANTS from "@/lib/constants/routes";
 
 function App() {
     return (

@@ -10,16 +10,16 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 
 // import components
-import BookCoverCard from "@/features/books/components/BookCover";
+import BookCoverCard from "@/components/common/BookCover";
 
 // import icons
 import { Calendar, Clock, BookOpen, CalendarDays } from "lucide-react";
 
 // import types
-import type { UserBookResponseDto, BookResponseDto } from "@/api/api";
+import type { UserBookResponseDto, BookResponseDto } from "@/lib/api/api";
 
 // import constants
-import RESOURCES_CONSTANTS from "@/constants/resources";
+import RESOURCES_CONSTANTS from "@/lib/constants/resources";
 
 /**
  * RecordingShowCard component

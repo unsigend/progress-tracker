@@ -2,10 +2,10 @@
 import { cn } from "@/lib/utils";
 
 // import components
-import BookCoverCard from "@/features/books/components/BookCover";
+import BookCoverCard from "@/components/common/BookCover";
 
 // import constants
-import ROUTES_CONSTANTS from "@/constants/routes";
+import ROUTES_CONSTANTS from "@/lib/constants/routes";
 
 /**
  * BookGrid component

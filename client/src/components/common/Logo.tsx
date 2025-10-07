@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { Link } from "@refinedev/core";
 
 // import constants
-import ROUTES_CONSTANTS from "@/constants/routes";
+import ROUTES_CONSTANTS from "@/lib/constants/routes";
 
 /**
  * Logo component

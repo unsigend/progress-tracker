@@ -20,10 +20,10 @@ import { Upload, File, X, Image as ImageIcon, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
 // import api
-import ApiClient from "@/api/apiClient";
+import ApiClient from "@/lib/api/apiClient";
 
 // import types
-import type { FileUploadResponseDto } from "@/api/api";
+import type { FileUploadResponseDto } from "@/lib/api/api";
 import type { AxiosResponse } from "axios";
 
 interface FileUploadProps {

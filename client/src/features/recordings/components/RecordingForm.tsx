@@ -37,10 +37,10 @@ import BackButton from "@/components/common/BackButton";
 import TimePicker from "@/components/common/TimePicker";
 
 // import types
-import type { CreateRecordingDto } from "@/api/api";
+import type { CreateRecordingDto } from "@/lib/api/api";
 
 // import constants
-import ROUTES_CONSTANTS from "@/constants/routes";
+import ROUTES_CONSTANTS from "@/lib/constants/routes";
 
 /**
  * RecordingNewCard component
@@ -158,7 +158,7 @@ const RecordingNewCard = ({
             <CardHeader className="text-center">
                 {/* Back Button - Top Left */}
                 <div className="flex items-center justify-start mb-2">
-                    <BackLink onClick={back} />
+                    <BackButton onClick={back} />
                 </div>
 
                 <div className="flex justify-center mb-4">

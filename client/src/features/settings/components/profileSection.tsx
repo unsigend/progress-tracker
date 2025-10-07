@@ -15,14 +15,14 @@ import { Card, CardTitle, CardHeader, CardContent } from "@/components/ui/card";
 import { Edit3, Github, Mail, User } from "lucide-react";
 
 // import types
-import type { UpdateUserDto, UserResponseDto } from "@/api/api";
+import type { UpdateUserDto, UserResponseDto } from "@/lib/api/api";
 
 // import hooks
 import useInvalidateCurrentUser from "@/hooks/use-invalidate-current-user";
 
 // import utils
-import errorUtils from "@/utils/error";
-import validationUtils from "@/utils/validation";
+import errorUtils from "@/lib/utils/error";
+import validationUtils from "@/lib/utils/validation";
 
 const ProfileSection = () => {
     const { data: user } = useGetIdentity<UserResponseDto>();

@@ -1,5 +1,4 @@
 // import dependencies
-import { useOne } from "@refinedev/core";
 import { ClipLoader } from "react-spinners";
 import * as React from "react";
 import {
@@ -37,11 +36,8 @@ import {
 // import icons
 import { ArrowUpDown, Calendar, BookOpen, GitMerge } from "lucide-react";
 
-// import constants
-import RESOURCES_CONSTANTS from "@/constants/resources";
-
 // import types
-import type { RecordingsResponseDto, RecordingResponseDto } from "@/api/api";
+import type { RecordingResponseDto } from "@/lib/api/api";
 
 // Define the recording type for the table
 type Recording = RecordingResponseDto;
@@ -142,20 +138,20 @@ const columns: ColumnDef<Recording>[] = [
     },
 ];
 
-const RecordingList = ({ userBookId }: { userBookId: string }) => {
-    const { result, query } = useOne({
-        resource: RESOURCES_CONSTANTS.READING_RECORDINGS,
-        id: userBookId,
-    });
+interface RecordingListProps {
+    recordings: Recording[];
+    isLoading?: boolean;
+    onSafeMerge?: () => void;
+}
 
+const RecordingList = ({
+    recordings,
+    isLoading = false,
+    onSafeMerge,
+}: RecordingListProps) => {
     const [sorting, setSorting] = React.useState<SortingState>([
         { id: "date", desc: true },
     ]);
-
-    let recordings: Recording[] = [];
-    if (query.isSuccess && result) {
-        recordings = (result as unknown as RecordingsResponseDto).recordings;
-    }
 
     const table = useReactTable({
         data: recordings,
@@ -200,8 +196,7 @@ const RecordingList = ({ userBookId }: { userBookId: string }) => {
                                 <AlertDialogCancel>Cancel</AlertDialogCancel>
                                 <AlertDialogAction
                                     onClick={() => {
-                                        // TODO: Add merge logic here
-                                        console.log("Safe merge confirmed");
+                                        onSafeMerge?.();
                                     }}
                                 >
                                     Confirm
@@ -211,7 +206,7 @@ const RecordingList = ({ userBookId }: { userBookId: string }) => {
                     </AlertDialog>
                 </div>
             </CardHeader>
-            {query.isLoading ? (
+            {isLoading ? (
                 <CardContent>
                     <div className="flex justify-center py-8">
                         <ClipLoader size={40} color="hsl(var(--primary))" />

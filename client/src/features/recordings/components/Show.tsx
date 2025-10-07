@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 // import dependencies
-import { useShow } from "@refinedev/core";
 import { ClipLoader } from "react-spinners";
 
 // import shadcn/ui components
@@ -10,28 +9,29 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 
 // import components
-import BookCoverCard from "@/features/books/components/BookCover";
+import BookCoverCard from "@/components/common/BookCover";
 
 // import icons
 import { Calendar, Clock, BookOpen, CalendarDays } from "lucide-react";
 
 // import types
-import type { UserBookResponseDto, BookResponseDto } from "@/api/api";
+import type { UserBookResponseDto, BookResponseDto } from "@/lib/api/api";
 
-// import constants
-import RESOURCES_CONSTANTS from "@/constants/resources";
+interface RecordingShowProps {
+    userBook: UserBookResponseDto;
+    book: BookResponseDto;
+    isLoading?: boolean;
+}
 
 /**
- * RecordingShowCard component
+ * RecordingShow component
  * Displays detailed information about a specific reading recording
  */
-const RecordingShowCard = ({ UserBook }: { UserBook: UserBookResponseDto }) => {
-    // get book data
-    const { query: bookQuery, result: bookResult } = useShow({
-        resource: RESOURCES_CONSTANTS.BOOKS,
-        id: UserBook.book_id,
-    });
-
+const RecordingShow = ({
+    userBook,
+    book,
+    isLoading = false,
+}: RecordingShowProps) => {
     // Format dates for display
     const formatDate = (dateString: any) => {
         if (!dateString) return "Not available";
@@ -46,8 +46,8 @@ const RecordingShowCard = ({ UserBook }: { UserBook: UserBookResponseDto }) => {
         });
     };
 
-    // Show loading animation while book query is loading
-    if (bookQuery.isLoading) {
+    // Show loading animation while data is loading
+    if (isLoading) {
         return (
             <div className="min-h-screen bg-background flex items-center justify-center">
                 <ClipLoader
@@ -59,8 +59,8 @@ const RecordingShowCard = ({ UserBook }: { UserBook: UserBookResponseDto }) => {
         );
     }
 
-    // Show error if book query fails
-    if (bookQuery.isError || !bookResult) {
+    // Show error if book data is not available
+    if (!book) {
         return (
             <div className="min-h-screen bg-background flex items-center justify-center">
                 <div className="text-center text-muted-foreground">
@@ -71,8 +71,6 @@ const RecordingShowCard = ({ UserBook }: { UserBook: UserBookResponseDto }) => {
         );
     }
 
-    const Book = bookResult as BookResponseDto;
-
     return (
         <div>
             <div className="mx-auto max-w-6xl p-4 sm:p-6 lg:p-8">
@@ -82,8 +80,8 @@ const RecordingShowCard = ({ UserBook }: { UserBook: UserBookResponseDto }) => {
                         {/* Book Cover */}
                         <div className="flex justify-center lg:justify-start">
                             <BookCoverCard
-                                image={Book.cover_url}
-                                alt={Book.title}
+                                image={book.cover_url}
+                                alt={book.title}
                                 className="w-48 h-64 lg:w-56 lg:h-72"
                             />
                         </div>
@@ -92,13 +90,13 @@ const RecordingShowCard = ({ UserBook }: { UserBook: UserBookResponseDto }) => {
                         <div className="flex justify-center lg:justify-start">
                             <Badge
                                 variant={
-                                    UserBook.status === "COMPLETED"
+                                    userBook.status === "COMPLETED"
                                         ? "default"
                                         : "secondary"
                                 }
                                 className="text-sm px-4 py-2"
                             >
-                                {UserBook.status}
+                                {userBook.status}
                             </Badge>
                         </div>
                     </div>
@@ -108,10 +106,10 @@ const RecordingShowCard = ({ UserBook }: { UserBook: UserBookResponseDto }) => {
                         {/* Book Title and Author */}
                         <div className="space-y-2">
                             <h1 className="text-3xl lg:text-4xl font-bold text-foreground leading-tight">
-                                {Book.title}
+                                {book.title}
                             </h1>
                             <h2 className="text-xl text-muted-foreground">
-                                by {Book.author}
+                                by {book.author}
                             </h2>
                         </div>
 
@@ -123,7 +121,7 @@ const RecordingShowCard = ({ UserBook }: { UserBook: UserBookResponseDto }) => {
                                 About This Book
                             </h3>
                             <p className="text-muted-foreground leading-relaxed">
-                                {Book.description}
+                                {book.description}
                             </p>
                         </div>
 
@@ -149,7 +147,7 @@ const RecordingShowCard = ({ UserBook }: { UserBook: UserBookResponseDto }) => {
                                                 </p>
                                                 <p className="font-semibold text-foreground">
                                                     {formatDate(
-                                                        UserBook.start_date
+                                                        userBook.start_date
                                                     )}
                                                 </p>
                                             </div>
@@ -170,7 +168,7 @@ const RecordingShowCard = ({ UserBook }: { UserBook: UserBookResponseDto }) => {
                                                 </p>
                                                 <p className="font-semibold text-foreground">
                                                     {formatDate(
-                                                        UserBook.completed_date
+                                                        userBook.completed_date
                                                     )}
                                                 </p>
                                             </div>
@@ -198,7 +196,7 @@ const RecordingShowCard = ({ UserBook }: { UserBook: UserBookResponseDto }) => {
                                             </div>
                                             <div>
                                                 <p className="text-2xl font-bold text-foreground">
-                                                    {UserBook.total_days}
+                                                    {userBook.total_days}
                                                 </p>
                                                 <p className="text-sm text-muted-foreground">
                                                     Total Days
@@ -218,7 +216,7 @@ const RecordingShowCard = ({ UserBook }: { UserBook: UserBookResponseDto }) => {
                                             <div>
                                                 <p className="text-2xl font-bold text-foreground">
                                                     {(
-                                                        UserBook.total_minutes /
+                                                        userBook.total_minutes /
                                                         60
                                                     ).toFixed(1)}
                                                 </p>
@@ -239,7 +237,7 @@ const RecordingShowCard = ({ UserBook }: { UserBook: UserBookResponseDto }) => {
                                             </div>
                                             <div>
                                                 <p className="text-2xl font-bold text-foreground">
-                                                    {UserBook.current_page}
+                                                    {userBook.current_page}
                                                 </p>
                                                 <p className="text-sm text-muted-foreground">
                                                     Pages Read
@@ -257,4 +255,4 @@ const RecordingShowCard = ({ UserBook }: { UserBook: UserBookResponseDto }) => {
     );
 };
 
-export default RecordingShowCard;
+export default RecordingShow;

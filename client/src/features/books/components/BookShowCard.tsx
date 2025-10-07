@@ -1,8 +1,8 @@
 // import components
-import BookCover from "@/features/books/components/BookCover";
+import BookCover from "@/components/common/BookCover";
 
 // import types
-import type { BookResponseDto } from "@/api/api";
+import type { BookResponseDto } from "@/lib/api/api";
 
 /**
  * BookShowCard component

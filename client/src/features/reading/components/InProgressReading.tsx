@@ -1,6 +1,6 @@
 // import dependencies
 import { useState } from "react";
-import { useGo, useList } from "@refinedev/core";
+import { useGo } from "@refinedev/core";
 import { ClipLoader } from "react-spinners";
 
 // import shadcn/ui components
@@ -9,39 +9,32 @@ import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 
 // import components
-import BookCoverCard from "@/features/books/components/BookCover";
+import BookCoverCard from "@/components/common/BookCover";
 
 // import types
-import type { UserBooksResponseDto } from "@/api/api";
+import type { BookProgressDto, UserBooksResponseDto } from "@/lib/api/api";
 
 // import constants
-import RESOURCES_CONSTANTS from "@/constants/resources";
-import ROUTES_CONSTANTS from "@/constants/routes";
+import ROUTES_CONSTANTS from "@/lib/constants/routes";
 
 // import icons
 import { Plus } from "lucide-react";
 
-const InProgressReading = () => {
+const InProgressReading = ({
+    inProgressBooks,
+    isLoading = false,
+}: {
+    inProgressBooks: UserBooksResponseDto;
+    isLoading?: boolean;
+}) => {
     // use the go navigation hook
     const go = useGo();
 
     // state for showing all books
     const [showAllBooks, setShowAllBooks] = useState(false);
 
-    // get the in progress books
-    const { result: inProgressBooks, query } = useList<UserBooksResponseDto>({
-        resource: RESOURCES_CONSTANTS.USER_BOOKS,
-        filters: [
-            {
-                field: "",
-                operator: "eq",
-                value: "IN_PROGRESS",
-            },
-        ],
-    });
-
-    // Show loading animation while query is loading
-    if (query.isLoading) {
+    // Show loading animation while data is loading
+    if (isLoading) {
         return (
             <Card className="min-h-[200px]">
                 <CardHeader>
@@ -60,8 +53,7 @@ const InProgressReading = () => {
         );
     }
 
-    const Books = (inProgressBooks.data as unknown as UserBooksResponseDto)
-        .books;
+    const Books: BookProgressDto[] = inProgressBooks.books;
 
     const maxDisplayBooks = 3;
     const displayBooks = showAllBooks ? Books : Books.slice(0, maxDisplayBooks);

@@ -8,14 +8,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 // import constants
-import ROUTES_CONSTANTS from "@/constants/routes";
+import ROUTES_CONSTANTS from "@/lib/constants/routes";
 
 // import hooks
 import { useLogin } from "@refinedev/core";
-import { useOAuthLogin } from "@/hooks/use-oauth";
+import { useOAuthLogin } from "@/features/auth/hooks/use-oauth";
 
 // import types
-import type { LoginRequestDto } from "@/api/api";
+import type { LoginRequestDto } from "@/lib/api/api";
 
 const LoginForm = () => {
     const [loginFormData, setLoginFormData] = useState<LoginRequestDto>({

@@ -37,10 +37,10 @@ import BackLink from "@/components/common/BackButton";
 import TimePicker from "@/components/common/TimePicker";
 
 // import types
-import type { CreateRecordingDto } from "@/api/api";
+import type { CreateRecordingDto } from "@/lib/api/api";
 
 // import constants
-import ROUTES_CONSTANTS from "@/constants/routes";
+import ROUTES_CONSTANTS from "@/lib/constants/routes";
 
 /**
  * RecordingNewCard component

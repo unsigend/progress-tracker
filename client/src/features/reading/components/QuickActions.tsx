@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Plus, BookOpen } from "lucide-react";
 
 // import constants
-import ROUTES_CONSTANTS from "@/constants/routes";
+import ROUTES_CONSTANTS from "@/lib/constants/routes";
 
 const QuickActionsCard = () => {
     return (

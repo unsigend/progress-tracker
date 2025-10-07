@@ -3,7 +3,7 @@ import { Link } from "@refinedev/core";
 import React from "react";
 
 // import constants
-import ROUTES_CONSTANTS from "@/constants/routes";
+import ROUTES_CONSTANTS from "@/lib/constants/routes";
 
 // import icons
 import { ArrowRight } from "lucide-react";
