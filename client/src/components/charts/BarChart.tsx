@@ -29,17 +29,19 @@ const BarChartComponent = ({
     chartData,
     color,
     label,
+    className,
 }: {
     chartData: BarChartData[];
     color: string | undefined;
     label: string;
+    className?: string;
 }) => {
     // Simple theme-aware color logic
     const getBarColor = () => {
         if (color) return color;
 
         // Always use dark color for consistency with light backgrounds
-        return "#1e293b"; // Dark blue-gray color for light theme
+        return "#1e293b";
     };
 
     const chartConfig: ChartConfig = {
@@ -49,7 +51,7 @@ const BarChartComponent = ({
     } satisfies ChartConfig;
 
     return (
-        <ChartContainer config={chartConfig} className="h-full w-full">
+        <ChartContainer config={chartConfig} className={className}>
             <BarChart
                 accessibilityLayer
                 data={chartData}

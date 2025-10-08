@@ -1,52 +1,202 @@
+// import dependencies
+import { useState, useMemo } from "react";
+
 // import shadcn/ui components
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+
+// import icons
+import { ChevronLeft, ChevronRight } from "lucide-react";
+
 // import components
 import BarChartComponent from "@/components/charts/BarChart";
 
+// Function to get current week number of the year
+const getCurrentWeekNumber = () => {
+    const now = new Date();
+    const start = new Date(now.getFullYear(), 0, 1);
+    const diff = now.getTime() - start.getTime();
+    const oneWeek = 1000 * 60 * 60 * 24 * 7;
+    return Math.floor(diff / oneWeek) + 1;
+};
+
+// Generate fake data for multiple weeks around current week
+const generateWeeklyData = () => {
+    const currentWeek = getCurrentWeekNumber();
+    return [
+        // Previous week
+        {
+            weekNumber: currentWeek - 1,
+            data: [
+                { key: "Mon", value: 0 },
+                { key: "Tue", value: 0 },
+                { key: "Wed", value: 0 },
+                { key: "Thu", value: 0 },
+                { key: "Fri", value: 0 },
+                { key: "Sat", value: 0 },
+                { key: "Sun", value: 0 },
+            ],
+        },
+        // Current week
+        {
+            weekNumber: currentWeek,
+            data: [
+                { key: "Mon", value: 25 },
+                { key: "Tue", value: 0 },
+                { key: "Wed", value: 0 },
+                { key: "Thu", value: 42 },
+                { key: "Fri", value: 0 },
+                { key: "Sat", value: 0 },
+                { key: "Sun", value: 18 },
+            ],
+        },
+        // Next week
+        {
+            weekNumber: currentWeek + 1,
+            data: [
+                { key: "Mon", value: 0 },
+                { key: "Tue", value: 55 },
+                { key: "Wed", value: 0 },
+                { key: "Thu", value: 0 },
+                { key: "Fri", value: 34 },
+                { key: "Sat", value: 0 },
+                { key: "Sun", value: 0 },
+            ],
+        },
+        // Week after next
+        {
+            weekNumber: currentWeek + 2,
+            data: [
+                { key: "Mon", value: 67 },
+                { key: "Tue", value: 0 },
+                { key: "Wed", value: 0 },
+                { key: "Thu", value: 0 },
+                { key: "Fri", value: 0 },
+                { key: "Sat", value: 23 },
+                { key: "Sun", value: 0 },
+            ],
+        },
+        // Week after that
+        {
+            weekNumber: currentWeek + 3,
+            data: [
+                { key: "Mon", value: 0 },
+                { key: "Tue", value: 0 },
+                { key: "Wed", value: 89 },
+                { key: "Thu", value: 0 },
+                { key: "Fri", value: 0 },
+                { key: "Sat", value: 0 },
+                { key: "Sun", value: 45 },
+            ],
+        },
+    ];
+};
+
+const fakeWeeklyData = generateWeeklyData();
+
 const WeeklyAnalysis = () => {
+    const [currentWeekIndex, setCurrentWeekIndex] = useState(1); // Start with current week
+
+    const currentWeekData = fakeWeeklyData[currentWeekIndex];
+
+    // Calculate stats from current week data
+    const stats = useMemo(() => {
+        const values = currentWeekData.data.map((day) => day.value);
+        const totalPages = values.reduce((sum, value) => sum + value, 0);
+        const nonZeroValues = values.filter((value) => value > 0);
+        const dailyAvg =
+            nonZeroValues.length > 0
+                ? Math.round(totalPages / nonZeroValues.length)
+                : 0;
+
+        // Find best day
+        const maxValue = Math.max(...values);
+        const bestDayIndex = values.indexOf(maxValue);
+        const bestDay =
+            maxValue > 0 ? currentWeekData.data[bestDayIndex].key : "0";
+
+        return {
+            totalPages,
+            dailyAvg,
+            bestDay,
+        };
+    }, [currentWeekData]);
+
+    const handlePreviousWeek = () => {
+        if (currentWeekIndex > 0) {
+            setCurrentWeekIndex(currentWeekIndex - 1);
+        }
+    };
+
+    const handleNextWeek = () => {
+        if (currentWeekIndex < fakeWeeklyData.length - 1) {
+            setCurrentWeekIndex(currentWeekIndex + 1);
+        }
+    };
+
     return (
         <Card className="h-full flex flex-col">
-            <CardHeader className="flex-shrink-0">
-                <CardTitle className="text-lg font-semibold">
-                    Weekly Analysis
-                </CardTitle>
+            <CardHeader className="flex-shrink-0 p-2 sm:p-3">
+                <div className="flex items-center justify-between">
+                    <CardTitle className="text-base sm:text-lg font-semibold">
+                        Weekly Analysis
+                    </CardTitle>
+                </div>
 
-                <div className="grid grid-cols-3 gap-4 pt-4 border-t">
+                <div className="grid grid-cols-3 gap-2 sm:gap-4 pt-3 sm:pt-4 border-t">
                     <div className="space-y-1 text-center">
                         <div className="text-xs text-muted-foreground">
                             Total Pages
                         </div>
-                        <div className="text-2xl font-bold">100</div>
+                        <div className="text-lg sm:text-2xl font-bold">
+                            {stats.totalPages}
+                        </div>
                     </div>
                     <div className="space-y-1 text-center">
                         <div className="text-xs text-muted-foreground">
                             Daily Avg
                         </div>
-                        <div className="text-2xl font-bold">10</div>
+                        <div className="text-lg sm:text-2xl font-bold">
+                            {stats.dailyAvg}
+                        </div>
                     </div>
                     <div className="space-y-1 text-center">
                         <div className="text-xs text-muted-foreground">
                             Best Day
                         </div>
-                        <div className="text-xl font-bold truncate">Monday</div>
+                        <div className="text-base sm:text-xl font-bold truncate">
+                            {stats.bestDay}
+                        </div>
                     </div>
                 </div>
             </CardHeader>
-            <CardContent className="flex items-center justify-center p-4">
-                <div className="w-[90%] sm:w-[60%] h-[200px]">
+            <CardContent className="p-1 sm:p-2 flex items-center justify-center">
+                <div className="flex items-center gap-2">
+                    {/* Left Arrow */}
+                    <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={handlePreviousWeek}
+                    >
+                        <ChevronLeft className="h-4 w-4" />
+                    </Button>
+
+                    {/* Bar Chart */}
                     <BarChartComponent
-                        chartData={[
-                            { key: "Mon", value: 25 },
-                            { key: "Tue", value: 42 },
-                            { key: "Wed", value: 18 },
-                            { key: "Thu", value: 55 },
-                            { key: "Fri", value: 34 },
-                            { key: "Sat", value: 0 },
-                            { key: "Sun", value: 0 },
-                        ]}
-                        color={undefined}
+                        className="h-46"
+                        chartData={currentWeekData.data}
+                        color="rgb(56, 65, 81)"
                         label="Pages"
                     />
+
+                    {/* Right Arrow */}
+                    <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={handleNextWeek}
+                    >
+                        <ChevronRight className="h-4 w-4" />
+                    </Button>
                 </div>
             </CardContent>
         </Card>
