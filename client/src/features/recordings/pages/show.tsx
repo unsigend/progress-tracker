@@ -5,10 +5,11 @@ import {
     useShow,
     useGo,
     useDelete,
-    useOne,
+    useInvalidate,
 } from "@refinedev/core";
 import { ClipLoader } from "react-spinners";
 import { useState } from "react";
+import { toast } from "sonner";
 
 // import components
 import BackButton from "@/components/common/BackButton";
@@ -37,6 +38,12 @@ import type {
     RecordingsResponseDto,
 } from "@/lib/api/api";
 
+// import api
+import apiClient from "@/lib/api/apiClient";
+
+// import utils
+import errorUtils from "@/lib/utils/error";
+
 const DashboardReadingRecordingShowPage = () => {
     // get the id from the parsed url
     const globalID = useParsed().id;
@@ -58,10 +65,13 @@ const DashboardReadingRecordingShowPage = () => {
     });
 
     // get recordings data
-    const { query: recordingsQuery, result: recordingsResult } = useOne({
+    const { query: recordingsQuery, result: recordingsResult } = useShow({
         resource: RESOURCES_CONSTANTS.READING_RECORDINGS,
         id: globalID,
     });
+
+    // use invalidate
+    const invalidate = useInvalidate();
 
     // delete user book mutation
     const { mutate: deleteUserBook } = useDelete();
@@ -97,9 +107,21 @@ const DashboardReadingRecordingShowPage = () => {
     /**
      * Handle safe merge action
      */
-    const handleSafeMerge = () => {
-        // TODO: Implement safe merge logic
-        console.log("Safe merge confirmed");
+    const handleSafeMerge = async () => {
+        if (!globalID) return;
+
+        try {
+            await apiClient.api.userBookControllerDeleteAllRecordings(
+                globalID as string
+            );
+            invalidate({
+                resource: RESOURCES_CONSTANTS.READING_RECORDINGS,
+                invalidates: ["detail"],
+                id: globalID,
+            });
+        } catch (error) {
+            toast.error(errorUtils.extractErrorMessage(error));
+        }
     };
 
     // render the content

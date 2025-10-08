@@ -1091,6 +1091,25 @@ export class Api<
     /**
      * No description
      *
+     * @tags UserBook
+     * @name UserBookControllerDeleteAllRecordings
+     * @summary Delete all recordings by user book id
+     * @request DELETE:/api/v1/user-books/{id}/recordings
+     */
+    userBookControllerDeleteAllRecordings: (
+      id: string,
+      params: RequestParams = {},
+    ) =>
+      this.request<boolean, void>({
+        path: `/api/v1/user-books/${id}/recordings`,
+        method: "DELETE",
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
      * @tags ReadingRecording
      * @name ReadingRecordingControllerCreate
      * @summary Create a recording
