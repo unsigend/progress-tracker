@@ -23,19 +23,23 @@ import ROUTES_CONSTANTS from "@/lib/constants/routes";
 // import types
 import type { UserResponseDto } from "@/lib/api/api";
 
+// import hooks
+import { useLogout } from "@/hooks/use-auth";
+
 const Header = ({
     isSidebarOpen,
     toggleSidebar,
-    onLogout,
     user,
     isLoading,
 }: {
     isSidebarOpen: boolean;
     toggleSidebar: () => void;
-    onLogout: () => void;
     user: UserResponseDto;
     isLoading: boolean;
 }) => {
+    // hook for the logout
+    const { mutate: logout } = useLogout();
+
     return (
         <header
             className="sticky top-0 z-30 flex h-16 shrink-0 items-center justify-between border-b 
@@ -95,7 +99,7 @@ const Header = ({
                                         key={user.avatar_url}
                                     />
                                     <AvatarFallback className="text-xs bg-muted text-muted-foreground">
-                                        {user.username.charAt(0)}
+                                        {user.username.charAt(0).toUpperCase()}
                                     </AvatarFallback>
                                 </Avatar>
                                 <div className="hidden sm:block text-left">
@@ -122,7 +126,7 @@ const Header = ({
                                         key={user.avatar_url}
                                     />
                                     <AvatarFallback className="text-xs bg-muted text-muted-foreground">
-                                        {user.username.charAt(0)}
+                                        {user.username.charAt(0).toUpperCase()}
                                     </AvatarFallback>
                                 </Avatar>
                                 <div className="flex-1 min-w-0">
@@ -147,7 +151,9 @@ const Header = ({
                             <DropdownMenuSeparator />
                             <DropdownMenuItem
                                 className="text-destructive focus:text-destructive cursor-pointer"
-                                onClick={onLogout}
+                                onClick={() => {
+                                    logout();
+                                }}
                             >
                                 <LogOut className="h-4 w-4 mr-2" />
                                 Sign out

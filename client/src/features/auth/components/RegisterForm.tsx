@@ -1,5 +1,4 @@
 // import dependencies
-import { useState } from "react";
 import { Link } from "react-router";
 
 // import shadcn/ui components
@@ -22,50 +21,33 @@ import ROUTES_CONSTANTS from "@/lib/constants/routes";
 
 // import data
 import steps from "@/features/auth/data/steps";
+
+// import types
 import type { StepData } from "@/features/auth/data/steps";
+import type { RegisterUserDto } from "@/lib/api/api";
+
+// import hooks
+import { useGoogleLogin, useGithubLogin } from "@/hooks/use-auth";
 
 const RegisterForm = ({
+    stepData,
     currentStep,
-    setCurrentStep,
+    formData,
+    setFormData,
+    handleNextStep,
+    handlePreviousStep,
 }: {
+    stepData: StepData;
     currentStep: number;
-    setCurrentStep: (step: number) => void;
+    formData: RegisterUserDto;
+    setFormData: (formData: RegisterUserDto) => void;
+    handleNextStep: () => void;
+    handlePreviousStep: () => void;
 }) => {
-    const [formData, setFormData] = useState({
-        email: "",
-        password: "",
-        username: "",
-    });
-
-    const currentStepData: StepData = steps[currentStep - 1];
-
-    const handlePreviousStep = () => {
-        if (currentStep > 1) {
-            setCurrentStep(currentStep - 1);
-        }
-    };
-
-    const handleNextStep = () => {
-        if (currentStep < steps.length) {
-            setCurrentStep(currentStep + 1);
-        } else {
-            // TODO: Handle form submission
-            console.log("Form submitted:", formData);
-        }
-    };
-
-    const handleInputChange =
-        (field: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
-            setFormData((prev) => ({
-                ...prev,
-                [field]: e.target.value,
-            }));
-        };
-
-    const handleOAuthLogin = (provider: "google" | "github") => {
-        // TODO: Handle OAuth login
-        console.log(`OAuth login with ${provider}`);
-    };
+    // hook for the google login
+    const googleLogin = useGoogleLogin();
+    // hook for the github login
+    const githubLogin = useGithubLogin();
 
     return (
         <div className="w-full max-w-md mx-auto space-y-8">
@@ -79,7 +61,7 @@ const RegisterForm = ({
             <div className="text-center space-y-3">
                 <div className="flex items-center justify-between">
                     <h1 className="text-3xl font-bold text-foreground transition-all duration-300">
-                        {currentStepData?.title}
+                        {stepData.title}
                     </h1>
                     <Button
                         variant="link"
@@ -89,43 +71,40 @@ const RegisterForm = ({
                     </Button>
                 </div>
                 <p className="text-sm text-muted-foreground transition-all duration-300 text-left">
-                    {currentStepData?.description}
+                    {stepData.description}
                 </p>
             </div>
 
             {/* Form */}
-            <form
-                onSubmit={(e) => {
-                    e.preventDefault();
-                    handleNextStep();
-                }}
-                className="space-y-6"
-            >
+            <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
                 <FieldGroup>
                     <Field>
-                        <FieldLabel htmlFor={currentStepData?.field}>
-                            {currentStepData?.field.charAt(0).toUpperCase() +
-                                currentStepData?.field.slice(1)}
+                        <FieldLabel htmlFor={stepData.field}>
+                            {stepData.field.charAt(0).toUpperCase() +
+                                stepData.field.slice(1)}
                         </FieldLabel>
                         <FieldContent>
                             <Input
-                                id={currentStepData?.field}
-                                type={currentStepData?.type}
-                                placeholder={currentStepData?.placeholder}
+                                id={stepData.field}
+                                type={stepData.type}
+                                placeholder={stepData.placeholder}
                                 value={
                                     formData[
-                                        currentStepData?.field as keyof typeof formData
+                                        stepData.field as keyof typeof formData
                                     ] || ""
                                 }
-                                onChange={handleInputChange(
-                                    currentStepData?.field
-                                )}
+                                onChange={(e) =>
+                                    setFormData({
+                                        ...formData,
+                                        [stepData.field]: e.target.value,
+                                    })
+                                }
                                 autoFocus
                                 className="transition-all duration-200"
                             />
-                            {currentStepData?.hint && (
+                            {stepData.hint && (
                                 <FieldDescription>
-                                    {currentStepData?.hint}
+                                    {stepData.hint}
                                 </FieldDescription>
                             )}
                         </FieldContent>
@@ -149,8 +128,9 @@ const RegisterForm = ({
                         className={`transition-all duration-200 ${
                             currentStep === 1 ? "w-full" : "flex-1"
                         } cursor-pointer`}
+                        onClick={handleNextStep}
                     >
-                        {currentStepData?.buttonText}
+                        {stepData.buttonText}
                     </Button>
                 </div>
             </form>
@@ -166,7 +146,7 @@ const RegisterForm = ({
                         <Button
                             variant="outline"
                             className="w-full cursor-pointer"
-                            onClick={() => handleOAuthLogin("google")}
+                            onClick={() => googleLogin()}
                         >
                             <img
                                 src="/image/google.svg"
@@ -178,7 +158,7 @@ const RegisterForm = ({
                         <Button
                             variant="outline"
                             className="w-full cursor-pointer"
-                            onClick={() => handleOAuthLogin("github")}
+                            onClick={() => githubLogin()}
                         >
                             <img
                                 src="/image/github.svg"

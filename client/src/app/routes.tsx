@@ -15,6 +15,7 @@ import LandingAboutPage from "@/features/landing/pages/about";
 
 // import dashboard pages
 import DashboardHomePage from "@/features/dashboard/pages/home";
+import DashboardSettingsPage from "@/features/dashboard/pages/settings";
 
 // import auth pages
 import LoginPage from "@/features/auth/pages/login";
@@ -51,6 +52,11 @@ const AppRoutes = () => {
                 <Route
                     path={ROUTES_CONSTANTS.DASHBOARD().HOME()}
                     element={<DashboardHomePage />}
+                />
+                {/* Dashboard Settings Page */}
+                <Route
+                    path={ROUTES_CONSTANTS.DASHBOARD().SETTINGS()}
+                    element={<DashboardSettingsPage />}
                 />
             </Route>
 

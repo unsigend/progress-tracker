@@ -2,7 +2,7 @@
  * Validation utility functions
  */
 // import constants
-import VALIDATION_CONSTANTS from "@/features/auth/constants/validation";
+import VALIDATION_CONSTANTS from "@/lib/constants/validation";
 
 export const validationUtils = {
     /**

@@ -1,4 +1,3 @@
-import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 
 // import components
@@ -7,8 +6,4 @@ import App from "@/app/App.tsx";
 // import styles
 import "@/app/index.css";
 
-createRoot(document.getElementById("root")!).render(
-    <StrictMode>
-        <App />
-    </StrictMode>
-);
+createRoot(document.getElementById("root")!).render(<App />);

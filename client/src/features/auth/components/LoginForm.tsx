@@ -18,6 +18,9 @@ import ROUTES_CONSTANTS from "@/lib/constants/routes";
 // import types
 import type { LoginRequestDto } from "@/lib/api/api";
 
+// import hooks
+import { useGoogleLogin, useGithubLogin } from "@/hooks/use-auth";
+
 const LoginForm = ({
     loginForm,
     setLoginForm,
@@ -29,6 +32,11 @@ const LoginForm = ({
     onSubmit: (e: React.FormEvent) => void;
     isLoading: boolean;
 }) => {
+    // hook for the google login
+    const googleLogin = useGoogleLogin();
+    // hook for the github login
+    const githubLogin = useGithubLogin();
+
     return (
         <div className="w-full max-w-md mx-auto space-y-8">
             {/* Header */}
@@ -124,6 +132,7 @@ const LoginForm = ({
                         variant="outline"
                         className="w-full cursor-pointer"
                         disabled={isLoading}
+                        onClick={() => googleLogin()}
                     >
                         <img
                             src="/image/google.svg"
@@ -136,6 +145,7 @@ const LoginForm = ({
                         variant="outline"
                         className="w-full cursor-pointer"
                         disabled={isLoading}
+                        onClick={() => githubLogin()}
                     >
                         <img
                             src="/image/github.svg"

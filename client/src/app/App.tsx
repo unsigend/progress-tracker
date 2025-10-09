@@ -21,7 +21,7 @@ function App() {
             <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
                 <QueryClientProvider client={queryClient}>
                     <AppRoutes />
-                    <Toaster />
+                    <Toaster position="top-right" />
                 </QueryClientProvider>
             </ThemeProvider>
         </BrowserRouter>
