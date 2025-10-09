@@ -4,6 +4,13 @@ import { useState, useMemo } from "react";
 // import shadcn/ui components
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
 
 // import icons
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -96,8 +103,18 @@ const fakeWeeklyData = generateWeeklyData();
 
 const WeeklyAnalysis = () => {
     const [currentWeekIndex, setCurrentWeekIndex] = useState(1); // Start with current week
+    const [selectedBook, setSelectedBook] = useState<string>("");
 
     const currentWeekData = fakeWeeklyData[currentWeekIndex];
+
+    // Fake book data for selection
+    const fakeBooks = [
+        { id: "1", title: "The Great Gatsby" },
+        { id: "2", title: "To Kill a Mockingbird" },
+        { id: "3", title: "1984" },
+        { id: "4", title: "Pride and Prejudice" },
+        { id: "5", title: "The Catcher in the Rye" },
+    ];
 
     // Calculate stats from current week data
     const stats = useMemo(() => {
@@ -109,16 +126,9 @@ const WeeklyAnalysis = () => {
                 ? Math.round(totalPages / nonZeroValues.length)
                 : 0;
 
-        // Find best day
-        const maxValue = Math.max(...values);
-        const bestDayIndex = values.indexOf(maxValue);
-        const bestDay =
-            maxValue > 0 ? currentWeekData.data[bestDayIndex].key : "0";
-
         return {
             totalPages,
             dailyAvg,
-            bestDay,
         };
     }, [currentWeekData]);
 
@@ -160,13 +170,22 @@ const WeeklyAnalysis = () => {
                             {stats.dailyAvg}
                         </div>
                     </div>
-                    <div className="space-y-1 text-center">
-                        <div className="text-xs text-muted-foreground">
-                            Best Day
-                        </div>
-                        <div className="text-base sm:text-xl font-bold truncate">
-                            {stats.bestDay}
-                        </div>
+                    <div className="space-y-1">
+                        <Select
+                            value={selectedBook}
+                            onValueChange={setSelectedBook}
+                        >
+                            <SelectTrigger className="h-8 text-xs">
+                                <SelectValue placeholder="Book..." />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {fakeBooks.map((book) => (
+                                    <SelectItem key={book.id} value={book.id}>
+                                        {book.title}
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
                     </div>
                 </div>
             </CardHeader>
@@ -183,7 +202,7 @@ const WeeklyAnalysis = () => {
 
                     {/* Bar Chart */}
                     <BarChartComponent
-                        className="h-46"
+                        className="h-38"
                         chartData={currentWeekData.data}
                         color="rgb(56, 65, 81)"
                         label="Pages"

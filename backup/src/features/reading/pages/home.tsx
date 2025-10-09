@@ -68,17 +68,11 @@ const DashboardReadingHomePage = () => {
             {/* Advanced CSS Grid Layout */}
             <div className="grid grid-cols-12 gap-4 sm:gap-6 lg:gap-8 auto-rows-min">
                 {/* Row 1: Hero Section - Equal heights and centered */}
-                <div className="col-span-12 lg:col-span-5 flex items-start justify-center lg:justify-start">
+                {/* <div className="col-span-12 lg:col-span-5 flex items-start justify-center lg:justify-start">
                     <div className="w-full h-[400px]">
                         <WelcomeCard />
                     </div>
-                </div>
-
-                <div className="col-span-12 lg:col-span-7 flex items-start justify-center lg:justify-end">
-                    <div className="w-full h-[400px]">
-                        <WeeklyAnalysis />
-                    </div>
-                </div>
+                </div> */}
 
                 {/* Row 2: Daily Summary Card */}
                 <div className="col-span-12 lg:col-span-4 xl:col-span-4 flex items-start justify-center lg:justify-start">
@@ -98,12 +92,9 @@ const DashboardReadingHomePage = () => {
                 </div>
 
                 {/* Row 2: Feature Book Card */}
-                <div className="col-span-12 lg:col-span-4 xl:col-span-4 flex items-start justify-center lg:justify-end">
+                <div className="col-span-12 lg:col-span-4 flex items-start justify-center lg:justify-end">
                     <div className="w-full h-[350px]">
-                        <FeatureBookCard
-                            coverImageUrl="https://m.media-amazon.com/images/I/71OMPF7vzmL._SY522_.jpg"
-                            title="Check out this amazing thriller!"
-                        />
+                        <WeeklyAnalysis />
                     </div>
                 </div>
 
