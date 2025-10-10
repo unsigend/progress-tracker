@@ -11,14 +11,18 @@ import { Spinner } from "@/components/ui/spinner";
 import { Edit3, Github, Mail, User } from "lucide-react";
 
 // import types
-import type { UserResponseDto } from "@/lib/api/api";
+import type { UserResponseDto, UpdateUserDto } from "@/lib/api/api";
 
 const ProfileSection = ({
     user,
     isLoading,
+    setUser,
+    onUpdate,
 }: {
     user: UserResponseDto;
     isLoading: boolean;
+    setUser: (user: UpdateUserDto) => void;
+    onUpdate: () => void;
 }) => {
     if (isLoading) {
         return (
@@ -50,7 +54,12 @@ const ProfileSection = ({
                                 <Input
                                     id="name"
                                     value={user.username}
-                                    onChange={(e) => {}}
+                                    onChange={(e) => {
+                                        setUser({
+                                            ...(user as UpdateUserDto),
+                                            username: e.target.value,
+                                        });
+                                    }}
                                 />
                                 <p className="text-sm text-muted-foreground">
                                     Your username will be used to identify you
@@ -65,7 +74,12 @@ const ProfileSection = ({
                                         id="email"
                                         className="pr-10"
                                         value={user.email}
-                                        onChange={(e) => {}}
+                                        onChange={(e) => {
+                                            setUser({
+                                                ...(user as UpdateUserDto),
+                                                email: e.target.value,
+                                            });
+                                        }}
                                     />
                                     <div className="absolute inset-y-0 right-0 flex items-center pr-3">
                                         <svg
@@ -114,7 +128,7 @@ const ProfileSection = ({
                     </div>
 
                     {/* Connected Accounts Section */}
-                    {user?.provider && (
+                    {user.provider && (
                         <div className="space-y-3">
                             <h3 className="text-lg font-semibold text-foreground">
                                 Connected accounts
@@ -152,7 +166,7 @@ const ProfileSection = ({
                         </div>
                     )}
 
-                    <Button>Update</Button>
+                    <Button onClick={onUpdate}>Update</Button>
                 </div>
             </CardContent>
         </Card>

@@ -61,7 +61,7 @@ export interface UpdateUserDto {
    * The avatar url of the user
    * @example "https://example.com/avatar.png"
    */
-  avatar_url?: object;
+  avatar_url?: string;
   /**
    * The role of the user
    * @example "USER"
@@ -89,7 +89,7 @@ export interface CreateUserDto {
    * The avatar url of the user
    * @example "https://example.com/avatar.png"
    */
-  avatar_url?: object;
+  avatar_url?: string;
   /**
    * The role of the user
    * @example "USER"
@@ -174,6 +174,11 @@ export interface LoginRequestDto {
   password: string;
 }
 
+export interface LoginResponseDto {
+  /** The access token */
+  access_token: string;
+}
+
 export interface RegisterUserDto {
   /** The username of the user */
   username: string;
@@ -181,11 +186,6 @@ export interface RegisterUserDto {
   email: string;
   /** The password of the user */
   password: string;
-}
-
-export interface LoginResponseDto {
-  /** The access token */
-  access_token: string;
 }
 
 export interface EmailCheckResponseDto {
@@ -784,11 +784,12 @@ export class Api<
      * @request POST:/api/v1/auth/login
      */
     authControllerLogin: (data: LoginRequestDto, params: RequestParams = {}) =>
-      this.request<void, void>({
+      this.request<LoginResponseDto, void>({
         path: `/api/v1/auth/login`,
         method: "POST",
         body: data,
         type: ContentType.Json,
+        format: "json",
         ...params,
       }),
 
@@ -801,9 +802,10 @@ export class Api<
      * @request POST:/api/v1/auth/logout
      */
     authControllerLogout: (params: RequestParams = {}) =>
-      this.request<void, void>({
+      this.request<boolean, void>({
         path: `/api/v1/auth/logout`,
         method: "POST",
+        format: "json",
         ...params,
       }),
 

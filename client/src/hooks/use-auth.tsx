@@ -54,8 +54,8 @@ const useLogin = () => {
             // navigate to dashboard
             navigate(ROUTES_CONSTANTS.DASHBOARD().HOME());
         },
-        onError: (error) => {
-            toast.error(errorUtils.extractErrorMessage(error));
+        onError: () => {
+            toast.error("Invalid email or password");
         },
     });
 };

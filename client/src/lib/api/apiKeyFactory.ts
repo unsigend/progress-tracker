@@ -20,7 +20,16 @@ const API_KEY_FACTORY = {
     },
     BOOK: () => {
         return {
-            All: () => [RESOURCES.BOOKS],
+            All: (query?: {
+                value?: string;
+                page?: number;
+                limit?: number;
+                sort?: "title" | "author" | "createdAt" | "updatedAt";
+                order?: "asc" | "desc";
+            }) => {
+                if (!query) return [RESOURCES.BOOKS];
+                return [RESOURCES.BOOKS, query];
+            },
             Detail: (id: string) => [RESOURCES.BOOKS, id],
         };
     },

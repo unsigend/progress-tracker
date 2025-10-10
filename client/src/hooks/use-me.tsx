@@ -47,8 +47,6 @@ const useUpdateMe = () => {
             queryClient.invalidateQueries({
                 queryKey: API_KEY_FACTORY.USER().Me(),
             });
-            // toast success
-            toast.success("User updated successfully");
         },
         onError: (error) => {
             toast.error(errorUtils.extractErrorMessage(error));

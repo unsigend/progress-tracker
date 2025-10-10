@@ -23,6 +23,12 @@ import RegisterPage from "@/features/auth/pages/register";
 import GoogleCallbackPage from "@/features/auth/pages/google-callback";
 import GithubCallbackPage from "@/features/auth/pages/github-callback";
 
+// import books pages
+import BookListPage from "@/features/books/pages/list";
+import BookEditPage from "@/features/books/pages/edit";
+import BookNewPage from "@/features/books/pages/new";
+import BookShowPage from "@/features/books/pages/show";
+
 const AppRoutes = () => {
     return (
         <Routes>
@@ -57,6 +63,26 @@ const AppRoutes = () => {
                 <Route
                     path={ROUTES_CONSTANTS.DASHBOARD().SETTINGS()}
                     element={<DashboardSettingsPage />}
+                />
+                {/* Books List Page */}
+                <Route
+                    path={ROUTES_CONSTANTS.DASHBOARD().READING().BOOKS_LIST()}
+                    element={<BookListPage />}
+                />
+                {/* Books Edit Page */}
+                <Route
+                    path={ROUTES_CONSTANTS.DASHBOARD().READING().BOOKS_EDIT()}
+                    element={<BookEditPage />}
+                />
+                {/* Books New Page */}
+                <Route
+                    path={ROUTES_CONSTANTS.DASHBOARD().READING().BOOKS_NEW()}
+                    element={<BookNewPage />}
+                />
+                {/* Books Show Page */}
+                <Route
+                    path={ROUTES_CONSTANTS.DASHBOARD().READING().BOOKS_SHOW()}
+                    element={<BookShowPage />}
                 />
             </Route>
 
