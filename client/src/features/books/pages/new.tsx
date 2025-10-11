@@ -9,7 +9,7 @@ import { toast } from "sonner";
 import BookEditForm from "@/features/books/components/BookEditForm";
 
 // import types
-import type { CreateBookDto, UpdateBookDto } from "@/lib/api/api";
+import type { BookCreateDto, BookUpdateDto } from "@/lib/api/api";
 
 // import utils
 import genericUtils from "@/lib/utils/generic";
@@ -22,13 +22,13 @@ import ROUTES_CONSTANTS from "@/lib/constants/routes";
 
 const BookNewPage = () => {
     const navigate = useNavigate();
-    const [formData, setFormData] = useState<CreateBookDto>({
+    const [formData, setFormData] = useState<BookCreateDto>({
         title: "",
         author: "",
         description: "",
         ISBN10: "",
         ISBN13: "",
-        pages: undefined,
+        pages: NaN,
         cover_url: "",
     });
     const { mutate: createBook } = useCreateBook();
@@ -36,9 +36,9 @@ const BookNewPage = () => {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         // remove empty fields
-        const filteredFormData: CreateBookDto = genericUtils.removeEmptyFields(
+        const filteredFormData: BookCreateDto = genericUtils.removeEmptyFields(
             formData
-        ) as unknown as CreateBookDto;
+        ) as unknown as BookCreateDto;
         createBook(filteredFormData, {
             onSuccess: () => {
                 toast.success("Book created successfully");
@@ -56,7 +56,7 @@ const BookNewPage = () => {
                     formData={formData}
                     setFormData={
                         setFormData as React.Dispatch<
-                            React.SetStateAction<CreateBookDto | UpdateBookDto>
+                            React.SetStateAction<BookCreateDto | BookUpdateDto>
                         >
                     }
                     onSubmit={handleSubmit}

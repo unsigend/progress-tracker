@@ -6,10 +6,10 @@ import ApiClient from "@/lib/api/apiClient";
 
 // import types
 import type {
-    AllBookResponseDto,
+    BooksResponseDto,
     BookResponseDto,
-    CreateBookDto,
-    UpdateBookDto,
+    BookCreateDto,
+    BookUpdateDto,
 } from "@/lib/api/api";
 
 // import api key factory
@@ -37,9 +37,9 @@ const useBooks = (
 ) => {
     return useQuery({
         queryKey: API_KEY_FACTORY.BOOK().All(query),
-        queryFn: async (): Promise<AllBookResponseDto> => {
+        queryFn: async (): Promise<BooksResponseDto> => {
             const response = await ApiClient.api.bookControllerFindAll(query);
-            return response.data as unknown as AllBookResponseDto;
+            return response.data as unknown as BooksResponseDto;
         },
     });
 };
@@ -52,6 +52,7 @@ const useBooks = (
 const useBook = (id: string) => {
     return useQuery({
         queryKey: API_KEY_FACTORY.BOOK().Detail(id),
+        enabled: !!id,
         queryFn: async (): Promise<BookResponseDto> => {
             const response = await ApiClient.api.bookControllerFindById(id);
             return response.data as unknown as BookResponseDto;
@@ -66,7 +67,7 @@ const useBook = (id: string) => {
 const useCreateBook = () => {
     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: async (data: CreateBookDto): Promise<BookResponseDto> => {
+        mutationFn: async (data: BookCreateDto): Promise<BookResponseDto> => {
             const response = await ApiClient.api.bookControllerCreate(data);
             return response.data as unknown as BookResponseDto;
         },
@@ -90,7 +91,7 @@ const useCreateBook = () => {
 const useUpdateBook = (id: string) => {
     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: async (data: UpdateBookDto): Promise<BookResponseDto> => {
+        mutationFn: async (data: BookUpdateDto): Promise<BookResponseDto> => {
             const response = await ApiClient.api.bookControllerPatch(id, data);
             return response.data as unknown as BookResponseDto;
         },

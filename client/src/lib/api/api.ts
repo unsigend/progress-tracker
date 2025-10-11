@@ -41,7 +41,7 @@ export interface UserResponseDto {
   updatedAt: string;
 }
 
-export interface UpdateUserDto {
+export interface UserUpdateDto {
   /**
    * The username of the user
    * @example "JohnDoe"
@@ -69,7 +69,7 @@ export interface UpdateUserDto {
   role?: "ADMIN" | "USER";
 }
 
-export interface CreateUserDto {
+export interface UserCreateDto {
   /**
    * The username of the user
    * @example "JohnDoe"
@@ -97,7 +97,7 @@ export interface CreateUserDto {
   role?: "ADMIN" | "USER";
 }
 
-export interface CreateBookDto {
+export interface BookCreateDto {
   /** The title of the book */
   title: string;
   /** The author of the book */
@@ -109,7 +109,7 @@ export interface CreateBookDto {
   /** The ISBN13 of the book */
   ISBN13?: string;
   /** The pages of the book */
-  pages?: number;
+  pages: number;
   /** The cover url of the book */
   cover_url?: string;
 }
@@ -143,7 +143,7 @@ export interface BookResponseDto {
   updatedAt: string;
 }
 
-export interface UpdateBookDto {
+export interface BookUpdateDto {
   /** The title of the book */
   title?: string;
   /** The author of the book */
@@ -160,7 +160,7 @@ export interface UpdateBookDto {
   cover_url?: string;
 }
 
-export interface AllBookResponseDto {
+export interface BooksResponseDto {
   /** The book list */
   books: BookResponseDto[];
   /** The total count of the books */
@@ -179,7 +179,7 @@ export interface LoginResponseDto {
   access_token: string;
 }
 
-export interface RegisterUserDto {
+export interface RegisterRequestDto {
   /** The username of the user */
   username: string;
   /** The email of the user */
@@ -252,16 +252,12 @@ export interface UserBookResponseDto {
   updatedAt: string;
 }
 
-export interface BookProgressDto {
-  /** book data */
-  book: BookResponseDto;
-  /** user book data */
-  userBook: UserBookResponseDto;
-}
-
 export interface UserBooksResponseDto {
   /** The books */
-  books: BookProgressDto[];
+  books: {
+    book?: BookResponseDto;
+    userBook?: UserBookResponseDto;
+  }[];
   /** The total count of the books */
   totalCount: number;
 }
@@ -274,10 +270,42 @@ export interface UserBookUpdateDto {
   /** The added days of the user book */
   days: number;
   /**
-   * The updated date of the user book
+   * The updated date of the user book, possibly be start_date or completed_date
    * @format date-time
    */
   date: string;
+}
+
+export interface RecordingCreateDto {
+  /**
+   * The date of the recording
+   * @format date-time
+   */
+  date: string;
+  /** The pages */
+  pages: number;
+  /** The minutes */
+  minutes?: number;
+  /** The notes */
+  notes: string;
+}
+
+export interface RecordingResponseDto {
+  /** The recording id */
+  id: string;
+  /** The user book id */
+  user_book_id: string;
+  /**
+   * The date of the recording
+   * @format date-time
+   */
+  date: string;
+  /** The pages of the recording */
+  pages: number;
+  /** The minutes of the recording */
+  minutes: number;
+  /** The notes of the recording */
+  notes: object;
 }
 
 import type {
@@ -491,7 +519,7 @@ export class Api<
      * @summary Update the current user
      * @request PATCH:/api/v1/users/me
      */
-    userControllerUpdateMe: (data: UpdateUserDto, params: RequestParams = {}) =>
+    userControllerUpdateMe: (data: UserUpdateDto, params: RequestParams = {}) =>
       this.request<UserResponseDto, void>({
         path: `/api/v1/users/me`,
         method: "PATCH",
@@ -526,7 +554,7 @@ export class Api<
      * @request PUT:/api/v1/users/me
      */
     userControllerReplaceMe: (
-      data: UpdateUserDto,
+      data: UserUpdateDto,
       params: RequestParams = {},
     ) =>
       this.request<UserResponseDto, void>({
@@ -546,7 +574,7 @@ export class Api<
      * @summary Create a user
      * @request POST:/api/v1/users
      */
-    userControllerCreate: (data: CreateUserDto, params: RequestParams = {}) =>
+    userControllerCreate: (data: UserCreateDto, params: RequestParams = {}) =>
       this.request<UserResponseDto, void>({
         path: `/api/v1/users`,
         method: "POST",
@@ -582,7 +610,7 @@ export class Api<
      */
     userControllerUpdate: (
       id: string,
-      data: UpdateUserDto,
+      data: UserUpdateDto,
       params: RequestParams = {},
     ) =>
       this.request<UserResponseDto, void>({
@@ -620,7 +648,7 @@ export class Api<
      */
     userControllerReplace: (
       id: string,
-      data: UpdateUserDto,
+      data: UserUpdateDto,
       params: RequestParams = {},
     ) =>
       this.request<UserResponseDto, void>({
@@ -640,7 +668,7 @@ export class Api<
      * @summary Create a book
      * @request POST:/api/v1/books
      */
-    bookControllerCreate: (data: CreateBookDto, params: RequestParams = {}) =>
+    bookControllerCreate: (data: BookCreateDto, params: RequestParams = {}) =>
       this.request<BookResponseDto, void>({
         path: `/api/v1/books`,
         method: "POST",
@@ -691,7 +719,7 @@ export class Api<
       },
       params: RequestParams = {},
     ) =>
-      this.request<AllBookResponseDto, void>({
+      this.request<BooksResponseDto, void>({
         path: `/api/v1/books`,
         method: "GET",
         query: query,
@@ -725,7 +753,7 @@ export class Api<
      */
     bookControllerReplace: (
       id: string,
-      data: UpdateBookDto,
+      data: BookUpdateDto,
       params: RequestParams = {},
     ) =>
       this.request<BookResponseDto, void>({
@@ -763,7 +791,7 @@ export class Api<
      */
     bookControllerPatch: (
       id: string,
-      data: UpdateBookDto,
+      data: BookUpdateDto,
       params: RequestParams = {},
     ) =>
       this.request<BookResponseDto, void>({
@@ -818,7 +846,7 @@ export class Api<
      * @request POST:/api/v1/auth/register
      */
     authControllerRegister: (
-      data: RegisterUserDto,
+      data: RegisterRequestDto,
       params: RequestParams = {},
     ) =>
       this.request<LoginResponseDto, void>({
@@ -1045,6 +1073,63 @@ export class Api<
         method: "PATCH",
         body: data,
         type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags UserBook
+     * @name UserBookControllerCreateRecording
+     * @summary Create a recording for a user book
+     * @request POST:/api/v1/user-books/{id}/recordings
+     */
+    userBookControllerCreateRecording: (
+      id: string,
+      data: RecordingCreateDto,
+      params: RequestParams = {},
+    ) =>
+      this.request<RecordingResponseDto, void>({
+        path: `/api/v1/user-books/${id}/recordings`,
+        method: "POST",
+        body: data,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags UserBook
+     * @name UserBookControllerGetRecordings
+     * @summary Get all recordings for a user book
+     * @request GET:/api/v1/user-books/{id}/recordings
+     */
+    userBookControllerGetRecordings: (id: string, params: RequestParams = {}) =>
+      this.request<RecordingResponseDto, void>({
+        path: `/api/v1/user-books/${id}/recordings`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags UserBook
+     * @name UserBookControllerDeleteRecordings
+     * @summary Delete all recordings for a user book
+     * @request DELETE:/api/v1/user-books/{id}/recordings
+     */
+    userBookControllerDeleteRecordings: (
+      id: string,
+      params: RequestParams = {},
+    ) =>
+      this.request<boolean, void>({
+        path: `/api/v1/user-books/${id}/recordings`,
+        method: "DELETE",
         format: "json",
         ...params,
       }),

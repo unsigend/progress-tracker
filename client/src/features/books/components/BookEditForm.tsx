@@ -14,7 +14,7 @@ import { BookOpen, User, FileText, Hash, Image } from "lucide-react";
 import BackButton from "@/components/common/BackButton";
 
 // import types
-import type { CreateBookDto, UpdateBookDto } from "@/lib/api/api";
+import type { BookCreateDto, BookUpdateDto } from "@/lib/api/api";
 
 // import constants
 import ROUTES_CONSTANTS from "@/lib/constants/routes";
@@ -33,9 +33,9 @@ const BookEditCard = ({
 }: {
     title: string;
     description: string;
-    formData: UpdateBookDto | CreateBookDto;
+    formData: BookUpdateDto | BookCreateDto;
     setFormData: React.Dispatch<
-        React.SetStateAction<UpdateBookDto | CreateBookDto>
+        React.SetStateAction<BookUpdateDto | BookCreateDto>
     >;
     onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
     action: "add" | "edit";

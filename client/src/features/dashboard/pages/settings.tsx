@@ -13,7 +13,7 @@ import { toast } from "sonner";
 import { useMe, useUpdateMe } from "@/hooks/use-me";
 
 // import types
-import type { UserResponseDto, UpdateUserDto } from "@/lib/api/api";
+import type { UserResponseDto, UserUpdateDto } from "@/lib/api/api";
 
 // import utils
 import validationUtils from "@/lib/utils/validation";
@@ -22,7 +22,7 @@ const DashboardSettingsPage = () => {
     // get the current user data
     const { data: user, isLoading } = useMe();
     const { mutate: updateMe } = useUpdateMe();
-    const [userForm, setUserForm] = useState<UpdateUserDto>({
+    const [userForm, setUserForm] = useState<UserUpdateDto>({
         username: user?.username || "",
         email: user?.email || "",
         avatar_url: user?.avatar_url || "",

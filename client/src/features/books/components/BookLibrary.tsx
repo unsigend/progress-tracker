@@ -13,7 +13,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import SmartPagination from "@/components/common/SmartPagination";
 
 // import types
-import type { AllBookResponseDto } from "@/lib/api/api";
+import type { BooksResponseDto } from "@/lib/api/api";
 
 // import constants
 import ROUTES_CONSTANTS from "@/lib/constants/routes";
@@ -30,7 +30,7 @@ const BookLibrary = ({
     setCurrentPage,
     searchSubmit,
 }: {
-    books: AllBookResponseDto;
+    books: BooksResponseDto;
     isLoading: boolean;
     currentPage: number;
     totalPages: number;
@@ -88,7 +88,7 @@ const BookLibrary = ({
                 </div>
             </CardHeader>
 
-            <CardContent>
+            <CardContent className="min-h-[700px]">
                 {/* Loading State */}
                 {isLoading ? (
                     <div className="flex justify-center items-center py-12">

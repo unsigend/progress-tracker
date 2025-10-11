@@ -10,7 +10,7 @@ import { useBooks } from "@/hooks/use-books";
 import { useUpdateUrlParams } from "@/hooks/use-url-params";
 
 // import types
-import type { AllBookResponseDto } from "@/lib/api/api";
+import type { BooksResponseDto } from "@/lib/api/api";
 
 const BookListPage = () => {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -67,7 +67,7 @@ const BookListPage = () => {
 
     return (
         <BookLibrary
-            books={data as AllBookResponseDto}
+            books={data as BooksResponseDto}
             isLoading={isLoading}
             currentPage={query.page}
             totalPages={totalPages}

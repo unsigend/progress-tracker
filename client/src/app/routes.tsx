@@ -29,6 +29,19 @@ import BookEditPage from "@/features/books/pages/edit";
 import BookNewPage from "@/features/books/pages/new";
 import BookShowPage from "@/features/books/pages/show";
 
+// import recordings pages
+import RecordingNewPage from "@/features/recordings/pages/new";
+import RecordingShowPage from "@/features/recordings/pages/show";
+
+// import reading pages
+import DashboardReadingHomePage from "@/features/reading/pages/home";
+
+// import projects pages
+import DashboardProjectsHomePage from "@/features/projects/pages/home";
+
+// import courses pages
+import DashboardCoursesHomePage from "@/features/courses/pages/home";
+
 const AppRoutes = () => {
     return (
         <Routes>
@@ -64,26 +77,84 @@ const AppRoutes = () => {
                     path={ROUTES_CONSTANTS.DASHBOARD().SETTINGS()}
                     element={<DashboardSettingsPage />}
                 />
-                {/* Books List Page */}
+
+                {/* Dashboard Books Page */}
+                <Route path={ROUTES_CONSTANTS.DASHBOARD().READING().HOME()}>
+                    {/* Books List Page */}
+                    <Route
+                        path={ROUTES_CONSTANTS.DASHBOARD()
+                            .READING()
+                            .BOOKS_LIST()}
+                        element={<BookListPage />}
+                    />
+                    {/* Books Edit Page */}
+                    <Route
+                        path={ROUTES_CONSTANTS.DASHBOARD()
+                            .READING()
+                            .BOOKS_EDIT()}
+                        element={<BookEditPage />}
+                    />
+                    {/* Books New Page */}
+                    <Route
+                        path={ROUTES_CONSTANTS.DASHBOARD()
+                            .READING()
+                            .BOOKS_NEW()}
+                        element={<BookNewPage />}
+                    />
+                    {/* Books Show Page */}
+                    <Route
+                        path={ROUTES_CONSTANTS.DASHBOARD()
+                            .READING()
+                            .BOOKS_SHOW()}
+                        element={<BookShowPage />}
+                    />
+                </Route>
+
+                {/* Dashboard Reading Recordings Page */}
                 <Route
-                    path={ROUTES_CONSTANTS.DASHBOARD().READING().BOOKS_LIST()}
-                    element={<BookListPage />}
-                />
-                {/* Books Edit Page */}
-                <Route
-                    path={ROUTES_CONSTANTS.DASHBOARD().READING().BOOKS_EDIT()}
-                    element={<BookEditPage />}
-                />
-                {/* Books New Page */}
-                <Route
-                    path={ROUTES_CONSTANTS.DASHBOARD().READING().BOOKS_NEW()}
-                    element={<BookNewPage />}
-                />
-                {/* Books Show Page */}
-                <Route
-                    path={ROUTES_CONSTANTS.DASHBOARD().READING().BOOKS_SHOW()}
-                    element={<BookShowPage />}
-                />
+                    path={ROUTES_CONSTANTS.DASHBOARD().READING().RECORDINGS()}
+                >
+                    {/* Recording New Page */}
+                    <Route
+                        path={ROUTES_CONSTANTS.DASHBOARD()
+                            .READING()
+                            .RECORDINGS_NEW()}
+                        element={<RecordingNewPage />}
+                    />
+                    {/* Recording Show Page */}
+                    <Route
+                        path={ROUTES_CONSTANTS.DASHBOARD()
+                            .READING()
+                            .RECORDINGS_SHOW()}
+                        element={<RecordingShowPage />}
+                    />
+                </Route>
+
+                {/* Dashboard Reading Page */}
+                <Route path={ROUTES_CONSTANTS.DASHBOARD().READING().HOME()}>
+                    {/* Dashboard Reading Home Page */}
+                    <Route
+                        path={ROUTES_CONSTANTS.DASHBOARD().READING().HOME()}
+                        element={<DashboardReadingHomePage />}
+                    />
+                </Route>
+                {/* Dashboard Projects Page */}
+                <Route path={ROUTES_CONSTANTS.DASHBOARD().PROJECTS().HOME()}>
+                    {/* Dashboard Projects Home Page */}
+                    <Route
+                        path={ROUTES_CONSTANTS.DASHBOARD().PROJECTS().HOME()}
+                        element={<DashboardProjectsHomePage />}
+                    />
+                </Route>
+
+                {/* Dashboard Courses Page */}
+                <Route path={ROUTES_CONSTANTS.DASHBOARD().COURSES().HOME()}>
+                    {/* Dashboard Courses Home Page */}
+                    <Route
+                        path={ROUTES_CONSTANTS.DASHBOARD().COURSES().HOME()}
+                        element={<DashboardCoursesHomePage />}
+                    />
+                </Route>
             </Route>
 
             {/* Auth Main Layout */}

@@ -19,7 +19,7 @@ import graphData from "@/features/auth/data/graph";
 import steps from "@/features/auth/data/steps";
 
 // import types
-import type { RegisterUserDto } from "@/lib/api/api";
+import type { RegisterRequestDto } from "@/lib/api/api";
 
 // import hooks
 import { useEmailCheck } from "@/hooks/use-auth";
@@ -33,7 +33,7 @@ const RegisterPage = () => {
     // state for current step
     const [currentStep, setCurrentStep] = useState<number>(1);
     // state for form data
-    const [formData, setFormData] = useState<RegisterUserDto>({
+    const [formData, setFormData] = useState<RegisterRequestDto>({
         email: "",
         password: "",
         username: "",

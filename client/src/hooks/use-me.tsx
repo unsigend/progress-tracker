@@ -15,7 +15,7 @@ import { toast } from "sonner";
 import errorUtils from "@/lib/utils/error";
 
 // import types
-import type { UserResponseDto, UpdateUserDto } from "@/lib/api/api";
+import type { UserResponseDto, UserUpdateDto } from "@/lib/api/api";
 
 // import constants
 import ROUTES_CONSTANTS from "@/lib/constants/routes";
@@ -38,7 +38,7 @@ const useMe = () => {
 const useUpdateMe = () => {
     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: async (data: UpdateUserDto): Promise<UserResponseDto> => {
+        mutationFn: async (data: UserUpdateDto): Promise<UserResponseDto> => {
             const response = await ApiClient.api.userControllerUpdateMe(data);
             return response.data as unknown as UserResponseDto;
         },

@@ -7,7 +7,6 @@ import SideBar from "@/features/dashboard/layouts/side-bar";
 import Header from "@/features/dashboard/layouts/header";
 
 // import hooks
-import { useLogout } from "@/hooks/use-auth";
 import { useMe } from "@/hooks/use-me";
 
 // import types
@@ -16,9 +15,6 @@ import type { UserResponseDto } from "@/lib/api/api";
 const DashboardMainLayout = () => {
     // state for the sidebar
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
-    // hook for the logout
-    const { mutate: logout } = useLogout();
 
     // hook for the current user
     const { data: user, isLoading } = useMe();
@@ -44,7 +40,6 @@ const DashboardMainLayout = () => {
                 <Header
                     isSidebarOpen={isSidebarOpen}
                     toggleSidebar={toggleSidebar}
-                    onLogout={logout}
                     user={user as UserResponseDto}
                     isLoading={isLoading}
                 />

@@ -24,7 +24,7 @@ import steps from "@/features/auth/data/steps";
 
 // import types
 import type { StepData } from "@/features/auth/data/steps";
-import type { RegisterUserDto } from "@/lib/api/api";
+import type { RegisterRequestDto } from "@/lib/api/api";
 
 // import hooks
 import { useGoogleLogin, useGithubLogin } from "@/hooks/use-auth";
@@ -39,8 +39,8 @@ const RegisterForm = ({
 }: {
     stepData: StepData;
     currentStep: number;
-    formData: RegisterUserDto;
-    setFormData: (formData: RegisterUserDto) => void;
+    formData: RegisterRequestDto;
+    setFormData: (formData: RegisterRequestDto) => void;
     handleNextStep: () => void;
     handlePreviousStep: () => void;
 }) => {

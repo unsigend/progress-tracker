@@ -20,7 +20,7 @@ import ROUTES_CONSTANTS from "@/lib/constants/routes";
 import type {
     LoginRequestDto,
     LoginResponseDto,
-    RegisterUserDto,
+    RegisterRequestDto,
 } from "@/lib/api/api";
 
 // import utils
@@ -69,7 +69,7 @@ const useRegister = () => {
     const queryClient = useQueryClient();
     return useMutation({
         mutationFn: async (
-            data: RegisterUserDto
+            data: RegisterRequestDto
         ): Promise<LoginResponseDto> => {
             const response = await ApiClient.api.authControllerRegister(data);
             return response.data as unknown as LoginResponseDto;

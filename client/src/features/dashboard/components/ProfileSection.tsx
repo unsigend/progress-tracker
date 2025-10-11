@@ -11,7 +11,7 @@ import { Spinner } from "@/components/ui/spinner";
 import { Edit3, Github, Mail, User } from "lucide-react";
 
 // import types
-import type { UserResponseDto, UpdateUserDto } from "@/lib/api/api";
+import type { UserResponseDto, UserUpdateDto } from "@/lib/api/api";
 
 const ProfileSection = ({
     user,
@@ -21,7 +21,7 @@ const ProfileSection = ({
 }: {
     user: UserResponseDto;
     isLoading: boolean;
-    setUser: (user: UpdateUserDto) => void;
+    setUser: (user: UserUpdateDto) => void;
     onUpdate: () => void;
 }) => {
     if (isLoading) {
@@ -56,7 +56,7 @@ const ProfileSection = ({
                                     value={user.username}
                                     onChange={(e) => {
                                         setUser({
-                                            ...(user as UpdateUserDto),
+                                            ...(user as UserUpdateDto),
                                             username: e.target.value,
                                         });
                                     }}
@@ -76,7 +76,7 @@ const ProfileSection = ({
                                         value={user.email}
                                         onChange={(e) => {
                                             setUser({
-                                                ...(user as UpdateUserDto),
+                                                ...(user as UserUpdateDto),
                                                 email: e.target.value,
                                             });
                                         }}

@@ -13,7 +13,7 @@ import BookEditForm from "@/features/books/components/BookEditForm";
 import { useBook, useUpdateBook } from "@/hooks/use-books";
 
 // import types
-import type { UpdateBookDto } from "@/lib/api/api";
+import type { BookUpdateDto } from "@/lib/api/api";
 
 // import constants
 import ROUTES_CONSTANTS from "@/lib/constants/routes";
@@ -26,7 +26,7 @@ const BookEditPage = () => {
     const navigate = useNavigate();
     const { data: book, isLoading } = useBook(id ?? "");
     const { mutate: updateBook } = useUpdateBook(id ?? "");
-    const [formData, setFormData] = useState<UpdateBookDto>(book ?? {});
+    const [formData, setFormData] = useState<BookUpdateDto>(book ?? {});
 
     useEffect(() => {
         setFormData(book ?? {});

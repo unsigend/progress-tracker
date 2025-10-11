@@ -6,12 +6,13 @@ import { toast } from "sonner";
 
 // import hooks
 import { useBook, useDeleteBook } from "@/hooks/use-books";
+import { useCreateUserBook } from "@/hooks/use-user-books";
 
 // import components
 import BookShowCard from "@/features/books/components/BookShowCard";
 
 // import types
-import type { BookResponseDto } from "@/lib/api/api";
+import { type BookResponseDto } from "@/lib/api/api";
 
 // import utils
 import errorUtils from "@/lib/utils/error";
@@ -24,8 +25,21 @@ const BookDetailsPage = () => {
     const navigate = useNavigate();
     const { data: book, isLoading } = useBook(id ?? "");
     const { mutate: deleteBook } = useDeleteBook(id ?? "");
+    const { mutate: createUserBook } = useCreateUserBook();
 
-    const onClickAddButton = () => {};
+    const onClickAddButton = () => {
+        createUserBook(
+            { id: id ?? "" },
+            {
+                onSuccess: () => {
+                    toast.success("Book added to your reading list");
+                },
+                onError: (error) => {
+                    toast.error(errorUtils.extractErrorMessage(error));
+                },
+            }
+        );
+    };
     const onClickEditButton = () => {
         navigate(
             ROUTES_CONSTANTS.DASHBOARD()

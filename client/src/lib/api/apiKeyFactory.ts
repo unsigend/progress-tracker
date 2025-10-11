@@ -2,9 +2,13 @@
  * API Query Key Factory for Tanstack Query
  */
 
+// import types
+import type { ReadingStatus } from "@/lib/api/api";
+
 const RESOURCES = {
     USERS: "users",
     BOOKS: "books",
+    USER_BOOKS: "user-books",
     RECORDINGS: "recordings",
     PROJECTS: "projects",
     COURSES: "courses",
@@ -35,8 +39,16 @@ const API_KEY_FACTORY = {
     },
     RECORDING: () => {
         return {
-            All: () => [RESOURCES.RECORDINGS],
             Detail: (id: string) => [RESOURCES.RECORDINGS, id],
+        };
+    },
+    USER_BOOK: () => {
+        return {
+            All: (query?: { value?: ReadingStatus }) => {
+                if (!query) return [RESOURCES.USER_BOOKS];
+                return [RESOURCES.USER_BOOKS, query];
+            },
+            Detail: (id: string) => [RESOURCES.USER_BOOKS, id],
         };
     },
     PROJECT: () => {
