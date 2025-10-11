@@ -32,6 +32,7 @@ const useRecordings = (userBookId: string) => {
  * @returns useMutation for the create recording
  */
 const useCreateRecording = (userBookId: string) => {
+    const queryClient = useQueryClient();
     return useMutation({
         mutationFn: async (recording: RecordingCreateDto) => {
             const response =
@@ -40,6 +41,12 @@ const useCreateRecording = (userBookId: string) => {
                     recording
                 );
             return response.data as unknown as RecordingResponseDto;
+        },
+        onSuccess: () => {
+            // invalidate the recordings query
+            queryClient.invalidateQueries({
+                queryKey: API_KEY_FACTORY.RECORDING().Detail(userBookId),
+            });
         },
     });
 };

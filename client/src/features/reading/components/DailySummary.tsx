@@ -7,13 +7,49 @@ import ROUTES_CONSTANTS from "@/lib/constants/routes";
 // import shadcn/ui components
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components/ui/spinner";
 
 // import icons
 import { Plus } from "lucide-react";
 
-const DailySummaryCard = () => {
+// import types
+import { type StatisticsRecordingResponseDto } from "@/lib/api/api";
+
+const DailySummaryCard = ({
+    readingStatistics,
+    isLoading,
+}: {
+    readingStatistics: StatisticsRecordingResponseDto;
+    isLoading: boolean;
+}) => {
     // use the go navigation hook
     const navigate = useNavigate();
+
+    const totalPages =
+        readingStatistics?.recordings?.reduce(
+            (sum, recording) => sum + recording.pages,
+            0
+        ) ?? 0;
+
+    const totalMinutes =
+        readingStatistics?.recordings?.reduce(
+            (sum, recording) => sum + recording.minutes,
+            0
+        ) ?? 0;
+
+    // Format time display
+    const formatTime = (minutes: number) => {
+        if (minutes === 0) return { value: "0", unit: "m" };
+        const hours = Math.floor(minutes / 60);
+        const remainingMinutes = minutes % 60;
+
+        if (hours > 0) {
+            return remainingMinutes > 0
+                ? { value: `${hours}h ${remainingMinutes}`, unit: "m" }
+                : { value: `${hours}`, unit: "h" };
+        }
+        return { value: `${minutes}`, unit: "m" };
+    };
 
     return (
         <Card className="h-full flex flex-col">
@@ -37,41 +73,59 @@ const DailySummaryCard = () => {
                 </CardTitle>
             </CardHeader>
             <CardContent className="flex-1 flex flex-col justify-center">
-                <div className="space-y-6">
-                    {/* Date */}
-                    <div>
-                        <p className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
-                            {new Date()
-                                .toLocaleDateString("en-US", {
-                                    month: "long",
-                                    day: "numeric",
-                                    year: "numeric",
-                                })
-                                .toUpperCase()}
-                        </p>
+                {isLoading ? (
+                    <div className="flex justify-center items-center py-8">
+                        <Spinner className="size-8" />
                     </div>
+                ) : (
+                    <div className="space-y-6">
+                        {/* Date */}
+                        <div>
+                            <p className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
+                                {new Date()
+                                    .toLocaleDateString("en-US", {
+                                        month: "long",
+                                        day: "numeric",
+                                        year: "numeric",
+                                    })
+                                    .toUpperCase()}
+                            </p>
+                        </div>
 
-                    {/* Pages Read */}
-                    <div className="space-y-2">
-                        <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
-                            Pages Read
-                        </p>
-                        <p className="text-3xl font-bold text-foreground">
-                            100
-                        </p>
+                        {/* Pages Read */}
+                        <div className="space-y-2">
+                            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+                                Pages Read
+                            </p>
+                            <div className="flex items-baseline gap-1">
+                                <p className="text-3xl font-bold text-foreground">
+                                    {totalPages}
+                                </p>
+                                <p className="text-sm text-muted-foreground">
+                                    pages
+                                </p>
+                            </div>
+                        </div>
+
+                        {/* Separator */}
+                        <div className="border-t border-border"></div>
+
+                        {/* Time Spent */}
+                        <div className="space-y-2">
+                            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+                                Time Spent
+                            </p>
+                            <div className="flex items-baseline gap-1">
+                                <p className="text-3xl font-bold text-foreground">
+                                    {formatTime(totalMinutes).value}
+                                </p>
+                                <p className="text-sm text-muted-foreground">
+                                    {formatTime(totalMinutes).unit}
+                                </p>
+                            </div>
+                        </div>
                     </div>
-
-                    {/* Separator */}
-                    <div className="border-t border-border"></div>
-
-                    {/* Time Spent */}
-                    <div className="space-y-2">
-                        <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
-                            Time Spent
-                        </p>
-                        <p className="text-3xl font-bold text-foreground">70</p>
-                    </div>
-                </div>
+                )}
             </CardContent>
         </Card>
     );

@@ -6,21 +6,110 @@ import CompletedBooks from "@/features/reading/components/CompletedBooks";
 import InProgressReading from "@/features/reading/components/InProgressReading";
 import QuickActionsCard from "@/features/reading/components/QuickActions";
 
+// import dependencies
+import { useState, useMemo } from "react";
+
 // import hooks
 import { useUserBooks } from "@/hooks/use-user-books";
+import { useRecordingsStatistics } from "@/hooks/use-statistics";
+
+// import utils
+import dateUtils from "@/lib/utils/date";
 
 // import types
-import { ReadingStatus, type UserBooksResponseDto } from "@/lib/api/api";
+import {
+    ReadingStatus,
+    type StatisticsRecordingResponseDto,
+    type UserBooksResponseDto,
+} from "@/lib/api/api";
 
 const DashboardReadingHomePage = () => {
+    // Weekly analysis state
+    const [currentWeekOffset, setCurrentWeekOffset] = useState(0);
+
+    // get completed books data
     const { data: completedBooks, isLoading: isLoadingCompletedBooks } =
         useUserBooks({
             value: ReadingStatus.COMPLETED,
         });
+
+    // get in progress books data
     const { data: inProgressBooks, isLoading: isLoadingInProgressBooks } =
         useUserBooks({
             value: ReadingStatus.IN_PROGRESS,
         });
+
+    // get today's recordings data
+    const { data: todayRecordings, isLoading: isLoadingTodayRecordings } =
+        useRecordingsStatistics({
+            startDate: new Date().toISOString().split("T")[0],
+            dateLimit: 1,
+        });
+
+    // get weekly recordings data
+    const { data: weeklyRecordings, isLoading: isLoadingWeeklyRecordings } =
+        useRecordingsStatistics({
+            startDate: dateUtils.getWeekStartDate(currentWeekOffset),
+            dateLimit: 7,
+        });
+
+    // Calculate weekly analysis data
+    const weeklyAnalysisData = useMemo(() => {
+        // if no recordings, return empty data
+        if (!weeklyRecordings?.recordings) {
+            return {
+                weekData: dateUtils.createWeekData(
+                    [],
+                    dateUtils.getWeekStartDate(currentWeekOffset)
+                ),
+                stats: { totalPages: 0, dailyAvg: 0, bestDay: "N/A" },
+                weekRange: dateUtils.formatWeekRange(
+                    dateUtils.getWeekStartDate(currentWeekOffset)
+                ),
+            };
+        }
+
+        // create week data
+        const weekData = dateUtils.createWeekData(
+            weeklyRecordings.recordings,
+            dateUtils.getWeekStartDate(currentWeekOffset)
+        );
+
+        // Calculate stats
+        const values = weekData.map((day) => day.value);
+        const totalPages = values.reduce((sum, value) => sum + value, 0);
+        const nonZeroValues = values.filter((value) => value > 0);
+        const dailyAvg =
+            nonZeroValues.length > 0
+                ? Math.round(totalPages / nonZeroValues.length)
+                : 0;
+
+        // Find best day
+        const bestDayData = weekData.reduce((best, current) =>
+            current.value > best.value ? current : best
+        );
+        const bestDay = bestDayData.value > 0 ? bestDayData.key : "N/A";
+
+        return {
+            weekData,
+            stats: { totalPages, dailyAvg, bestDay },
+            weekRange: dateUtils.formatWeekRange(
+                dateUtils.getWeekStartDate(currentWeekOffset)
+            ),
+        };
+    }, [weeklyRecordings, currentWeekOffset]);
+
+    // Navigation handlers
+    const handlePreviousWeek = () => {
+        setCurrentWeekOffset(currentWeekOffset - 1);
+    };
+
+    const handleNextWeek = () => {
+        // Don't allow future weeks
+        if (currentWeekOffset < 0) {
+            setCurrentWeekOffset(currentWeekOffset + 1);
+        }
+    };
 
     // Sample book cover URLs for the Books We Love section - NO REPEATS
     const sampleBookCoverUrls = [
@@ -43,7 +132,12 @@ const DashboardReadingHomePage = () => {
                 {/* Row 1: Daily Summary Card */}
                 <div className="col-span-12 lg:col-span-4 xl:col-span-4 flex items-start justify-center lg:justify-start">
                     <div className="w-full h-[350px]">
-                        <DailySummaryCard />
+                        <DailySummaryCard
+                            readingStatistics={
+                                todayRecordings as StatisticsRecordingResponseDto
+                            }
+                            isLoading={isLoadingTodayRecordings}
+                        />
                     </div>
                 </div>
 
@@ -60,11 +154,19 @@ const DashboardReadingHomePage = () => {
                 {/* Row 1: Weekly Analysis */}
                 <div className="col-span-12 lg:col-span-4 flex items-start justify-center lg:justify-end">
                     <div className="w-full h-[350px]">
-                        <WeeklyAnalysis />
+                        <WeeklyAnalysis
+                            isLoading={isLoadingWeeklyRecordings}
+                            weekRange={weeklyAnalysisData.weekRange}
+                            stats={weeklyAnalysisData.stats}
+                            weekData={weeklyAnalysisData.weekData}
+                            onPreviousWeek={handlePreviousWeek}
+                            onNextWeek={handleNextWeek}
+                            canGoNext={currentWeekOffset >= 0}
+                        />
                     </div>
                 </div>
 
-                {/* Row 3: In Progress Reading - Full Width */}
+                {/* Row 3: In Progress Reading*/}
                 <div className="col-span-12">
                     <InProgressReading
                         inProgressBooks={
@@ -74,7 +176,7 @@ const DashboardReadingHomePage = () => {
                     />
                 </div>
 
-                {/* Row 4: Completed Books - Full Width */}
+                {/* Row 4: Completed Books */}
                 <div className="col-span-12">
                     <CompletedBooks
                         completedBooks={completedBooks as UserBooksResponseDto}

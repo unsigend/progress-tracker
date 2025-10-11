@@ -308,6 +308,13 @@ export interface RecordingResponseDto {
   notes: object;
 }
 
+export interface StatisticsRecordingResponseDto {
+  /** The recordings */
+  recordings: RecordingResponseDto[];
+  /** The total count of recordings */
+  totalCount: number;
+}
+
 import type {
   AxiosInstance,
   AxiosRequestConfig,
@@ -1130,6 +1137,36 @@ export class Api<
       this.request<boolean, void>({
         path: `/api/v1/user-books/${id}/recordings`,
         method: "DELETE",
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Statistics
+     * @name StatisticsControllerGetRecordingsStatistics
+     * @summary Get the statistics of the recordings
+     * @request GET:/api/v1/statistics/recordings
+     */
+    statisticsControllerGetRecordingsStatistics: (
+      query?: {
+        /**
+         * The start date of the recordings
+         * @format date-time
+         */
+        startDate?: string;
+        /** date limit */
+        dateLimit?: number;
+        /** User Book ID if not provided, will use all user books */
+        userBookID?: string;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<StatisticsRecordingResponseDto, void>({
+        path: `/api/v1/statistics/recordings`,
+        method: "GET",
+        query: query,
         format: "json",
         ...params,
       }),
