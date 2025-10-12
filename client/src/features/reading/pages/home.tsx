@@ -1,4 +1,4 @@
-// imports for components
+// imports components
 import FeatureBooks from "@/features/reading/components/FeatureBooks";
 import DailySummaryCard from "@/features/reading/components/DailySummary";
 import WeeklyAnalysis from "@/features/reading/components/WeeklyAnalysis";

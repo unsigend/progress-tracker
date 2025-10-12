@@ -15,6 +15,9 @@ import { Plus } from "lucide-react";
 // import types
 import { type StatisticsRecordingResponseDto } from "@/lib/api/api";
 
+// import utils
+import dateUtils from "@/lib/utils/date";
+
 const DailySummaryCard = ({
     readingStatistics,
     isLoading,
@@ -36,20 +39,6 @@ const DailySummaryCard = ({
             (sum, recording) => sum + recording.minutes,
             0
         ) ?? 0;
-
-    // Format time display
-    const formatTime = (minutes: number) => {
-        if (minutes === 0) return { value: "0", unit: "m" };
-        const hours = Math.floor(minutes / 60);
-        const remainingMinutes = minutes % 60;
-
-        if (hours > 0) {
-            return remainingMinutes > 0
-                ? { value: `${hours}h ${remainingMinutes}`, unit: "m" }
-                : { value: `${hours}`, unit: "h" };
-        }
-        return { value: `${minutes}`, unit: "m" };
-    };
 
     return (
         <Card className="h-full flex flex-col">
@@ -117,10 +106,10 @@ const DailySummaryCard = ({
                             </p>
                             <div className="flex items-baseline gap-1">
                                 <p className="text-3xl font-bold text-foreground">
-                                    {formatTime(totalMinutes).value}
+                                    {dateUtils.formatTime(totalMinutes).value}
                                 </p>
                                 <p className="text-sm text-muted-foreground">
-                                    {formatTime(totalMinutes).unit}
+                                    {dateUtils.formatTime(totalMinutes).unit}
                                 </p>
                             </div>
                         </div>

@@ -111,6 +111,24 @@ const dateUtils = {
         }
         return weekData;
     },
+
+    /**
+     * Format time display
+     * @param minutes - The minutes to format
+     * @returns The formatted time
+     */
+    formatTime: (minutes: number) => {
+        if (minutes === 0) return { value: "0", unit: "m" };
+        const hours = Math.floor(minutes / 60);
+        const remainingMinutes = minutes % 60;
+
+        if (hours > 0) {
+            return remainingMinutes > 0
+                ? { value: `${hours}h ${remainingMinutes}`, unit: "m" }
+                : { value: `${hours}`, unit: "h" };
+        }
+        return { value: `${minutes}`, unit: "m" };
+    },
 };
 
 export default dateUtils;

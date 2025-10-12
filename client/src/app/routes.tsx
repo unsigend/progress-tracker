@@ -42,6 +42,10 @@ import DashboardProjectsHomePage from "@/features/projects/pages/home";
 // import courses pages
 import DashboardCoursesHomePage from "@/features/courses/pages/home";
 
+// import general pages
+import Protector from "@/pages/protector";
+import NotFoundPage from "@/pages/not-found";
+
 const AppRoutes = () => {
     return (
         <Routes>
@@ -65,7 +69,11 @@ const AppRoutes = () => {
             {/* Dashboard Main Layout */}
             <Route
                 path={ROUTES_CONSTANTS.DASHBOARD().HOME()}
-                element={<DashboardMainLayout />}
+                element={
+                    <Protector>
+                        <DashboardMainLayout />
+                    </Protector>
+                }
             >
                 {/* Dashboard Home Page */}
                 <Route
@@ -183,6 +191,9 @@ const AppRoutes = () => {
                     element={<GithubCallbackPage />}
                 />
             </Route>
+
+            {/* 404 Not Found Route */}
+            <Route path="*" element={<NotFoundPage />} />
         </Routes>
     );
 };

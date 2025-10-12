@@ -161,6 +161,17 @@ const useEmailCheck = () => {
     });
 };
 
+/**
+ * Hook for the authentication
+ * @returns boolean for whether the user is authenticated
+ */
+const useAuth = () => {
+    const isAuthenticated = !!localStorage.getItem(
+        AUTH_CONSTANTS.ACCESS_TOKEN_KEY
+    );
+    return isAuthenticated;
+};
+
 export {
     useLogin,
     useLogout,
@@ -168,4 +179,5 @@ export {
     useGithubLogin,
     useEmailCheck,
     useRegister,
+    useAuth,
 };
