@@ -11,6 +11,7 @@ import { toast } from "sonner";
 
 // import hooks
 import { useMe, useUpdateMe } from "@/hooks/use-me";
+import { useFileUploadAvatar } from "@/hooks/use-cloud";
 
 // import types
 import type { UserResponseDto, UserUpdateDto } from "@/lib/api/api";
@@ -19,20 +20,20 @@ import type { UserResponseDto, UserUpdateDto } from "@/lib/api/api";
 import validationUtils from "@/lib/utils/validation";
 
 const DashboardSettingsPage = () => {
-    // get the current user data
+    // get the data use hooks
     const { data: user, isLoading } = useMe();
     const { mutate: updateMe } = useUpdateMe();
+    const { mutate: uploadAvatar } = useFileUploadAvatar();
+
     const [userForm, setUserForm] = useState<UserUpdateDto>({
         username: user?.username || "",
         email: user?.email || "",
-        avatar_url: user?.avatar_url || "",
     });
 
     useEffect(() => {
         setUserForm({
             username: user?.username || "",
             email: user?.email || "",
-            avatar_url: user?.avatar_url || "",
         });
     }, [user]);
 
@@ -63,6 +64,14 @@ const DashboardSettingsPage = () => {
         }
 
         updateMe(userForm);
+        toast.success("User updated successfully");
+    };
+
+    const handleUploadAvatar = async (file: File) => {
+        // upload the avatar
+        const response = await uploadAvatar(file);
+        // update the avatar for the user
+        updateMe({ avatar_url: response.file_url });
     };
 
     return (
@@ -77,10 +86,12 @@ const DashboardSettingsPage = () => {
                         <div className="flex flex-col gap-4">
                             {/* Profile Section */}
                             <ProfileSection
-                                user={userForm as UserResponseDto}
+                                user={user as UserResponseDto}
+                                updatedUser={userForm as UserUpdateDto}
                                 isLoading={isLoading}
                                 setUser={setUserForm}
                                 onUpdate={handleUpdate}
+                                onUploadAvatar={handleUploadAvatar}
                             />
 
                             {/* Security Section */}

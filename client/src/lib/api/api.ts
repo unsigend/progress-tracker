@@ -193,13 +193,6 @@ export interface EmailCheckResponseDto {
   exists: boolean;
 }
 
-export interface FileUploadResponseDto {
-  /** The file url */
-  file_url: string;
-  /** Whether the file was uploaded successfully */
-  success: boolean;
-}
-
 export interface FileDeleteRequestDto {
   /** The file url */
   file_url: string;
@@ -207,6 +200,13 @@ export interface FileDeleteRequestDto {
 
 export interface FileDeleteResponseDto {
   /** Whether the file was deleted successfully */
+  success: boolean;
+}
+
+export interface FileUploadResponseDto {
+  /** The file url */
+  file_url: string;
+  /** Whether the file was uploaded successfully */
   success: boolean;
 }
 
@@ -944,12 +944,33 @@ export class Api<
     /**
      * No description
      *
-     * @tags File
-     * @name FileControllerUploadFile
-     * @summary Upload a file to cloud
-     * @request POST:/api/v1/file/upload
+     * @tags Cloud
+     * @name CloudControllerDeleteFile
+     * @summary Delete a file from cloud
+     * @request DELETE:/api/v1/cloud
      */
-    fileControllerUploadFile: (
+    cloudControllerDeleteFile: (
+      data: FileDeleteRequestDto,
+      params: RequestParams = {},
+    ) =>
+      this.request<FileDeleteResponseDto, void>({
+        path: `/api/v1/cloud`,
+        method: "DELETE",
+        body: data,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Cloud
+     * @name CloudControllerUploadFile
+     * @summary Upload a file to cloud
+     * @request POST:/api/v1/cloud/file
+     */
+    cloudControllerUploadFile: (
       data: {
         /** @format binary */
         file: File;
@@ -957,7 +978,7 @@ export class Api<
       params: RequestParams = {},
     ) =>
       this.request<FileUploadResponseDto, void>({
-        path: `/api/v1/file/upload`,
+        path: `/api/v1/cloud/file`,
         method: "POST",
         body: data,
         type: ContentType.FormData,
@@ -968,20 +989,47 @@ export class Api<
     /**
      * No description
      *
-     * @tags File
-     * @name FileControllerDeleteFile
-     * @summary Delete a file from cloud
-     * @request DELETE:/api/v1/file/delete
+     * @tags Cloud
+     * @name CloudControllerUploadAvatar
+     * @summary Upload an avatar image to cloud
+     * @request POST:/api/v1/cloud/avatar
      */
-    fileControllerDeleteFile: (
-      data: FileDeleteRequestDto,
+    cloudControllerUploadAvatar: (
+      data: {
+        /** @format binary */
+        file: File;
+      },
       params: RequestParams = {},
     ) =>
-      this.request<FileDeleteResponseDto, void>({
-        path: `/api/v1/file/delete`,
-        method: "DELETE",
+      this.request<FileUploadResponseDto, void>({
+        path: `/api/v1/cloud/avatar`,
+        method: "POST",
         body: data,
-        type: ContentType.Json,
+        type: ContentType.FormData,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Cloud
+     * @name CloudControllerUploadImage
+     * @summary Upload an image to cloud
+     * @request POST:/api/v1/cloud/image
+     */
+    cloudControllerUploadImage: (
+      data: {
+        /** @format binary */
+        file: File;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<FileUploadResponseDto, void>({
+        path: `/api/v1/cloud/image`,
+        method: "POST",
+        body: data,
+        type: ContentType.FormData,
         format: "json",
         ...params,
       }),

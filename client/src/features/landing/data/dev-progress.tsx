@@ -29,7 +29,8 @@ const timelineData: TimelineItem[] = [
         title: "Reading Progress Tracking",
         description:
             "Track daily and monthly reading progress with pages and minutes read. Monitor completed and in-progress books with detailed page-based analytics.",
-        status: "coming-soon",
+        status: "completed",
+        date: "October 10, 2025",
     },
     {
         id: "aws-s3-cloud-image-storage",

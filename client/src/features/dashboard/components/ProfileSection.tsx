@@ -13,16 +13,23 @@ import { Edit3, Github, Mail, User } from "lucide-react";
 // import types
 import type { UserResponseDto, UserUpdateDto } from "@/lib/api/api";
 
+// import components
+import FileUpload from "@/components/common/FileUpload";
+
 const ProfileSection = ({
+    updatedUser,
     user,
     isLoading,
     setUser,
     onUpdate,
+    onUploadAvatar,
 }: {
+    updatedUser: UserUpdateDto;
     user: UserResponseDto;
     isLoading: boolean;
     setUser: (user: UserUpdateDto) => void;
     onUpdate: () => void;
+    onUploadAvatar: (file: File) => Promise<void>;
 }) => {
     if (isLoading) {
         return (
@@ -53,10 +60,10 @@ const ProfileSection = ({
                                 <Label htmlFor="name">Username</Label>
                                 <Input
                                     id="name"
-                                    value={user.username}
+                                    value={updatedUser.username}
                                     onChange={(e) => {
                                         setUser({
-                                            ...(user as UserUpdateDto),
+                                            ...updatedUser,
                                             username: e.target.value,
                                         });
                                     }}
@@ -73,10 +80,10 @@ const ProfileSection = ({
                                     <Input
                                         id="email"
                                         className="pr-10"
-                                        value={user.email}
+                                        value={updatedUser.email}
                                         onChange={(e) => {
                                             setUser({
-                                                ...(user as UserUpdateDto),
+                                                ...updatedUser,
                                                 email: e.target.value,
                                             });
                                         }}
@@ -113,20 +120,19 @@ const ProfileSection = ({
                                     className="object-cover"
                                 />
                                 <AvatarFallback className="text-2xl">
-                                    {user.username.charAt(0).toUpperCase()}
+                                    {user.username?.charAt(0).toUpperCase()}
                                 </AvatarFallback>
                             </Avatar>
-                            <Button
-                                variant="outline"
-                                size="sm"
+
+                            <FileUpload
+                                handleUpload={onUploadAvatar}
+                                maxFileSizeMB={1}
+                                icon={<Edit3 className="w-4 h-4" />}
+                                text="Edit"
                                 className="w-full mt-3"
-                            >
-                                <Edit3 className="w-4 h-4 mr-2" />
-                                Edit
-                            </Button>
+                            />
                         </div>
                     </div>
-
                     {/* Connected Accounts Section */}
                     {user.provider && (
                         <div className="space-y-3">
@@ -165,7 +171,6 @@ const ProfileSection = ({
                             )}
                         </div>
                     )}
-
                     <Button onClick={onUpdate}>Update</Button>
                 </div>
             </CardContent>

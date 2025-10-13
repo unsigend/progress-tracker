@@ -19,20 +19,8 @@ import { Upload, File, X, Image as ImageIcon, Loader2 } from "lucide-react";
 // import toast
 import { toast } from "sonner";
 
-// import api
-import ApiClient from "@/lib/api/apiClient";
-
-// import types
-import type { FileUploadResponseDto } from "@/lib/api/api";
-import type { AxiosResponse } from "axios";
-
-interface FileUploadProps {
-    text?: string;
-    icon?: React.ReactNode;
-    acceptedFileTypes?: string;
-    maxFileSizeMB?: number;
-    onUploadSuccess?: (fileUrl: string) => void;
-}
+// import utils
+import { cn } from "@/lib/utils";
 
 /**
  * FileUpload component
@@ -41,16 +29,24 @@ interface FileUploadProps {
  * @param icon - The icon to display on the button
  * @param acceptedFileTypes - The accepted file types
  * @param maxFileSizeMB - The maximum file size in MB
- * @param onUploadSuccess - The function to call when the file is uploaded successfully
+ * @param handleUpload - The function to call when handle the upload
  * @returns FileUpload component
  */
 const FileUpload = ({
+    handleUpload,
     text = "Upload File",
     icon = <Upload className="w-4 h-4" />,
     acceptedFileTypes = "image/*",
     maxFileSizeMB = 10,
-    onUploadSuccess,
-}: FileUploadProps) => {
+    className,
+}: {
+    handleUpload: (file: File) => Promise<void>;
+    text?: string;
+    icon?: React.ReactNode;
+    acceptedFileTypes?: string;
+    maxFileSizeMB?: number;
+    className?: string;
+}) => {
     const [file, setFile] = useState<File | null>(null);
     const [isDragOver, setIsDragOver] = useState(false);
     const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -60,6 +56,18 @@ const FileUpload = ({
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const selectedFile = e.target.files?.[0];
         if (selectedFile) {
+            // Check file size
+            const fileSizeMB = selectedFile.size / (1024 * 1024);
+            if (fileSizeMB > maxFileSizeMB) {
+                toast.error(
+                    `File size exceeds the maximum limit of ${maxFileSizeMB}MB`
+                );
+                // Clear the input
+                if (fileInputRef.current) {
+                    fileInputRef.current.value = "";
+                }
+                return;
+            }
             setFile(selectedFile);
         }
     };
@@ -79,6 +87,14 @@ const FileUpload = ({
         setIsDragOver(false);
         const droppedFile = e.dataTransfer.files[0];
         if (droppedFile) {
+            // Check file size
+            const fileSizeMB = droppedFile.size / (1024 * 1024);
+            if (fileSizeMB > maxFileSizeMB) {
+                toast.error(
+                    `File size exceeds the maximum limit of ${maxFileSizeMB}MB`
+                );
+                return;
+            }
             setFile(droppedFile);
         }
     };
@@ -94,15 +110,13 @@ const FileUpload = ({
         }
     };
 
-    const handleUpload = async () => {
+    const handleUserUpload = async () => {
         if (file) {
             try {
                 setIsLoading(true);
-                const response: AxiosResponse<FileUploadResponseDto> =
-                    await ApiClient.api.fileControllerUploadFile({ file });
+                await handleUpload(file);
                 setIsDialogOpen(false);
                 setFile(null);
-                onUploadSuccess?.(response.data.file_url);
             } catch {
                 // Show error toast
                 toast.error("Failed to upload file. Please try again.");
@@ -123,7 +137,10 @@ const FileUpload = ({
     return (
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger asChild>
-                <Button variant="outline" className="flex items-center gap-2">
+                <Button
+                    variant="outline"
+                    className={cn("flex items-center gap-2", className)}
+                >
                     {icon}
                     {text}
                 </Button>
@@ -221,7 +238,7 @@ const FileUpload = ({
                             Cancel
                         </Button>
                         <Button
-                            onClick={handleUpload}
+                            onClick={handleUserUpload}
                             disabled={!file || isLoading}
                             className="flex items-center gap-2"
                         >

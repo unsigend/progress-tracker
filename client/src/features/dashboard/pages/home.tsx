@@ -1,10 +1,7 @@
 // import components
 
-/**
- * Dashboard Home Page
- */
 const DashboardHomePage = () => {
-    return <div>Dashboard Home Page</div>;
+    return null;
 };
 
 export default DashboardHomePage;
