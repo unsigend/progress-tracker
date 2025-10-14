@@ -25,6 +25,21 @@ export interface TimelineItem {
  */
 const timelineData: TimelineItem[] = [
     {
+        id: "email-notifications",
+        title: "Email Notification System",
+        description:
+            "Secure email-based authentication with verification codes for password reset, account verification, and important notifications with real-time delivery.",
+        status: "coming-soon",
+    },
+    {
+        id: "image-compression",
+        title: "Image Compression",
+        description:
+            "Automatically compress and optimize images to reduce file size and improve loading speed with minimal quality loss.",
+        status: "completed",
+        date: "October 13, 2025",
+    },
+    {
         id: "reading-progress-tracking",
         title: "Reading Progress Tracking",
         description:

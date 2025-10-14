@@ -24,6 +24,7 @@ const ROUTES_CONSTANTS = {
             HOME: (): string => `${AUTH_ROOT}`,
             LOGIN: (): string => `${AUTH_ROOT}/login`,
             REGISTER: (): string => `${AUTH_ROOT}/register`,
+            RESET_PASSWORD: (): string => `${AUTH_ROOT}/reset-password`,
             GOOGLE_CALLBACK: (): string => `${AUTH_ROOT}/google/callback`,
             GITHUB_CALLBACK: (): string => `${AUTH_ROOT}/github/callback`,
         };

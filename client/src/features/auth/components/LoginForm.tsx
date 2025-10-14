@@ -86,12 +86,12 @@ const LoginForm = ({
                     <Field>
                         <div className="flex items-center justify-between">
                             <FieldLabel htmlFor="password">Password</FieldLabel>
-                            <a
-                                href="#"
+                            <Link
+                                to={ROUTES_CONSTANTS.AUTH().RESET_PASSWORD()}
                                 className="text-sm text-muted-foreground hover:text-foreground underline-offset-4 hover:underline cursor-pointer transition-colors"
                             >
                                 Forgot your password?
-                            </a>
+                            </Link>
                         </div>
                         <FieldContent>
                             <Input

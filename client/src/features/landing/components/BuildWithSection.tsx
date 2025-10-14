@@ -50,7 +50,9 @@ const BuildWithSection = () => {
                         fadeOut={true}
                         fadeOutColor={getFadeColor()}
                         ariaLabel="Technology stack logos"
-                        className="py-4"
+                        className={`py-4 ${
+                            theme === "dark" ? "dark-mode-logos" : ""
+                        }`}
                     />
                 </div>
             </div>

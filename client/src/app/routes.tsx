@@ -22,6 +22,7 @@ import LoginPage from "@/features/auth/pages/login";
 import RegisterPage from "@/features/auth/pages/register";
 import GoogleCallbackPage from "@/features/auth/pages/google-callback";
 import GithubCallbackPage from "@/features/auth/pages/github-callback";
+import ResetPasswordPage from "@/features/auth/pages/reset-password";
 
 // import books pages
 import BookListPage from "@/features/books/pages/list";
@@ -191,6 +192,12 @@ const AppRoutes = () => {
                     element={<GithubCallbackPage />}
                 />
             </Route>
+
+            {/* Reset Password Page*/}
+            <Route
+                path={ROUTES_CONSTANTS.AUTH().RESET_PASSWORD()}
+                element={<ResetPasswordPage />}
+            />
 
             {/* 404 Not Found Route */}
             <Route path="*" element={<NotFoundPage />} />

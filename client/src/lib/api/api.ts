@@ -193,6 +193,34 @@ export interface EmailCheckResponseDto {
   exists: boolean;
 }
 
+export interface SendVerifyCodeRequestDto {
+  /** The email of the user */
+  email: string;
+}
+
+export interface SendVerifyCodeResponseDto {
+  /** The reset password token */
+  resetToken: string;
+}
+
+export interface ResetPasswordRequestDto {
+  /** The reset password token */
+  resetToken: string;
+  /** The verification code */
+  code: string;
+  /** The new password */
+  newPassword: string;
+}
+
+export interface ResetPasswordResponseDto {
+  /** The result message */
+  message: string;
+  /** Whether the password was reset successfully */
+  reset_success: boolean;
+  /** Whether the verification code is valid */
+  valid: boolean;
+}
+
 export interface FileDeleteRequestDto {
   /** The file url */
   file_url: string;
@@ -938,6 +966,48 @@ export class Api<
       this.request<void, void>({
         path: `/api/v1/auth/github/callback`,
         method: "GET",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Auth
+     * @name AuthControllerSendVerifyCode
+     * @summary Send verification code
+     * @request POST:/api/v1/auth/verify-code
+     */
+    authControllerSendVerifyCode: (
+      data: SendVerifyCodeRequestDto,
+      params: RequestParams = {},
+    ) =>
+      this.request<SendVerifyCodeResponseDto, any>({
+        path: `/api/v1/auth/verify-code`,
+        method: "POST",
+        body: data,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Auth
+     * @name AuthControllerResetPassword
+     * @summary Reset password
+     * @request POST:/api/v1/auth/reset-password
+     */
+    authControllerResetPassword: (
+      data: ResetPasswordRequestDto,
+      params: RequestParams = {},
+    ) =>
+      this.request<ResetPasswordResponseDto, any>({
+        path: `/api/v1/auth/reset-password`,
+        method: "POST",
+        body: data,
+        type: ContentType.Json,
+        format: "json",
         ...params,
       }),
 

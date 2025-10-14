@@ -21,6 +21,9 @@ import type {
     LoginRequestDto,
     LoginResponseDto,
     RegisterRequestDto,
+    SendVerifyCodeResponseDto,
+    ResetPasswordRequestDto,
+    ResetPasswordResponseDto,
 } from "@/lib/api/api";
 
 // import utils
@@ -172,6 +175,42 @@ const useAuth = () => {
     return isAuthenticated;
 };
 
+/**
+ * Hook for the send verify code
+ * @returns useMutation for the send verify code
+ */
+const useSendVerifyCode = () => {
+    return useMutation({
+        mutationFn: async (
+            email: string
+        ): Promise<SendVerifyCodeResponseDto> => {
+            const response = await ApiClient.api.authControllerSendVerifyCode({
+                email,
+            });
+            return response.data;
+        },
+        retry: 0,
+    });
+};
+
+/**
+ * Hook for the reset password
+ * @returns useMutation for the reset password
+ */
+const useResetPassword = () => {
+    return useMutation({
+        mutationFn: async (
+            resetPasswordRequest: ResetPasswordRequestDto
+        ): Promise<ResetPasswordResponseDto> => {
+            const response = await ApiClient.api.authControllerResetPassword(
+                resetPasswordRequest
+            );
+            return response.data;
+        },
+        retry: 0,
+    });
+};
+
 export {
     useLogin,
     useLogout,
@@ -180,4 +219,6 @@ export {
     useEmailCheck,
     useRegister,
     useAuth,
+    useSendVerifyCode,
+    useResetPassword,
 };

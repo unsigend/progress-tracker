@@ -121,3 +121,8 @@
         @apply bg-background text-foreground;
     }
 }
+
+/* Dark mode logo styling */
+.dark-mode-logos .logoloop__item img {
+    filter: brightness(0) invert(1);
+}
