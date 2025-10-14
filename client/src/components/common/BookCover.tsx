@@ -23,7 +23,7 @@ const BookCoverCard = ({
     const cardContent = (
         <div
             className={cn(
-                "group relative w-40 h-52 bg-card rounded-sm shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1",
+                "group relative w-42 h-54 bg-card rounded-sm shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1",
                 "before:absolute before:inset-y-0 before:left-0 before:w-1 before:bg-muted before:rounded-l-sm",
                 className
             )}

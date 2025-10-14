@@ -38,12 +38,12 @@ const SearchBar = ({
                 onSubmit={onSubmit}
             >
                 {/* Main pill-shaped container */}
-                <div className="relative w-full bg-gray-50 rounded-full shadow-lg overflow-hidden">
+                <div className="relative w-full bg-muted rounded-full shadow-lg overflow-hidden">
                     {/* Search input */}
                     <Input
                         type="text"
                         placeholder={placeholder}
-                        className={`border-0 shadow-none focus:ring-0 focus:outline-none focus:border-0 bg-transparent rounded-none placeholder:text-gray-400 transition-all duration-200 w-full ${
+                        className={`border-0 shadow-none focus:ring-0 focus:outline-none focus:border-0 bg-transparent rounded-none placeholder:text-muted-foreground text-foreground transition-all duration-200 w-full ${
                             isLarge
                                 ? "h-14 pl-6 pr-16 text-lg py-4"
                                 : "h-10 pl-4 pr-12 text-sm py-2"
@@ -56,13 +56,13 @@ const SearchBar = ({
                     {searchTerm && onClear && (
                         <button
                             type="button"
-                            className={`absolute right-12 top-1/2 transform -translate-y-1/2 hover:bg-gray-100 rounded-full transition-all duration-200 flex items-center justify-center ${
+                            className={`absolute right-12 top-1/2 transform -translate-y-1/2 hover:bg-muted-foreground/10 rounded-full transition-all duration-200 flex items-center justify-center ${
                                 isLarge ? "w-10 h-10" : "w-8 h-8"
                             }`}
                             onClick={onClear}
                         >
                             <X
-                                className={`text-gray-400 mr-2 ${
+                                className={`text-muted-foreground mr-2 ${
                                     isLarge ? "h-5 w-5" : "h-4 w-4"
                                 }`}
                             />
@@ -72,12 +72,12 @@ const SearchBar = ({
                     {/* Circular search button */}
                     <button
                         type="submit"
-                        className={`absolute right-1 top-1/2 transform -translate-y-1/2 bg-gray-800 hover:bg-gray-900 rounded-full shadow-lg flex items-center justify-center transition-all duration-200 ${
+                        className={`absolute right-1 top-1/2 transform -translate-y-1/2 bg-primary hover:bg-primary/90 rounded-full shadow-lg flex items-center justify-center transition-all duration-200 ${
                             isLarge ? "h-12 w-12" : "h-8 w-8"
                         }`}
                     >
                         <Search
-                            className={`text-white ${
+                            className={`text-primary-foreground ${
                                 isLarge ? "h-6 w-6" : "h-4 w-4"
                             }`}
                         />

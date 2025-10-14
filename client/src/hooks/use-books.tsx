@@ -68,7 +68,33 @@ const useCreateBook = () => {
     const queryClient = useQueryClient();
     return useMutation({
         mutationFn: async (data: BookCreateDto): Promise<BookResponseDto> => {
-            const response = await ApiClient.api.bookControllerCreate(data);
+            const formData = new FormData();
+            // append required fields
+            formData.append("title", data.title);
+            formData.append("pages", data.pages.toString());
+
+            // append optional fields
+            if (data.description) {
+                formData.append("description", data.description);
+            }
+            if (data.author) {
+                formData.append("author", data.author);
+            }
+            if (data.ISBN10) {
+                formData.append("ISBN10", data.ISBN10);
+            }
+            if (data.ISBN13) {
+                formData.append("ISBN13", data.ISBN13);
+            }
+            if (data.cover_url) {
+                formData.append("cover_url", data.cover_url);
+            }
+            if (data.cover) {
+                formData.append("cover", data.cover);
+            }
+            const response = await ApiClient.api.bookControllerCreate(
+                formData as unknown as BookCreateDto
+            );
             return response.data as unknown as BookResponseDto;
         },
         onSuccess: () => {
@@ -92,10 +118,44 @@ const useUpdateBook = (id: string) => {
     const queryClient = useQueryClient();
     return useMutation({
         mutationFn: async (data: BookUpdateDto): Promise<BookResponseDto> => {
-            const response = await ApiClient.api.bookControllerPatch(id, data);
+            const formData = new FormData();
+
+            // append optional fields
+            if (data.title) {
+                formData.append("title", data.title);
+            }
+            if (data.author) {
+                formData.append("author", data.author);
+            }
+            if (data.description) {
+                formData.append("description", data.description);
+            }
+            if (data.ISBN10) {
+                formData.append("ISBN10", data.ISBN10);
+            }
+            if (data.ISBN13) {
+                formData.append("ISBN13", data.ISBN13);
+            }
+            if (data.pages) {
+                formData.append("pages", data.pages.toString());
+            }
+            if (data.cover_url) {
+                formData.append("cover_url", data.cover_url);
+            }
+            if (data.cover) {
+                formData.append("cover", data.cover);
+            }
+            const response = await ApiClient.api.bookControllerPatch(
+                id,
+                formData as unknown as BookUpdateDto
+            );
             return response.data as unknown as BookResponseDto;
         },
         onSuccess: () => {
+            queryClient.invalidateQueries({
+                queryKey: API_KEY_FACTORY.BOOK().All(),
+            });
+
             // invalidate the books query
             queryClient.invalidateQueries({
                 queryKey: API_KEY_FACTORY.BOOK().Detail(id),

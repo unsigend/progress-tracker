@@ -11,14 +11,12 @@ import BookEditForm from "@/features/books/components/BookEditForm";
 // import types
 import type { BookCreateDto, BookUpdateDto } from "@/lib/api/api";
 
-// import utils
-import genericUtils from "@/lib/utils/generic";
-
 // import hooks
 import { useCreateBook } from "@/hooks/use-books";
 
 // import constants
 import ROUTES_CONSTANTS from "@/lib/constants/routes";
+import genericUtils from "@/lib/utils/generic";
 
 const BookNewPage = () => {
     const navigate = useNavigate();
@@ -30,21 +28,38 @@ const BookNewPage = () => {
         ISBN13: "",
         pages: NaN,
         cover_url: "",
+        cover: undefined,
     });
     const { mutate: createBook } = useCreateBook();
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        // remove empty fields
-        const filteredFormData: BookCreateDto = genericUtils.removeEmptyFields(
-            formData
-        ) as unknown as BookCreateDto;
-        createBook(filteredFormData, {
+
+        // simple validation
+        if (formData.title === "") {
+            toast.error("Title is required");
+            return;
+        }
+        if (isNaN(formData.pages)) {
+            toast.error("Pages is required");
+            return;
+        }
+        const formDataToSend = genericUtils.removeEmptyFields(formData);
+
+        // create book
+        createBook(formDataToSend as unknown as BookCreateDto, {
             onSuccess: () => {
                 toast.success("Book created successfully");
                 navigate(ROUTES_CONSTANTS.DASHBOARD().READING().BOOKS_LIST());
             },
         });
+    };
+
+    const handleFileUpload = async (file: File) => {
+        setFormData((prev) => ({
+            ...prev,
+            cover: file,
+        }));
     };
 
     return (
@@ -61,6 +76,7 @@ const BookNewPage = () => {
                     }
                     onSubmit={handleSubmit}
                     action="add"
+                    onFileUpload={handleFileUpload}
                 />
             </div>
         </div>

@@ -89,7 +89,7 @@ const SideBar = ({
                                     to={item.href}
                                     onClick={handleLinkClick}
                                     className={cn(
-                                        "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+                                        "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium",
                                         isActive
                                             ? "bg-sidebar-primary text-sidebar-primary-foreground"
                                             : "text-sidebar-foreground"

@@ -103,7 +103,7 @@ export interface BookCreateDto {
   /** The author of the book */
   author?: string;
   /** The description of the book */
-  description: string;
+  description?: string;
   /** The ISBN10 of the book */
   ISBN10?: string;
   /** The ISBN13 of the book */
@@ -112,6 +112,11 @@ export interface BookCreateDto {
   pages: number;
   /** The cover url of the book */
   cover_url?: string;
+  /**
+   * The cover image file
+   * @format binary
+   */
+  cover?: File;
 }
 
 export interface BookResponseDto {
@@ -158,6 +163,11 @@ export interface BookUpdateDto {
   pages?: number;
   /** The cover url of the book */
   cover_url?: string;
+  /**
+   * The cover image file
+   * @format binary
+   */
+  cover?: File;
 }
 
 export interface BooksResponseDto {
@@ -209,7 +219,7 @@ export interface ResetPasswordRequestDto {
   /** The verification code */
   code: string;
   /** The new password */
-  newPassword: string;
+  newPassword?: string;
 }
 
 export interface ResetPasswordResponseDto {
@@ -708,7 +718,7 @@ export class Api<
         path: `/api/v1/books`,
         method: "POST",
         body: data,
-        type: ContentType.Json,
+        type: ContentType.FormData,
         format: "json",
         ...params,
       }),
@@ -782,11 +792,11 @@ export class Api<
      * No description
      *
      * @tags Books
-     * @name BookControllerReplace
-     * @summary Replace a book by id
+     * @name BookControllerUpdate
+     * @summary Update a book by id
      * @request PUT:/api/v1/books/{id}
      */
-    bookControllerReplace: (
+    bookControllerUpdate: (
       id: string,
       data: BookUpdateDto,
       params: RequestParams = {},
@@ -795,23 +805,7 @@ export class Api<
         path: `/api/v1/books/${id}`,
         method: "PUT",
         body: data,
-        type: ContentType.Json,
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Books
-     * @name BookControllerDeleteById
-     * @summary Delete a book by id
-     * @request DELETE:/api/v1/books/{id}
-     */
-    bookControllerDeleteById: (id: string, params: RequestParams = {}) =>
-      this.request<BookResponseDto, void>({
-        path: `/api/v1/books/${id}`,
-        method: "DELETE",
+        type: ContentType.FormData,
         format: "json",
         ...params,
       }),
@@ -833,7 +827,23 @@ export class Api<
         path: `/api/v1/books/${id}`,
         method: "PATCH",
         body: data,
-        type: ContentType.Json,
+        type: ContentType.FormData,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Books
+     * @name BookControllerDeleteById
+     * @summary Delete a book by id
+     * @request DELETE:/api/v1/books/{id}
+     */
+    bookControllerDeleteById: (id: string, params: RequestParams = {}) =>
+      this.request<BookResponseDto, void>({
+        path: `/api/v1/books/${id}`,
+        method: "DELETE",
         format: "json",
         ...params,
       }),
