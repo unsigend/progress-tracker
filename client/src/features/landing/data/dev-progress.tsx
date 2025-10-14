@@ -25,11 +25,19 @@ export interface TimelineItem {
  */
 const timelineData: TimelineItem[] = [
     {
+        id: "deployment-e2e-testing",
+        title: "Deployment & End-to-End Testing",
+        description:
+            "Deploy the application across multiple platforms with comprehensive end-to-end testing. Implement automated testing pipelines for user flows, authentication, and reading progress tracking to ensure production readiness.",
+        status: "coming-soon",
+    },
+    {
         id: "email-notifications",
         title: "Email Notification System",
         description:
             "Secure email-based authentication with verification codes for password reset, account verification, and important notifications with real-time delivery.",
-        status: "coming-soon",
+        status: "completed",
+        date: "October 14, 2025",
     },
     {
         id: "image-compression",
