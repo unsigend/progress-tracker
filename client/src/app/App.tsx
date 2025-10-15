@@ -13,6 +13,9 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 // import toast
 import { Toaster } from "@/components/ui/sonner";
 
+// import vercel analytics
+import { Analytics } from "@vercel/analytics/react";
+
 function App() {
     const queryClient = new QueryClient();
 
@@ -20,6 +23,7 @@ function App() {
         <BrowserRouter>
             <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
                 <QueryClientProvider client={queryClient}>
+                    <Analytics />
                     <AppRoutes />
                     <Toaster position="top-right" />
                 </QueryClientProvider>
