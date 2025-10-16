@@ -25,17 +25,27 @@ export interface TimelineItem {
  */
 const timelineData: TimelineItem[] = [
     {
-        id: "deployment-e2e-testing",
-        title: "Deployment & End-to-End Testing",
+        id: "role-based-access-control",
+        title: "Role-based Access Control (RBAC)",
         description:
-            "Deploy the application across multiple platforms with comprehensive end-to-end testing. Implement automated testing pipelines for user flows, authentication, and reading progress tracking to ensure production readiness.",
+            "Implement comprehensive RBAC system to protect sensitive endpoints and resources. \
+            Includes integrated admin panel for user management, system monitoring, and administrative controls.",
         status: "coming-soon",
+    },
+    {
+        id: "deployment-e2e-testing",
+        title: "Deployment",
+        description:
+            "Deploy the application across multiple platforms into production and apply end-to-end testing.",
+        status: "completed",
+        date: "October 15, 2025",
     },
     {
         id: "email-notifications",
         title: "Email Notification System",
         description:
-            "Secure email-based authentication with verification codes for password reset, account verification, and important notifications with real-time delivery.",
+            "Secure email-based authentication with verification codes for password reset, account verification, \
+            and important notifications with real-time delivery.",
         status: "completed",
         date: "October 14, 2025",
     },
@@ -51,7 +61,8 @@ const timelineData: TimelineItem[] = [
         id: "reading-progress-tracking",
         title: "Reading Progress Tracking",
         description:
-            "Track daily and monthly reading progress with pages and minutes read. Monitor completed and in-progress books with detailed page-based analytics.",
+            "Track daily and monthly reading progress with pages and minutes read. Monitor completed and in-progress books \
+            with detailed page-based analytics.",
         status: "completed",
         date: "October 10, 2025",
     },

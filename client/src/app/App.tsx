@@ -15,6 +15,7 @@ import { Toaster } from "@/components/ui/sonner";
 
 // import vercel analytics
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 
 function App() {
     const queryClient = new QueryClient();
@@ -23,8 +24,14 @@ function App() {
         <BrowserRouter>
             <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
                 <QueryClientProvider client={queryClient}>
+                    {/* Analytics and Speed Insights */}
                     <Analytics />
+                    <SpeedInsights />
+
+                    {/* App Routes */}
                     <AppRoutes />
+
+                    {/* Toast */}
                     <Toaster position="top-right" />
                 </QueryClientProvider>
             </ThemeProvider>

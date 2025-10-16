@@ -46,6 +46,7 @@ import DashboardCoursesHomePage from "@/features/courses/pages/home";
 // import general pages
 import Protector from "@/pages/protector";
 import NotFoundPage from "@/pages/not-found";
+import RedirectDashboard from "@/pages/redirect-dashboard";
 
 const AppRoutes = () => {
     return (
@@ -174,7 +175,11 @@ const AppRoutes = () => {
                 {/* Login Page */}
                 <Route
                     path={ROUTES_CONSTANTS.AUTH().LOGIN()}
-                    element={<LoginPage />}
+                    element={
+                        <RedirectDashboard>
+                            <LoginPage />
+                        </RedirectDashboard>
+                    }
                 />
                 {/* Register Page */}
                 <Route
