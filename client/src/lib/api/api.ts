@@ -10,347 +10,228 @@
  * ---------------------------------------------------------------
  */
 
-/** The search value for status */
-export enum ReadingStatus {
-  IN_PROGRESS = "IN_PROGRESS",
-  COMPLETED = "COMPLETED",
+export interface RegisterRequestDto {
+  /** The username of the user */
+  username: string;
+  /**
+   * The email of the user
+   * @format email
+   */
+  email: string;
+  /**
+   * The password of the user
+   * @minLength 8
+   * @maxLength 128
+   */
+  password: string;
 }
 
+export interface LoginRequestDto {
+  /**
+   * The email of the user
+   * @format email
+   */
+  email: string;
+  /**
+   * The password of the user
+   * @minLength 8
+   * @maxLength 128
+   */
+  password: string;
+}
+
+export type UserCreateRequestDto = object;
+
 export interface UserResponseDto {
-  /** The unique identifier of the user */
+  /** The id of the user */
   id: string;
   /** The username of the user */
   username: string;
   /** The email of the user */
   email: string;
   /** The avatar url of the user */
-  avatar_url: string;
+  avatarUrl: string;
   /** The provider of the user */
   provider: string[];
   /** The role of the user */
-  role: string;
+  role: "ADMIN" | "USER";
   /**
-   * The created at date of the user
+   * The created at timestamp
    * @format date-time
    */
   createdAt: string;
   /**
-   * The updated at date of the user
+   * The updated at timestamp
    * @format date-time
    */
   updatedAt: string;
+  /**
+   * The deleted at timestamp
+   * @format date-time
+   */
+  deletedAt: string | null;
 }
 
-export interface UserUpdateDto {
-  /**
-   * The username of the user
-   * @example "JohnDoe"
-   */
-  username?: string;
-  /**
-   * The email of the user
-   * @example "john.doe@gmail.com"
-   */
-  email?: string;
-  /**
-   * The password of the user
-   * @example "password"
-   */
-  password?: string;
-  /**
-   * The avatar url of the user
-   * @example "https://example.com/avatar.png"
-   */
-  avatar_url?: string;
-  /**
-   * The role of the user
-   * @example "USER"
-   */
-  role?: "ADMIN" | "USER";
-}
+export type UserUpdateRequestDto = object;
 
-export interface UserCreateDto {
+export interface BookCreateRequestDto {
   /**
-   * The username of the user
-   * @example "JohnDoe"
+   * The title of the book
+   * @maxLength 255
    */
-  username: string;
-  /**
-   * The email of the user
-   * @example "john.doe@gmail.com"
-   */
-  email: string;
-  /**
-   * The password of the user
-   * @example "password"
-   */
-  password: string;
-  /**
-   * The avatar url of the user
-   * @example "https://example.com/avatar.png"
-   */
-  avatar_url?: string;
-  /**
-   * The role of the user
-   * @example "USER"
-   */
-  role?: "ADMIN" | "USER";
-}
-
-export interface BookCreateDto {
-  /** The title of the book */
   title: string;
-  /** The author of the book */
-  author?: string;
-  /** The description of the book */
-  description?: string;
-  /** The ISBN10 of the book */
-  ISBN10?: string;
-  /** The ISBN13 of the book */
-  ISBN13?: string;
-  /** The pages of the book */
-  pages: number;
-  /** The cover url of the book */
-  cover_url?: string;
   /**
-   * The cover image file
-   * @format binary
+   * The pages of the book
+   * @min 1
+   * @max 3000
    */
-  cover?: File;
+  pages: number;
+  /**
+   * The author of the book
+   * @maxLength 255
+   */
+  author?: string | null;
+  /** The description of the book */
+  description?: string | null;
+  /** The ISBN 10 of the book */
+  isbn10?: string | null;
+  /** The ISBN 13 of the book */
+  isbn13?: string | null;
+  /** The cover image file (JPEG, PNG, GIF, or WebP, max 10MB) */
+  cover?: object | null;
 }
 
 export interface BookResponseDto {
-  /** The unique identifier of the book */
+  /** The id of the book */
   id: string;
   /** The title of the book */
   title: string;
-  /** The author of the book */
-  author: string;
-  /** The description of the book */
-  description: string;
-  /** The ISBN10 of the book */
-  ISBN10: string;
-  /** The ISBN13 of the book */
-  ISBN13: string;
   /** The pages of the book */
   pages: number;
+  /** The author of the book */
+  author: string | null;
+  /** The description of the book */
+  description: string | null;
+  /** The ISBN 10 of the book */
+  isbn10: string | null;
+  /** The ISBN 13 of the book */
+  isbn13: string | null;
   /** The cover url of the book */
-  cover_url: string;
+  coverUrl: string | null;
+  /** The created by id of the book */
+  createdById: string;
   /**
-   * The created at date of the book
+   * The created at timestamp
    * @format date-time
    */
   createdAt: string;
   /**
-   * The updated at date of the book
+   * The updated at timestamp
    * @format date-time
    */
   updatedAt: string;
 }
 
-export interface BookUpdateDto {
-  /** The title of the book */
-  title?: string;
-  /** The author of the book */
-  author?: string;
-  /** The description of the book */
-  description?: string;
-  /** The ISBN10 of the book */
-  ISBN10?: string;
-  /** The ISBN13 of the book */
-  ISBN13?: string;
-  /** The pages of the book */
-  pages?: number;
-  /** The cover url of the book */
-  cover_url?: string;
+export interface BookUpdateRequestDto {
   /**
-   * The cover image file
-   * @format binary
+   * The title of the book
+   * @maxLength 255
    */
-  cover?: File;
+  title?: string;
+  /**
+   * The pages of the book
+   * @min 1
+   * @max 3000
+   */
+  pages?: number;
+  /**
+   * The author of the book
+   * @maxLength 255
+   */
+  author?: string | null;
+  /** The description of the book */
+  description?: string | null;
+  /** The ISBN 10 of the book */
+  isbn10?: string | null;
+  /** The ISBN 13 of the book */
+  isbn13?: string | null;
+  /** The cover image file (JPEG, PNG, GIF, or WebP, max 10MB) */
+  cover?: object | null;
 }
 
-export interface BooksResponseDto {
-  /** The book list */
-  books: BookResponseDto[];
-  /** The total count of the books */
-  totalCount: number;
-}
-
-export interface LoginRequestDto {
-  /** The email of the user */
-  email: string;
-  /** The password of the user */
-  password: string;
-}
-
-export interface LoginResponseDto {
-  /** The access token */
-  access_token: string;
-}
-
-export interface RegisterRequestDto {
-  /** The username of the user */
-  username: string;
-  /** The email of the user */
-  email: string;
-  /** The password of the user */
-  password: string;
-}
-
-export interface EmailCheckResponseDto {
-  /** Whether the email exists */
-  exists: boolean;
-}
-
-export interface SendVerifyCodeRequestDto {
-  /** The email of the user */
-  email: string;
-}
-
-export interface SendVerifyCodeResponseDto {
-  /** The reset password token */
-  resetToken: string;
-}
-
-export interface ResetPasswordRequestDto {
-  /** The reset password token */
-  resetToken: string;
-  /** The verification code */
-  code: string;
-  /** The new password */
-  newPassword?: string;
-}
-
-export interface ResetPasswordResponseDto {
-  /** The result message */
-  message: string;
-  /** Whether the password was reset successfully */
-  reset_success: boolean;
-  /** Whether the verification code is valid */
-  valid: boolean;
-}
-
-export interface FileDeleteRequestDto {
-  /** The file url */
-  file_url: string;
-}
-
-export interface FileDeleteResponseDto {
-  /** Whether the file was deleted successfully */
-  success: boolean;
-}
-
-export interface FileUploadResponseDto {
-  /** The file url */
-  file_url: string;
-  /** Whether the file was uploaded successfully */
-  success: boolean;
-}
-
-export interface ObjectIdDto {
-  /** The object id */
-  id: string;
+export interface UserBookCreateRequestDto {
+  /**
+   * The book id of the user book
+   * @format uuid
+   */
+  bookId: string;
 }
 
 export interface UserBookResponseDto {
-  /** The unique identifier of the user book */
+  /** The id of the user book */
   id: string;
-  /** The book id of the user book */
-  book_id: string;
   /** The user id of the user book */
-  user_id: string;
-  /** The status of the user book */
-  status: "IN_PROGRESS" | "COMPLETED";
+  userId: string;
+  /** The book id of the user book */
+  bookId: string;
+  /** The reading status of the user book */
+  status: string;
   /** The current page of the user book */
-  current_page: number;
+  currentPage: number;
   /**
    * The start date of the user book
    * @format date-time
    */
-  start_date: string;
+  startDate: string | null;
   /**
    * The completed date of the user book
    * @format date-time
    */
-  completed_date: string;
+  completedDate: string | null;
   /** The total minutes of the user book */
-  total_minutes: number;
+  totalMinutes: number;
   /** The total days of the user book */
-  total_days: number;
+  totalDays: number;
   /**
-   * The created at date of the user book
+   * The created at timestamp
    * @format date-time
    */
   createdAt: string;
   /**
-   * The updated at date of the user book
+   * The updated at timestamp
    * @format date-time
    */
   updatedAt: string;
 }
 
-export interface UserBooksResponseDto {
-  /** The books */
-  books: {
-    book?: BookResponseDto;
-    userBook?: UserBookResponseDto;
-  }[];
-  /** The total count of the books */
-  totalCount: number;
-}
-
-export interface UserBookUpdateDto {
-  /** The added pages of the user book */
+export interface ReadingRecordingCreateRequestDto {
+  /**
+   * The date of the reading recording
+   * @format date-time
+   */
+  date: string;
+  /**
+   * The pages of the reading recording
+   * @min 1
+   * @max 3000
+   */
   pages: number;
-  /** The added minutes of the user book */
+  /**
+   * The minutes of the reading recording
+   * @min 1
+   * @max 600
+   */
   minutes: number;
-  /** The added days of the user book */
-  days: number;
-  /**
-   * The updated date of the user book, possibly be start_date or completed_date
-   * @format date-time
-   */
-  date: string;
+  /** The notes of the reading recording */
+  notes?: string | null;
 }
 
-export interface RecordingCreateDto {
+export interface FileDeleteRequestDto {
   /**
-   * The date of the recording
-   * @format date-time
+   * The URL of the file to be deleted
+   * @format uri
    */
-  date: string;
-  /** The pages */
-  pages: number;
-  /** The minutes */
-  minutes?: number;
-  /** The notes */
-  notes: string;
-}
-
-export interface RecordingResponseDto {
-  /** The recording id */
-  id: string;
-  /** The user book id */
-  user_book_id: string;
-  /**
-   * The date of the recording
-   * @format date-time
-   */
-  date: string;
-  /** The pages of the recording */
-  pages: number;
-  /** The minutes of the recording */
-  minutes: number;
-  /** The notes of the recording */
-  notes: object;
-}
-
-export interface StatisticsRecordingResponseDto {
-  /** The recordings */
-  recordings: RecordingResponseDto[];
-  /** The total count of recordings */
-  totalCount: number;
+  url: string;
 }
 
 import type {
@@ -530,11 +411,11 @@ export class HttpClient<SecurityDataType = unknown> {
 
 /**
  * @title Progress Tracker API
- * @version v1
+ * @version 1.0
  * @license MIT (https://opensource.org/licenses/MIT)
  * @contact
  *
- * Progress Tracker Backend API Specification
+ * API documentation for the Progress Tracker application
  */
 export class Api<
   SecurityDataType extends unknown,
@@ -543,84 +424,106 @@ export class Api<
     /**
      * No description
      *
-     * @tags User
-     * @name UserControllerGetMe
-     * @summary Get the current user
-     * @request GET:/api/v1/users/me
+     * @tags auth
+     * @name AuthControllerRegister
+     * @summary Register a new user
+     * @request POST:/api/v1/auth/register
      */
-    userControllerGetMe: (params: RequestParams = {}) =>
-      this.request<UserResponseDto, void>({
-        path: `/api/v1/users/me`,
-        method: "GET",
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags User
-     * @name UserControllerUpdateMe
-     * @summary Update the current user
-     * @request PATCH:/api/v1/users/me
-     */
-    userControllerUpdateMe: (data: UserUpdateDto, params: RequestParams = {}) =>
-      this.request<UserResponseDto, void>({
-        path: `/api/v1/users/me`,
-        method: "PATCH",
-        body: data,
-        type: ContentType.Json,
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags User
-     * @name UserControllerDeleteMe
-     * @summary Delete the current user
-     * @request DELETE:/api/v1/users/me
-     */
-    userControllerDeleteMe: (params: RequestParams = {}) =>
-      this.request<UserResponseDto, void>({
-        path: `/api/v1/users/me`,
-        method: "DELETE",
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags User
-     * @name UserControllerReplaceMe
-     * @summary Replace the current user
-     * @request PUT:/api/v1/users/me
-     */
-    userControllerReplaceMe: (
-      data: UserUpdateDto,
+    authControllerRegister: (
+      data: RegisterRequestDto,
       params: RequestParams = {},
     ) =>
-      this.request<UserResponseDto, void>({
-        path: `/api/v1/users/me`,
-        method: "PUT",
+      this.request<void, any>({
+        path: `/api/v1/auth/register`,
+        method: "POST",
         body: data,
         type: ContentType.Json,
-        format: "json",
         ...params,
       }),
 
     /**
      * No description
      *
-     * @tags User
+     * @tags auth
+     * @name AuthControllerLogin
+     * @summary Login a user
+     * @request POST:/api/v1/auth/login
+     */
+    authControllerLogin: (data: LoginRequestDto, params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/api/v1/auth/login`,
+        method: "POST",
+        body: data,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags auth
+     * @name AuthControllerEmailCheck
+     * @summary Check if an email exists
+     * @request GET:/api/v1/auth/email-check/{email}
+     */
+    authControllerEmailCheck: (email: string, params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/api/v1/auth/email-check/${email}`,
+        method: "GET",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags users
+     * @name UserControllerFindAll
+     * @summary Get all users
+     * @request GET:/api/v1/users
+     */
+    userControllerFindAll: (
+      query?: {
+        /** The key of the query */
+        key?: string;
+        /** The value of the query */
+        value?: string;
+        /** The sort of the query */
+        sort?: string;
+        /** The order of the query */
+        order?: "asc" | "desc";
+        /**
+         * The limit of the query
+         * @min 1
+         */
+        limit?: number;
+        /**
+         * The page of the query
+         * @min 1
+         */
+        page?: number;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<void, any>({
+        path: `/api/v1/users`,
+        method: "GET",
+        query: query,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags users
      * @name UserControllerCreate
-     * @summary Create a user
+     * @summary Create a new user
      * @request POST:/api/v1/users
      */
-    userControllerCreate: (data: UserCreateDto, params: RequestParams = {}) =>
-      this.request<UserResponseDto, void>({
+    userControllerCreate: (
+      data: UserCreateRequestDto,
+      params: RequestParams = {},
+    ) =>
+      this.request<UserResponseDto, any>({
         path: `/api/v1/users`,
         method: "POST",
         body: data,
@@ -632,13 +535,13 @@ export class Api<
     /**
      * No description
      *
-     * @tags User
+     * @tags users
      * @name UserControllerFindById
-     * @summary Find a user by id
+     * @summary Get a user by ID
      * @request GET:/api/v1/users/{id}
      */
     userControllerFindById: (id: string, params: RequestParams = {}) =>
-      this.request<UserResponseDto, void>({
+      this.request<UserResponseDto, any>({
         path: `/api/v1/users/${id}`,
         method: "GET",
         format: "json",
@@ -648,17 +551,17 @@ export class Api<
     /**
      * No description
      *
-     * @tags User
+     * @tags users
      * @name UserControllerUpdate
-     * @summary Update a user by id
+     * @summary Update a user by ID
      * @request PATCH:/api/v1/users/{id}
      */
     userControllerUpdate: (
       id: string,
-      data: UserUpdateDto,
+      data: UserUpdateRequestDto,
       params: RequestParams = {},
     ) =>
-      this.request<UserResponseDto, void>({
+      this.request<UserResponseDto, any>({
         path: `/api/v1/users/${id}`,
         method: "PATCH",
         body: data,
@@ -670,35 +573,33 @@ export class Api<
     /**
      * No description
      *
-     * @tags User
-     * @name UserControllerDeleteById
-     * @summary Delete a user by id
+     * @tags users
+     * @name UserControllerDelete
+     * @summary Delete a user by ID
      * @request DELETE:/api/v1/users/{id}
      */
-    userControllerDeleteById: (id: string, params: RequestParams = {}) =>
-      this.request<UserResponseDto, void>({
+    userControllerDelete: (id: string, params: RequestParams = {}) =>
+      this.request<void, any>({
         path: `/api/v1/users/${id}`,
         method: "DELETE",
-        format: "json",
         ...params,
       }),
 
     /**
      * No description
      *
-     * @tags User
-     * @name UserControllerReplace
-     * @summary Replace a user by id
-     * @request PUT:/api/v1/users/{id}
+     * @tags books
+     * @name BookControllerCreate
+     * @summary Create a new book
+     * @request POST:/api/v1/books
      */
-    userControllerReplace: (
-      id: string,
-      data: UserUpdateDto,
+    bookControllerCreate: (
+      data: BookCreateRequestDto,
       params: RequestParams = {},
     ) =>
-      this.request<UserResponseDto, void>({
-        path: `/api/v1/users/${id}`,
-        method: "PUT",
+      this.request<BookResponseDto, any>({
+        path: `/api/v1/books`,
+        method: "POST",
         body: data,
         type: ContentType.Json,
         format: "json",
@@ -708,126 +609,59 @@ export class Api<
     /**
      * No description
      *
-     * @tags Books
-     * @name BookControllerCreate
-     * @summary Create a book
-     * @request POST:/api/v1/books
-     */
-    bookControllerCreate: (data: BookCreateDto, params: RequestParams = {}) =>
-      this.request<BookResponseDto, void>({
-        path: `/api/v1/books`,
-        method: "POST",
-        body: data,
-        type: ContentType.FormData,
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Books
+     * @tags books
      * @name BookControllerFindAll
-     * @summary Get all books and set header x-total-count
+     * @summary Find all books
      * @request GET:/api/v1/books
      */
     bookControllerFindAll: (
       query?: {
-        /**
-         * Value to filter books by title, author, ISBN10 or ISBN13
-         * @example ""
-         */
+        /** The key to be used to query the books */
+        key?: string;
+        /** The value to be used to query the books */
         value?: string;
+        /** The sort of the query */
+        sort?: string;
+        /** The order of the query */
+        order?: "asc" | "desc";
         /**
-         * Page number for pagination index starts from 1
+         * The limit of the query
          * @min 1
-         * @example 1
-         */
-        page?: number;
-        /**
-         * Number of results per page (max 100)
-         * @min 1
-         * @max 100
-         * @example 10
          */
         limit?: number;
         /**
-         * Field to sort by
-         * @example "createdAt"
+         * The page of the query
+         * @min 1
          */
-        sort?: "title" | "author" | "createdAt" | "updatedAt";
-        /**
-         * Sort order
-         * @example "desc"
-         */
-        order?: "asc" | "desc";
+        page?: number;
       },
       params: RequestParams = {},
     ) =>
-      this.request<BooksResponseDto, void>({
+      this.request<void, any>({
         path: `/api/v1/books`,
         method: "GET",
         query: query,
-        format: "json",
         ...params,
       }),
 
     /**
      * No description
      *
-     * @tags Books
-     * @name BookControllerFindById
-     * @summary Get a book by id
-     * @request GET:/api/v1/books/{id}
-     */
-    bookControllerFindById: (id: string, params: RequestParams = {}) =>
-      this.request<BookResponseDto, void>({
-        path: `/api/v1/books/${id}`,
-        method: "GET",
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Books
+     * @tags books
      * @name BookControllerUpdate
-     * @summary Update a book by id
-     * @request PUT:/api/v1/books/{id}
+     * @summary update a book
+     * @request PATCH:/api/v1/books/{id}
      */
     bookControllerUpdate: (
       id: string,
-      data: BookUpdateDto,
+      data: BookUpdateRequestDto,
       params: RequestParams = {},
     ) =>
-      this.request<BookResponseDto, void>({
-        path: `/api/v1/books/${id}`,
-        method: "PUT",
-        body: data,
-        type: ContentType.FormData,
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Books
-     * @name BookControllerPatch
-     * @summary Patch a book by id
-     * @request PATCH:/api/v1/books/{id}
-     */
-    bookControllerPatch: (
-      id: string,
-      data: BookUpdateDto,
-      params: RequestParams = {},
-    ) =>
-      this.request<BookResponseDto, void>({
+      this.request<BookResponseDto, any>({
         path: `/api/v1/books/${id}`,
         method: "PATCH",
         body: data,
-        type: ContentType.FormData,
+        type: ContentType.Json,
         format: "json",
         ...params,
       }),
@@ -835,300 +669,31 @@ export class Api<
     /**
      * No description
      *
-     * @tags Books
-     * @name BookControllerDeleteById
+     * @tags books
+     * @name BookControllerFindById
+     * @summary Find a book by id
+     * @request GET:/api/v1/books/{id}
+     */
+    bookControllerFindById: (id: string, params: RequestParams = {}) =>
+      this.request<BookResponseDto, any>({
+        path: `/api/v1/books/${id}`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags books
+     * @name BookControllerDelete
      * @summary Delete a book by id
      * @request DELETE:/api/v1/books/{id}
      */
-    bookControllerDeleteById: (id: string, params: RequestParams = {}) =>
-      this.request<BookResponseDto, void>({
+    bookControllerDelete: (id: string, params: RequestParams = {}) =>
+      this.request<void, any>({
         path: `/api/v1/books/${id}`,
         method: "DELETE",
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Auth
-     * @name AuthControllerLogin
-     * @summary Login a user
-     * @request POST:/api/v1/auth/login
-     */
-    authControllerLogin: (data: LoginRequestDto, params: RequestParams = {}) =>
-      this.request<LoginResponseDto, void>({
-        path: `/api/v1/auth/login`,
-        method: "POST",
-        body: data,
-        type: ContentType.Json,
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Auth
-     * @name AuthControllerLogout
-     * @summary Logout a user
-     * @request POST:/api/v1/auth/logout
-     */
-    authControllerLogout: (params: RequestParams = {}) =>
-      this.request<boolean, void>({
-        path: `/api/v1/auth/logout`,
-        method: "POST",
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Auth
-     * @name AuthControllerRegister
-     * @summary Register a user
-     * @request POST:/api/v1/auth/register
-     */
-    authControllerRegister: (
-      data: RegisterRequestDto,
-      params: RequestParams = {},
-    ) =>
-      this.request<LoginResponseDto, void>({
-        path: `/api/v1/auth/register`,
-        method: "POST",
-        body: data,
-        type: ContentType.Json,
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Auth
-     * @name AuthControllerEmailCheck
-     * @summary Check if an email exists
-     * @request GET:/api/v1/auth/email-check/{email}
-     */
-    authControllerEmailCheck: (email: string, params: RequestParams = {}) =>
-      this.request<EmailCheckResponseDto, any>({
-        path: `/api/v1/auth/email-check/${email}`,
-        method: "GET",
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Auth
-     * @name AuthControllerGoogle
-     * @summary Login with Google only the entry point
-     * @request GET:/api/v1/auth/google
-     */
-    authControllerGoogle: (params: RequestParams = {}) =>
-      this.request<void, void>({
-        path: `/api/v1/auth/google`,
-        method: "GET",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Auth
-     * @name AuthControllerGoogleCallback
-     * @summary Google OAuth callback redirect to the frontend with the access_token
-     * @request GET:/api/v1/auth/google/callback
-     */
-    authControllerGoogleCallback: (params: RequestParams = {}) =>
-      this.request<void, void>({
-        path: `/api/v1/auth/google/callback`,
-        method: "GET",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Auth
-     * @name AuthControllerGithub
-     * @summary Login with Github only the entry point
-     * @request GET:/api/v1/auth/github
-     */
-    authControllerGithub: (params: RequestParams = {}) =>
-      this.request<void, void>({
-        path: `/api/v1/auth/github`,
-        method: "GET",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Auth
-     * @name AuthControllerGithubCallback
-     * @summary Github OAuth callback redirect to the frontend with the access_token
-     * @request GET:/api/v1/auth/github/callback
-     */
-    authControllerGithubCallback: (params: RequestParams = {}) =>
-      this.request<void, void>({
-        path: `/api/v1/auth/github/callback`,
-        method: "GET",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Auth
-     * @name AuthControllerSendVerifyCode
-     * @summary Send verification code
-     * @request POST:/api/v1/auth/verify-code
-     */
-    authControllerSendVerifyCode: (
-      data: SendVerifyCodeRequestDto,
-      params: RequestParams = {},
-    ) =>
-      this.request<SendVerifyCodeResponseDto, any>({
-        path: `/api/v1/auth/verify-code`,
-        method: "POST",
-        body: data,
-        type: ContentType.Json,
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Auth
-     * @name AuthControllerResetPassword
-     * @summary Reset password
-     * @request POST:/api/v1/auth/reset-password
-     */
-    authControllerResetPassword: (
-      data: ResetPasswordRequestDto,
-      params: RequestParams = {},
-    ) =>
-      this.request<ResetPasswordResponseDto, any>({
-        path: `/api/v1/auth/reset-password`,
-        method: "POST",
-        body: data,
-        type: ContentType.Json,
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Cloud
-     * @name CloudControllerDeleteFile
-     * @summary Delete a file from cloud
-     * @request DELETE:/api/v1/cloud
-     */
-    cloudControllerDeleteFile: (
-      data: FileDeleteRequestDto,
-      params: RequestParams = {},
-    ) =>
-      this.request<FileDeleteResponseDto, void>({
-        path: `/api/v1/cloud`,
-        method: "DELETE",
-        body: data,
-        type: ContentType.Json,
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Cloud
-     * @name CloudControllerUploadFile
-     * @summary Upload a file to cloud
-     * @request POST:/api/v1/cloud/file
-     */
-    cloudControllerUploadFile: (
-      data: {
-        /** @format binary */
-        file: File;
-      },
-      params: RequestParams = {},
-    ) =>
-      this.request<FileUploadResponseDto, void>({
-        path: `/api/v1/cloud/file`,
-        method: "POST",
-        body: data,
-        type: ContentType.FormData,
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Cloud
-     * @name CloudControllerUploadAvatar
-     * @summary Upload an avatar image to cloud
-     * @request POST:/api/v1/cloud/avatar
-     */
-    cloudControllerUploadAvatar: (
-      data: {
-        /** @format binary */
-        file: File;
-      },
-      params: RequestParams = {},
-    ) =>
-      this.request<FileUploadResponseDto, void>({
-        path: `/api/v1/cloud/avatar`,
-        method: "POST",
-        body: data,
-        type: ContentType.FormData,
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Cloud
-     * @name CloudControllerUploadImage
-     * @summary Upload an image to cloud
-     * @request POST:/api/v1/cloud/image
-     */
-    cloudControllerUploadImage: (
-      data: {
-        /** @format binary */
-        file: File;
-      },
-      params: RequestParams = {},
-    ) =>
-      this.request<FileUploadResponseDto, void>({
-        path: `/api/v1/cloud/image`,
-        method: "POST",
-        body: data,
-        type: ContentType.FormData,
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags UserBook
-     * @name UserBookControllerCreate
-     * @summary Track a book for current user
-     * @request POST:/api/v1/user-books
-     */
-    userBookControllerCreate: (data: ObjectIdDto, params: RequestParams = {}) =>
-      this.request<UserBookResponseDto, void>({
-        path: `/api/v1/user-books`,
-        method: "POST",
-        body: data,
-        type: ContentType.Json,
-        format: "json",
         ...params,
       }),
 
@@ -1137,24 +702,35 @@ export class Api<
      *
      * @tags UserBook
      * @name UserBookControllerFindAll
-     * @summary Get all tracked books for a user
+     * @summary Find all user books
      * @request GET:/api/v1/user-books
      */
     userBookControllerFindAll: (
       query?: {
         /**
-         * The search value for status
-         * @example "IN_PROGRESS"
+         * The book id of the query
+         * @format uuid
          */
-        value?: ReadingStatus;
+        bookId?: string;
+        /** The key of the query */
+        key?: string;
+        /** The value of the query */
+        value?: string;
+        /** The sort of the query */
+        sort?: string;
+        /** The order of the query */
+        order?: "asc" | "desc";
+        /** The limit of the query */
+        limit?: number;
+        /** The page of the query */
+        page?: number;
       },
       params: RequestParams = {},
     ) =>
-      this.request<UserBooksResponseDto, void>({
+      this.request<void, any>({
         path: `/api/v1/user-books`,
         method: "GET",
         query: query,
-        format: "json",
         ...params,
       }),
 
@@ -1162,14 +738,19 @@ export class Api<
      * No description
      *
      * @tags UserBook
-     * @name UserBookControllerDeleteById
-     * @summary Untrack a book for current user
-     * @request DELETE:/api/v1/user-books/{id}
+     * @name UserBookControllerCreate
+     * @summary Create a user book
+     * @request POST:/api/v1/user-books
      */
-    userBookControllerDeleteById: (id: string, params: RequestParams = {}) =>
-      this.request<UserBookResponseDto, void>({
-        path: `/api/v1/user-books/${id}`,
-        method: "DELETE",
+    userBookControllerCreate: (
+      data: UserBookCreateRequestDto,
+      params: RequestParams = {},
+    ) =>
+      this.request<UserBookResponseDto, any>({
+        path: `/api/v1/user-books`,
+        method: "POST",
+        body: data,
+        type: ContentType.Json,
         format: "json",
         ...params,
       }),
@@ -1179,11 +760,11 @@ export class Api<
      *
      * @tags UserBook
      * @name UserBookControllerFindById
-     * @summary Get a user book by id
+     * @summary Find a user book by id
      * @request GET:/api/v1/user-books/{id}
      */
     userBookControllerFindById: (id: string, params: RequestParams = {}) =>
-      this.request<UserBookResponseDto, void>({
+      this.request<UserBookResponseDto, any>({
         path: `/api/v1/user-books/${id}`,
         method: "GET",
         format: "json",
@@ -1194,21 +775,14 @@ export class Api<
      * No description
      *
      * @tags UserBook
-     * @name UserBookControllerUpdate
-     * @summary Update a user book
-     * @request PATCH:/api/v1/user-books/{id}
+     * @name UserBookControllerDelete
+     * @summary Delete a user book by id
+     * @request DELETE:/api/v1/user-books/{id}
      */
-    userBookControllerUpdate: (
-      id: string,
-      data: UserBookUpdateDto,
-      params: RequestParams = {},
-    ) =>
-      this.request<UserBookResponseDto, void>({
+    userBookControllerDelete: (id: string, params: RequestParams = {}) =>
+      this.request<void, any>({
         path: `/api/v1/user-books/${id}`,
-        method: "PATCH",
-        body: data,
-        type: ContentType.Json,
-        format: "json",
+        method: "DELETE",
         ...params,
       }),
 
@@ -1222,15 +796,14 @@ export class Api<
      */
     userBookControllerCreateRecording: (
       id: string,
-      data: RecordingCreateDto,
+      data: ReadingRecordingCreateRequestDto,
       params: RequestParams = {},
     ) =>
-      this.request<RecordingResponseDto, void>({
+      this.request<void, any>({
         path: `/api/v1/user-books/${id}/recordings`,
         method: "POST",
         body: data,
         type: ContentType.Json,
-        format: "json",
         ...params,
       }),
 
@@ -1238,15 +811,39 @@ export class Api<
      * No description
      *
      * @tags UserBook
-     * @name UserBookControllerGetRecordings
-     * @summary Get all recordings for a user book
+     * @name UserBookControllerFindRecordings
+     * @summary Find recordings by user book id
      * @request GET:/api/v1/user-books/{id}/recordings
      */
-    userBookControllerGetRecordings: (id: string, params: RequestParams = {}) =>
-      this.request<RecordingResponseDto, void>({
+    userBookControllerFindRecordings: (
+      id: string,
+      query?: {
+        /**
+         * The date of the reading recording
+         * @format date-time
+         */
+        date?: string;
+        /** The sort of the reading recording */
+        sort?: string;
+        /** The order of the reading recording */
+        order?: "asc" | "desc";
+        /**
+         * The limit of the reading recording
+         * @min 1
+         */
+        limit?: number;
+        /**
+         * The page of the reading recording
+         * @min 1
+         */
+        page?: number;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<void, any>({
         path: `/api/v1/user-books/${id}/recordings`,
         method: "GET",
-        format: "json",
+        query: query,
         ...params,
       }),
 
@@ -1255,47 +852,81 @@ export class Api<
      *
      * @tags UserBook
      * @name UserBookControllerDeleteRecordings
-     * @summary Delete all recordings for a user book
+     * @summary Delete recordings by user book id
      * @request DELETE:/api/v1/user-books/{id}/recordings
      */
     userBookControllerDeleteRecordings: (
       id: string,
       params: RequestParams = {},
     ) =>
-      this.request<boolean, void>({
+      this.request<void, any>({
         path: `/api/v1/user-books/${id}/recordings`,
         method: "DELETE",
-        format: "json",
         ...params,
       }),
 
     /**
      * No description
      *
-     * @tags Statistics
-     * @name StatisticsControllerGetRecordingsStatistics
-     * @summary Get the statistics of the recordings
-     * @request GET:/api/v1/statistics/recordings
+     * @tags cloud
+     * @name CloudControllerUploadFile
+     * @summary Upload a file to cloud storage
+     * @request POST:/api/v1/cloud/upload
      */
-    statisticsControllerGetRecordingsStatistics: (
-      query?: {
-        /**
-         * The start date of the recordings
-         * @format date-time
-         */
-        startDate?: string;
-        /** date limit */
-        dateLimit?: number;
-        /** User Book ID if not provided, will use all user books */
-        userBookID?: string;
-      },
+    cloudControllerUploadFile: (params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/api/v1/cloud/upload`,
+        method: "POST",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags cloud
+     * @name CloudControllerUploadImage
+     * @summary Upload an image to cloud storage
+     * @request POST:/api/v1/cloud/upload/image
+     */
+    cloudControllerUploadImage: (params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/api/v1/cloud/upload/image`,
+        method: "POST",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags cloud
+     * @name CloudControllerUploadAvatar
+     * @summary Upload an avatar image to cloud storage
+     * @request POST:/api/v1/cloud/upload/avatar
+     */
+    cloudControllerUploadAvatar: (params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/api/v1/cloud/upload/avatar`,
+        method: "POST",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags cloud
+     * @name CloudControllerDeleteFile
+     * @summary Delete a file from cloud storage
+     * @request DELETE:/api/v1/cloud/delete
+     */
+    cloudControllerDeleteFile: (
+      data: FileDeleteRequestDto,
       params: RequestParams = {},
     ) =>
-      this.request<StatisticsRecordingResponseDto, void>({
-        path: `/api/v1/statistics/recordings`,
-        method: "GET",
-        query: query,
-        format: "json",
+      this.request<void, any>({
+        path: `/api/v1/cloud/delete`,
+        method: "DELETE",
+        body: data,
+        type: ContentType.Json,
         ...params,
       }),
   };
